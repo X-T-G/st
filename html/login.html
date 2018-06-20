@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>神庭医馆</title>
+        <link type="image/x-icon" rel="shortcut icon" href="../images/logo.png">
+        <link rel="stylesheet" href="../css/common.css">
+        <link rel="stylesheet" href="../css/weui.min.css">
+        <script src="../js/zepto.min.js"></script>
+        <script src="../js/index.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    </head>
+    <body>
+        <div class="header">
+            登录
+        </div>
+        <div class="login">
+            <form>
+                <div class="logo_contain">
+                    <img src="../images/logo.png" alt="">
+                </div>
+                <div class="input_row flex">
+                    <img src="../images/login_phone.png" alt="">
+                    <div class="flex-1">
+                        <input class="name" type="text" placeholder="请输入手机号/邮箱/邀请码">
+                    </div>
+                </div>
+                <div class="input_row flex">
+                    <img src="../images/enroll_key.png" alt="">
+                    <div class="flex-1">
+                        <input class="password" type="password" placeholder="请输入密码">
+                    </div>
+                </div>
+                <div class="bottom_btn">
+                    <button class="login_btn" type="button">立即登录</button>
+                </div>
+                <div class="text_center" style="margin-top: 10px;">
+                    <a href="./regist.html" style="color: #F17355;">新用户注册</a>
+                </div>
+            </form>
+            <div class="bottom_img"></div>
+            <div class="js_dialog" id="androidDialog2" style="opacity: 0;display: none;">
+                <div class="weui-mask"></div>
+                <div class="weui-dialog weui-skin_android">
+                    <div class="weui-dialog__bd">
+                        账号或密码错误，请重新输入。
+                    </div>
+                    <div class="weui-dialog__ft">
+                        <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

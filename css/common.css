@@ -1,0 +1,273 @@
+@charset "utf-8";
+/* 公共样式 */
+input{outline:none;}
+ul,p,label,hr,dd,h3,table,table.table,form,dl{margin:0;padding:0;}
+li{ list-style:none;}
+ul,li{vertical-align:middle;}
+.text-overflow{white-space:nowrap;text-overflow:ellipsis;-o-text-overflow:ellipsis;overflow:hidden;}
+.fl{float: left;}
+.fr{float: right;}
+.dis-no{display:none;}
+.text_center{text-align: center;}
+.text_left{text-align: left;}
+.text_right{text-align:right;}
+* {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;font-size: 14px;}
+body{margin:0;background-color: #fff;color:#686b6d;}
+h1,h2,h3,h4,h5,h6{margin:0;font-weight:normal;}
+h1,h2,h3{font-size:16px;}
+h4,h5,h6{font-size:14px;}
+input.green:focus,select.green:focus,textarea.green:focus{border:1px #11C382 solid;}
+textarea{resize: none;}
+select, textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {border-color:none;box-shadow:none;border-radius:2px;margin:0;}
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus{border-color:none;box-shadow:none;}
+.clearfix:after{content: "";display: block;clear: both;}
+input[type="radio"], input[type="checkbox"]{margin-top: 0;}
+button{outline: none;}
+body{background-color:#f7f4ef;}
+img{width: 100%;height: auto;}
+input[type="text"],input[type="password"]{-webkit-appearance: none;}/*苹果手机input内阴影*/
+textarea{-webkit-appearance: none;}/*苹果手机input内阴影*/
+.weui-loadmor{text-align: center;margin-top: 160px;}
+/* 文字颜色 居中 */
+.tint{color: #939399;}
+.text_center{text-align:center;}
+.text_fl{text-align:left;}
+.text_fr{text-align:right;}
+
+/*弹性布局*/
+.flex{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:-moz-box;display:flex;}
+.flex-v{-webkit-box-orient:vertical;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;}
+.flex-1{-webkit-box-flex:1;-webkit-flex:1;-ms-flex:1;flex:1;}
+.flex-align-center{-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;}
+.flex-pack-center{-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;}
+.flex-pack-justify{-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;}
+
+/* 首页顶部 */
+.header{background-color:#F17355;width: 100%;height:40px;line-height: 40px;color: #fff;font-size:18px;text-align: center;}
+.middle_detail .top_contain,.traffic_way{padding: 20px;}
+.middle_detail .text_detail{text-indent: 27px;line-height: 24px;}
+.middle_detail .pic_contain .store_pic{width: 100%;height: auto;}
+.middle_detail .map_contain{height: 300px;margin: 20px 0;}
+.middle_detail .app_contain,.middle_detail .qq_contain,.lead .app_contain{width: 100%;height: auto;}
+.middle_detail .qq_contain img{width: 50%;float: left;padding: 10px;}
+.middle_detail .app_contain,.lead .app_contain{text-align: center;}
+.middle_detail{padding-bottom: 40px;}
+.middle_detail .qq_contain:after{display:table;clear: both;content: "";}
+.store_container{width: 100%;margin:20px auto;}
+.store_container img,.traffic_way img{width: 100%;height: auto;}
+.traffic_way p strong{color: #F17355;}
+.traffic_way p{margin-bottom: 20px;}
+img.store_pic{width: 108px;height:108px;}
+
+/* 一键导航 */
+.lead{padding: 40px 20px;}
+.lead img.store_img{width: 100%;height: auto;}
+.lead .text_detail{text-indent: 27px;margin: 20px 0;}
+#container{min-width:600px;min-height:767px;}
+.lead_button.weui-btn{width:88px;height:35px;font-size: 14px;line-height: 35px;margin-bottom:20px; }
+.lead #mapPage{height: 600px;}
+
+/* 个人中心 */
+.person .top_bg{padding-top:40px;text-align: center;background: url(../images/bg_zone.png);background-repeat:no-repeat ; background-size:100% 100%;}
+.person .top_bg div.head{margin:0 auto 20px;width: 70px;height: 70px;border-radius: 50%;border: 1px solid #d9847d}
+.person .top_bg div img{width: 100%;height: auto;}
+.person{background-color:#f7f4ef;padding-bottom: 20px;}
+.person .middle_person .weui-cell{background-color: #fff;}
+.person .middle_person .order,.person .middle_person .software,.person .middle_person .addr{margin-top: 20px;}
+.person .top_bg .flex{padding-bottom: 15px;margin-top: 10px;}
+.person .addr .weui-cell_access .weui-cell__ft:after{height:0;width:0;border-width:0;border-color: none;border-style: none;}
+.person .addr  .weui-cell__ft button{margin-left: 70px;border: none;width: 60px;background-color: #F17355;color: #fff;border-radius: 3px;font-size: 13px;padding: 2px 4px;}
+.person .weui-actionsheet__menu{padding: 20px;text-align: center;}
+.person .weui-actionsheet__menu .warm_info{line-height: 110px;margin-left: 10px;}
+.person .weui-actionsheet__menu  button{border: none;color: #f17355;margin: 10px auto 0;background-color: #fff;}
+.person .weui-actionsheet__menu .text_info{font-size: 16px;margin: 10px 0;}
+.person .weui-skin_android .weui-actionsheet{border: 1px solid #e5e5e5;}
+
+/* 我的订单/消费记录*/
+.m_order,.m_consume,.m_coupon{padding: 20px 0;}
+.m_order .bar_option,.m_consume .bar_option{margin: 0 auto;width: 200px;height: 30px;line-height: 30px;text-align: center;border-radius: 6px;border: 1px solid #f57d64;}
+.m_order .bar_option div.flex-1,.m_consume .bar_option div.flex-1{background-color: #fff;color: #f57d64;}
+.m_order .bar_option div.active,.m_consume .bar_option div.active{color: #fff;background-color:#f57d64;height: 29px;}
+.m_order .bar_option div.all_order,.m_consume .bar_option div.all_order,.m_coupon .bar_option div.all_order{border-top-left-radius: 6px;border-bottom-left-radius: 6px;}
+.m_order .bar_option div.ordered,.m_consume .bar_option div.ordered,.m_coupon .bar_option div.ordered{border-top-right-radius: 6px;border-bottom-right-radius: 6px;}
+.m_order .bar_option div.ordering,.m_consume .bar_option div.ordering,.m_coupon .bar_option div.ordering{border-left: 1px solid #f57d64;border-right: 1px solid #f57d64;}
+.has_noinfo{width: 160px;height: 160px;margin: 140px auto;}
+.m_order .weui-loadmore,.m_consume .weui-loadmore,.m_coupon .weui-loadmore{margin: 160px auto;}
+.ask_record{background-color: #fff;margin-top: 20px;padding-top: 20px;}
+.ask_record .top_text{border-left: 2px solid #f57d64;margin-bottom: 20px;padding-left: 20px;}
+.ask_record .each_row.flex{border-bottom: 1px solid #e4e4e4;color: #939399;padding-top: 16px;padding-right: 16px;}
+.ask_record .img_container{width: 50px;height: 50px;border-radius: 50%;border: .5px solid #f57d64;text-align: center;line-height: 50px;margin: 0 16px 16px;}
+.ask_record .img_container img{width: 46px;height: 46px;border-radius: 50%;}
+.m_order .weui-cell img{width: 80px;height: 80px;margin-right: 10px;}
+.m_order .weui-cell{padding: 10px;}
+.m_order .weui-cells .create{margin-bottom:14px;color: #939399;}
+.m_order .weui-cells .payprice,.m_order .weui-cells .payprice span{color: #939399;font-size: 12px;}
+.m_order .weui-cells .clearfix{color: #939399;margin-right: 10px;border-top: 1px solid #e5e5e5;margin: 0 10px;padding: 6px;}
+.m_order .weui-cells .clearfix span.or_status{color: #f57d64;font-size: 14px;margin-right: 10px;}
+.m_order .weui-cells .clearfix .updata_time{font-size: 12px;}
+.m_order .weui-cells{margin-top: 10px;}
+.my_order .order_page{border: 1px solid #f57d64;color: #f57d64;background-color: #fff;}
+.my_order .cli_page{margin: 20px;}
+.my_order .cli_page .order_page{margin-left: 4px;padding: 4px 8px;width: 30px;height: 30px;text-align: center;line-height: 23px;}
+.my_order .cli_page div.active{border: none;background-color: #f7f4ef;}
+
+/* 我的优惠券 */
+.m_coupon .bar_option,.m_regist .bar_option{margin: 0 auto;max-width: 200px;height: 40px;line-height: 40px;text-align: center;border: none;}
+.m_coupon .bar_option div,.m_regist .bar_option div{width: 50%;border-bottom: 1px solid #e4e4e4;}
+.m_coupon .bar_option div.active,.m_regist .bar_option div.active{border-bottom: 1px solid #f57d64;color: #f57d64;}
+.m_coupon .mycoupon{background-repeat:no-repeat ;background-size:100%;height: 90px;}
+.m_coupon .each_coupon{padding: 6px 12px;background-color: #fff;margin-top: 10px;}
+.m_coupon .mycoupon .fr{text-align: center;padding: 6px;margin-right: 14px;}
+
+/* 我的地址 */
+.m_address .address_container img{width:14px;height: 16px;}
+.m_address .weui-btn,.m_contacts .weui-btn{background-color: #F17355;position: fixed;bottom: 0;width: 100%;height:40px;line-height: 40px;text-align: center;color: #fff;z-index: 1000;border-radius: 0;}
+.m_address .address_container{background-color: #fff;padding: 20px;margin-bottom: 10px;}
+.m_address .address_container .each_addr .addr_op{padding:12px 15px 0 15px;}
+.m_address .address_container .weui-cell{padding: 0;}
+.m_address .address_container .weui-cells_checkbox{padding:12px 15px 0px 0;}
+.m_address .weui-cells_checkbox .weui-icon-checked:before{font-size: 20px;}
+.m_address .weui-cells:before{border-top:none;}
+.m_address .address_container .bottom_operate{border-top:1px solid #e5e5e5;margin-top: 10px; }
+.m_address .address_container .weui-cells{margin-top: 0;}
+.m_address .address_container .weui-cells:after{border-bottom: 0;}
+.m_address .address_container .addr_detail{margin-top: 10px;}
+
+/* 常用联系人 */
+.m_contacts .weui-cells{margin-top: 0;}
+.m_contacts .weui-cells:before{border-top:none;}
+.m_contacts .weui-cells::after{border-bottom:none;}
+.m_contacts .weui-cells_form input{text-align: right;}
+
+/* 就诊预约 */
+.m_reserve .text_describ{overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;}
+.m_reserve .text_describ span:first-child{font-weight: bold;color:#f17355;}
+.m_reserve a{color:#686b6d;}
+.m_coupon{padding-top: 0;}
+.each_doctor .doctor_pic img{width:90px;height: 100px;margin-right: 20px;}
+.m_reserve .each_doctor{padding:20px;background-color: #fff;}
+.m_reserve .re_doctor{margin-bottom: 10px;display: block;}
+.m_reserve .doctor_container{background-color: #f7f4ef;}
+.m_reserve .text_describ span:last-child{font-size: 13px;}
+.doctor_container .re_title{font-size: 16px;height: 40px;color: #F17355;line-height: 40px;}
+.m_reserve .doctor_container .re_bottom{max-height:500px;overflow-y: auto;padding-bottom: 50px;}
+.m_reserve  .has_noinfo{margin: 30px auto;}
+.weui-actionsheet__menu.reser_menu{padding: 20px;border: 1px solid #e5e5e5;}
+.weui-actionsheet__menu.reser_menu button{border: none;background-color: #fff;color: #F17355;}
+.weui-actionsheet__menu.reser_menu .weui-dialog{border: 1px solid #e5e5e5;}
+.js_dialog.reserve_ .weui-dialog__btn_primary{color: #F17355;}
+.weui-dialog_test{position: fixed;border:1px solid #e5e5e5;z-index: 5000;width: 80%;max-width: 300px;top: 50%;left: 50%;-webkit-transform: translate(-50%,-50%);transform: translate(-50%,-50%);background-color: #fff;text-align: center;border-radius: 3px;overflow: hidden;}
+.weui-dialog_test.weui_android .weui-dialog__ft:after{border: none;}
+.weui_android .weui-dialog__bd {color: #999;padding: .25em 1.6em 2em;font-size: 17px;text-align: left;}
+.weui_android .weui-dialog__bd:first-child {padding: 1.6em 1.6em 2em;color: #353535;}
+
+/* 预约详情 */
+.reserve_detail #showTooltips{background-color: #F17355;position: fixed;bottom: 0;width: 100%;height: 40px;line-height: 40px;text-align: center;color: #fff;z-index: 1000;border-radius: 0;}
+.reserve_detail .weui-btn-area{margin: 0;}
+.reserve_detail .weui-toptips{padding: 0;font-size: 18px;height: 40px;line-height: 40px;}
+.reserve_detail .DatePicker,.reserve_detail .DatePicker .weui-cell__bd,.reserve_detail .DatePicker2 .weui-cell__bd,.reserve_detail .DatePicker2 .weui-cell__hd{height: 45px;line-height: 45px;}
+.reserve_detail .weui-cell__bd input{text-align: right;padding-right: 20px;}
+.reserve_detail .morning{margin: 10px 0 20px;}
+.reserve_detail .weui-actionsheet__menu .time_container{padding-top: 20px;padding-bottom: 40px;max-height: 500px;overflow-y: auto;}
+.reserve_detail .weui-actionsheet .choose_time div.fl{width:60px;height: 30px;line-height:30px;text-align:center;margin-left: 10px;border: 1px solid #e5e5e5;margin-bottom: 10px;}
+.reserve_detail .weui-skin_android .weui-actionsheet{width: 290px;}
+.reserve_detail .weui-skin_android p.tint{margin-bottom: 10px;}
+.reserve_detail .weui-skin_android p.tint.text_fr.info{font-size: 10px;}
+.reserve_detail .weui-skin_android .time_sure{width: 100%;height: 40px;line-height: 40px;background-color: #F17355;color: #fff;position: absolute;bottom: 0;outline: none;box-shadow: none;border: none;}
+.reserve_detail .weui-actionsheet .choose_time div.fl.can_reserve.selected{border: 1px solid #F17355;color:#F17355;background-color: #fff;}
+.reserve_detail .weui-actionsheet .choose_time div.fl.can_reserve{border: 1px solid #939399;}
+.reserve_detail .re_persons{height: 45px;line-height: 45px;}
+.reserve_detail .re_persons .weui-cell__hd{width: 100%;}
+.reserve_detail .weui-cell{background-color: #fff;}
+.each_doctor .doctor_pic input{margin-top: 46px;width: 16px;height: 16px;}
+.rese.weui-toptips{height: 40px;line-height: 40px;background-color:#1AAD19;}
+.fail.weui-toptips{height: 40px;line-height: 40px;}
+
+/* 预约成功界面 */
+.reserve_success{padding: 180px 0;}
+.reserve_success .weui-icon_msg{font-size: 70px;}
+.reserve_success .go_last{margin-left: 20px;}
+
+/* 预约信息展示 */
+.order_detail{border-bottom:1px solid #e5e5e5;}
+.order_detail .weui-cell:before{border: none;}
+.order_detail button.re_cancel{width: 56px;height: 26px;float: right;background-color: #F17355;color: #fff;margin:0 15px 10px 0;border: none;border-radius: 3px;line-height: 26px;font-size: 13px;}
+.order_detail .each_reserve{margin-bottom: 10px;background-color: #fff;}
+
+/* 登录界面 */
+.login .logo_contain,.regist .logo_contain{text-align: center;}
+.login .logo_contain img,.regist .logo_contain img{width: 100px;height: 100px;margin: 60px auto;}
+.login .input_row,.regist .input_row{padding:0 40px;margin-top: 20px;line-height: 40px;}
+.login .input_row img,.regist .input_row img{width: 24px;height: 25px;margin-top: 4px;margin-right: 6px; }
+.login .input_row .flex-1,.regist .input_row .flex-1{line-height: 30px;}
+.login .input_row .flex-1 input,.regist .input_row .flex-1 input{border: 1px solid #e5e5e5;outline: none;box-shadow: none;height: 36px;padding: 0 0 0 10px;width: 100%;}
+.login .login_btn,.regist .login_btn{width: 100%;height: 36px;border-radius:6px;line-height: 36px;background-color:#aaaaaa;width: 100%;background-color: #aaaaaa;border: none;color: #fff; }
+.bottom_btn{padding: 0 40px;margin-top: 40px;}
+.bottom_img{height:110px;background: url(../images/login_background.png);background-repeat:no-repeat ;background-size:cover;}
+.login .login_btn.pass,.regist .login_btn.pass{background-color:#F17355;}
+.login .weui-skin_android .weui-dialog__ft,.regist .weui-skin_android .weui-dialog__ft{text-align: center;}
+.login .weui-dialog__btn_primary,.msg_success .weui-icon-success,.regist .weui-dialog__btn_primary,.regist .msg_success .weui-icon-success{color:#F17355;}
+
+/* 注册界面 */
+.regist{padding-top:0; }
+.regist .input_row .flex-1 input{border: none;border-bottom: 1px solid #e5e5e5;background-color:#f7f4ef;}
+.regist .input_row{padding: 0;}
+.regist .weui-agree__checkbox:checked:before{background-color:#F17355;color: #fff;}
+.regist .weui-agree a{color: #F17355;}
+.authorize h3,.authorize h4{font-weight: bold;}
+.authorize{padding:20px 20px 40px;}
+.authorize h4{text-indent: 27px;margin: 10px 0;}
+.authorize p{text-indent: 27px;line-height: 22px;}
+.authorize p.P_text{margin: 10px 0;font-weight: bold;text-align: center;}
+.regist .input_row .flex-1 .get_code,.regist .input_row .flex-1 .get_code_btn{height: 26px;padding: 4px 6px;border-radius: 5px;font-size:12px;background-color: #939399;color: #fff;border: none;}
+.regist .input_row .flex-1 .get_code_btn.hasinput{background-color: #F17355;color: #fff;}
+.regist .input_row .flex-1 input.pass_code{width:150px;}
+.regist .m_regist{padding: 0 20px;}
+.regist .remain_time{display: inline-block;width: 18px;}
+.regist .weui-agree span,.regist .weui-agree a{font-size: 12px;}
+.regist .input_row .flex-1 input{height:36px;}
+.regist .input_row img{margin-top: 8px;margin-right: 0px;}
+.regist .weui-agree{padding: 0;line-height: 20px;}
+.regist .bottom_btn{margin-top: 20px;}
+.regist  .weui-toptips_warn{background-color:#1AAD19;height: 40px;line-height: 40px;}
+
+/* 医生详情 */
+.doctor_detail img{width:90px;height: 100px; }
+.doctor_detail .doctor_pic{padding: 20px; background-color: #fff;}
+.doctor_detail .doctor_pic .doname{margin-top:10px; }
+.doctor_detail .doctor_pic .description{margin-top:10px;text-indent: 27px; }
+.doctor_detail .doctor_pic .skill{margin-top:10px;text-indent: 27px; }
+
+
+
+

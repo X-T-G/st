@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>神庭医馆</title>
+        <link type="image/x-icon" rel="shortcut icon" href="../images/logo.png">
+        <link rel="stylesheet" href="../css/common.css">
+        <link rel="stylesheet" href="../css/weui.min.css">
+        <script src="../js/zepto.min.js"></script>
+        <script src="../js/vue.min.js"></script>
+        <script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+        <script src="../js/index.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    </head>
+    <body>
+        <div class="header">
+            预约医生
+        </div>
+        <div id="my_serve">
+            <div class="reserve_detail">
+                <div class="weui-toptips weui-toptips_warn js_tooltips" style="display: none;">提交错误</div>
+                <form id="androidActionsheet">
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">姓名/神庭君ID</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input re_name"  placeholder="请输入">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">性别</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input re_sex"  placeholder="请输入">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">联系方式</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input re_tel"  placeholder="请输入">
+                        </div>
+                    </div>
+                    <div class="weui-cell weui-cell_select weui-cell_select-after DatePicker" id="showDatePicker"  v-on:click="choose">
+                        <div class="weui-cell__hd">
+                            <label for="" class="weui-label" >日期</label>
+                        </div>
+                        <div class="weui-cell__bd re_date">
+                        </div>
+                    </div>
+                    <div class="weui-cell weui-cell_select weui-cell_select-after DatePicker2" id="showDatePicker2" v-on:click="show_modal">
+                        <div class="weui-cell__hd">
+                            <label for="" class="weui-label" >时间</label>
+                        </div>
+                        <div class="weui-cell__bd re_time">
+                        </div>
+                    </div>
+                    <div class="weui-cell weui-cell_select weui-cell_select-after re_persons">
+                        <div class="weui-cell__hd">
+                            <label for="" class="weui-label">预约人数</label>
+                        </div>
+                        <div class="weui-cell__hd">1人<span style="color: #F17355;font-size: 12px;margin-left: 20px;" class="text_fr">(注：单人单次预约)</span></div>
+                    </div>
+                    <div class="weui-cell weui-cell_select weui-cell_select-after re_persons">
+                        <div class="weui-cell__hd">
+                            <label for="" class="weui-label">预约医生</label>
+                        </div>
+                        <div class="weui-cell__hd doc_name"></div>
+                    </div>
+                    <div class="weui-btn-area">
+                        <button type="button" class="weui-btn weui-btn_primary"  id="showTooltips" >确认预约</button>
+                    </div>
+                    <div class="weui-skin_android dis-no">
+                        <div class="weui-mask" v-on:click="hidden_modal"></div>
+                        <div class="weui-actionsheet">
+                            <div class="weui-actionsheet__menu">
+                                <div class="time_container">
+                                    <h2 class="text_center">选择预约时间段</h2>
+                                    <div class="text_center morning">
+                                        <p class="tint">上午</p>
+                                        <div class="clearfix choose_time">
+                                            <div class="fl can_reserve">9:15</div>
+                                            <div class="fl can_reserve">09:30</div>
+                                            <div class="fl can_reserve">09:45</div>
+                                            <div class="fl can_reserve">10:00</div>
+                                            <div class="fl can_reserve">10:15</div>
+                                            <div class="fl can_reserve">10:30</div>
+                                            <div class="fl can_reserve">10:45</div>
+                                            <div class="fl can_reserve">11:00</div>
+                                            <div class="fl can_reserve">11:15</div>
+                                            <div class="fl can_reserve">11:30</div>
+                                            <div class="fl can_reserve">11:45</div>
+                                        </div>
+                                        <!-- <p class="tint text_fr info">（注：灰色字体表示当前时间不可选。）</p> -->
+                                    </div> 
+                                    <div class="text_center afternoon">
+                                        <p class="tint">下午</p>
+                                        <div class="clearfix choose_time">
+                                            <div class="fl can_reserve">14:15</div>
+                                            <div class="fl can_reserve">14:30</div>
+                                            <div class="fl can_reserve">14:45</div>
+                                            <div class="fl can_reserve">15:00</div>
+                                            <div class="fl can_reserve">15:15</div>
+                                            <div class="fl can_reserve">15:30</div>
+                                            <div class="fl can_reserve">15:45</div>
+                                            <div class="fl can_reserve">16:00</div>
+                                            <div class="fl can_reserve">16:15</div>
+                                            <div class="fl can_reserve">16:30</div>
+                                            <div class="fl can_reserve">16:45</div>
+                                            <div class="fl can_reserve">17:00</div>
+                                            <div class="fl can_reserve">17:15</div>
+                                            <div class="fl can_reserve">17:45</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="time_sure"  v-on:click="choose2">确认</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="m_reserve">
+                <!-- 医生列表 -->
+                <div class="doctor_container" id="doctor_container">
+                    <div class="text_center re_title">
+                        医生列表
+                    </div>
+                    <div class="re_bottom" :class=[{"dis-no":(is_show==false)}] >
+                        <!-- 没有数据 -->
+                            <div class="has_noinfo">
+                            <img src="../images/bg_nodata.png" alt="">
+                        </div>
+                        <!-- 加载效果 -->
+                        <!-- <div class="weui-loadmore">
+                            <i class="weui-loading"></i>
+                            <span class="weui-loadmore__tips">正在加载</span>
+                        </div> -->
+                        <a href="javascript:;" class="re_doctor dis-no" v-for="doctor in my_doctors">
+                            <div class="each_doctor">
+                                <label for="">
+                                    <div class="doctor_pic flex">
+                                        <input type="radio" name="test"  v-on:click="choose_doctor(doctor)">
+                                        <img v-if="doctor.doctor.icon ==null"  src="../images/avator_default.png"  alt="" v-on:click="to_detail(doctor)" >
+                                        <img v-else-if="doctor.doctor.icon ==''" src="../images/avator_default.png"  alt="" v-on:click="to_detail(doctor)" >
+                                        <img v-else-if="doctor.doctor.icon !==null && doctor.doctor.icon !=='' " v-bind:src="doctor.doctor.icon"  alt="" v-on:click="to_detail(doctor)" >
+                                        <div class="flex-1" v-on:click="to_detail(doctor)">
+                                            <p class="doname">{{doctor.doctor.name}}</p>
+                                            <p>{{doctor.doctor.major}}</p>
+                                            <p>诊费：{{doctor.doctor.fee}}元/次</p>
+                                            <p>坐诊时间：
+                                                <span style="font-size: 12px;color: #F17355;margin-left: 3px;" v-for="_item in do_time[doctor.doctor.id]">{{_item.week}}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- 确认弹窗 -->
+            <div class="weui-skin_android" id="quit_account" style="opacity: 0; display: none;">
+                <div class="weui-mask2"></div>
+                <div class="weui-actionsheet">
+                    <div class="weui-actionsheet__menu reser_menu">
+                        <div class="text_info" style="margin-bottom: 10px;"><span style="font-size: 14px;">预约将扣除1000积分,按时就诊后会返还账户，确认继续预约？</span></div>
+                        <div class="flex" style="text-align: center;">
+                            <div class="flex-1" >
+                                <button type="button" class="quit_sure" v-on:click="resure">确认</button>
+                            </div>
+                            <div class="flex-1">
+                                <button type="button" class="time_cancel" v-on:click="cancel">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 弹窗 -->
+        <div class="weui-toptips weui-toptips_warn js_tooltips fail dis-no"></div>
+        <!-- 加载效果 -->
+        <div class="weui-loadmor" :class=[{"dis-no":(loading==false)}]>
+            <i class="weui-loading"></i>
+            <span class="weui-loadmore__tips">正在加载</span>
+        </div>
+        <!-- 报错提示 -->
+        <div class="js_dialog reserve_" id="Dialog2" style="opacity: 0;display: none;">
+            <div class="weui-dialog_test weui_android">
+                <div class="weui-dialog__bd">请填写完整信息！</div>
+                <div class="weui-dialog__ft">
+                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
