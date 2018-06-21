@@ -24,19 +24,19 @@
                     <div class="weui-cell">
                         <div class="weui-cell__hd"><label class="weui-label">姓名/神庭君ID</label></div>
                         <div class="weui-cell__bd">
-                            <input class="weui-input re_name"  placeholder="请输入">
+                            <input class="weui-input re_name"  placeholder="请输入" :value= "person.realName">
                         </div>
                     </div>
                     <div class="weui-cell">
                         <div class="weui-cell__hd"><label class="weui-label">性别</label></div>
                         <div class="weui-cell__bd">
-                            <input class="weui-input re_sex"  placeholder="请输入">
+                            <input class="weui-input re_sex"  placeholder="请输入" :value= "person.gender">
                         </div>
                     </div>
                     <div class="weui-cell">
                         <div class="weui-cell__hd"><label class="weui-label">联系方式</label></div>
                         <div class="weui-cell__bd">
-                            <input class="weui-input re_tel"  placeholder="请输入">
+                            <input class="weui-input re_tel"  placeholder="请输入" :value= "person.phone">
                         </div>
                     </div>
                     <div class="weui-cell weui-cell_select weui-cell_select-after DatePicker" id="showDatePicker"  v-on:click="choose">

@@ -711,7 +711,8 @@ $(function(){
                     show_page:true,//是否显示页面
                     doctor_id:[],
                     doctor_name:[],
-                    
+                    person:[],
+
                 },
                 created:function(){
                     var that = this;
@@ -725,9 +726,24 @@ $(function(){
                         var ta=arr1[i].split('=');
                         arr2[ta[0]]=ta[1];
                     }
-                    that.doctor_id = arr2.id;
+                    that.doctor_id = arr2.id;//医生的id
                     var doctor = localStorage.getItem('doctor');
                     that.doctor_name = doctor;
+                    $.ajax({
+                        headers: {
+                            'Authorization': 'bearer '+_token
+                        },
+                        type: "GET",
+                        url: medicine_url + '/v1.0.0/personalCenter/getPersonalInfo',
+                        contentType:"json",
+                        dataType: "json",
+                        success: function(data){
+                            if(data.code == 0){
+                                that.person = data.object;
+                            }
+                            to_login(data);
+                        }
+                    });
                 },
                 methods:{
                     choose:function(event){//选日期
@@ -758,36 +774,6 @@ $(function(){
                                         var _time = dateStr3 +'T'+ _content2;
                                         that._date = dateStr3;//日期
                                         that._time = _content2;//时间
-                                        // if (date.length >0 && dateStr3.length > 0) {
-                                        //     $.ajax({//发起请求
-                                        //         headers: {
-                                        //             'Authorization': 'bearer '+_token
-                                        //         },
-                                        //         type: "GET",
-                                        //         url:assistant_url + '/common/doctorList/'+_time,
-                                        //         contentType:"application/json",
-                                        //         success: function(data){
-                                        //             if (data.code == 0) {
-                                        //                 var Data_length =  data.appointmentSchedules.length;
-                                        //                 if (Data_length == 0) {
-                                        //                     $('.weui-loadmore').addClass('dis-no');//隐藏加载更多
-                                        //                     $('.has_noinfo').removeClass('dis-no');
-                                        //                     that.is_show = false;
-                                        //                 }else{//请求到数据
-                                        //                     $('.weui-loadmore').addClass('dis-no');//隐藏加载更多
-                                        //                     $('.has_noinfo').addClass('dis-no');
-                                        //                     that.is_show = true;
-                                        //                     that.my_doctors = data.appointmentSchedules;
-                                        //                     that.do_time = data.doctorAppointmentScheduleMap;
-                                        //                 }
-                                        //             }
-                                        //             to_login(data);
-                                        //         }
-                                        //     });
-                                        // }else{
-                                        //     return;
-                                        // }
-                                        
                                     }else{
                                         
                                     }
@@ -849,9 +835,36 @@ $(function(){
                         var that = this;
                         that.doctor = doctor;
                     },
-                    show_modal:function(){
+                    show_modal:function(){//发起请求，获取医生空余时间
                         var that = this;
+                        var doctor_id = that.doctor_id
                         $('.weui-skin_android').removeClass('dis-no');
+                        $.ajax({//发起请求
+                            headers: {
+                                'Authorization': 'bearer '+_token
+                            },
+                            type: "GET",
+                            url:'http://192.168.0.155:8036/assistant/appointment/appointmentTimeRecordByDay/'+doctor_id,
+                            contentType:"application/json",
+                            success: function(data){
+                                if (data.code == 0) {
+                                    console.log(data);
+                                    var Data_length =  data.appointmentSchedules.length;
+                                    if (Data_length == 0) {
+                                        $('.weui-loadmore').addClass('dis-no');//隐藏加载更多
+                                        $('.has_noinfo').removeClass('dis-no');
+                                        that.is_show = false;
+                                    }else{//请求到数据
+                                        $('.weui-loadmore').addClass('dis-no');//隐藏加载更多
+                                        $('.has_noinfo').addClass('dis-no');
+                                        that.is_show = true;
+                                        that.my_doctors = data.appointmentSchedules;
+                                        that.do_time = data.doctorAppointmentScheduleMap;
+                                    }
+                                }
+                                to_login(data);
+                            }
+                        });
                     },
                     resure:function(e){//确认预约
                         var that = this;
