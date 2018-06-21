@@ -58,6 +58,7 @@ img{width: 100%;height: auto;}
 input[type="text"],input[type="password"]{-webkit-appearance: none;}/*苹果手机input内阴影*/
 textarea{-webkit-appearance: none;}/*苹果手机input内阴影*/
 .weui-loadmor{text-align: center;margin-top: 160px;}
+a:link,a:visited{color:#686b6d;}
 /* 文字颜色 居中 */
 .tint{color: #939399;}
 .text_center{text-align:center;}
@@ -267,6 +268,13 @@ img.store_pic{width: 108px;height:108px;}
 .doctor_detail .doctor_pic .doname{margin-top:10px; }
 .doctor_detail .doctor_pic .description{margin-top:10px;text-indent: 27px; }
 .doctor_detail .doctor_pic .skill{margin-top:10px;text-indent: 27px; }
+
+/* 医生列表 */
+.doctor_list{padding: 20px;background-color: #fff;margin-bottom: 20px;}
+.doctor_list .doctor_pic img{width: 100px;height: 100px;}
+
+
+
 
 
 

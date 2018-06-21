@@ -646,6 +646,48 @@ $(function(){
                 }
             }
         });
+    }else if($('.doctor_list').size()>0){
+        var _token = localStorage.getItem('access_token');
+        var app = new Vue({
+            el: '#doctor_list',
+            data: {
+                doctors:[],//初始化数据
+                has_noinfo:false,//没有数据
+                loading:true,//加载
+                show_page:false,//是否显示页面
+                week:[],//数据初始化
+
+            },
+            created:function(){
+                var that =this;
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: "GET",
+                    url:assistant_url + '/common/doctorList',
+                    contentType:"application/json",
+                    success: function(data){
+                        if (data.code == 0) {
+                            var Data_length =  data.doctors.length;
+                            if (Data_length == 0) {
+                                that.show_page = false;
+                                that.has_noinfo = true;
+                                that.loading = false;
+                                return;
+                            }else{//请求到数据
+                                that.doctors = data.doctors;//改变页面内容
+                                that.week = data.doctorAppointmentScheduleMap;
+                                that.show_page = true;
+                                that.has_noinfo = false;
+                                that.loading = false;
+                            }
+                        }
+                        to_login(data);
+                    }
+                });
+            }
+        });
     }else if($('.m_reserve').size()>0){//预约页面,医生列表
         var _token = localStorage.getItem('access_token');
         if (_token !==null){//判断token存在
@@ -662,6 +704,22 @@ $(function(){
                     has_noinfo:false,//没有数据
                     loading:false,//加载
                     show_page:true,//是否显示页面
+                    doctor_id:[],
+
+                },
+                created:function(){
+                    var that = this;
+                    var url=location.href;
+                    var i=url.indexOf('?');
+                    if(i==-1)return;//无跳转则返回
+                    var querystr=url.substr(i+1);
+                    var arr1=querystr.split('&');
+                    var arr2=new Object();
+                    for  (i in arr1){
+                        var ta=arr1[i].split('=');
+                        arr2[ta[0]]=ta[1];
+                    }
+                    that.doctor_id = arr2.id;
                 },
                 methods:{
                     choose:function(event){//选日期
@@ -692,35 +750,35 @@ $(function(){
                                         var _time = dateStr3 +'T'+ _content2;
                                         that._date = dateStr3;//日期
                                         that._time = _content2;//时间
-                                        if (date.length >0 && dateStr3.length > 0) {
-                                            $.ajax({//发起请求
-                                                headers: {
-                                                    'Authorization': 'bearer '+_token
-                                                },
-                                                type: "GET",
-                                                url:assistant_url + '/common/doctorList/'+_time,
-                                                contentType:"application/json",
-                                                success: function(data){
-                                                    if (data.code == 0) {
-                                                        var Data_length =  data.appointmentSchedules.length;
-                                                        if (Data_length == 0) {
-                                                            $('.weui-loadmore').addClass('dis-no');//隐藏加载更多
-                                                            $('.has_noinfo').removeClass('dis-no');
-                                                            that.is_show = false;
-                                                        }else{//请求到数据
-                                                            $('.weui-loadmore').addClass('dis-no');//隐藏加载更多
-                                                            $('.has_noinfo').addClass('dis-no');
-                                                            that.is_show = true;
-                                                            that.my_doctors = data.appointmentSchedules;
-                                                            that.do_time = data.doctorAppointmentScheduleMap;
-                                                        }
-                                                    }
-                                                    to_login(data);
-                                                }
-                                            });
-                                        }else{
-                                            return;
-                                        }
+                                        // if (date.length >0 && dateStr3.length > 0) {
+                                        //     $.ajax({//发起请求
+                                        //         headers: {
+                                        //             'Authorization': 'bearer '+_token
+                                        //         },
+                                        //         type: "GET",
+                                        //         url:assistant_url + '/common/doctorList/'+_time,
+                                        //         contentType:"application/json",
+                                        //         success: function(data){
+                                        //             if (data.code == 0) {
+                                        //                 var Data_length =  data.appointmentSchedules.length;
+                                        //                 if (Data_length == 0) {
+                                        //                     $('.weui-loadmore').addClass('dis-no');//隐藏加载更多
+                                        //                     $('.has_noinfo').removeClass('dis-no');
+                                        //                     that.is_show = false;
+                                        //                 }else{//请求到数据
+                                        //                     $('.weui-loadmore').addClass('dis-no');//隐藏加载更多
+                                        //                     $('.has_noinfo').addClass('dis-no');
+                                        //                     that.is_show = true;
+                                        //                     that.my_doctors = data.appointmentSchedules;
+                                        //                     that.do_time = data.doctorAppointmentScheduleMap;
+                                        //                 }
+                                        //             }
+                                        //             to_login(data);
+                                        //         }
+                                        //     });
+                                        // }else{
+                                        //     return;
+                                        // }
                                         
                                     }else{
                                         
