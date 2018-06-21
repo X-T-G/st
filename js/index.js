@@ -1,12 +1,12 @@
 $(function(){
     // 测试
-    // var medicine_url = "http://192.168.0.155:8006/stmedicine";// 测试个人信息
-    // var assistant_url = "http://192.168.0.155:8036/stassistant";// 测试预约
-    // var weixin_url = "http://192.168.0.155:8046/stweixin";// 测试微信
+    var medicine_url = "http://192.168.0.155:8006/stmedicine";// 测试个人信息
+    var assistant_url = "http://192.168.0.155:8036/stassistant";// 测试预约
+    var weixin_url = "http://192.168.0.155:8046/stweixin";// 测试微信
     //线上  
-    var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
-    var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
-    var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
+    // var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
+    // var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
+    // var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
 
     // 公共方法401跳转
     function to_login(data){
@@ -865,7 +865,6 @@ $(function(){
                 var re_time = $('.re_time').html();
                 var doc_name = $('.doc_name').html();
                 if (re_name.length >0 && re_sex.length >0 && re_tel.length >0 &&re_date.length >0 &&re_time.length >0 && doc_name.length >0 ){
-                    console.log(3)
                     var $androidActionSheet = $('#quit_account');
                     var $androidMask = $androidActionSheet.find('.weui-mask2');
                     $androidActionSheet.fadeIn(200);
@@ -873,7 +872,6 @@ $(function(){
                         $androidActionSheet.fadeOut(200);
                     });
                 }else{
-                    console.log(4)
                     $('.reserve_.js_dialog').css('display','block');
                     $('.reserve_.js_dialog').css('opacity','1');
                     $('.weui-dialog.weui-skin_android').css('block');
