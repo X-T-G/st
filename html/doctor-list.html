@@ -18,7 +18,7 @@
         </div>
         <div id="doctor_list">
             <div class="doctor_list" :class=[{"dis-no":(show_page==false)}]  v-for="doctor in doctors">
-                <a :href="'./reserve.html?id='+doctor.id">
+                <a href="javascript:;" v-on:click="setname(doctor.name)" :href="'./reserve.html?id='+doctor.id">
                     <div class="doctor_pic">
                         <div class="flex">
                             <img v-if="doctor.icon ==null"  src="../images/avator_default.png"  alt="" >

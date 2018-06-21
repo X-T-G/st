@@ -14,7 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     </head>
     <body>
-        <div class="header">
+        <div class="header m_reserve">
             预约医生
         </div>
         <div id="my_serve">
@@ -53,17 +53,11 @@
                         <div class="weui-cell__bd re_time">
                         </div>
                     </div>
-                    <!-- <div class="weui-cell weui-cell_select weui-cell_select-after re_persons">
-                        <div class="weui-cell__hd">
-                            <label for="" class="weui-label">预约人数</label>
-                        </div>
-                        <div class="weui-cell__hd">1人</div>
-                    </div> -->
                     <div class="weui-cell weui-cell_select weui-cell_select-after re_persons">
                         <div class="weui-cell__hd">
                             <label for="" class="weui-label">预约医生</label>
                         </div>
-                        <div class="weui-cell__hd doc_name"></div>
+                        <div class="weui-cell__hd doc_name">{{doctor_name}}</div>
                     </div>
                     <div class="weui-btn-area">
                         <button type="button" class="weui-btn weui-btn_primary"  id="showTooltips" >确认预约</button>
@@ -89,7 +83,6 @@
                                             <div class="fl can_reserve">11:30</div>
                                             <div class="fl can_reserve">11:45</div>
                                         </div>
-                                        <!-- <p class="tint text_fr info">（注：灰色字体表示当前时间不可选。）</p> -->
                                     </div> 
                                     <div class="text_center afternoon">
                                         <p class="tint">下午</p>
@@ -117,45 +110,6 @@
                     </div>
                 </form>
             </div>
-            <div class="m_reserve">
-                <!-- 医生列表 -->
-                <div class="doctor_container" id="doctor_container">
-                    <div class="text_center re_title">
-                        医生列表
-                    </div>
-                    <div class="re_bottom" :class=[{"dis-no":(is_show==false)}] >
-                        <!-- 没有数据 -->
-                            <div class="has_noinfo">
-                            <img src="../images/bg_nodata.png" alt="">
-                        </div>
-                        <!-- 加载效果 -->
-                        <!-- <div class="weui-loadmore">
-                            <i class="weui-loading"></i>
-                            <span class="weui-loadmore__tips">正在加载</span>
-                        </div> -->
-                        <a href="javascript:;" class="re_doctor dis-no" v-for="doctor in my_doctors">
-                            <div class="each_doctor">
-                                <label for="">
-                                    <div class="doctor_pic flex">
-                                        <input type="radio" name="test"  v-on:click="choose_doctor(doctor)">
-                                        <img v-if="doctor.doctor.icon ==null"  src="../images/avator_default.png"  alt="" v-on:click="to_detail(doctor)" >
-                                        <img v-else-if="doctor.doctor.icon ==''" src="../images/avator_default.png"  alt="" v-on:click="to_detail(doctor)" >
-                                        <img v-else-if="doctor.doctor.icon !==null && doctor.doctor.icon !=='' " v-bind:src="doctor.doctor.icon"  alt="" v-on:click="to_detail(doctor)" >
-                                        <div class="flex-1" v-on:click="to_detail(doctor)">
-                                            <p class="doname">{{doctor.doctor.name}}</p>
-                                            <p>{{doctor.doctor.major}}</p>
-                                            <p>诊费：{{doctor.doctor.fee}}元/次</p>
-                                            <p>坐诊时间：
-                                                <span style="font-size: 12px;color: #F17355;margin-left: 3px;" v-for="_item in do_time[doctor.doctor.id]">{{_item.week}}</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
             <!-- 确认弹窗 -->
             <div class="weui-skin_android" id="quit_account" style="opacity: 0; display: none;">
                 <div class="weui-mask2"></div>
@@ -176,11 +130,6 @@
         </div>
         <!-- 弹窗 -->
         <div class="weui-toptips weui-toptips_warn js_tooltips fail dis-no"></div>
-        <!-- 加载效果 -->
-        <div class="weui-loadmor" :class=[{"dis-no":(loading==false)}]>
-            <i class="weui-loading"></i>
-            <span class="weui-loadmore__tips">正在加载</span>
-        </div>
         <!-- 报错提示 -->
         <div class="js_dialog reserve_" id="Dialog2" style="opacity: 0;display: none;">
             <div class="weui-dialog_test weui_android">

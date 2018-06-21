@@ -686,6 +686,11 @@ $(function(){
                         to_login(data);
                     }
                 });
+            },
+            methods:{
+                setname:function(event){
+                    localStorage.setItem("doctor",event);
+                } 
             }
         });
     }else if($('.m_reserve').size()>0){//预约页面,医生列表
@@ -705,7 +710,8 @@ $(function(){
                     loading:false,//加载
                     show_page:true,//是否显示页面
                     doctor_id:[],
-
+                    doctor_name:[],
+                    
                 },
                 created:function(){
                     var that = this;
@@ -720,6 +726,8 @@ $(function(){
                         arr2[ta[0]]=ta[1];
                     }
                     that.doctor_id = arr2.id;
+                    var doctor = localStorage.getItem('doctor');
+                    that.doctor_name = doctor;
                 },
                 methods:{
                     choose:function(event){//选日期
