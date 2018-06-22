@@ -213,6 +213,7 @@ img.store_pic{width: 108px;height:108px;}
 .each_doctor .doctor_pic input{margin-top: 46px;width: 16px;height: 16px;}
 .rese.weui-toptips{height: 40px;line-height: 40px;background-color:#1AAD19;}
 .fail.weui-toptips{height: 40px;line-height: 40px;}
+.reserve_detail .weui-label{width: 180px;}
 
 /* 预约成功界面 */
 .reserve_success{padding: 180px 0;}

@@ -844,7 +844,7 @@ $(function(){
                                 'Authorization': 'bearer '+_token
                             },
                             type: "GET",
-                            url:'http://192.168.0.155:8036/assistant/appointment/appointmentTimeRecordByDay/'+doctor_id,
+                            url:assistant_url +'/assistant/appointment/appointmentTimeRecordByDay/'+doctor_id,
                             contentType:"application/json",
                             success: function(data){
                                 if (data.code == 0) {
