@@ -348,6 +348,7 @@ $(function(){
                                         sex:data.object.gender,
                                         age:age,
                                         vip:data.object.memberType,
+                                        inviteNumber:data.object.inviteNumber
                                     }
                                 });
                             }
@@ -712,7 +713,7 @@ $(function(){
                     doctor_id:[],
                     doctor_name:[],
                     person:[],
-                    
+
                 },
                 created:function(){
                     var that = this;

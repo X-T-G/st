@@ -197,7 +197,7 @@ img.store_pic{width: 108px;height:108px;}
 .reserve_detail .weui-btn-area{margin: 0;}
 .reserve_detail .weui-toptips{padding: 0;font-size: 18px;height: 40px;line-height: 40px;}
 .reserve_detail .DatePicker,.reserve_detail .DatePicker .weui-cell__bd,.reserve_detail .DatePicker2 .weui-cell__bd,.reserve_detail .DatePicker2 .weui-cell__hd{height: 45px;line-height: 45px;}
-.reserve_detail .weui-cell__bd input{text-align: right;padding-right: 20px;}
+.reserve_detail .weui-cell__bd input{text-align: left;padding-right: 20px;}
 .reserve_detail .morning{margin: 10px 0 20px;}
 .reserve_detail .weui-actionsheet__menu .time_container{padding-top: 20px;padding-bottom: 40px;max-height: 500px;overflow-y: auto;}
 .reserve_detail .weui-actionsheet .choose_time div.fl{width:60px;height: 30px;line-height:30px;text-align:center;margin-left: 10px;border: 1px solid #e5e5e5;margin-bottom: 10px;}
@@ -275,8 +275,8 @@ img.store_pic{width: 108px;height:108px;}
 .doctor_list{padding: 20px;background-color: #fff;margin-bottom: 20px;}
 .doctor_list .doctor_pic img{width: 100px;height: 120px;margin-right: 10px;}
 #my_serve .weui-cell_select div.flex-1{padding-left: 15px;}
-
-
+#my_serve .weui-cell_select .weui-select{padding-left: 0;}
+#my_serve .reserve_detail .weui-cell__bd input.re_tel{text-align: left;}
 
 
 
