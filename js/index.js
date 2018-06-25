@@ -657,7 +657,6 @@ $(function(){
                 loading:true,//加载
                 show_page:false,//是否显示页面
                 week:[],//数据初始化
-
             },
             created:function(){
                 var that =this;
@@ -689,11 +688,13 @@ $(function(){
                 });
             },
             methods:{
-                setname:function(doctor){//预约的医生详情
+                setname:function(doctor,map){//预约的医生详情
                     localStorage.setItem("doctor_detail",JSON.stringify(doctor));
+                    var map = this.week;
+                    localStorage.setItem("map",JSON.stringify(map));
                     window.location.href='./doctor-detail.html';
                 },
-                reserve:function(doctor){//阻止默认行为
+                reserve:function(doctor){
                     localStorage.setItem("doctor_detail",JSON.stringify(doctor));
                     window.location.href='./reserve.html?id='+doctor.id;
                 },
@@ -1010,11 +1011,13 @@ $(function(){
         });
     }else if($('.doctor_detail').size()>0){
         var doctor_detail = JSON.parse(localStorage.getItem('doctor_detail'));
-        console.log(doctor_detail);
+        var map = JSON.parse(localStorage.getItem('map'));
+        console.log(map);
         var app = new Vue({
             el: '#doctor_detail',
             data: {
                 doctor_detail:doctor_detail,
+                map:map,
             }
         });
     }
