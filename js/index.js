@@ -689,16 +689,13 @@ $(function(){
                 });
             },
             methods:{
-                setname:function(event){//保存医生信息
-                    localStorage.setItem("doctor",event);
+                setname:function(doctor){//预约的医生详情
+                    localStorage.setItem("doctor_detail",JSON.stringify(doctor));
+                    window.location.href='./doctor-detail.html';
                 },
-                reserve:function(e,doctor){//阻止默认行为
-                    e.preventDefault();
-                    e.stopPropagation();
-                    console.log(e);
-                    console.log(doctor);
-                    // localStorage.setItem("doctor_detail",JSON.stringify(doctor));
-                    // window.location.href='./doctor-detail.html';
+                reserve:function(doctor){//阻止默认行为
+                    localStorage.setItem("doctor_detail",JSON.stringify(doctor));
+                    window.location.href='./reserve.html';
                 },
             }
         });
@@ -918,10 +915,6 @@ $(function(){
                     },
                     cancel:function(){
                         $('#quit_account').css('display','none');
-                    },
-                    to_detail:function(doctor){//预约的医生详情
-                        localStorage.setItem("doctor_detail",JSON.stringify(doctor));
-                        window.location.href='./doctor-detail.html';
                     },
                     hidden_modal:function(){//隐藏模态框
                         $('.weui-skin_android').addClass('dis-no');
