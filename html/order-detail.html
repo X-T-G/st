@@ -15,6 +15,9 @@
     <body>
         <div class="header">
             预约详情
+            <span>
+                <img src="../images/back_gery.png" alt="">
+            </span>
         </div>
         <div class="order_detail" id = "order_detail">
             <div class="each_reserve" v-for="my_order in my_orders">
@@ -39,28 +42,6 @@
                     <button class="re_cancel">取消预约</button>
                 </div> -->
             </div>
-            <!-- <div class="each_reserve">
-                <div class="weui-cell">
-                    <div class="weui-cell__bd">
-                        <p>医生：<span>李德敏</span></p>
-                    </div>
-                    <div class="weui-cell__ft">时间: <span>{{re_date}} {{re_time}}</span> </div>
-                </div>
-                <div class="weui-cell">
-                    <div class="weui-cell__bd">
-                        <p>姓名：<span>{{re_name}}</span></p>
-                    </div>
-                    <div class="weui-cell__ft">
-                        <!-- <span>联系方式：</span>
-                        <span>{{re_tel}}</span>  -->
-                        <!-- <span>性别:</span> 
-                        <span>{{re_sex}}</span>
-                    </div>
-                </div>
-                <div class="clearfix">
-                    <button class="re_cancel">取消预约</button>
-                </div>
-            </div> -->
         </div>
     </body>
 </html>

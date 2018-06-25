@@ -991,7 +991,6 @@ $(function(){
             contentType:"application/json",
             success: function(data){
                 if (data.code == 0) {
-                    console.log(data);
                     var Data_length =  data.page.content.length;
                     if (Data_length == 0) {
                         $('.weui-loadmore').addClass('dis-no');//隐藏加载更多
