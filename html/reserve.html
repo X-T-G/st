@@ -21,18 +21,29 @@
             <div class="reserve_detail">
                 <div class="weui-toptips weui-toptips_warn js_tooltips" style="display: none;">提交错误</div>
                 <form id="androidActionsheet">
-                    <div class="weui-cell">
+                    <div class="weui-cell" >
                         <div class="weui-cell__hd"><label class="weui-label">姓名/神庭君ID</label></div>
                         <div class="weui-cell__bd">
                             <input class="weui-input re_name"  placeholder="请输入" :value= "person.realName">
                         </div>
                     </div>
-                    <div class="weui-cell">
+                    <!-- <div class="weui-cell">
                         <div class="weui-cell__hd"><label class="weui-label">性别</label></div>
                         <div class="weui-cell__bd">
                             <input class="weui-input re_sex"  placeholder="请输入" :value= "person.gender">
                         </div>
-                    </div>
+                    </div> -->
+                    <!-- <div class="weui-cells"> -->
+                        <div class="weui-cell weui-cell_select flex" style="color: #686b6d;">
+                            <div class="flex-1">性别</div>
+                            <div class="weui-cell__bd">
+                                <select class="weui-select" name="select1">
+                                    <option value="1">男</option>
+                                    <option value="2">女</option>
+                                </select>
+                            </div>
+                        </div>
+                    <!-- </div> -->
                     <div class="weui-cell">
                         <div class="weui-cell__hd"><label class="weui-label">联系方式</label></div>
                         <div class="weui-cell__bd">
