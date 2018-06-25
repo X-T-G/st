@@ -273,7 +273,7 @@ img.store_pic{width: 108px;height:108px;}
 
 /* 医生列表 */
 .doctor_list{padding: 20px;background-color: #fff;margin-bottom: 20px;}
-.doctor_list .doctor_pic img{width: 100px;height: 100px;}
+.doctor_list .doctor_pic img{width: 100px;height: 120px;margin-right: 10px;}
 
 
 

@@ -712,7 +712,7 @@ $(function(){
                     doctor_id:[],
                     doctor_name:[],
                     person:[],
-
+                    
                 },
                 created:function(){
                     var that = this;
