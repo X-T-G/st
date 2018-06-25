@@ -690,7 +690,7 @@ $(function(){
             methods:{
                 setname:function(doctor,map){//预约的医生详情
                     localStorage.setItem("doctor_detail",JSON.stringify(doctor));
-                    var map = this.week;
+                    var map = this.week[doctor.id];
                     localStorage.setItem("map",JSON.stringify(map));
                     window.location.href='./doctor-detail.html';
                 },
@@ -1012,7 +1012,6 @@ $(function(){
     }else if($('.doctor_detail').size()>0){
         var doctor_detail = JSON.parse(localStorage.getItem('doctor_detail'));
         var map = JSON.parse(localStorage.getItem('map'));
-        console.log(map);
         var app = new Vue({
             el: '#doctor_detail',
             data: {
