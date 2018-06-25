@@ -18,18 +18,21 @@
         </div>
         <div id="doctor_list">
             <div class="doctor_list" :class=[{"dis-no":(show_page==false)}]  v-for="doctor in doctors">
-                <a href="javascript:;" v-on:click="setname(doctor.name)" :href="'./reserve.html?id='+doctor.id">
+                <a href="javascript:;">
                     <div class="doctor_pic">
                         <div class="flex">
-                            <img v-if="doctor.icon ==null"  src="../images/avator_default.png"  alt="" >
-                            <img v-else-if="doctor.icon ==''" src="../images/avator_default.png"  alt=""  >
-                            <img v-else-if="doctor.icon !==null && doctor.icon !=='' " v-bind:src="doctor.icon"   alt="" >
+                            <img v-on:click="setname(doctor.name)" :href="'./reserve.html?id='+doctor.id" v-if="doctor.icon ==null"  src="../images/avator_default.png"  alt="" >
+                            <img v-on:click="setname(doctor.name)" :href="'./reserve.html?id='+doctor.id" v-else-if="doctor.icon ==''" src="../images/avator_default.png"  alt=""  >
+                            <img v-on:click="setname(doctor.name)" :href="'./reserve.html?id='+doctor.id" v-else-if="doctor.icon !==null && doctor.icon !=='' " v-bind:src="doctor.icon"   alt="" >
                             <div class="flex-1 doctor_detail">
-                                <p class="doname" >{{doctor.name}}</p>
-                                <p >{{doctor.major}}</p>
-                                <p>诊费：{{doctor.fee}}元/次</p>
-                                <p>坐诊时间：
+                                <p class="doname"  v-on:click="setname(doctor.name)" :href="'./reserve.html?id='+doctor.id">{{doctor.name}}</p>
+                                <p  v-on:click="setname(doctor.name)" :href="'./reserve.html?id='+doctor.id">{{doctor.major}}</p>
+                                <p v-on:click="setname(doctor.name)" :href="'./reserve.html?id='+doctor.id">诊费：{{doctor.fee}}元/次</p>
+                                <p v-on:click="setname(doctor.name)" :href="'./reserve.html?id='+doctor.id">坐诊时间：
                                     <span style="font-size: 12px;color: #F17355;margin-left: 3px;" v-for="day in week[doctor.id]">{{day.week}}</span>
+                                </p>
+                                <p>
+                                    <button class="reserve_doctor" v-on:click="reserve(e,doctor)">预约</button>
                                 </p>
                             </div>
                         </div>

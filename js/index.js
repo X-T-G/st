@@ -689,12 +689,20 @@ $(function(){
                 });
             },
             methods:{
-                setname:function(event){
+                setname:function(event){//保存医生信息
                     localStorage.setItem("doctor",event);
-                } 
+                },
+                reserve:function(e,doctor){//阻止默认行为
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log(e);
+                    console.log(doctor);
+                    // localStorage.setItem("doctor_detail",JSON.stringify(doctor));
+                    // window.location.href='./doctor-detail.html';
+                },
             }
         });
-    }else if($('.m_reserve').size()>0){//预约页面,医生列表
+    }else if($('.m_reserve').size()>0){//预约页面
         var _token = localStorage.getItem('access_token');
         if (_token !==null){//判断token存在
             // 实例化对象
