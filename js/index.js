@@ -646,7 +646,7 @@ $(function(){
                 }
             }
         });
-    }else if($('.doctor_list').size()>0){
+    }else if($('.doctor_list').size()>0){//医生列表页
         var _token = localStorage.getItem('access_token');
         var app = new Vue({
             el: '#doctor_list',
@@ -839,7 +839,7 @@ $(function(){
                         var that = this;
                         // var _date = that._date;
                         var doctor_id = that.doctor_id;
-                        
+
                         $.ajax({//发起请求
                             headers: {
                                 'Authorization': 'bearer '+_token
@@ -849,17 +849,17 @@ $(function(){
                             contentType:"application/json",
                             success: function(data){
                                 if (data.code == 0) {
-                                    var Data_length =  data.appointmentSchedules.length;
+                                    var Data_length =  data.appointmentTimes.length;
+                                    $('.weui-skin_android').removeClass('dis-no');
                                     if (Data_length == 0) {
-                                        $('.weui-loadmore').addClass('dis-no');//隐藏加载更多
-                                        $('.has_noinfo').removeClass('dis-no');
-                                        that.is_show = false;
+                                        
+                                        // that.is_show = false;
                                     }else{//请求到数据
-                                        $('.weui-loadmore').addClass('dis-no');//隐藏加载更多
-                                        $('.has_noinfo').addClass('dis-no');
-                                        that.is_show = true;
-                                        that.my_doctors = data.appointmentSchedules;
-                                        that.do_time = data.doctorAppointmentScheduleMap;
+                                        // $('.weui-loadmore').addClass('dis-no');//隐藏加载更多
+                                        // $('.has_noinfo').addClass('dis-no');
+                                        // that.is_show = true;
+                                        // that.my_doctors = data.appointmentSchedules;
+                                        // that.do_time = data.doctorAppointmentScheduleMap;
                                     }
                                 }
                                 to_login(data);
