@@ -16,6 +16,9 @@
     <body>
         <div class="header m_reserve">
             预约医生
+            <span>
+                <img src="../images/back_gery.png" alt="">
+            </span>
         </div>
         <div id="my_serve">
             <div class="reserve_detail">
@@ -27,31 +30,23 @@
                             <input class="weui-input re_name"  placeholder="请输入" :value= "person.realName">
                         </div>
                     </div>
-                    <!-- <div class="weui-cell">
-                        <div class="weui-cell__hd"><label class="weui-label">性别</label></div>
+                    <div class="weui-cell weui-cell_select flex" style="color: #686b6d;">
+                        <div class="flex-1">性别</div>
                         <div class="weui-cell__bd">
-                            <input class="weui-input re_sex"  placeholder="请输入" :value= "person.gender">
-                        </div>
-                    </div> -->
-                    <!-- <div class="weui-cells"> -->
-                        <div class="weui-cell weui-cell_select flex" style="color: #686b6d;">
-                            <div class="flex-1">性别</div>
-                            <div class="weui-cell__bd">
-                                <select class="weui-select" name="select1" v-if="person.gender!==undefined && person.gender.length>0 && person.gender =='女'">
-                                        <option value="1">女</option>
-                                        <option value="2">男</option>
-                                </select>
-                                <select class="weui-select" name="select1" v-else-if="person.gender!==undefined && person.gender.length>0 && person.gender =='男'">
-                                        <option value="1">男</option>
-                                        <option value="2">女</option>
-                                </select>
-                                <select class="weui-select" name="select1" v-else-if="person.gender!==undefined && person.gender.length<=0">
+                            <select class="weui-select" name="select1" v-if="person.gender!==undefined && person.gender.length>0 && person.gender =='女'">
+                                    <option value="1">女</option>
+                                    <option value="2">男</option>
+                            </select>
+                            <select class="weui-select" name="select1" v-else-if="person.gender!==undefined && person.gender.length>0 && person.gender =='男'">
                                     <option value="1">男</option>
                                     <option value="2">女</option>
-                                </select>
-                            </div>
+                            </select>
+                            <select class="weui-select" name="select1" v-else-if="person.gender!==undefined && person.gender.length<=0">
+                                <option value="1">男</option>
+                                <option value="2">女</option>
+                            </select>
                         </div>
-                    <!-- </div> -->
+                    </div>
                     <div class="weui-cell">
                         <div class="weui-cell__hd"><label class="weui-label">联系方式</label></div>
                         <div class="weui-cell__bd">
