@@ -265,7 +265,7 @@ img.store_pic{width: 108px;height:108px;}
 .regist  .weui-toptips_warn{background-color:#1AAD19;height: 40px;line-height: 40px;}
 
 /* 医生详情 */
-.doctor_detail img{width:90px;height: 100px; }
+.doctor_detail img{width: 100px;height: 120px;margin-right: 10px;}
 .doctor_detail .doctor_pic{padding: 20px; background-color: #fff;}
 .doctor_detail .doctor_pic .doname{margin-top:10px; }
 .doctor_detail .doctor_pic .description{margin-top:10px;text-indent: 27px; }

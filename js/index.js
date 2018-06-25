@@ -695,7 +695,7 @@ $(function(){
                 },
                 reserve:function(doctor){//阻止默认行为
                     localStorage.setItem("doctor_detail",JSON.stringify(doctor));
-                    window.location.href='./reserve.html';
+                    window.location.href='./reserve.html?id='+doctor.id;
                 },
             }
         });
@@ -1010,7 +1010,7 @@ $(function(){
         });
     }else if($('.doctor_detail').size()>0){
         var doctor_detail = JSON.parse(localStorage.getItem('doctor_detail'));
-        // console.log(doctor_detail);
+        console.log(doctor_detail);
         var app = new Vue({
             el: '#doctor_detail',
             data: {
