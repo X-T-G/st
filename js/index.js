@@ -837,18 +837,18 @@ $(function(){
                     },
                     show_modal:function(){//发起请求，获取医生空余时间
                         var that = this;
-                        var doctor_id = that.doctor_id
-                        $('.weui-skin_android').removeClass('dis-no');
+                        // var _date = that._date;
+                        var doctor_id = that.doctor_id;
+                        
                         $.ajax({//发起请求
                             headers: {
                                 'Authorization': 'bearer '+_token
                             },
                             type: "GET",
-                            url:assistant_url +'/assistant/appointment/appointmentTimeRecordByDay/'+doctor_id,
+                            url:assistant_url +'/assistant/appointment/appointmentTimeRecordByDay/'+'2018-06-23/'+doctor_id,
                             contentType:"application/json",
                             success: function(data){
                                 if (data.code == 0) {
-                                    console.log(data);
                                     var Data_length =  data.appointmentSchedules.length;
                                     if (Data_length == 0) {
                                         $('.weui-loadmore').addClass('dis-no');//隐藏加载更多
