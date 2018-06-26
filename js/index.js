@@ -848,6 +848,9 @@ $(function(){
                             contentType:"application/json",
                             success: function(data){
                                 $('.weui-skin_android').removeClass('dis-no');
+                                var doctor_detail = localStorage.getItem('doctor_detail');
+                                console.log(JSON.parse(doctor_detail));
+                                // JSON.stringify({appointmentTime:_time,remark:'',doctorEntity:doctor}),
                                 if (data.code == 0) {//请求到正常数据，医生上班
                                     that.is_work = true;
                                     var Data_length =  data.appointmentTimes.length;
@@ -859,6 +862,7 @@ $(function(){
                                         // that.is_show = true;
                                         // that.my_doctors = data.appointmentSchedules;
                                         // that.do_time = data.doctorAppointmentScheduleMap;
+                                        
                                     }
                                 }else if (data.code == 1){//医生当天不上班
                                     that.is_work = false;
