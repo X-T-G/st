@@ -30,7 +30,6 @@
                             <p>{{doctor_detail.major}}</p>
                             <p>诊费：{{doctor_detail.fee}}元/次</p>
                             <p>坐诊时间：
-                                <!-- <span style="font-size: 12px;color: #F17355;margin-left: 3px;" v-for="day in map">{{day.week}}</span> -->
                                 <span v-if="doctor_detail.id='10'" style="font-size: 12px;color: #F17355;margin-left: 3px;">预约制</span>
                                 <span v-else-if="doctor_detail.id !='10'" style="font-size: 12px;color: #F17355;margin-left: 3px;"  v-for="day in map">{{day.week}}</span>
                             </p>
