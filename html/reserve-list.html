@@ -14,7 +14,7 @@
     </head>
     <body>
         <div class="header">
-            预约详情
+            预约列表
             <span>
                 <img src="../images/back_gery.png" alt="">
             </span>
@@ -25,7 +25,7 @@
                     <div class="weui-cell__bd">
                         <p>医生：<span>{{my_order.doctorEntity.name}}</span></p>
                     </div>
-                    <div class="weui-cell__ft">时间: <span>{{my_order.appointmentTime}}</span> </div>
+                    <div class="weui-cell__ft">时间: <span>{{my_order.appointmentTime.split("T")[0]+' '+my_order.appointmentTime.split("T")[1]}}</span> </div>
                 </div>
                 <div class="weui-cell">
                     <div class="weui-cell__bd">
