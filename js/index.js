@@ -740,6 +740,7 @@ $(function(){
                     that.doctor_id = arr2.id;//医生的id
                     var doctor = localStorage.getItem('doctor');
                     that.doctor_name = doctor;
+                    that.doctor = doctor;
                     $.ajax({
                         headers: {
                             'Authorization': 'bearer '+_token
@@ -792,6 +793,7 @@ $(function(){
                             $('.DatePicker2 .weui-cell__bd').html(_content);
                             $('.weui-skin_android').addClass('dis-no');
                             $('.can_reserve').removeClass('selected');
+                            that._time = _content2;
                         }else{
                             $('.weui-skin_android').addClass('dis-no');
                             $('.can_reserve').removeClass('selected');
@@ -840,7 +842,7 @@ $(function(){
                     resure:function(e){//确认预约
                         var that = this;
                         var re_name = $('.re_name').val();
-                        var re_sex = $('.weui-select').val();
+                        var re_sex = $('.weui-select.re_gender').val();
                         var re_tel = $('.re_tel').val();
                         var re_date = $('.re_date').html();
                         var re_time = $('.re_time').html();
@@ -903,27 +905,27 @@ $(function(){
                 var do_name = $(this).siblings('.flex-1').find('.doname').html();
                 $('.doc_name').html(do_name);
             });
-            // $('.weui-btn.weui-btn_primary').live('click',function(){//弹窗确认
-            //     var re_name = $('.re_name').val();
-            //     var re_sex = $('.re_sex').val();
-            //     var re_tel = $('.re_tel').val();
-            //     var re_date = $('.re_date').html();
-            //     var re_time = $('.re_time').html();
-            //     var doc_name = $('.doc_name').html();
-            //     if (re_name.length >0 && re_sex.length >0 && re_tel.length >0 &&re_date.length >0 &&re_time.length >0 && doc_name.length >0 ){
-            //         var $androidActionSheet = $('#quit_account');
-            //         var $androidMask = $androidActionSheet.find('.weui-mask2');
-            //         $androidActionSheet.fadeIn(200);
-            //         $androidMask.on('click',function () {
-            //             $androidActionSheet.fadeOut(200);
-            //         });
-            //     }else{
-            //         $('.reserve_.js_dialog').css('display','block');
-            //         $('.reserve_.js_dialog').css('opacity','1');
-            //         $('.weui-dialog.weui-skin_android').css('block');
-            //     }
+            $('.weui-btn.weui-btn_primary').live('click',function(){//弹窗确认
+                var re_name = $('.re_name').val();
+                var re_sex = $('.weui-select.re_gender').val();
+                var re_tel = $('.re_tel').val();
+                var re_date = $('.re_date').html();
+                var re_time = $('.re_time').html();
+                var doc_name = $('.doc_name').html();
+                if (re_name.length >0 && re_sex.length >0 && re_tel.length >0 &&re_date.length >0 &&re_time.length >0 && doc_name.length >0 ){
+                    var $androidActionSheet = $('#quit_account');
+                    var $androidMask = $androidActionSheet.find('.weui-mask2');
+                    $androidActionSheet.fadeIn(200);
+                    $androidMask.on('click',function () {
+                        $androidActionSheet.fadeOut(200);
+                    });
+                }else{
+                    $('.reserve_.js_dialog').css('display','block');
+                    $('.reserve_.js_dialog').css('opacity','1');
+                    $('.weui-dialog.weui-skin_android').css('block');
+                }
                 
-            // });
+            });
             $('.js_dialog.reserve_ .weui-dialog__btn_primary').live('click',function(){
                 $('.reserve_.js_dialog').css('display','none');
                 $('.reserve_.js_dialog').css('opacity','0');
