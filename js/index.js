@@ -847,10 +847,10 @@ $(function(){
                             url:assistant_url +'/assistant/appointment/appointmentTimeRecordByDay/'+_date+'/'+doctor_id,
                             contentType:"application/json",
                             success: function(data){
+                                $('.weui-skin_android').removeClass('dis-no');
                                 if (data.code == 0) {//请求到正常数据，医生上班
                                     that.is_work = true;
                                     var Data_length =  data.appointmentTimes.length;
-                                    $('.weui-skin_android').removeClass('dis-no');
                                     if (Data_length == 0) {//医生没有被预约
                                         return;
                                     }else{//医生事件被占用，数据处理
