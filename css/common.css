@@ -111,7 +111,7 @@ img.store_pic{width: 108px;height:108px;}
 .person .addr .weui-cell_access .weui-cell__ft:after{height:0;width:0;border-width:0;border-color: none;border-style: none;}
 .person .addr  .weui-cell__ft button{margin-left: 70px;border: none;width: 60px;background-color: #F17355;color: #fff;border-radius: 3px;font-size: 13px;padding: 2px 4px;}
 .person .weui-actionsheet__menu{padding: 20px;text-align: center;}
-.person .weui-actionsheet__menu .warm_info{line-height: 110px;margin-left: 10px;}
+.person .weui-actionsheet__menu .warm_info{line-height: 24px;padding-top: 30px;margin-left: 10px;}
 .person .weui-actionsheet__menu  button{border: none;color: #f17355;margin: 10px auto 0;background-color: #fff;}
 .person .weui-actionsheet__menu .text_info{font-size: 16px;margin: 10px 0;}
 .person .weui-skin_android .weui-actionsheet{border: 1px solid #e5e5e5;}

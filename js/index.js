@@ -1,12 +1,12 @@
 $(function(){
     // 测试
-    var medicine_url = "http://192.168.0.155:8006/stmedicine";// 测试个人信息
-    var assistant_url = "http://192.168.0.155:8036/stassistant";// 测试预约
-    var weixin_url = "http://192.168.0.155:8046/stweixin";// 测试微信
+    // var medicine_url = "http://192.168.0.155:8006/stmedicine";// 测试个人信息
+    // var assistant_url = "http://192.168.0.155:8036/stassistant";// 测试预约
+    // var weixin_url = "http://192.168.0.155:8046/stweixin";// 测试微信
     //线上  
-    // var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
-    // var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
-    // var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
+    var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
+    var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
+    var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
 
     // 公共方法401跳转
     function to_login(data){
