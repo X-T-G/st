@@ -1,12 +1,12 @@
 $(function(){
     // 测试
-    // var medicine_url = "http://192.168.0.155:8006/stmedicine";// 测试个人信息
-    // var assistant_url = "http://192.168.0.155:8036/stassistant";// 测试预约
-    // var weixin_url = "http://192.168.0.155:8046/stweixin";// 测试微信
+    var medicine_url = "http://192.168.0.155:8006/stmedicine";// 测试个人信息
+    var assistant_url = "http://192.168.0.155:8036/stassistant";// 测试预约
+    var weixin_url = "http://192.168.0.155:8046/stweixin";// 测试微信
     //线上  
-    var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
-    var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
-    var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
+    // var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
+    // var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
+    // var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
 
     // 公共方法401跳转
     function to_login(data){
@@ -700,6 +700,7 @@ $(function(){
                 reserve:function(doctor){
                     localStorage.setItem("doctor_detail",JSON.stringify(doctor));
                     window.location.href='./reserve.html?id='+doctor.id;
+                    localStorage.setItem("doctor",doctor.name);
                 },
             }
         });
@@ -722,7 +723,7 @@ $(function(){
                     doctor_id:[],
                     doctor_name:[],
                     person:[],
-
+                    is_work:true,//医生是否上班
                 },
                 created:function(){
                     var that = this;
@@ -772,21 +773,11 @@ $(function(){
                                         var _content = result[0] + '年' + result[1] +'月'+  result[2] + '日';
                                     }
                                     $('.DatePicker .weui-cell__bd').html(_content);
-                                    if($('.time_container').find('.can_reserve').hasClass('selected')){
-                                        var _content1 = $('.can_reserve.selected').parents('.text_center').find('p.tint').html();
-                                        var _content2 = $('.can_reserve.selected').html();
-                                        var _content = _content1 +" "+ _content2;
-                                        $('.DatePicker2 .weui-cell__bd').html(_content);
-                                        var date = $('.re_date').html();
-                                        var dateStr1 = date.replace('年','-');
-                                        var dateStr2 = dateStr1.replace('月','-');
-                                        var dateStr3 = dateStr2.replace('日','');//最终日期
-                                        var _time = dateStr3 +'T'+ _content2;
-                                        that._date = dateStr3;//日期
-                                        that._time = _content2;//时间
-                                    }else{
-                                        
-                                    }
+                                    var date = $('.re_date').html();
+                                    var dateStr1 = date.replace('年','-');
+                                    var dateStr2 = dateStr1.replace('月','-');
+                                    var dateStr3 = dateStr2.replace('日','');//最终日期
+                                    that._date = dateStr3;//日期
                                 }
                             });
                         });
@@ -816,7 +807,6 @@ $(function(){
                                     contentType:"application/json",
                                     success: function(data){
                                         if (data.code == 0) {
-                                            // console.log(data);
                                             var Data_length =  data.appointmentSchedules.length;
                                             if (Data_length == 0) {
                                                 $('.weui-loadmore').addClass('dis-no');//隐藏加载更多
@@ -847,30 +837,31 @@ $(function(){
                     },
                     show_modal:function(){//发起请求，获取医生空余时间
                         var that = this;
-                        // var _date = that._date;
+                        var _date = that._date;
                         var doctor_id = that.doctor_id;
-
                         $.ajax({//发起请求
                             headers: {
                                 'Authorization': 'bearer '+_token
                             },
                             type: "GET",
-                            url:assistant_url +'/assistant/appointment/appointmentTimeRecordByDay/'+'2018-06-23/'+doctor_id,
+                            url:assistant_url +'/assistant/appointment/appointmentTimeRecordByDay/'+_date+'/'+doctor_id,
                             contentType:"application/json",
                             success: function(data){
-                                if (data.code == 0) {
+                                if (data.code == 0) {//请求到正常数据，医生上班
+                                    that.is_work = true;
                                     var Data_length =  data.appointmentTimes.length;
                                     $('.weui-skin_android').removeClass('dis-no');
-                                    if (Data_length == 0) {
-                                        
-                                        // that.is_show = false;
-                                    }else{//请求到数据
+                                    if (Data_length == 0) {//医生没有被预约
+                                        return;
+                                    }else{//医生事件被占用，数据处理
                                         // $('.weui-loadmore').addClass('dis-no');//隐藏加载更多
                                         // $('.has_noinfo').addClass('dis-no');
                                         // that.is_show = true;
                                         // that.my_doctors = data.appointmentSchedules;
                                         // that.do_time = data.doctorAppointmentScheduleMap;
                                     }
+                                }else if (data.code == 1){//医生当天不上班
+                                    that.is_work = false;
                                 }
                                 to_login(data);
                             }
