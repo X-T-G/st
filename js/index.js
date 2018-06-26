@@ -723,7 +723,7 @@ $(function(){
                     doctor_id:[],
                     doctor_name:[],
                     person:[],
-                    is_work:true,//医生是否上班
+                    is_work:false,//医生是否上班
                 },
                 created:function(){
                     var that = this;
@@ -790,45 +790,48 @@ $(function(){
                             var _content2 = $('.can_reserve.selected').html();
                             var _content = _content1 +" "+ _content2;
                             $('.DatePicker2 .weui-cell__bd').html(_content);
-                            var date = $('.re_date').html();
-                            var dateStr1 = date.replace('年','-');
-                            var dateStr2 = dateStr1.replace('月','-');
-                            var dateStr3 = dateStr2.replace('日','');//最终日期
-                            var _time = dateStr3 +'T'+ _content2;
-                            that._date = dateStr3;//日期
-                            that._time = _content2;//时间
-                            if (date.length >0 && dateStr3.length > 0) {
-                                $.ajax({//发起请求
-                                    headers: {
-                                        'Authorization': 'bearer '+_token
-                                    },
-                                    type: "GET",
-                                    url:assistant_url + '/common/doctorList/'+_time,
-                                    contentType:"application/json",
-                                    success: function(data){
-                                        if (data.code == 0) {
-                                            var Data_length =  data.appointmentSchedules.length;
-                                            if (Data_length == 0) {
-                                                $('.weui-loadmore').addClass('dis-no');//隐藏加载更多
-                                                $('.has_noinfo').removeClass('dis-no');
-                                                that.is_show = false;
-                                            }else{//请求到数据
-                                                $('.weui-loadmore').addClass('dis-no');//隐藏加载更多
-                                                $('.has_noinfo').addClass('dis-no');
-                                                that.is_show = true;
-                                                that.my_doctors = data.appointmentSchedules;
-                                                that.do_time = data.doctorAppointmentScheduleMap;
-                                            }
-                                        }
-                                        to_login(data);
-                                    }
-                                });
-                            }else{
-                                return;
-                            }
+                            $('.weui-skin_android').addClass('dis-no');
+                            $('.can_reserve').removeClass('selected');
+                            // var date = $('.re_date').html();
+                            // var dateStr1 = date.replace('年','-');
+                            // var dateStr2 = dateStr1.replace('月','-');
+                            // var dateStr3 = dateStr2.replace('日','');//最终日期
+                            // var _time = dateStr3 +'T'+ _content2;
+                            // that._date = dateStr3;//日期
+                            // that._time = _content2;//时间
+                            // if (date.length >0 && dateStr3.length > 0) {
+                            //     $.ajax({//发起请求
+                            //         headers: {
+                            //             'Authorization': 'bearer '+_token
+                            //         },
+                            //         type: "GET",
+                            //         url:assistant_url + '/common/doctorList/'+_time,
+                            //         contentType:"application/json",
+                            //         success: function(data){
+                            //             if (data.code == 0) {
+                            //                 var Data_length =  data.appointmentSchedules.length;
+                            //                 if (Data_length == 0) {
+                            //                     $('.weui-loadmore').addClass('dis-no');//隐藏加载更多
+                            //                     $('.has_noinfo').removeClass('dis-no');
+                            //                     that.is_show = false;
+                            //                 }else{//请求到数据
+                            //                     $('.weui-loadmore').addClass('dis-no');//隐藏加载更多
+                            //                     $('.has_noinfo').addClass('dis-no');
+                            //                     that.is_show = true;
+                            //                     that.my_doctors = data.appointmentSchedules;
+                            //                     that.do_time = data.doctorAppointmentScheduleMap;
+                            //                 }
+                            //             }
+                            //             to_login(data);
+                            //         }
+                            //     });
+                            // }else{
+                            //     return;
+                            // }
                             
                         }else{
-
+                            $('.weui-skin_android').addClass('dis-no');
+                            $('.can_reserve').removeClass('selected');
                         }
                     },
                     choose_doctor:function(doctor){
@@ -922,7 +925,7 @@ $(function(){
                 }
             });
             // 时间选中效果
-            $('.choose_time div.fl.can_reserve').on('click',function(e){
+            $('.choose_time div.fl.can_reserve').live('click',function(e){
                 e.preventDefault();
                 e.stopPropagation();
                 if($(this).hasClass('selected')){//如果被选中
