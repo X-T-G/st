@@ -770,11 +770,42 @@ $(function(){
                                 onConfirm: function (result) {
                                     if (result[1]<10){
                                         var _content = result[0] + '年' + '0'+ result[1] +'月'+  result[2] + '日';
+                                        var _dd = result[0] + '-' + '0'+ result[1] +'-'+  result[2];//标准时间格式
                                     }else{
                                         var _content = result[0] + '年' + result[1] +'月'+  result[2] + '日';
+                                        var _dd = result[0] + '-' + result[1] +'-'+  result[2] + '-';//标准时间格式
+                                    }
+                                    var now = new Date();
+                                    var year = now.getFullYear();
+                                    var month =(now.getMonth() + 1).toString();
+                                    var day = (now.getDate()).toString();
+                                    if (month.length == 1) {
+                                        month = "0" + month;
+                                    }
+                                    if (day.length == 1) {
+                                        day = "0" + day;
+                                    }
+                                    var to_day = year +'-'+ month +'-'+  day;
+                                    var today = new Date();
+                                    var oneday = 1000 * 60 * 60 * 24;
+                                    // 三周以内
+                                    var lastMonday = new Date(today- oneday * (today.getDay() - 24));
+                                    var t_time = Date.parse(to_day);//今天的时间戳
+                                    var r_time = Date.parse(_dd);//预约的时间戳
+                                    var m_time = Date.parse(lastMonday);//三周以内的时间戳
+                                    console.log(t_time);
+                                    console.log(r_time);
+                                    console.log(m_time);
+                                    if (r_time < t_time || r_time > m_time){
+                                        console.log(0);
+                                        $('.reservse_time').css('display','block');
+                                        $('.reservse_time').css('opacity','1');
+                                    }else{
+                                        console.log(2);
                                     }
                                     $('.DatePicker .weui-cell__bd').html(_content);
                                     var date = $('.re_date').html();
+                                    $('.re_time').html('');
                                     var dateStr1 = date.replace('年','-');
                                     var dateStr2 = dateStr1.replace('月','-');
                                     var dateStr3 = dateStr2.replace('日','');//最终日期
@@ -817,14 +848,15 @@ $(function(){
                             success: function(data){
                                 $('.weui-skin_android').removeClass('dis-no');
                                 var doctor_detail = localStorage.getItem('doctor_detail');
-                                console.log(JSON.parse(doctor_detail));
+                                // console.log(JSON.parse(doctor_detail));
                                 // JSON.stringify({appointmentTime:_time,remark:'',doctorEntity:doctor}),
                                 if (data.code == 0) {//请求到正常数据，医生上班
                                     that.is_work = true;
                                     var Data_length =  data.appointmentTimes.length;
                                     if (Data_length == 0) {//医生没有被预约
+                                        that.is_work = true;
                                         return;
-                                    }else{//医生事件被占用，数据处理
+                                    }else{//医生时间被占用，数据处理
                                         // $('.weui-loadmore').addClass('dis-no');//隐藏加载更多
                                         // $('.has_noinfo').addClass('dis-no');
                                         // that.is_show = true;
