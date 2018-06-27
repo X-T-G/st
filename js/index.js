@@ -57,7 +57,14 @@ $(function(){
                     success: function(data){
                         if(data.code==0){
                             localStorage.setItem("access_token", data.token.access_token);
-                            window.location.href='./person.html';
+                            var _url = document.referrer;
+                            var _index = _url.lastIndexOf("\/");  
+                            var str  = _url.substring(_index + 1, _url.length);
+                            if (str == 'doctor-list.html'){//医生列表跳转而来
+                                window.location.href='./doctor-list.html';
+                            }else{
+                                window.location.href='./person.html';
+                            } 
                         }else{
                             var $androidDialog2 = $('#androidDialog2');
                             $androidDialog2.fadeIn(200);
