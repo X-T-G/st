@@ -19,28 +19,53 @@
                 <img src="../images/back_gery.png" alt="">
             </span>
         </div>
-        <div class="order_detail" id = "order_detail">
-            <div class="each_reserve" v-for="my_order in my_orders">
-                <div class="weui-cell">
-                    <div class="weui-cell__bd">
-                        <p>医生：<span>{{my_order.doctorEntity.name}}</span></p>
+        <div id = "order_detail">
+            <div class="order_detail" :class=[{"dis-no":(show_page==false)}]>
+                <div class="each_reserve" v-for="my_order in my_orders">
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <p>医生：<span>{{my_order.doctorEntity.name}}</span></p>
+                        </div>
+                        <div class="weui-cell__ft">时间: <span>{{my_order.appointmentTime.split("T")[0]+' '+my_order.appointmentTime.split("T")[1]}}</span> </div>
                     </div>
-                    <div class="weui-cell__ft">时间: <span>{{my_order.appointmentTime.split("T")[0]+' '+my_order.appointmentTime.split("T")[1]}}</span> </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <p>姓名：<span>{{my_order.appointmentName}}</span></p>
+                        </div>
+                        <div class="weui-cell__ft">
+                            <span>手机:</span> 
+                            <span>{{my_order.phone}}</span>
+                        </div>
+                    </div>
+                    <div class="clearfix" v-if="my_order.status.dictId=='appointment_status_accept'">
+                        <button class="re_cancel" v-on:click="cancel_reserve(my_order.id)">取消预约</button>
+                    </div>
                 </div>
-                <div class="weui-cell">
-                    <div class="weui-cell__bd">
-                        <p>姓名：<span>{{my_order.appointmentName}}</span></p>
-                    </div>
-                    <div class="weui-cell__ft">
-                        <!-- <span>联系方式：</span>
-                        <span>{{re_tel}}</span>  -->
-                        <span>手机:</span> 
-                        <span>{{my_order.phone}}</span>
+            </div>
+            <div class="weui-loadmore" :class=[{"dis-no":(loading==false)}]>
+                <i class="weui-loading"></i>
+                <span class="weui-loadmore__tips">正在加载</span>
+            </div>
+                <!-- 没有数据 -->
+                <div class="has_noinfo"  :class=[{"dis-no":(has_noinfo==false)}]>
+                <img src="../images/bg_nodata.png" alt="">
+            </div>
+            <!-- 确认弹窗 -->
+            <div class="weui-skin_android" id="quit_account"  :class=[{"dis-no":(show_modal==false)}]>
+                <div class="weui-mask2"></div>
+                <div class="weui-actionsheet">
+                    <div class="weui-actionsheet__menu reser_menu">
+                        <div class="text_info" style="margin-bottom: 10px;"><span style="font-size: 14px;">取消预约将扣除500积分,确认取消预约？</span></div>
+                        <div class="flex" style="text-align: center;">
+                            <div class="flex-1" >
+                                <button type="button" class="quit_sure" v-on:click="resure">确认</button>
+                            </div>
+                            <div class="flex-1">
+                                <button type="button" class="time_cancel" v-on:click="cancel">取消</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- <div class="clearfix">
-                    <button class="re_cancel">取消预约</button>
-                </div> -->
             </div>
         </div>
     </body>

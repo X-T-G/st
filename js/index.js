@@ -877,24 +877,14 @@ $(function(){
                             success: function(data){
                                 $('.weui-skin_android').removeClass('dis-no');
                                 var doctor_detail = JSON.parse(localStorage.getItem('doctor_map'));
-                                // var doctor_detail = localStorage.getItem('doctor_map');
                                 if (data.code == 0) {//请求到正常数据，医生上班
                                     that.is_work = true;
                                     var Data_length =  data.appointmentTimes.length;
-                                    // var alltime = $('.choose_time .fl').length;
                                     var work_time = that.work_time;
-                                    // work_time.each(function(j,item){
-                                    // // 你要实现的业务逻辑
-                                    //     console.log(j);
-                                    //     console.log(typeof(item); //输出input 中的 value 值到控制台
-                                    // });
-                                    
                                     if (Data_length == 0) {//医生没有被预约
                                         that.is_work = true;
                                         return;
                                     }else{//医生时间被占用，数据处理
-                                        // var all_time = that.work_time;
-                                        // console.log(all_time);
                                         for(var i = 0 ;i<work_time.length;i++){
                                             for(var j = 0;j<data.appointmentTimes.length;j++){
                                                 if(work_time[i]._time == data.appointmentTimes[j]){
@@ -903,7 +893,6 @@ $(function(){
                                             }
                                         }
                                         that.work_time = work_time;
-                                        console.log(that.work_time);
                                     }
                                 }else if (data.code == 1){//医生当天不上班
                                     that.is_work = false;
@@ -1012,41 +1001,101 @@ $(function(){
         });
 
     }else if($('.order_detail').size()>0){
-        var re_name = localStorage.getItem('re_name');
-        var re_sex = localStorage.getItem('re_sex');
-        var re_tel = localStorage.getItem('re_tel');
-        var re_date = localStorage.getItem('re_date');
-        var re_time = localStorage.getItem('re_time');
         var _token = localStorage.getItem('access_token');
-        $.ajax({//发起请求
-            headers: {
-                'Authorization': 'bearer '+_token
+        var app = new Vue({
+            el: '#order_detail',
+            data: {
+                my_orders:[],
+                has_noinfo:false,//没有数据
+                loading:true,//加载
+                show_page:false,//是否显示页面
+                reserve_id:[],//取消id
+                show_modal:false,
             },
-            type: "GET",
-            url:weixin_url + '/appointment/user-appointment-list',
-            contentType:"application/json",
-            success: function(data){
-                if (data.code == 0) {
-                    var Data_length =  data.page.content.length;
-                    if (Data_length == 0) {
-                        $('.weui-loadmore').addClass('dis-no');//隐藏加载更多
-                        $('.has_noinfo').removeClass('dis-no');
-                        // $('.my_coupon').addClass('dis-no');
-                    }else{//请求到数据
-                        $('.weui-loadmore').addClass('dis-no');//隐藏加载更多
-                        $('.has_noinfo').addClass('dis-no');
-                        // $('.my_coupon').removeClass('dis-no');
-                        var app = new Vue({
-                            el: '#order_detail',
-                            data: {
-                                my_orders:data.page.content,
+            created:function(){
+                var that = this;
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: "GET",
+                    url:weixin_url + '/appointment/user-appointment-list',
+                    contentType:"application/json",
+                    success: function(data){
+                        if (data.code == 0) {
+                            var Data_length =  data.page.content.length;
+                            if (Data_length == 0) {
+                                that.show_page = false;
+                                that.has_noinfo = true;
+                                that.loading = false;
+                                return;
+                            }else{//请求到数据
+                                that.my_orders = data.page.content;
+                                that.show_page = true;
+                                that.has_noinfo = false;
+                                that.loading = false;
                             }
-                        });
+                        }
+                        to_login(data);
                     }
+                });
+            },
+            methods:{
+                cancel_reserve:function(reserve_id){//取消按钮
+                    var that = this;
+                    that.show_modal = true;
+                    that.reserve_id = reserve_id;
+                },
+                resure:function(){//确认取消
+                    var that = this;
+                    var reserve_id = that.reserve_id;
+                    that.show_modal = false;
+                    $.ajax({//发起请求
+                        headers: {
+                            'Authorization': 'bearer '+_token
+                        },
+                        type: "GET",
+                        url:weixin_url + '/appointment/cancelAppointment/'+reserve_id,
+                        contentType:"application/json",
+                        success: function(data){
+                            if (data.code == 0) {
+                                $.ajax({//发起请求
+                                    headers: {
+                                        'Authorization': 'bearer '+_token
+                                    },
+                                    type: "GET",
+                                    url:weixin_url + '/appointment/user-appointment-list',
+                                    contentType:"application/json",
+                                    success: function(data2){
+                                        if (data2.code == 0) {
+                                            var Data_length =  data2.page.content.length;
+                                            if (Data_length == 0) {
+                                                that.show_page = false;
+                                                that.has_noinfo = true;
+                                                that.loading = false;
+                                                return;
+                                            }else{//请求到数据
+                                                that.my_orders = data2.page.content;
+                                                that.show_page = true;
+                                                that.has_noinfo = false;
+                                                that.loading = false;
+                                            }
+                                        }
+                                        to_login(data);
+                                    }
+                                });
+                            }
+                            to_login(data);
+                        }
+                    }); 
+                },
+                cancel:function(){//取消
+                    var that = this;
+                    that.show_modal = false;
                 }
-                to_login(data);
             }
         });
+        
     }else if($('.doctor_detail').size()>0){
         var doctor_detail = JSON.parse(localStorage.getItem('doctor_detail'));
         var map = JSON.parse(localStorage.getItem('map'));
