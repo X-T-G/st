@@ -793,23 +793,24 @@ $(function(){
                                     var t_time = Date.parse(to_day);//今天的时间戳
                                     var r_time = Date.parse(_dd);//预约的时间戳
                                     var m_time = Date.parse(lastMonday);//三周以内的时间戳
-                                    console.log(t_time);
-                                    console.log(r_time);
-                                    console.log(m_time);
-                                    if (r_time < t_time || r_time > m_time){
-                                        console.log(0);
+                                    if (r_time < t_time || r_time > m_time){//预约时间不正确
                                         $('.reservse_time').css('display','block');
                                         $('.reservse_time').css('opacity','1');
-                                    }else{
-                                        console.log(2);
+                                        $('.DatePicker .weui-cell__bd').html('');
+                                    }else{//格式正确
+                                        $('.DatePicker .weui-cell__bd').html(_content);
+                                        var date = $('.re_date').html();
+                                        $('.re_time').html('');
+                                        var dateStr1 = date.replace('年','-');
+                                        var dateStr2 = dateStr1.replace('月','-');
+                                        var dateStr3 = dateStr2.replace('日','');//最终日期
+                                        that._date = dateStr3;//日期
+                                        return;
                                     }
-                                    $('.DatePicker .weui-cell__bd').html(_content);
-                                    var date = $('.re_date').html();
-                                    $('.re_time').html('');
-                                    var dateStr1 = date.replace('年','-');
-                                    var dateStr2 = dateStr1.replace('月','-');
-                                    var dateStr3 = dateStr2.replace('日','');//最终日期
-                                    that._date = dateStr3;//日期
+                                    $('.reservse_time .time-sure3').live('click',function(){
+                                        $('.reservse_time').css('opacity','0');
+                                        $('.reservse_time').css('display','none');
+                                    });
                                 }
                             });
                         });
