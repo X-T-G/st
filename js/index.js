@@ -697,10 +697,11 @@ $(function(){
                     localStorage.setItem("map",JSON.stringify(map));
                     window.location.href='./doctor-detail.html';
                 },
-                reserve:function(doctor){
+                reserve:function(doctor,week){
                     localStorage.setItem("doctor_detail",JSON.stringify(doctor));
                     window.location.href='./reserve.html?id='+doctor.id;
                     localStorage.setItem("doctor",doctor.name);
+                    localStorage.setItem("doctor_map",JSON.stringify(week));
                 },
             }
         });
@@ -723,7 +724,34 @@ $(function(){
                     doctor_id:[],
                     doctor_name:[],
                     person:[],
+                    work_time:[{_time:"09:00",status:"active"},
+                            {_time:"09:15",status:"active"},
+                            {_time:"09:30",status:"active"},
+                            {_time:"09:45",status:"active"},
+                            {_time:"10:00",status:"active"},
+                            {_time:"10:15",status:"active"},
+                            {_time:"10:30",status:"active"},
+                            {_time:"10:45",status:"active"},
+                            {_time:"11:00",status:"active"},
+                            {_time:"11:15",status:"active"},
+                            {_time:"11:30",status:"active"},
+                            {_time:"11:45",status:"active"},
+                            {_time:"14:00",status:"active"},
+                            {_time:"14:15",status:"active"},
+                            {_time:"14:30",status:"active"},
+                            {_time:"14:45",status:"active"},
+                            {_time:"15:00",status:"active"},
+                            {_time:"15:15",status:"active"},
+                            {_time:"15:30",status:"active"},
+                            {_time:"15:45",status:"active"},
+                            {_time:"16:00",status:"active"},
+                            {_time:"16:15",status:"active"},
+                            {_time:"16:30",status:"active"},
+                            {_time:"16:45",status:"active"},
+                            {_time:"17:00",status:"active"},
+                            {_time:"17:15",status:"active"}],//医生上班时间
                     is_work:false,//医生是否上班
+
                 },
                 created:function(){
                     var that = this;
@@ -848,22 +876,34 @@ $(function(){
                             contentType:"application/json",
                             success: function(data){
                                 $('.weui-skin_android').removeClass('dis-no');
-                                var doctor_detail = localStorage.getItem('doctor_detail');
-                                // console.log(JSON.parse(doctor_detail));
-                                // JSON.stringify({appointmentTime:_time,remark:'',doctorEntity:doctor}),
+                                var doctor_detail = JSON.parse(localStorage.getItem('doctor_map'));
+                                // var doctor_detail = localStorage.getItem('doctor_map');
                                 if (data.code == 0) {//请求到正常数据，医生上班
                                     that.is_work = true;
                                     var Data_length =  data.appointmentTimes.length;
+                                    // var alltime = $('.choose_time .fl').length;
+                                    var work_time = that.work_time;
+                                    // work_time.each(function(j,item){
+                                    // // 你要实现的业务逻辑
+                                    //     console.log(j);
+                                    //     console.log(typeof(item); //输出input 中的 value 值到控制台
+                                    // });
+                                    
                                     if (Data_length == 0) {//医生没有被预约
                                         that.is_work = true;
                                         return;
                                     }else{//医生时间被占用，数据处理
-                                        // $('.weui-loadmore').addClass('dis-no');//隐藏加载更多
-                                        // $('.has_noinfo').addClass('dis-no');
-                                        // that.is_show = true;
-                                        // that.my_doctors = data.appointmentSchedules;
-                                        // that.do_time = data.doctorAppointmentScheduleMap;
-                                        
+                                        // var all_time = that.work_time;
+                                        // console.log(all_time);
+                                        for(var i = 0 ;i<work_time.length;i++){
+                                            for(var j = 0;j<data.appointmentTimes.length;j++){
+                                                if(work_time[i]._time == data.appointmentTimes[j]){
+                                                    work_time[i].status='notactive';
+                                                }
+                                            }
+                                        }
+                                        that.work_time = work_time;
+                                        console.log(that.work_time);
                                     }
                                 }else if (data.code == 1){//医生当天不上班
                                     that.is_work = false;
@@ -880,7 +920,7 @@ $(function(){
                         var re_date = $('.re_date').html();
                         var re_time = $('.re_time').html();
                         var doc_name = $('.doc_name').html();
-                        var doctor = that.doctor;
+                        var doctor = JSON.parse(localStorage.getItem('doctor_detail')); 
                         var _date = that._date;
                         var _time = that._time;
                         var _time = _date +'T'+_time;
