@@ -960,7 +960,6 @@ $(function(){
             });
             // 时间选中效果
             $('.choose_time div.fl.can_reserve').live('click',function(e){
-                alert(33333);
                 e.preventDefault();
                 e.stopPropagation();
                 if($(this).hasClass('selected')){//如果被选中
