@@ -216,7 +216,9 @@ img.store_pic{width: 108px;height:108px;}
 .each_doctor .doctor_pic input{margin-top: 46px;width: 16px;height: 16px;}
 .rese.weui-toptips{height: 40px;line-height: 40px;background-color:#1AAD19;}
 .fail.weui-toptips{height: 40px;line-height: 40px;}
-.reserve_detail .weui-label{width: 180px;}
+.reserve_detail .weui-label{width: 152px;}
+.reserve_detail .weui-cell_select{padding: 10px 15px;}
+.reserve_detail .weui-select,.reserve_detail .DatePicker2 .weui-cell__bd,.reserve_detail .DatePicker2 .weui-cell__hd{height: 24px;line-height: 24px;}
 
 /* 预约成功界面 */
 .reserve_success{padding: 180px 0;}
