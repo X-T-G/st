@@ -1057,6 +1057,8 @@ $(function(){
                     var that = this;
                     var reserve_id = that.reserve_id;
                     that.show_modal = false;
+                    that.show_page = false;//隐藏页面
+                    that.loading = true;
                     $.ajax({//发起请求
                         headers: {
                             'Authorization': 'bearer '+_token
@@ -1074,6 +1076,12 @@ $(function(){
                                     url:weixin_url + '/appointment/user-appointment-list',
                                     contentType:"application/json",
                                     success: function(data2){
+                                        that.show_page = true;//隐藏页面
+                                        that.loading = false;
+                                        $('#cancel_info').css('display','block');
+                                        setTimeout(function(){
+                                            $('#cancel_info').css('display','none');
+                                        },1500);
                                         if (data2.code == 0) {
                                             var Data_length =  data2.page.content.length;
                                             if (Data_length == 0) {
@@ -1102,7 +1110,6 @@ $(function(){
                 }
             }
         });
-        
     }else if($('.doctor_detail').size()>0){
         var doctor_detail = JSON.parse(localStorage.getItem('doctor_detail'));
         var map = JSON.parse(localStorage.getItem('map'));

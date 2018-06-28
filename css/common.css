@@ -283,5 +283,7 @@ img.store_pic{width: 108px;height:108px;}
 #my_serve .reserve_detail .weui-cell__bd input.re_tel{text-align: left;}
 #doctor_list button.reserve_doctor{width: 50px;height: 25px;border-radius: 4px;border: none;background-color: #F17355;color: #fff;}
 
-
+/* 预约列表 */
+#order_detail .weui-toptips{height: 40px;line-height: 40px;background-color:#1AAD19;}
+#order_detail .order_detail {border-bottom:none;}
 
