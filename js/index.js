@@ -795,7 +795,7 @@ $(function(){
                 methods:{
                     choose:function(event){//选日期
                         var that = this;
-                        // 时间选择器
+                        // 日期选择器
                         $('#showDatePicker').live('click', function () {
                             var year = new Date().getFullYear();
                             weui.datePicker({

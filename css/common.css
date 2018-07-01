@@ -286,4 +286,4 @@ img.store_pic{width: 108px;height:108px;}
 /* 预约列表 */
 #order_detail .weui-toptips{height: 40px;line-height: 40px;background-color:#1AAD19;}
 #order_detail .order_detail {border-bottom:none;}
-
+/* #order_detail .{z-index: 10100;} */
