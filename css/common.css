@@ -64,7 +64,6 @@ a:link,a:visited{color:#686b6d;}
 .text_center{text-align:center;}
 .text_fl{text-align:left;}
 .text_fr{text-align:right;}
-
 /*弹性布局*/
 .flex{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:-moz-box;display:flex;}
 .flex-v{-webkit-box-orient:vertical;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;}
