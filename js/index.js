@@ -731,32 +731,7 @@ $(function(){
                     doctor_id:[],
                     doctor_name:[],
                     person:[],
-                    work_time:[{_time:"09:00",status:"active"},
-                            {_time:"09:15",status:"active"},
-                            {_time:"09:30",status:"active"},
-                            {_time:"09:45",status:"active"},
-                            {_time:"10:00",status:"active"},
-                            {_time:"10:15",status:"active"},
-                            {_time:"10:30",status:"active"},
-                            {_time:"10:45",status:"active"},
-                            {_time:"11:00",status:"active"},
-                            {_time:"11:15",status:"active"},
-                            {_time:"11:30",status:"active"},
-                            {_time:"11:45",status:"active"},
-                            {_time:"14:00",status:"active"},
-                            {_time:"14:15",status:"active"},
-                            {_time:"14:30",status:"active"},
-                            {_time:"14:45",status:"active"},
-                            {_time:"15:00",status:"active"},
-                            {_time:"15:15",status:"active"},
-                            {_time:"15:30",status:"active"},
-                            {_time:"15:45",status:"active"},
-                            {_time:"16:00",status:"active"},
-                            {_time:"16:15",status:"active"},
-                            {_time:"16:30",status:"active"},
-                            {_time:"16:45",status:"active"},
-                            {_time:"17:00",status:"active"},
-                            {_time:"17:15",status:"active"}],//医生上班时间
+                    work_time:[],
                     is_work:false,//医生是否上班
 
                 },
@@ -947,6 +922,33 @@ $(function(){
                         var that = this;
                         var _date = that._date;
                         var doctor_id = that.doctor_id;
+                        var doctor_time = [{_time:"09:00",status:"active"},
+                        {_time:"09:15",status:"active"},
+                        {_time:"09:30",status:"active"},
+                        {_time:"09:45",status:"active"},
+                        {_time:"10:00",status:"active"},
+                        {_time:"10:15",status:"active"},
+                        {_time:"10:30",status:"active"},
+                        {_time:"10:45",status:"active"},
+                        {_time:"11:00",status:"active"},
+                        {_time:"11:15",status:"active"},
+                        {_time:"11:30",status:"active"},
+                        {_time:"11:45",status:"active"},
+                        {_time:"14:00",status:"active"},
+                        {_time:"14:15",status:"active"},
+                        {_time:"14:30",status:"active"},
+                        {_time:"14:45",status:"active"},
+                        {_time:"15:00",status:"active"},
+                        {_time:"15:15",status:"active"},
+                        {_time:"15:30",status:"active"},
+                        {_time:"15:45",status:"active"},
+                        {_time:"16:00",status:"active"},
+                        {_time:"16:15",status:"active"},
+                        {_time:"16:30",status:"active"},
+                        {_time:"16:45",status:"active"},
+                        {_time:"17:00",status:"active"},
+                        {_time:"17:15",status:"active"}];//医生上班时间
+
                         $.ajax({//发起请求
                             headers: {
                                 'Authorization': 'bearer '+_token
@@ -960,7 +962,7 @@ $(function(){
                                 if (data.code == 0) {//请求到正常数据，医生上班
                                     that.is_work = true;
                                     var Data_length =  data.appointmentTimes.length;
-                                    var work_time = that.work_time;
+                                    var work_time = doctor_time;//每次单击进行数据覆盖
                                     if (Data_length == 0) {//医生没有被预约
                                         that.is_work = true;
                                         return;
@@ -1043,7 +1045,8 @@ $(function(){
                 }
             });
             $('.choose_time div.fl').live('click',function(e){
-                $(this).css('background-color','none');
+                $(this).css('background-color','#fff');
+                $(this).css('outline','none');
             })
             // 选中医生
             $('.doctor_pic input').live('click',function(e){
