@@ -965,6 +965,7 @@ $(function(){
                                     var work_time = doctor_time;//每次单击进行数据覆盖
                                     if (Data_length == 0) {//医生没有被预约
                                         that.is_work = true;
+                                        that.work_time = work_time;
                                         return;
                                     }else{//医生时间被占用，数据处理
                                         for(var i = 0 ;i<work_time.length;i++){
