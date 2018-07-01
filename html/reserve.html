@@ -88,18 +88,20 @@
                                             <p class="tint">上午</p>
                                             <div class="clearfix choose_time">
                                                 <div class="fl" v-for= "re_time in work_time"  style="cursor:pointer"  :class=[{"can_reserve":(is_work==true)}] v-if="re_time._time.split(':')[0]<12 && re_time.status== 'active'">{{re_time._time}}</div>
+                                                <div class="fl" v-for= "re_time in work_time"  style="cursor:pointer"  :class=[{"":(is_work==true)}] v-if="re_time._time.split(':')[0]<12 && re_time.status== 'notactive'">{{re_time._time}}</div>
                                             </div>
                                         </div> 
                                         <div class="text_center afternoon">
                                             <p class="tint">下午</p>
                                             <div class="clearfix choose_time">
                                                 <div class="fl" v-for= "re_time in work_time" style="cursor:pointer"  :class=[{"can_reserve":(is_work==true)}] v-if="re_time._time.split(':')[0]>12  && re_time.status== 'active'">{{re_time._time}}</div>
+                                                <div class="fl" v-for= "re_time in work_time" style="cursor:pointer"  :class=[{"":(is_work==true)}] v-if="re_time._time.split(':')[0]>12  && re_time.status== 'notactive'">{{re_time._time}}</div>
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <div style="color: #939399;font-size: 13px;text-align: right;padding-right: 10px;">
-                                        (注：灰色字体表示该时间段不可预约)
-                                    </div> -->
+                                    <div style="color: #939399;font-size: 13px;text-align: right;padding-right: 10px;">
+                                        (注：划线文字表示该时间段不可预约)
+                                    </div>
                                 </div>
                                 <button type="button" class="time_sure"  v-on:click="choose2">确认</button>
                             </div>

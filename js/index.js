@@ -827,102 +827,85 @@ $(function(){
                                     if (day.length == 1) {
                                         day = "0" + day;
                                     }
-                                    var to_day = year +'-'+ month +'-'+  day;
                                     // 三周以内，以今天的时间为参照
                                     var la_y = Number(year);
                                     var la_m = Number(month);
                                     var la_d = Number(day) + 21;//三周为21天，所以以21天计,截止天
-                                    switch(Number(month)){
+                                    var to_day = year +'-'+ month +'-'+  day;
+                                    switch(la_m){
                                         case 1:
                                         case 3:
                                         case 5:
                                         case 7:
                                         case 8:
                                         case 10://每月31天
-                                            if (la_d>31){//超出本月
-                                                console.log('可约到下个月');
-                                                if(Number(month) == 10){
-                                                    if ((la_d-31) <10){
-                                                        var last_date = la_y +'-'+ (la_m + 1) +'-0' + (la_d-31);
-                                                    }else{
-                                                        var last_date = la_y +'-'+ (la_m + 1) +'-' + (la_d-31);
-                                                    }
+                                            if(la_m == 10){//10月
+                                                if ((la_d-31) <0){
+                                                    var last_date = la_y +'-'+ (la_m + 1) +'-' + la_d;
                                                 }else{
-                                                    if ((la_d-31) <10){
-                                                        var last_date = la_y +'-0'+ (la_m + 1) +'-0' + (la_d-31);
-                                                    }else{
-                                                        var last_date = la_y +'-0'+ (la_m + 1) +'-' + (la_d-31);
-                                                    } 
+                                                    var last_date = la_y +'-'+ (la_m + 1) +'-0' + (la_d-31);
                                                 }
-                                            }else{//未超出本月
-                                                console.log('只可约到本月');
-                                                if(Number(month) == 10){
-                                                    var last_date = la_y +'-'+ la_m +'-' +la_d;
+                                            }else{//1.3.5.7.8月
+                                                if ((la_d-31) <0){
+                                                    var last_date = la_y +'-0'+ la_m  +'-'+ la_d;
                                                 }else{
-                                                    var last_date = la_y +'-0'+ la_m +'-' +la_d;
+                                                    var last_date = la_y +'-0'+ (la_m + 1) +'-' + (la_d-31);
                                                 }
                                             }
-                                            console.log(last_date);
                                             break;
                                         case 12://本月31天
-                                            if ((la_d-31) <10){
-                                                var last_date = la_y +'-0'+ (la_m + 1) +'-0' + (la_d-31);
+                                            if ((la_d-31) <0){
+                                                var last_date = la_y +'-'+ la_m +'-' + la_d;
                                             }else{
-                                                var last_date = la_y +'-0'+ (la_m + 1) +'-' + (la_d-31);
+                                                var last_date = (la_y + 1) +'-01' +'-0' + (la_d-31);
                                             } 
                                             break;
                                         case 4:
                                         case 6:
                                         case 9:
                                         case 11://每月30天
-                                            // console.log('30天');
+                                            if (la_m == 9) {
+                                                if ((la_d-30) <0){
+                                                    var last_date = la_y +'-0'+ la_m +'-' + la_d;
+                                                }else{
+                                                    var last_date = la_y  +'-' + (la_m + 1)+'-' + (la_d-30);
+                                                } 
+                                            }else if(la_m == 11){
+                                                if ((la_d-30) <0){
+                                                    var last_date = la_y +'-'+ la_m +'-' + la_d;
+                                                }else{
+                                                    var last_date = la_y  +'-' + (la_m + 1)+'-' + (la_d-30);
+                                                } 
+                                            }else{
+                                                if ((la_d-30) <0){
+                                                    var last_date = la_y +'-0'+ la_m +'-' + la_d;
+                                                }else{
+                                                    var last_date = la_y  +'-0' + (la_m + 1)+'-' + (la_d-30);
+                                                } 
+                                            }
                                             break;
                                         case 2:
-                                            if (re_y % 4 == 0 && re_y % 100 !== 0){//如果是闰年，2月为29天
-                                                // console.log('29天');
+                                            if (la_y % 4 == 0 && la_y % 100 !== 0){//如果是闰年，2月为29天
+                                                if ((la_d-29) <0){
+                                                    var last_date = la_y +'-0'+ la_m +'-' + la_d;
+                                                }else{
+                                                    var last_date = la_y  +'-0' + (la_m + 1)+'-' + (la_d-29);
+                                                } 
+
                                             }else{//平年，2月为28天
-                                                // console.log('28天');  
+                                                if ((la_d-28) <0){
+                                                    var last_date = la_y +'-0'+ la_m +'-' + la_d;
+                                                }else{
+                                                    var last_date = la_y  +'-0' + (la_m + 1)+'-' + (la_d-28);
+                                                } 
                                             }
                                             break;
                                     }
-
-
-
-
-
-
-                                    switch(result[1]){
-                                        case 1:
-                                        case 3:
-                                        case 5:
-                                        case 7:
-                                        case 8:
-                                        case 10:
-                                        case 12:
-                                            // console.log('31天');
-                                            break;
-                                        case 4:
-                                        case 6:
-                                        case 9:
-                                        case 11:
-                                            // console.log('30天');
-                                            break;
-                                        case 2:
-                                            if (re_y % 4 == 0 && re_y % 100 !== 0){//如果是闰年，2月为29天
-                                                // console.log('29天');
-                                            }else{//平年，2月为28天
-                                                // console.log('28天');  
-                                            }
-                                            break;
-                                    }
-                                    // console.log(to_day >_dd);
-                                    // console.log(to_day >_dd);
-                                    // if (r_time < t_time || r_time > m_time){//预约时间不正确
-                                        
-                                    //     $('.reservse_time').css('display','block');
-                                    //     $('.reservse_time').css('opacity','1');
-                                    //     $('.DatePicker .weui-cell__bd').html('');
-                                    // }else{//格式正确
+                                    if (_dd > last_date || _dd < to_day){//预约时间不正确(超出预约最终时间或小于今天时间)
+                                        $('.reservse_time').css('display','block');
+                                        $('.reservse_time').css('opacity','1');
+                                        $('.DatePicker .weui-cell__bd').html('');
+                                    }else{//格式正确
                                         $('.DatePicker .weui-cell__bd').html(_content);
                                         var date = $('.re_date').html();
                                         $('.re_time').html('');
@@ -931,7 +914,7 @@ $(function(){
                                         var dateStr3 = dateStr2.replace('日','');//最终日期
                                         that._date = dateStr3;//日期
                                         return;
-                                    // }
+                                    }
                                     $('.reservse_time .time-sure3').live('click',function(){
                                         $('.reservse_time').css('opacity','0');
                                         $('.reservse_time').css('display','none');
@@ -1059,6 +1042,9 @@ $(function(){
                     $(this).addClass('selected');
                 }
             });
+            $('.choose_time div.fl').live('click',function(e){
+                $(this).css('background-color','none');
+            })
             // 选中医生
             $('.doctor_pic input').live('click',function(e){
                 var do_name = $(this).siblings('.flex-1').find('.doname').html();
