@@ -803,12 +803,19 @@ $(function(){
                                 end: new Date().getFullYear(),
                                 defaultValue: [new Date().getFullYear(), new Date().getMonth()+1, new Date().getDate()],
                                 onConfirm: function (result) {
-                                    if (result[1]<10){
-                                        var _content = result[0] + '年' + '0'+ result[1] +'月'+  result[2] + '日';
-                                        var _dd = result[0] + '-' + '0'+ result[1] +'-'+  result[2];//标准时间格式
-                                    }else{
+                                    // _dd为选择预约的时间
+                                    if (result[1]<10 && result[2]<10){//月和日小于10
+                                        var _dd = result[0] + '-' + '0'+ result[1] +'-0'+  result[2];
+                                        var _content = result[0] + '年' + '0'+ result[1] +'月'+ '0'+ result[2] + '日';
+                                    }else if(10 <= result[1] && result[2]<10){//月大于等于10，日小于10
+                                        var _dd = result[0] + '-' + result[1] +'-0'+  result[2];
+                                        var _content = result[0] + '年' + result[1] +'月'+'0'+  result[2] + '日';
+                                    }else if(result[1]<10 && 10 <= result[2]){//月小于10，,日大于等于10
+                                        var _dd = result[0] + '-0' + result[1] +'-' + result[2];
+                                        var _content = result[0] + '年' +'0'+ result[1] +'月'+  result[2] + '日';
+                                    }else if(10<=result[1] && 10 <= result[2]){//月和日大于等于10
+                                        var _dd = result[0] + '-' + result[1] + '-'+ result[2];
                                         var _content = result[0] + '年' + result[1] +'月'+  result[2] + '日';
-                                        var _dd = result[0] + '-' + result[1] +'-'+  result[2] + '-';//标准时间格式
                                     }
                                     var now = new Date();
                                     var year = now.getFullYear();
@@ -821,18 +828,101 @@ $(function(){
                                         day = "0" + day;
                                     }
                                     var to_day = year +'-'+ month +'-'+  day;
-                                    var today = new Date();
-                                    var oneday = 1000 * 60 * 60 * 24;
-                                    // 三周以内
-                                    var lastMonday = new Date(today- oneday * (today.getDay() - 24));
-                                    var t_time = Date.parse(to_day);//今天的时间戳
-                                    var r_time = Date.parse(_dd);//预约的时间戳
-                                    var m_time = Date.parse(lastMonday);//三周以内的时间戳
-                                    if (r_time < t_time || r_time > m_time){//预约时间不正确
-                                        $('.reservse_time').css('display','block');
-                                        $('.reservse_time').css('opacity','1');
-                                        $('.DatePicker .weui-cell__bd').html('');
-                                    }else{//格式正确
+                                    // 三周以内，以今天的时间为参照
+                                    var la_y = Number(year);
+                                    var la_m = Number(month);
+                                    var la_d = Number(day) + 21;//三周为21天，所以以21天计,截止天
+                                    switch(Number(month)){
+                                        case 1:
+                                        case 3:
+                                        case 5:
+                                        case 7:
+                                        case 8:
+                                        case 10://每月31天
+                                            if (la_d>31){//超出本月
+                                                console.log('可约到下个月');
+                                                if(Number(month) == 10){
+                                                    if ((la_d-31) <10){
+                                                        var last_date = la_y +'-'+ (la_m + 1) +'-0' + (la_d-31);
+                                                    }else{
+                                                        var last_date = la_y +'-'+ (la_m + 1) +'-' + (la_d-31);
+                                                    }
+                                                }else{
+                                                    if ((la_d-31) <10){
+                                                        var last_date = la_y +'-0'+ (la_m + 1) +'-0' + (la_d-31);
+                                                    }else{
+                                                        var last_date = la_y +'-0'+ (la_m + 1) +'-' + (la_d-31);
+                                                    } 
+                                                }
+                                            }else{//未超出本月
+                                                console.log('只可约到本月');
+                                                if(Number(month) == 10){
+                                                    var last_date = la_y +'-'+ la_m +'-' +la_d;
+                                                }else{
+                                                    var last_date = la_y +'-0'+ la_m +'-' +la_d;
+                                                }
+                                            }
+                                            console.log(last_date);
+                                            break;
+                                        case 12://本月31天
+                                            if ((la_d-31) <10){
+                                                var last_date = la_y +'-0'+ (la_m + 1) +'-0' + (la_d-31);
+                                            }else{
+                                                var last_date = la_y +'-0'+ (la_m + 1) +'-' + (la_d-31);
+                                            } 
+                                            break;
+                                        case 4:
+                                        case 6:
+                                        case 9:
+                                        case 11://每月30天
+                                            // console.log('30天');
+                                            break;
+                                        case 2:
+                                            if (re_y % 4 == 0 && re_y % 100 !== 0){//如果是闰年，2月为29天
+                                                // console.log('29天');
+                                            }else{//平年，2月为28天
+                                                // console.log('28天');  
+                                            }
+                                            break;
+                                    }
+
+
+
+
+
+
+                                    switch(result[1]){
+                                        case 1:
+                                        case 3:
+                                        case 5:
+                                        case 7:
+                                        case 8:
+                                        case 10:
+                                        case 12:
+                                            // console.log('31天');
+                                            break;
+                                        case 4:
+                                        case 6:
+                                        case 9:
+                                        case 11:
+                                            // console.log('30天');
+                                            break;
+                                        case 2:
+                                            if (re_y % 4 == 0 && re_y % 100 !== 0){//如果是闰年，2月为29天
+                                                // console.log('29天');
+                                            }else{//平年，2月为28天
+                                                // console.log('28天');  
+                                            }
+                                            break;
+                                    }
+                                    // console.log(to_day >_dd);
+                                    // console.log(to_day >_dd);
+                                    // if (r_time < t_time || r_time > m_time){//预约时间不正确
+                                        
+                                    //     $('.reservse_time').css('display','block');
+                                    //     $('.reservse_time').css('opacity','1');
+                                    //     $('.DatePicker .weui-cell__bd').html('');
+                                    // }else{//格式正确
                                         $('.DatePicker .weui-cell__bd').html(_content);
                                         var date = $('.re_date').html();
                                         $('.re_time').html('');
@@ -841,7 +931,7 @@ $(function(){
                                         var dateStr3 = dateStr2.replace('日','');//最终日期
                                         that._date = dateStr3;//日期
                                         return;
-                                    }
+                                    // }
                                     $('.reservse_time .time-sure3').live('click',function(){
                                         $('.reservse_time').css('opacity','0');
                                         $('.reservse_time').css('display','none');
