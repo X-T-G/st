@@ -230,57 +230,75 @@ $(function(){
         $('.regist .pass').live('click',function(){
             var password =  $('.pass_name').val();
             var invitedNum = $('.invitedNum').val();//邀请码
-            if (invitedNum = undefined) {
-                var invitedNum = null;
-            }else{
+            if (invitedNum.length == 0) {//未输入验证码
+                $('.weui-dialog .weui-dialog__bd').html('请输入邀请码！'); 
+                var $androidDialog2 = $('#Dialog2');
+                $androidDialog2.fadeIn(200);
+            }else if(invitedNum.length !== 0 ){
                 var invitedNum = invitedNum;
-            }
-            if ($('.re_phone').hasClass('active')) {//手机注册
-                var phone = $('.phone_input').val();
-                var smsCode = $('.pass_code').val();//手机验证码
-                $.ajax({//手机注册
-                    type: "POST",
-                    url: medicine_url +'/v1.0.0/signup',
-                    contentType:"application/json",
-                    data: JSON.stringify({phone:phone,password:password,smsCode:smsCode,invitedNum:invitedNum}),
-                    dataType: "json",
-                    success: function(data){
-                        if(data.code !== 0){//事件处理
-                            $('.weui-dialog .weui-dialog__bd').html(data.message);
-                            var $androidDialog2 = $('#Dialog2');
-                            $androidDialog2.fadeIn(200);
-                        }else{
-                            $('#regist_info').css('display','block');
-                            setTimeout(function(){
-                                $('#regist_info').css('display','none');
-                                window.location.href='./login.html';
-                            },2000);
+                var once_pass = $('.once_pass').val();
+                var twice_pass = $('.twice_pass').val();
+                if (once_pass == twice_pass && 6 <= once_pass.length && 6 <= twice_pass.length){//两次密码一致
+                    var pass_code = $('.pass_code').val();
+                    var re_input = $('.re_input').val();
+                    if(re_input.length>0 && pass_code.length>0){//判断手机和验证码是否输入完成
+                        if ($('.re_phone').hasClass('active')) {//手机注册
+                            var phone = $('.phone_input').val();
+                            var smsCode = $('.pass_code').val();//手机验证码
+                            $.ajax({//手机注册
+                                type: "POST",
+                                url: medicine_url +'/v1.0.0/signup',
+                                contentType:"application/json",
+                                data: JSON.stringify({phone:phone,password:password,smsCode:smsCode,invitedNum:invitedNum}),
+                                dataType: "json",
+                                success: function(data){
+                                    if(data.code !== 0){//事件处理
+                                        $('.weui-dialog .weui-dialog__bd').html(data.message);
+                                        var $androidDialog2 = $('#Dialog2');
+                                        $androidDialog2.fadeIn(200);
+                                    }else{
+                                        $('#regist_info').css('display','block');
+                                        setTimeout(function(){
+                                            $('#regist_info').css('display','none');
+                                            window.location.href='./login.html';
+                                        },2000);
+                                    }
+                                }
+                            });
+                        }else if($('.re_email').hasClass('active')){//邮箱注册
+                            var email =  $('.email_input').val();
+                            var code = $('.pass_code').val();//邮箱验证码
+                            $.ajax({//邮箱注册
+                                type: "POST",
+                                url: medicine_url +'/v1.0.0/sign-up/email',
+                                contentType:"application/json",
+                                data: JSON.stringify({email:email,password:password,code:code,invitedNum:invitedNum}),//只有此处传这样的数据结构
+                                dataType: "json",
+                                success: function(data2){
+                                    if(data2.code !== 0){//事件处理
+                                        $('.weui-dialog .weui-dialog__bd').html(data2.message);
+                                        var $androidDialog2 = $('#Dialog2');
+                                        $androidDialog2.fadeIn(200);
+                                    }else{
+                                        $('#regist_info').css('display','block');
+                                        setTimeout(function(){
+                                            $('#regist_info').css('display','none');
+                                            window.location.href='./login.html';
+                                        },2000);
+                                    }
+                                }
+                            });
                         }
+                    }else{
+                        $('.weui-dialog .weui-dialog__bd').html('请填写完整信息！'); 
+                        var $androidDialog2 = $('#Dialog2');
+                        $androidDialog2.fadeIn(200); 
                     }
-                });
-            }else if($('.re_email').hasClass('active')){//邮箱注册
-                var email =  $('.email_input').val();
-                var code = $('.pass_code').val();//邮箱验证码
-                $.ajax({//邮箱注册
-                    type: "POST",
-                    url: medicine_url +'/v1.0.0/sign-up/email',
-                    contentType:"application/json",
-                    data: JSON.stringify({email:email,password:password,code:code,invitedNum:invitedNum}),//只有此处传这样的数据结构
-                    dataType: "json",
-                    success: function(data2){
-                        if(data2.code !== 0){//事件处理
-                            $('.weui-dialog .weui-dialog__bd').html(data2.message);
-                            var $androidDialog2 = $('#Dialog2');
-                            $androidDialog2.fadeIn(200);
-                        }else{
-                            $('#regist_info').css('display','block');
-                            setTimeout(function(){
-                                $('#regist_info').css('display','none');
-                                window.location.href='./login.html';
-                            },2000);
-                        }
-                    }
-                });
+                }else{//密码不一致
+                    $('.weui-dialog .weui-dialog__bd').html('两次密码不一致或者未输入密码！'); 
+                    var $androidDialog2 = $('#Dialog2');
+                    $androidDialog2.fadeIn(200);
+                }
             }
         });
     }else if($('.person').size()>0){//个人中心
