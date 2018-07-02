@@ -1125,10 +1125,19 @@ $(function(){
                 });
             },
             methods:{
-                cancel_reserve:function(reserve_id){//取消按钮
+                cancel_reserve:function(my_order){//取消按钮
                     var that = this;
-                    that.show_modal = true;
-                    that.reserve_id = reserve_id;
+                    var reserve_time = my_order.appointmentTime;
+                    var _str = reserve_time.split('-')[2];
+                    var _dd = Number(_str.split('T')[0]);
+                    var now = new Date();
+                    var day = Number(now.getDate());
+                    that.reserve_id = my_order.id;
+                    if(_dd == day){
+                        that.show_modal = true;
+                    }else{
+                        that.resure();
+                    }
                 },
                 resure:function(){//确认取消
                     var that = this;

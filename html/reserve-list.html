@@ -38,14 +38,26 @@
                         </div>
                     </div>
                     <div class="clearfix" v-if="my_order.status.dictId=='appointment_status_accept'">
-                        <button class="re_cancel" v-on:click="cancel_reserve(my_order.id)">取消预约</button>
+                        <button class="re_cancel" v-on:click="cancel_reserve(my_order)">取消预约</button>
                     </div>
-                    <div class="clearfix cance_order" v-if="my_order.status.dictId=='appointment_status_cancel'">
+                    <div class="clearfix cance_order" v-else-if="my_order.status.dictId=='appointment_status_cancel'">
                         已取消
                     </div>
-                    <!-- <div class="clearfix cance_order" v-if="my_order.status.dictId=='appointment_status_cancel'">
-                        爽约
-                    </div> -->
+                    <div class="clearfix cance_order" v-else-if="my_order.status.dictId=='appointment_status_finish'">
+                        已接待
+                    </div>
+                    <div class="clearfix cance_order" v-else-if="my_order.status.dictId=='appointment_status_accepting'">
+                        接待中
+                    </div>
+                    <div class="clearfix cance_order" v-else-if="my_order.status.dictId=='appointment_status_close'">
+                        已关闭
+                    </div>
+                    <div class="clearfix cance_order" v-else-if="my_order.status.dictId=='appointment_status_makePrescription'">
+                        已开方
+                    </div>
+                    <div class="clearfix cance_order" v-else-if="my_order.status.dictId=='appointment_status_cached'">
+                        医助已保存
+                    </div>
                 </div>
                 <!-- 分页 -->
                 <div class="clearfix fr cli_page">
