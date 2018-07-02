@@ -145,6 +145,57 @@ $(function(){
                     dataType: "json",
                     success: function(data){
                         if(data.code==0){
+                            $.ajax({//手机注册请求
+                                type: "GET",
+                                url: medicine_url +'/v1.0.0/signup/getSmsCode/'+_val2,
+                                dataType: "json",
+                                success: function(data2){
+                                    if (data2.code !== 0) {
+                                        $('.weui-dialog .weui-dialog__bd').html(data2.message);
+                                        var $androidDialog2 = $('#Dialog2');
+                                        $androidDialog2.fadeIn(200);
+                                    }else{
+                                        clearTimeout(set_time);
+                                        $('.get_code .remain_time').html('60');//初始化
+                                        $('.get_code_btn').addClass('dis-no'); 
+                                        $('.get_code').removeClass('dis-no'); 
+                                        var _Time = 60;
+                                        function _time(){
+                                            if (_Time>0){
+                                                set_time = setTimeout(function(){
+                                                    _Time--;
+                                                    var remain_time = _Time;
+                                                    $('.get_code .remain_time').html(remain_time);
+                                                    _time();
+                                                },1000);
+                                            }else{
+                                                $('button.get_code_btn.hasinput').removeClass('dis-no');  
+                                                $('.get_code').addClass('dis-no');
+                                            }
+                                        }
+                                        _time();
+                                    }
+                                }
+                            });
+                        }else{
+                            $('.weui-dialog .weui-dialog__bd').html(data.message);
+                            var $androidDialog2 = $('#Dialog2');
+                            $androidDialog2.fadeIn(200);
+                        }
+                    }
+                });
+            }else if($('.re_email').hasClass('active')){//邮箱登录
+                var _val = $('.email_input').val();
+                $.ajax({//邮箱注册请求
+                    type: "GET",
+                    url: medicine_url +'/v1.0.0/sign-up/get-validate-code/email/'+_val,
+                    dataType: "json",
+                    success: function(data){
+                        if(data.code !== 0){//事件处理
+                            $('.weui-dialog .weui-dialog__bd').html(data.message);
+                            var $androidDialog2 = $('#Dialog2');
+                            $androidDialog2.fadeIn(200);
+                        }else{
                             clearTimeout(set_time);
                             $('.get_code .remain_time').html('60');//初始化
                             $('.get_code_btn').addClass('dis-no'); 
@@ -165,73 +216,6 @@ $(function(){
                                 }
                             }
                             _time();
-                            $.ajax({//手机注册请求
-                                type: "GET",
-                                url: medicine_url +'/v1.0.0/signup/getSmsCode/'+_val2,
-                                dataType: "json",
-                                success: function(data2){
-                                    if (data2.code !== 0) {
-                                        var app = new Vue({
-                                            el: '#Dialog2',
-                                            data: {
-                                                msg: data2.message,
-                                            }
-                                        });
-                                        var $androidDialog2 = $('#Dialog2');
-                                        $androidDialog2.fadeIn(200);
-                                    }
-                                }
-                            });
-                        }else{
-                            if (data.code == 101) {
-                                var msg = '手机号已存在';
-                            }else if (data.code == 99) {
-                                var msg = '查询失败';
-                            }else{
-                                var msg = '参数校验失败';
-                            }
-                            var app = new Vue({
-                                el: '#Dialog2',
-                                data: {
-                                    msg: msg,
-                                }
-                            });
-                            var $androidDialog2 = $('#Dialog2');
-                            $androidDialog2.fadeIn(200);
-                        }
-                    }
-                });
-            }else if($('.re_email').hasClass('active')){//邮箱登录
-                var _val = $('.email_input').val();
-                clearTimeout(set_time);
-                $('.get_code .remain_time').html('60');//初始化
-                $('.get_code_btn').addClass('dis-no'); 
-                $('.get_code').removeClass('dis-no'); 
-                var _Time = 60;
-            
-                function _time(){
-                    if (_Time>0){
-                        set_time = setTimeout(function(){
-                            _Time--;
-                            var remain_time = _Time;
-                            $('.get_code .remain_time').html(remain_time);
-                            _time();
-                        },1000);
-                    }else{
-                        $('button.get_code_btn.hasinput').removeClass('dis-no');  
-                        $('.get_code').addClass('dis-no');
-                    }
-                }
-                _time();
-                $.ajax({//邮箱注册请求
-                    type: "GET",
-                    url: medicine_url +'/v1.0.0/sign-up/get-validate-code/email/'+_val,
-                    dataType: "json",
-                    success: function(data){
-                        if(data.code !== 0){//事件处理
-                            $('.weui-dialog .weui-dialog__bd').html(data.message);
-                            var $androidDialog2 = $('#Dialog2');
-                            $androidDialog2.fadeIn(200);
                         }
                     }
                 }); 
