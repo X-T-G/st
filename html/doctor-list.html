@@ -21,29 +21,7 @@
         </div>
         <div id="doctor_list">
             <div class="doctor_list" :class=[{"dis-no":(show_page==false)}]  v-for="doctor in doctors">
-                <div class="doctor_pic">
-                    <div class="flex">
-                        <a v-on:click="setname(doctor)">
-                            <img  v-if="doctor.icon ==null"  src="../images/avator_default.png"  alt="" >
-                            <img  v-else-if="doctor.icon ==''" src="../images/avator_default.png"  alt=""  >
-                            <img  v-else-if="doctor.icon !==null && doctor.icon !=='' " v-bind:src="doctor.icon"   alt="" >
-                            <div class="flex-1 doctor_detail">
-                                <a v-on:click="setname(doctor)">
-                                    <p class="doname"  >{{doctor.name}}</p>
-                                    <p >{{doctor.major}}</p>
-                                    <p>诊费：{{doctor.fee}}元/次</p>
-                                    <p>坐诊时间：
-                                        <span v-if="doctor.id='10'" style="font-size: 12px;color: #F17355;margin-left: 3px;">预约制</span>
-                                        <span v-else-if="doctor.id !='10'" style="font-size: 12px;color: #F17355;margin-left: 3px;"  v-for="day in week[doctor.id]">{{day.week}}</span>
-                                    </p> 
-                                </a>
-                            </div>
-                        </a>
-                        <p style="line-height: 125px;">
-                            <button class="reserve_doctor" v-on:click="reserve(doctor,week[doctor.id])">预约</button>
-                        </p>
-                    </div>
-                </div>
+                <!-- 每个医生为一个块 -->
                 <div class="doctor_pic">
                     <div class="flex">
                         <a v-on:click="setname(doctor)">
