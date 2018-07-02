@@ -240,7 +240,11 @@ $(function(){
                 var twice_pass = $('.twice_pass').val();
                 if (once_pass == twice_pass && 6 <= once_pass.length && 6 <= twice_pass.length){//两次密码一致
                     var pass_code = $('.pass_code').val();
-                    var re_input = $('.re_input').val();
+                    if ($('.re_phone').hasClass('active')) {
+                        var re_input = $('.phone_input').val();
+                    }else{
+                        var re_input = $('.email_input').val();
+                    }
                     if(re_input.length>0 && pass_code.length>0){//判断手机和验证码是否输入完成
                         if ($('.re_phone').hasClass('active')) {//手机注册
                             var phone = $('.phone_input').val();
