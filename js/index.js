@@ -907,18 +907,18 @@ $(function(){
                     },
                     choose2:function(e){//选时间
                         var that = this;
-                        if($('.time_container').find('.can_reserve').hasClass('selected')){
+                        if($('.time_container').find('.active').hasClass('selected')){
                             $('.weui-skin_android').addClass('dis-no');
-                            var _content1 = $('.can_reserve.selected').parents('.text_center').find('p.tint').html();
-                            var _content2 = $('.can_reserve.selected').html();
+                            var _content1 = $('.can_reserve.active.selected').parents('.text_center').find('p.tint').html();
+                            var _content2 = $('.can_reserve.active.selected').html();
                             var _content = _content1 +" "+ _content2;
                             $('.DatePicker2 .weui-cell__bd').html(_content);
                             $('.weui-skin_android').addClass('dis-no');
-                            $('.can_reserve').removeClass('selected');
+                            $('.can_reserve.active').removeClass('selected');
                             that._time = _content2;
                         }else{
                             $('.weui-skin_android').addClass('dis-no');
-                            $('.can_reserve').removeClass('selected');
+                            $('.can_reserve.active').removeClass('selected');
                         }
                     },
                     choose_doctor:function(doctor){
@@ -1044,12 +1044,12 @@ $(function(){
                     },
                     hidden_modal:function(){//隐藏模态框
                         $('.weui-skin_android').addClass('dis-no');
-                        $('.can_reserve').removeClass('selected');
+                        $('.can_reserve.active').removeClass('selected');
                     }
                 }
             });
             // 时间选中效果
-            $('.choose_time div.fl.can_reserve').live('click',function(e){
+            $('.choose_time div.fl.active').live('click',function(e){
                 e.preventDefault();
                 e.stopPropagation();
                 if($(this).hasClass('selected')){//如果被选中

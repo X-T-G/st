@@ -201,14 +201,14 @@ img.store_pic{width: 108px;height:108px;}
 .reserve_detail .weui-cell__bd input{text-align: left;padding-right: 20px;}
 .reserve_detail .morning{margin: 10px 0 20px;}
 .reserve_detail .weui-actionsheet__menu .time_container{padding-top: 20px;padding-bottom: 40px;max-height: 500px;overflow-y: auto;}
-.reserve_detail .weui-actionsheet .choose_time div.fl{width:60px;text-decoration: line-through;color: #939399;height: 30px;line-height:30px;text-align:center;margin-left: 10px;border: 1px solid #e5e5e5;margin-bottom: 10px;}
+.reserve_detail .weui-actionsheet .choose_time div.fl{width:60px;text-decoration: line-through;color: #F17355;height: 30px;line-height:30px;text-align:center;margin-left: 10px;border: 1px solid #686b6d;margin-bottom: 10px;}
 .reserve_detail .weui-skin_android .weui-actionsheet{width: 290px;}
 .reserve_detail .weui-skin_android p.tint{margin-bottom: 10px;}
 .reserve_detail .weui-skin_android p.tint.text_fr.info{font-size: 10px;}
 .reserve_detail .weui-skin_android .time_sure{width: 100%;height: 40px;line-height: 40px;background-color: #F17355;color: #fff;position: absolute;bottom: 0;outline: none;box-shadow: none;border: none;}
-.reserve_detail .weui-actionsheet .choose_time div.fl.can_reserve.selected{border: 1px solid #F17355;color:#F17355;background-color: #fff;}
-.reserve_detail .weui-actionsheet .choose_time div.fl.can_reserve{text-decoration: none;border: 1px solid #686b6d;color: #686b6d;}
+.reserve_detail .weui-actionsheet .choose_time div.fl.can_reserve.active{text-decoration: none;border: 1px solid #686b6d;color: #686b6d;}
 .reserve_detail .weui-actionsheet .choose_time div.fl.cannot{color: #939399;}
+.reserve_detail .weui-actionsheet .choose_time div.fl.active.selected{border: 1px solid #F17355;color:#F17355;background-color: #fff;}
 .reserve_detail .re_persons{height: 45px;line-height: 45px;}
 .reserve_detail .re_persons .weui-cell__hd{width: 100%;}
 .reserve_detail .weui-cell{background-color: #fff;}

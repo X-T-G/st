@@ -79,23 +79,20 @@
                     <div class="weui-skin_android dis-no" >
                         <div class="weui-mask" v-on:click="hidden_modal"></div>
                         <div class="weui-actionsheet">
-                            <div class="weui-actionsheet__menu">
+                            <div class="weui-actionsheet__menu" v-if="is_work==true">
                                 <div class="time_container">
                                     <h2 class="text_center">选择预约时间段</h2>
-                                    <div v-for="">
-                                        <!-- 遍历上班时间 -->
+                                    <div>
                                         <div class="text_center morning">
                                             <p class="tint">上午</p>
                                             <div class="clearfix choose_time">
-                                                <div class="fl" v-for= "re_time in work_time"  style="cursor:pointer"  :class=[{"can_reserve":(is_work==true)}] v-if="re_time._time.split(':')[0]<12 && re_time.status== 'active'">{{re_time._time}}</div>
-                                                <div class="fl" v-for= "re_time in work_time"  style="cursor:pointer"  :class=[{"":(is_work==true)}] v-if="re_time._time.split(':')[0]<12 && re_time.status== 'notactive'">{{re_time._time}}</div>
+                                                <div class="fl" v-for= "re_time in work_time"  style="cursor:pointer"  :class="[re_time.status,{'can_reserve':(is_work==true)}]" v-if="re_time._time.split(':')[0]<12">{{re_time._time}}</div>
                                             </div>
                                         </div> 
                                         <div class="text_center afternoon">
                                             <p class="tint">下午</p>
                                             <div class="clearfix choose_time">
-                                                <div class="fl" v-for= "re_time in work_time" style="cursor:pointer"  :class=[{"can_reserve":(is_work==true)}] v-if="re_time._time.split(':')[0]>12  && re_time.status== 'active'">{{re_time._time}}</div>
-                                                <div class="fl" v-for= "re_time in work_time" style="cursor:pointer"  :class=[{"":(is_work==true)}] v-if="re_time._time.split(':')[0]>12  && re_time.status== 'notactive'">{{re_time._time}}</div>
+                                                <div class="fl" v-for= "re_time in work_time" style="cursor:pointer"  :class="[re_time.status,{'can_reserve':(is_work==true)}]" v-if="re_time._time.split(':')[0]>12">{{re_time._time}}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -104,6 +101,11 @@
                                     </div>
                                 </div>
                                 <button type="button" class="time_sure"  v-on:click="choose2">确认</button>
+                            </div>
+                            <div v-if="is_work==false" class="actionsheet__menu" >
+                                <div class="time_container" style="text-align: center;color: #fff;">
+                                    该医生今日不上班，请重新选择日期。
+                                </div>
                             </div>
                         </div>
                     </div>
