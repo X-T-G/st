@@ -275,13 +275,13 @@ img.store_pic{width: 108px;height:108px;}
 .doctor_detail .doctor_pic .skill{margin-top:10px;text-indent: 27px; }
 
 /* 医生列表 */
-.doctor_list{padding: 20px;background-color: #fff;margin-bottom: 20px;}
+.doctor_list{background-color: #f7f4ef;margin-bottom: 20px;}
 .doctor_list .doctor_pic img{width: 100px;height: 120px;margin-right: 10px;}
 #my_serve .weui-cell_select div.flex-1{padding-left: 15px;}
 #my_serve .weui-cell_select .weui-select{padding-left: 0;}
 #my_serve .reserve_detail .weui-cell__bd input.re_tel{text-align: left;}
 #doctor_list button.reserve_doctor{width: 50px;height: 25px;border-radius: 4px;border: none;background-color: #F17355;color: #fff;}
-
+#doctor_list .doctor_pic{margin-bottom: 10px;background-color: #fff;padding: 10px 20px;}
 /* 预约列表 */
 #order_detail .weui-toptips{height: 40px;line-height: 40px;background-color:#1AAD19;}
 #order_detail .order_detail {border-bottom:none;}
