@@ -285,3 +285,13 @@ img.store_pic{width: 108px;height:108px;}
 /* 预约列表 */
 #order_detail .weui-toptips{height: 40px;line-height: 40px;background-color:#1AAD19;}
 #order_detail .order_detail {border-bottom:none;}
+#order_detail .cance_order{width: 56px;height: 26px;float: right;background-color: #F17355;color: #fff;margin: 0 15px 10px 0;border: none;border-radius: 3px;line-height: 26px;font-size: 13px;text-align: center;}
+#order_detail .cli_page div.active {border: none;background-color: #f7f4ef;}
+#order_detail .order_page {border: 1px solid #f57d64;color: #f57d64;background-color: #fff;}
+#order_detail .cli_page .order_page {margin-left: 4px;padding: 4px 8px;width: 30px;height: 30px;text-align: center;line-height: 23px;}
+#order_detail .cli_page{margin: 20px;}
+
+
+
+
+

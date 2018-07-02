@@ -1,12 +1,12 @@
 $(function(){
     // 测试
-    // var medicine_url = "http://192.168.0.155:8006/stmedicine";// 测试个人信息
-    // var assistant_url = "http://192.168.0.155:8036/stassistant";// 测试预约
-    // var weixin_url = "http://192.168.0.155:8046/stweixin";// 测试微信
+    var medicine_url = "http://192.168.0.155:8006/stmedicine";// 测试个人信息
+    var assistant_url = "http://192.168.0.155:8036/stassistant";// 测试预约
+    var weixin_url = "http://192.168.0.155:8046/stweixin";// 测试微信
     //线上  
-    var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
-    var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
-    var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
+    // var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
+    // var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
+    // var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
 
     // 公共方法401跳转
     function to_login(data){
@@ -497,12 +497,12 @@ $(function(){
                     var class_name = event.target.className;
                     var num = event.target.innerHTML;
                     var is_active = class_name.indexOf('active');
-                    that.show_page = false;
-                    that.has_noinfo = false;
-                    that.loading = true;
                     if (is_active !==-1) {//被选中
                         return;
                     }else{
+                        that.show_page = false;
+                        that.has_noinfo = false;
+                        that.loading = true;
                         that.current = num;
                         var page = num-1;
                         var order_status = that.status;
@@ -717,7 +717,7 @@ $(function(){
                     person:[],
                     work_time:[],
                     is_work:false,//医生是否上班
-
+                    appointmentName:[],//预约人
                 },
                 created:function(){
                     var that = this;
@@ -746,6 +746,7 @@ $(function(){
                         success: function(data){
                             if(data.code == 0){
                                 that.person = data.object;
+                                that.appointmentName =  data.object.inviteNumber;
                             }
                             to_login(data);
                         }
@@ -950,6 +951,8 @@ $(function(){
                                     if (Data_length == 0) {//医生没有被预约
                                         that.is_work = true;
                                         that.work_time = work_time;
+                                        that.person.inviteNumber = $('.re_name').val();
+                                        that.person.phone =  $('.re_tel').val();
                                         return;
                                     }else{//医生时间被占用，数据处理
                                         for(var i = 0 ;i<work_time.length;i++){
@@ -959,6 +962,9 @@ $(function(){
                                                 }
                                             }
                                         }
+                                        that.is_work = true;
+                                        that.person.inviteNumber = $('.re_name').val();
+                                        that.person.phone =  $('.re_tel').val();
                                         that.work_time = work_time;
                                     }
                                 }else if (data.code == 1){//医生当天不上班
@@ -976,6 +982,7 @@ $(function(){
                         var re_date = $('.re_date').html();
                         var re_time = $('.re_time').html();
                         var doc_name = $('.doc_name').html();
+                        var appointmentName = that.appointmentName;
                         var doctor = JSON.parse(localStorage.getItem('doctor_detail')); 
                         var _date = that._date;
                         var _time = that._time;
@@ -991,7 +998,8 @@ $(function(){
                                 type: "POST",
                                 url:assistant_url + '/assistant/appointment/saveAppointment',
                                 contentType:"application/json",
-                                data: JSON.stringify({appointmentTime:_time,remark:'',doctorEntity:doctor}),
+                                // visitName:就诊人，appointmentName：预约人
+                                data: JSON.stringify({appointmentTime:_time,remark:'',doctorEntity:doctor,appointmentName:appointmentName,visitName:re_name,phone:re_tel}),
                                 success: function(data){
                                     if (data.code == 0) {
                                             window.location.href='./reserve-success.html';
@@ -1073,6 +1081,7 @@ $(function(){
 
     }else if($('.order_detail').size()>0){
         var _token = localStorage.getItem('access_token');
+        var page = 0;//默认第一页
         var app = new Vue({
             el: '#order_detail',
             data: {
@@ -1082,6 +1091,8 @@ $(function(){
                 show_page:false,//是否显示页面
                 reserve_id:[],//取消id
                 show_modal:false,
+                page:[],
+                current:1,//当前页面
             },
             created:function(){
                 var that = this;
@@ -1090,10 +1101,11 @@ $(function(){
                         'Authorization': 'bearer '+_token
                     },
                     type: "GET",
-                    url:weixin_url + '/appointment/user-appointment-list',
+                    url:weixin_url + '/appointment/user-appointment-list?page='+page,
                     contentType:"application/json",
                     success: function(data){
                         if (data.code == 0) {
+                            that.current = 1;
                             var Data_length =  data.page.content.length;
                             if (Data_length == 0) {
                                 that.show_page = false;
@@ -1103,6 +1115,7 @@ $(function(){
                             }else{//请求到数据
                                 that.my_orders = data.page.content;
                                 that.show_page = true;
+                                that.page = data.page;
                                 that.has_noinfo = false;
                                 that.loading = false;
                             }
@@ -1171,7 +1184,49 @@ $(function(){
                 cancel:function(){//取消
                     var that = this;
                     that.show_modal = false;
-                }
+                },
+                change_page:function(event){
+                    var that =this;
+                    var class_name = event.target.className;
+                    var num = event.target.innerHTML;
+                    var is_active = class_name.indexOf('active');
+                    if (is_active !==-1) {//被选中
+                        return;
+                    }else{
+                        that.show_page = false;
+                        that.has_noinfo = false;
+                        that.loading = true;
+                        that.current = num;
+                        var page = num-1;
+                        // that.page = num;
+                        $.ajax({//发起请求
+                            headers: {
+                                'Authorization': 'bearer '+_token
+                            },
+                            type: "GET",
+                            url:weixin_url + '/appointment/user-appointment-list?page='+page,
+                            contentType:"application/json",
+                            success: function(data){
+                                if (data.code == 0) {
+                                    var Data_length =  data.page.content.length;
+                                    if (Data_length == 0) {
+                                        that.show_page = false;
+                                        that.has_noinfo = true;
+                                        that.loading = false;
+                                        return;
+                                    }else{//请求到数据
+                                        that.my_orders = data.page.content;
+                                        that.show_page = true;
+                                        that.page = data.page;
+                                        that.has_noinfo = false;
+                                        that.loading = false;
+                                    }
+                                }
+                                to_login(data);
+                            }
+                        });
+                    }
+                },
             }
         });
     }else if($('.doctor_detail').size()>0){
