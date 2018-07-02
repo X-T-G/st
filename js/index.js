@@ -1198,7 +1198,6 @@ $(function(){
                         that.loading = true;
                         that.current = num;
                         var page = num-1;
-                        // that.page = num;
                         $.ajax({//发起请求
                             headers: {
                                 'Authorization': 'bearer '+_token
