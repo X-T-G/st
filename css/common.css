@@ -299,7 +299,7 @@ img.store_pic{width: 108px;height:108px;}
 .goods_container .l_good.each_good{padding-right: 5px;}
 .goods_container .r_good.each_good{padding-left: 5px;}
 .goods_container h1{text-align: center;font-size: 14px;color: #000;height: 40px;line-height: 40px;background-color: #fff;}
-.goods_container .no_good{color: #939399;height: 40px;line-height: 40px;text-align: center;}
+.goods_container .no_good{color: #939399;padding-bottom: 80px;height: 40px;line-height: 40px;text-align: center;}
 .goods_container .bottom{height: 50px;width: 100%;border-top:1px solid #e5e5e5;padding-top: 5px;position: fixed;background-color:#fff;bottom: 0;z-index: 20000;text-align: center;}
 .goods_container .bottom img{width:21px;}
 .goods_container .bottom p{font-size: 12px;}
