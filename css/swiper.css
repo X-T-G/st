@@ -92,7 +92,8 @@ sizes, pagination, etc.
 
 	/*width:200px;
 	height: 100px;*/
-	/* height: 210px; */
+	/* min-height: 210px; */
+	position: relative;
 }
 .swiper-slide {
 	/* Specify Slides's Size: */
@@ -144,7 +145,7 @@ Pagination Styles
 .pagination {
 	position: absolute;
 	z-index: 20;
-	top: 180px;
+	bottom: 20px;
 	width: 100%;
 	text-align: center;
   }
