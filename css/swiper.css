@@ -92,7 +92,7 @@ sizes, pagination, etc.
 
 	/*width:200px;
 	height: 100px;*/
-	/* min-height: 210px; */
+	min-height: 210px;
 	position: relative;
 }
 .swiper-slide {

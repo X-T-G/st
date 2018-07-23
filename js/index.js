@@ -1269,5 +1269,9 @@ $(function(){
                 map:map,
             }
         });
+    }else if($('.store_index').size()>0){
+        console.log(444);
+        // import { Sku } from 'vant';
+        // Vue.use(Sku);
     }
 });

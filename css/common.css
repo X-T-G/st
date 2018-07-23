@@ -304,7 +304,8 @@ img.store_pic{width: 108px;height:108px;}
 .goods_container .bottom img{width:21px;}
 .goods_container .bottom p{font-size: 12px;}
 .store_index{overflow: hidden;}
-
+.store_index .swiper-wrapper img,.store_index .swiper-container{height: 210px;}
+.store_index .swiper-wrapper img{width: auto;}
 /* 商品详情页 */
 /* .store_index .{} */
 

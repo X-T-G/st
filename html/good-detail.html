@@ -8,9 +8,11 @@
         <link rel="stylesheet" href="../css/common.css">
         <link rel="stylesheet" href="../css/weui.min.css">
         <link rel="stylesheet" href="../css/swiper.css">
+        <link rel="stylesheet" href="https://unpkg.com/vant/lib/vant-css/index.css">
         <script src="../js/zepto.min.js"></script>
         <script src="../js/swiper.min.js"></script>
         <script src="../js/vue.min.js"></script>
+        <script src="https://unpkg.com/vant/lib/vant.min.js"></script>
         <script src="../js/index.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     </head>
@@ -22,13 +24,12 @@
         <div class="store_index" id="store_index">
             <!-- 轮播模块 -->
             <div class="swiper-container">
-                <div class="swiper-wrapper clearfix">
+                <div class="swiper-wrapper">
                     <div class="swiper-slide">
                         <img src="//img.alicdn.com/imgextra/i4/479966771/TB104vzFh9YBuNjy0FfXXXIsVXa_!!0-item_pic.jpg_760x760Q50s50.jpg_.webp" alt="">
                     </div>
                     <div class="swiper-slide">
                         <img src="//img.alicdn.com/imgextra/i2/479966771/TB2RnzCFkOWBuNjSsppXXXPgpXa-479966771.jpg_760x760Q50s50.jpg_.webp" alt="">
-
                     </div>
                     <div class="swiper-slide">
                         <img src="//img.alicdn.com/imgextra/i1/479966771/TB2MCPMCNGYBuNjy0FnXXX5lpXa-479966771.jpg_760x760Q50s50.jpg_.webp" alt="">
@@ -42,100 +43,22 @@
                 </div>
                 <div class="pagination"></div>
             </div>
-            <div class="index_content">
-                <!-- 商品展示模块-->
-                <div class="goods_container">
-                    <!-- 热卖 -->
-                    <div class="hot_good">
-                        <div>
-                            <h1>热卖商品</h1>
-                        </div>
-                        <div class="clearfix">
-                            <div class="fl each_good l_good">
-                                <img src="../images/b-(1).jpg" alt="">
-                                <p class="good_name">神庭湿气散</p>
-                                <p class="good_price">
-                                    <span>¥</span>
-                                    <span>49.00</span>
-                                </p>
-                            </div>
-                            <div class="fl each_good r_good">
-                                <img src="../images/b-(2).jpg" alt="">
-                                <p class="good_name">神庭足浴散</p>
-                                <p class="good_price">
-                                    <span>¥</span>
-                                    <span>49.00</span>
-                                </p>
-                            </div>
-                            
-                        </div>
-                    </div>
-                    <!-- 全部 -->
-                    <div class="all_good">
-                        <div>
-                            <h1>全部商品</h1>
-                        </div>
-                        <div class="clearfix">
-                            <div class="fl each_good l_good">
-                                <img src="../images/b-(3).jpg" alt="">
-                                <p class="good_name">神庭妇浴散</p>
-                                <p class="good_price">
-                                    <span>¥</span>
-                                    <span>49.00</span>
-                                </p>
-                            </div>
-                            <div class="fl each_good r_good">
-                                <img src="../images/b-(2).jpg" alt="">
-                                <p class="good_name">神庭足浴散</p>
-                                <p class="good_price">
-                                    <span>¥</span>
-                                    <span>49.00</span>
-                                </p>
-                            </div>
-                            <div class="fl each_good l_good">
-                                <img src="../images/b-(3).jpg" alt="">
-                                <p class="good_name">神庭妇浴散</p>
-                                <p class="good_price">
-                                    <span>¥</span>
-                                    <span>49.00</span>
-                                </p>
-                            </div>
-                            <div class="fl each_good r_good">
-                                <img src="../images/b-(2).jpg" alt="">
-                                <p class="good_name">神庭足浴散</p>
-                                <p class="good_price">
-                                    <span>¥</span>
-                                    <span>49.00</span>
-                                </p>
-                            </div>
-                            <div class="fl each_good l_good">
-                                <img src="../images/b-(3).jpg" alt="">
-                                <p class="good_name">神庭妇浴散</p>
-                                <p class="good_price">
-                                    <span>¥</span>
-                                    <span>49.00</span>
-                                </p>
-                            </div>
-                            <div class="fl each_good r_good">
-                                <img src="../images/b-(1).jpg" alt="">
-                                <p class="good_name">神庭湿气散</p>
-                                <p class="good_price">
-                                    <span>¥</span>
-                                    <span>49.00</span>
-                                </p>
-                            </div>
-                            <div class="fl each_good l_good">
-                                <img src="../images/b-(3).jpg" alt="">
-                                <p class="good_name">神庭妇浴散</p>
-                                <p class="good_price">
-                                    <span>¥</span>
-                                    <span>49.00</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>            
+            <van-sku
+            v-model="showBase"
+            :sku="sku"
+            :goods="goods"
+            :goods-id="goodsId"
+            :hide-stock="sku.hide_stock"
+            :quota="quota"
+            :quota-used="quotaUsed"
+            :reset-stepper-on-hide="resetStepperOnHide"
+            :reset-selected-sku-on-hide="resetSelectedSkuOnHide"
+            :close-on-click-overlay="closeOnClickOverlay"
+            :disable-stepper-input="disableStepperInput"
+            :message-config="messageConfig"
+            @buy-clicked="onBuyClicked"
+            @add-cart="onAddCartClicked"
+          />           
         </div>
         <script type="text/javascript">
             var mySwiper = new Swiper('.swiper-container',{
