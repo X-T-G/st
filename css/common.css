@@ -306,6 +306,17 @@ img.store_pic{width: 108px;height:108px;}
 .store_index{overflow: hidden;}
 .store_index .swiper-wrapper img,.store_index .swiper-container,.goood_detail .swiper-wrapper img{height: 210px;}
 .store_index .swiper-wrapper img,.goood_detail .swiper-wrapper img{width: auto;}
+.store_index .good_img img{width: 100%;height: auto;}
+
 /* 商品详情页 */
-/* .store_index .{} */
+.goood_detail .store_small_pic{width: 50px;height: 50px;border-radius: 50%;margin-right: 10px;}
+.goood_detail .store_small_pic img{width: 50px;height: 50px;border-radius: 50%;}
+.goood_detail .my_store{line-height: 50px;background-color: #fff;margin: 10px 0;}
+
+
+
+
+
+
+
 

@@ -1270,6 +1270,6 @@ $(function(){
             }
         });
     }else if($('.store_index').size()>0){
-        console.log(444);
+      
     }
 });
