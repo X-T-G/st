@@ -8,11 +8,9 @@
         <link rel="stylesheet" href="../css/common.css">
         <link rel="stylesheet" href="../css/weui.min.css">
         <link rel="stylesheet" href="../css/swiper.css">
-        <link rel="stylesheet" href="https://unpkg.com/vant/lib/vant-css/index.css">
         <script src="../js/zepto.min.js"></script>
         <script src="../js/swiper.min.js"></script>
         <script src="../js/vue.min.js"></script>
-        <script src="https://unpkg.com/vant/lib/vant.min.js"></script>
         <script src="../js/index.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     </head>
@@ -21,7 +19,7 @@
             <i class="weui-loading"></i>
             <span class="weui-loadmore__tips">正在加载</span>
         </div> -->
-        <div class="store_index" id="store_index">
+        <div class="goood_detail" id="goood_detail">
             <!-- 轮播模块 -->
             <div class="swiper-container">
                 <div class="swiper-wrapper">
@@ -43,22 +41,6 @@
                 </div>
                 <div class="pagination"></div>
             </div>
-            <van-sku
-            v-model="showBase"
-            :sku="sku"
-            :goods="goods"
-            :goods-id="goodsId"
-            :hide-stock="sku.hide_stock"
-            :quota="quota"
-            :quota-used="quotaUsed"
-            :reset-stepper-on-hide="resetStepperOnHide"
-            :reset-selected-sku-on-hide="resetSelectedSkuOnHide"
-            :close-on-click-overlay="closeOnClickOverlay"
-            :disable-stepper-input="disableStepperInput"
-            :message-config="messageConfig"
-            @buy-clicked="onBuyClicked"
-            @add-cart="onAddCartClicked"
-          />           
         </div>
         <script type="text/javascript">
             var mySwiper = new Swiper('.swiper-container',{

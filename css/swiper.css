@@ -94,6 +94,7 @@ sizes, pagination, etc.
 	height: 100px;*/
 	min-height: 210px;
 	position: relative;
+	background-color: #fff;
 }
 .swiper-slide {
 	/* Specify Slides's Size: */
