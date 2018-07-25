@@ -423,8 +423,16 @@ animation: myfade_in .2s;
     -webkit-animation: myfade_out .1s;
     -o-animation: myfade_out .1s;
 } 
-.goood_detail .sku_room{position: fixed;bottom: 50px;width: 100%;background-color: #fff;border-top: 1px solid #e5e5e5;}
-.goood_detail .sku_room .thumb img{width: 50px;height: 50px;border: 1px solid #eee;padding: 5px;}
+.goood_detail .sku_room{position: fixed;padding: 15px;bottom: 50px;width: 100%;background-color: #fff;border-top: 1px solid #e5e5e5;}
+.goood_detail .sku_room .thumb img{width: 100px;height: 100px;}
+.goood_detail .sku_room .good_sku{padding-top: 50px;padding-left: 10px;}
+.goood_detail .sku_room .good_sku .good_price{color: #ff473c;}
+.goood_detail .sku_room .good_sku .good_price span{color: #ff473c;font-size: 18px;margin-left: 3px;}
+.goood_detail .sku_room .good_sku .good_name{ display: -webkit-box;overflow: hidden;text-overflow: ellipsis;word-wrap: break-word;white-space: normal !important;-webkit-line-clamp: 1;-webkit-box-orient: vertical;}
+.sku_room .sku_operate .ope_num{margin: 0 5px;}
+.sku_operate{border-top: 1px solid #e5e5e5;}
+
+
 
 /* @keyframes fade_in2
 {
