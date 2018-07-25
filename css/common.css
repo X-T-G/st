@@ -429,79 +429,9 @@ animation: myfade_in .2s;
 .goood_detail .sku_room .good_sku .good_price{color: #ff473c;}
 .goood_detail .sku_room .good_sku .good_price span{color: #ff473c;font-size: 18px;margin-left: 3px;}
 .goood_detail .sku_room .good_sku .good_name{ display: -webkit-box;overflow: hidden;text-overflow: ellipsis;word-wrap: break-word;white-space: normal !important;-webkit-line-clamp: 1;-webkit-box-orient: vertical;}
-.sku_room .sku_operate .ope_num{margin: 0 15px;}
+.sku_room .sku_operate .ope_num{margin: 0 15px;display: inline-block;width: 20px;text-align: center;}
 .sku_operate{border-top: 1px solid #e5e5e5;margin-top: 10px;padding-top: 10px;}
 .goood_detail .sku-layout-title,.goood_detail .sku_operate{padding: 15px;}
-@keyframes test
-{
-    0%   {bottom:-201px;}
-    25%  {bottom:-100px;}
-    50%  {bottom:0px;}
-    100% {bottom:51px;}
-}
-@-moz-keyframes test
-{
-    0%   {bottom:-201px;}
-    25%  {bottom:-100px;}
-    50%  {bottom:0px;}
-    100% {bottom:51px;}
-}
-@-webkit-keyframes test
-{
-    0%   {bottom:-201px;}
-    25%  {bottom:-100px;}
-    50%  {bottom:0px;}
-    100% {bottom:51px;}
-}
-@-o-keyframes test
-{
-    0%   {bottom:-201px;}
-    25%  {bottom:-100px;}
-    50%  {bottom:0px;}
-    100% {bottom:51px;}
-}
-
-@keyframes test2
-{
-    0%   {bottom:51px;}
-    25%  {bottom:0px;}
-    50%  {bottom:-100px;}
-    100% {bottom:-201px;}
-}
-@-moz-keyframes test2
-{
-    0%   {bottom:51px;}
-    25%  {bottom:0px;}
-    50%  {bottom:-100px;}
-    100% {bottom:-201px;}
-}
-@-webkit-keyframes test2
-{
-    0%   {bottom:51px;}
-    25%  {bottom:0px;}
-    50%  {bottom:-100px;}
-    100% {bottom:-201px;}
-}
-@-o-keyframes test2
-{
-    0%   {bottom:51px;}
-    25%  {bottom:0px;}
-    50%  {bottom:-100px;}
-    100% {bottom:-201px;}
-}
-.goood_detail .sku_room.fade_in{
-    display: block;
-    animation: test .4s;
-    -moz-animation: test .4s;
-    -webkit-animation: test .4s;
-    -o-animation: test .4s;
-}
-.goood_detail .sku_room.fade_out{
-    animation: test2 .4s;
-    -moz-animation: test2 .4s;
-    -webkit-animation: test2 .4s;
-    -o-animation: test2 .4s;
-} 
 .goood_detail .btn_sure{width: 100%;height: 50px;line-height: 50px;background-color: #F17355;color: #fff;text-align: center;}
 
 

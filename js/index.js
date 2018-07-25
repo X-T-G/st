@@ -1276,21 +1276,31 @@ $(function(){
             if($('.sku_mask').hasClass('fade_in')){//如果有蒙版
                 $('.sku_mask').removeClass('fade_in');
                 $('.sku_mask').addClass('fade_out');
-                $('.sku_room').removeClass('fade_in');
-                $('.sku_room').addClass('fade_out');
+                $(".sku_room").animate({bottom:'-272px'});
             }else{
                 $('.sku_mask').addClass('fade_in');
                 $('.sku_mask').removeClass('fade_out');
-                $('.sku_room').addClass('fade_in');
-                $('.sku_room').removeClass('fade_out');
-                // $('.sku_mask').css({"display":"block","opacity":"1"});
+                $(".sku_room").animate({bottom:'0'});
             }
         })
-        $('.sku_mask.fade_in').live('click',function(){
-            $(this).removeClass('fade_in').addClass('fade_out');
-            $('.sku_room').removeClass('fade_in');
-            $('.sku_room').addClass('fade_out');
-            // $('.sku_mask').css({"display":"none","opacity":"0"});
+        $('.sku_mask.fade_in,.sku_room .btn_sure').live('click',function(){
+            $('.sku_mask').removeClass('fade_in').addClass('fade_out');
+            $(".sku_room").animate({bottom:'-272px'});
+        })
+        // 数量增减
+        $('.sku_operate .iconfont').live('click',function(){
+            console.log(2222);
+            var _num = $('.ope_num').html();
+            console.log(_num);
+            if($(this).hasClass('icon-jian') && _num >1){//减
+                _num--;
+                $('.ope_num').html(_num);
+            }else if($(this).hasClass('icon-jian') && _num <= 1){//加
+                return;
+            }else{
+                _num++;
+                $('.ope_num').html(_num);
+            }
         })
     }
 });
