@@ -7,103 +7,24 @@
         <link type="image/x-icon" rel="shortcut icon" href="../images/logo.png">
         <link rel="stylesheet" href="../css/common.css">
         <link rel="stylesheet" href="../css/weui.min.css">
-        <link rel="stylesheet" href="../css/swiper.css">
         <script src="../js/zepto.min.js"></script>
-        <script src="../js/swiper.min.js"></script>
         <script src="../js/vue.min.js"></script>
         <script src="../js/index.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     </head>
     <body>
-        <!-- <div class="weui-loadmore">
+        <div class="header">
+            购物车
+            <!-- <span>
+                <img src="../images/back_gery.png" alt="">
+            </span> -->
+        </div>
+        <div class="weui-loadmore">
             <i class="weui-loading"></i>
             <span class="weui-loadmore__tips">正在加载</span>
-        </div> -->
-        <div class="goood_detail" id="goood_detail">
-            <!-- 轮播模块 -->
-            <div class="swiper-container">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <img src="//img.alicdn.com/imgextra/i2/3475643436/TB2G1bGoKGSBuNjSspbXXciipXa_!!3475643436.jpg_640x640q85s150_.webp" alt="">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="//img.alicdn.com/imgextra/i3/3475643436/TB26inYoNSYBuNjSspjXXX73VXa_!!3475643436.jpg_640x640q85s150_.webp" alt="">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="//img.alicdn.com/imgextra/i2/3475643436/TB283MjoNGYBuNjy0FnXXX5lpXa_!!3475643436.jpg_640x640q85s150_.webp" alt="">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="//img.alicdn.com/imgextra/i4/3475643436/TB2I07ApcyYBuNkSnfoXXcWgVXa_!!3475643436.jpg_640x640q85s150_.webp" alt="">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="//img.alicdn.com/imgextra/i2/3475643436/TB23lZrpiCYBuNkSnaVXXcMsVXa_!!3475643436.jpg_640x640q85s150_.webp" alt="">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="//img.alicdn.com/imgextra/i2/3475643436/TB2G1bGoKGSBuNjSspbXXciipXa_!!3475643436.jpg_640x640q85s150_.webp" alt="">
-                    </div>
-                </div>
-                <div class="pagination"></div>
-            </div>
-            <!-- 医馆信息及跳转 -->
-            <div class="good_describe">
-                <a href="./index.html">
-                    <div class="weui-cell weui-cell_access my_store">
-                        <div class="weui-cell__bd clearfix">
-                            <div class="store_small_pic fl">
-                                <img src="../images/getheadimg.png" alt="">
-                            </div>
-                            <p class="fl">神庭医馆</p>
-                        </div>
-                        <div class="weui-cell__ft">
-                        </div>
-                    </div>
-                </a>
-                <p></p>
-            </div>
-            <!-- 医馆文字描述 -->
-            <div>
-
-            </div>
-            <!-- 商品图片详情 -->
-            <div class="good_img">
-                <img src="https://img.alicdn.com/imgextra/i4/3475643436/TB2DFzOoH1YBuNjSszhXXcUsFXa_!!3475643436.jpg_640x0q85s150_.webp" alt="">
-                <img src="https://img.alicdn.com/imgextra/i3/3475643436/TB2KCrJoKOSBuNjy0FdXXbDnVXa_!!3475643436.jpg_640x0q85s150_.webp" alt="">
-                <img src="https://img.alicdn.com/imgextra/i1/3475643436/TB21zYYoNSYBuNjSspjXXX73VXa_!!3475643436.jpg_640x0q85s150_.webp" alt="">
-                <img src="https://img.alicdn.com/imgextra/i1/3475643436/TB2HvvPoKuSBuNjSsziXXbq8pXa_!!3475643436.jpg_640x0q85s150_.webp" alt="">
-                <img src="https://img.alicdn.com/imgextra/i3/3475643436/TB28NzEoN1YBuNjy1zcXXbNcXXa_!!3475643436.jpg_640x0q85s150_.webp" alt="">
-                <img src="https://img.alicdn.com/imgextra/i3/3475643436/TB2P1LsoQ9WBuNjSspeXXaz5VXa_!!3475643436.jpg_640x0q85s150_.webp" alt="">
-                <img src="https://img.alicdn.com/imgextra/i2/3475643436/TB2Xff6oH9YBuNjy0FgXXcxcXXa_!!3475643436.jpg_640x0q85s150_.webp" alt="">
-                <img src="https://img.alicdn.com/imgextra/i2/3475643436/TB2CQiLgDXYBeNkHFrdXXciuVXa_!!3475643436.jpg_640x0q85s150_.webp" alt="">
-                <img src="https://img.alicdn.com/imgextra/i1/3475643436/TB2hAO2oQKWBuNjy1zjXXcOypXa_!!3475643436.jpg_640x0q85s150_.webp" alt="">
-            </div>
-            <!-- 底部商品操作 -->
-            <div class="bottom_operate">
-                <div class="each_op">
-                    <a href="./index.html">
-                        <div class="iconfont icon-dianpu"></div>
-                        <div>店铺</div>
-                    </a>
-                </div>
-                <div class="each_op">
-                    <a href="./cart.html">
-                        <div class="iconfont icon-gouwuche"></div>
-                        <div>购物车</div>
-                    </a>
-                </div>
-                <div class="each_op buy_btn">
-                    <div>购买</div>
-                </div>
-            </div>
         </div>
-        <script type="text/javascript">
-            var mySwiper = new Swiper('.swiper-container',{
-               loop: false,
-               autoplay: 3000,
-               pagination : '.pagination',
-               paginationClickable :true,
-               freeMode : false,
-               touchRatio : 0.5,
-            });  
-        </script>
+        <div class="cart" id="cart">
+            
+        </div>
     </body>
 </html>

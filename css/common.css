@@ -348,6 +348,88 @@ img.store_pic{width: 108px;height:108px;}
 .bottom_operate .each_op .iconfont{font-size: 18px;}
 .bottom_operate .each_op.buy_btn{width: 100%;height: 50px;background-color: #f17355;color:#fff;padding: 0;display: inline-block;line-height: 50px;text-align: center;}
 .goood_detail .good_img{padding-bottom: 50px;}
+.sku_mask{height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 1000;transition: none 0.5s ease;display: none;}
+@keyframes myfade_in
+{
+    0%   {opacity:0;}
+    25%  {opacity:0.25;}
+    50%  {opacity:0.5;}
+    100% {opacity:1;}
+}
+
+@-moz-keyframes myfade_in
+{
+    0%   {opacity:0;display: block;}
+    25%  {opacity:0.25;}
+    50%  {opacity:0.5;}
+    100% {opacity:1;}
+}
+
+@-webkit-keyframes myfade_in
+{
+    0%   {opacity:0;display: block;}
+    25%  {opacity:0.25;}
+    50%  {opacity:0.5;}
+    100% {opacity:1;}
+}
+
+@-o-keyframes myfade_in
+{
+    0%   {opacity:0;display: block;}
+    25%  {opacity:0.25;}
+    50%  {opacity:0.5;}
+    100% {opacity:1;}
+}
+.sku_mask.fade_in{
+display: block;
+animation: myfade_in .2s;
+-moz-animation: myfade_in .2s;
+-webkit-animation: myfade_in .2s;
+-o-animation: myfade_in .2s;
+} 
+
+
+@keyframes myfade_out
+{
+    0%   {opacity:1;}
+    25%  {opacity:0.75;}
+    50%  {opacity:0.5;}
+    100% {opacity:0;display: none;}
+}
+@-moz-keyframes myfade_out
+{
+    0%   {opacity:1;}
+    25%  {opacity:0.75;}
+    50%  {opacity:0.5;}
+    100% {opacity:0;display: none;}
+}
+@-webkit-keyframes myfade_out
+{
+    0%   {opacity:1;}
+    25%  {opacity:0.75;}
+    50%  {opacity:0.5;}
+    100% {opacity:0;display: none;}
+}
+@-o-keyframes myfade_out
+{
+    0%   {opacity:1;}
+    25%  {opacity:0.75;}
+    50%  {opacity:0.5;}
+    100% {opacity:0;display: none;}
+}
+.sku_mask.fade_out{
+    animation: myfade_out .1s;
+    -moz-animation: myfade_out .1s;
+    -webkit-animation: myfade_out .1s;
+    -o-animation: myfade_out .1s;
+} 
+.goood_detail .sku_room{position: fixed;bottom: 50px;width: 100%;background-color: #fff;border-top: 1px solid #e5e5e5;}
+
+
+
+
+
+
 
 
 

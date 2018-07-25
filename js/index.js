@@ -1271,5 +1271,21 @@ $(function(){
         });
     }else if($('.store_index').size()>0){
       
+    }else if($('.goood_detail').size()>0){
+        $('.buy_btn').live('click',function(){
+            if($('.sku_mask').hasClass('fade_in')){//如果有蒙版
+                $('.sku_mask').removeClass('fade_in');
+                $('.sku_mask').addClass('fade_out');
+                // $('.sku_mask').css({"display":"none","opacity":"0"});
+            }else{
+                $('.sku_mask').addClass('fade_in');
+                $('.sku_mask').removeClass('fade_out'); 
+                // $('.sku_mask').css({"display":"block","opacity":"1"});
+            }
+        })
+        $('.sku_mask.fade_in').live('click',function(){
+            $(this).removeClass('fade_in').addClass('fade_out');
+            // $('.sku_mask').css({"display":"none","opacity":"0"});
+        })
     }
 });
