@@ -1276,15 +1276,20 @@ $(function(){
             if($('.sku_mask').hasClass('fade_in')){//如果有蒙版
                 $('.sku_mask').removeClass('fade_in');
                 $('.sku_mask').addClass('fade_out');
-                // $('.sku_mask').css({"display":"none","opacity":"0"});
+                $('.sku_room').removeClass('fade_in');
+                $('.sku_room').addClass('fade_out');
             }else{
                 $('.sku_mask').addClass('fade_in');
-                $('.sku_mask').removeClass('fade_out'); 
+                $('.sku_mask').removeClass('fade_out');
+                $('.sku_room').addClass('fade_in');
+                $('.sku_room').removeClass('fade_out');
                 // $('.sku_mask').css({"display":"block","opacity":"1"});
             }
         })
         $('.sku_mask.fade_in').live('click',function(){
             $(this).removeClass('fade_in').addClass('fade_out');
+            $('.sku_room').removeClass('fade_in');
+            $('.sku_room').addClass('fade_out');
             // $('.sku_mask').css({"display":"none","opacity":"0"});
         })
     }

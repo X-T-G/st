@@ -423,76 +423,86 @@ animation: myfade_in .2s;
     -webkit-animation: myfade_out .1s;
     -o-animation: myfade_out .1s;
 } 
-.goood_detail .sku_room{position: fixed;padding: 15px;bottom: 50px;width: 100%;background-color: #fff;border-top: 1px solid #e5e5e5;}
+.goood_detail .sku_room{position: fixed;bottom:-252px;width: 100%;background-color: #fff;border-top: 1px solid #e5e5e5;z-index: 2000;}
 .goood_detail .sku_room .thumb img{width: 100px;height: 100px;}
 .goood_detail .sku_room .good_sku{padding-top: 50px;padding-left: 10px;}
 .goood_detail .sku_room .good_sku .good_price{color: #ff473c;}
 .goood_detail .sku_room .good_sku .good_price span{color: #ff473c;font-size: 18px;margin-left: 3px;}
 .goood_detail .sku_room .good_sku .good_name{ display: -webkit-box;overflow: hidden;text-overflow: ellipsis;word-wrap: break-word;white-space: normal !important;-webkit-line-clamp: 1;-webkit-box-orient: vertical;}
-.sku_room .sku_operate .ope_num{margin: 0 5px;}
-.sku_operate{border-top: 1px solid #e5e5e5;}
-
-
-
-/* @keyframes fade_in2
+.sku_room .sku_operate .ope_num{margin: 0 15px;}
+.sku_operate{border-top: 1px solid #e5e5e5;margin-top: 10px;padding-top: 10px;}
+.goood_detail .sku-layout-title,.goood_detail .sku_operate{padding: 15px;}
+@keyframes test
 {
-    0%   {opacity:1;}
-    25%  {opacity:0.75;}
-    50%  {opacity:0.5;}
-    100% {opacity:0;display: none;}
+    0%   {bottom:-201px;}
+    25%  {bottom:-100px;}
+    50%  {bottom:0px;}
+    100% {bottom:51px;}
 }
-@-moz-keyframes fade_in2
+@-moz-keyframes test
 {
-    0%   {opacity:1;}
-    25%  {opacity:0.75;}
-    50%  {opacity:0.5;}
-    100% {opacity:0;display: none;}
+    0%   {bottom:-201px;}
+    25%  {bottom:-100px;}
+    50%  {bottom:0px;}
+    100% {bottom:51px;}
 }
-@-webkit-keyframes fade_in2
+@-webkit-keyframes test
 {
-    0%   {opacity:1;}
-    25%  {opacity:0.75;}
-    50%  {opacity:0.5;}
-    100% {opacity:0;display: none;}
+    0%   {bottom:-201px;}
+    25%  {bottom:-100px;}
+    50%  {bottom:0px;}
+    100% {bottom:51px;}
 }
-@-o-keyframes fade_in2
+@-o-keyframes test
 {
-    0%   {opacity:1;}
-    25%  {opacity:0.75;}
-    50%  {opacity:0.5;}
-    100% {opacity:0;display: none;}
+    0%   {bottom:-201px;}
+    25%  {bottom:-100px;}
+    50%  {bottom:0px;}
+    100% {bottom:51px;}
 }
 
-@keyframes fade_out2
+@keyframes test2
 {
-    0%   {opacity:1;}
-    25%  {opacity:0.75;}
-    50%  {opacity:0.5;}
-    100% {opacity:0;display: none;}
+    0%   {bottom:51px;}
+    25%  {bottom:0px;}
+    50%  {bottom:-100px;}
+    100% {bottom:-201px;}
 }
-@-moz-keyframes fade_out2
+@-moz-keyframes test2
 {
-    0%   {opacity:1;}
-    25%  {opacity:0.75;}
-    50%  {opacity:0.5;}
-    100% {opacity:0;display: none;}
+    0%   {bottom:51px;}
+    25%  {bottom:0px;}
+    50%  {bottom:-100px;}
+    100% {bottom:-201px;}
 }
-@-webkit-keyframes fade_out2
+@-webkit-keyframes test2
 {
-    0%   {opacity:1;}
-    25%  {opacity:0.75;}
-    50%  {opacity:0.5;}
-    100% {opacity:0;display: none;}
+    0%   {bottom:51px;}
+    25%  {bottom:0px;}
+    50%  {bottom:-100px;}
+    100% {bottom:-201px;}
 }
-@-o-keyframes fade_out2
+@-o-keyframes test2
 {
-    0%   {opacity:1;}
-    25%  {opacity:0.75;}
-    50%  {opacity:0.5;}
-    100% {opacity:0;display: none;}
-} */
-.goood_detail .sku_room.fade_out{}
-.goood_detail .sku_room.fade_in{}
+    0%   {bottom:51px;}
+    25%  {bottom:0px;}
+    50%  {bottom:-100px;}
+    100% {bottom:-201px;}
+}
+.goood_detail .sku_room.fade_in{
+    display: block;
+    animation: test .4s;
+    -moz-animation: test .4s;
+    -webkit-animation: test .4s;
+    -o-animation: test .4s;
+}
+.goood_detail .sku_room.fade_out{
+    animation: test2 .4s;
+    -moz-animation: test2 .4s;
+    -webkit-animation: test2 .4s;
+    -o-animation: test2 .4s;
+} 
+.goood_detail .btn_sure{width: 100%;height: 50px;line-height: 50px;background-color: #F17355;color: #fff;text-align: center;}
 
 
 
