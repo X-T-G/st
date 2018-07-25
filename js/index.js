@@ -1276,7 +1276,7 @@ $(function(){
             if($('.sku_mask').hasClass('fade_in')){//如果有蒙版
                 $('.sku_mask').removeClass('fade_in');
                 $('.sku_mask').addClass('fade_out');
-                $(".sku_room").animate({bottom:'-272px'});
+                $(".sku_room").animate({bottom:'-284px'});
             }else{
                 $('.sku_mask').addClass('fade_in');
                 $('.sku_mask').removeClass('fade_out');
@@ -1285,7 +1285,7 @@ $(function(){
         })
         $('.sku_mask.fade_in,.sku_room .btn_sure').live('click',function(){
             $('.sku_mask').removeClass('fade_in').addClass('fade_out');
-            $(".sku_room").animate({bottom:'-272px'});
+            $(".sku_room").animate({bottom:'-284px'});
         })
         // 数量增减
         $('.sku_operate .iconfont').live('click',function(){

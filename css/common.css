@@ -423,19 +423,18 @@ animation: myfade_in .2s;
     -webkit-animation: myfade_out .1s;
     -o-animation: myfade_out .1s;
 } 
-.goood_detail .sku_room{position: fixed;bottom:-272px;width: 100%;background-color: #fff;border-top: 1px solid #e5e5e5;z-index: 2000;}
+.goood_detail .sku_room{position: fixed;bottom:-284px;width: 100%;background-color: #fff;border-top: 1px solid #e5e5e5;z-index: 2000;}
 .goood_detail .sku_room .thumb img{width: 100px;height: 100px;}
 .goood_detail .sku_room .good_sku{padding-top: 50px;padding-left: 10px;}
 .goood_detail .sku_room .good_sku .good_price{color: #ff473c;}
 .goood_detail .sku_room .good_sku .good_price span{color: #ff473c;font-size: 18px;margin-left: 3px;}
 .goood_detail .sku_room .good_sku .good_name{ display: -webkit-box;overflow: hidden;text-overflow: ellipsis;word-wrap: break-word;white-space: normal !important;-webkit-line-clamp: 1;-webkit-box-orient: vertical;}
-.sku_room .sku_operate .ope_num{margin: 0 15px;display: inline-block;width: 20px;text-align: center;}
+.sku_room .sku_operate .ope_num{margin: 0 15px;display: inline-block;width: 20px;height: 28px;line-height: 28px;text-align: center;}
 .sku_operate{border-top: 1px solid #e5e5e5;margin-top: 10px;padding-top: 10px;}
 .goood_detail .sku-layout-title,.goood_detail .sku_operate{padding: 15px;}
 .goood_detail .btn_sure{width: 100%;height: 50px;line-height: 50px;background-color: #F17355;color: #fff;text-align: center;}
-
-
-
+.sku_operate .iconfont{font-size: 18px;width: 30px;text-align: center;}
+.sku_operate .flex-1 p{height: 28px;line-height: 28px;}
 
 
 
