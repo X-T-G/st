@@ -423,7 +423,7 @@ animation: myfade_in .2s;
     -webkit-animation: myfade_out .1s;
     -o-animation: myfade_out .1s;
 } 
-.goood_detail .sku_room{position: fixed;bottom:-252px;width: 100%;background-color: #fff;border-top: 1px solid #e5e5e5;z-index: 2000;}
+.goood_detail .sku_room{position: fixed;bottom:-272px;width: 100%;background-color: #fff;border-top: 1px solid #e5e5e5;z-index: 2000;}
 .goood_detail .sku_room .thumb img{width: 100px;height: 100px;}
 .goood_detail .sku_room .good_sku{padding-top: 50px;padding-left: 10px;}
 .goood_detail .sku_room .good_sku .good_price{color: #ff473c;}
