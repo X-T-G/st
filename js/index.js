@@ -1283,7 +1283,7 @@ $(function(){
                 $(".sku_room").animate({bottom:'0'});
             }
         })
-        $('.sku_mask.fade_in,.sku_room .btn_sure').live('click',function(){
+        $('.sku_mask.fade_in,.sku_room .btn_sure,.sku_room .icon-shanchu3').live('click',function(){
             $('.sku_mask').removeClass('fade_in').addClass('fade_out');
             $(".sku_room").animate({bottom:'-284px'});
         })
