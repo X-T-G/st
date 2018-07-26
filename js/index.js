@@ -1301,6 +1301,18 @@ $(function(){
             }
         })
     }else if($('.cart').size()>0){
-        
+          // 数量增减
+          $('.cart .thumb .iconfont').live('click',function(){
+            var _num = $(this).siblings('.ope_num').html();
+            if($(this).hasClass('icon-jian') && _num >1){//减
+                _num--;
+                $(this).siblings('.ope_num').html(_num);
+            }else if($(this).hasClass('icon-jian') && _num <= 1){//加
+                return;
+            }else{
+                _num++;
+                $(this).siblings('.ope_num').html(_num);
+            }
+        })
     }
 });

@@ -454,8 +454,8 @@ animation: myfade_in .2s;
 .weui-cells_checkbox{padding-bottom: 51px;}
 .cart .weui-cells_checkbox .weui-icon-checked:before{font-size: 20px;}
 .cart .compute_btn{position: fixed;border-top: 1px solid #e5e5e5;width: 100%;bottom: 0;height: 50px;background-color: #fff;}
-
-
+.cart .compute_btn .btn{width:100px;color: #fff;background:#f17355;-webkit-box-pack: center;-webkit-justify-content: center;justify-content: center;-webkit-box-align: center;-webkit-align-items: center;align-items: center;display: -webkit-box;margin-left:10px;display: -webkit-flex;display: flex;height: 50px;line-height: 50px;}
+.cart .weui-cells:after{border-bottom:none;}
 
 
 
