@@ -450,10 +450,18 @@ animation: myfade_in .2s;
 .cart .thumb .good_price {color: #ff473c;}
 .cart .thumb .good_price span {color: #ff473c;font-size: 18px;margin-left: 3px;}
 .cart .thumb .iconfont {font-size: 16px;width: 30px;text-align: center;}
-.cart .thumb .ope_num {margin: 0 15px;display: inline-block;width: 20px;height: 28px;line-height: 28px;text-align: center;}
+.cart .thumb .ope_num {margin: 0 15px;display: inline-block;width: 20px;height: 26px;line-height: 26px;text-align: center;}
 .weui-cells_checkbox{padding-bottom: 51px;}
 .cart .weui-cells_checkbox .weui-icon-checked:before{font-size: 20px;}
-.cart .compute_btn
+.cart .compute_btn{position: fixed;border-top: 1px solid #e5e5e5;width: 100%;bottom: 0;height: 50px;background-color: #fff;}
+
+
+
+
+
+
+
+
 
 
 
