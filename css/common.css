@@ -453,10 +453,10 @@ animation: myfade_in .2s;
 .cart .thumb .ope_num {margin: 0 15px;display: inline-block;width: 20px;height: 26px;line-height: 26px;text-align: center;}
 .weui-cells_checkbox{padding-bottom: 51px;}
 .cart .weui-cells_checkbox .weui-icon-checked:before{font-size: 20px;}
-.cart .compute_btn{position: fixed;border-top: 1px solid #e5e5e5;width: 100%;bottom: 0;height: 50px;background-color: #fff;}
+.cart .compute_btn{position: fixed;z-index: 2000;border-top: 1px solid #e5e5e5;width: 100%;bottom: 0;height: 50px;background-color: #fff;}
 .cart .compute_btn .btn{width:100px;color: #fff;background:#f17355;-webkit-box-pack: center;-webkit-justify-content: center;justify-content: center;-webkit-box-align: center;-webkit-align-items: center;align-items: center;display: -webkit-box;margin-left:10px;display: -webkit-flex;display: flex;height: 50px;line-height: 50px;border-top: 1px solid #f17355;}
 .cart .compute_btn .weui-cells:after,.cart .compute_btn .weui-cells:before{border-bottom:none;border-top:none;}
-
+.cart .delete_btn{width: 60px;height: 30px;background-color: #f14731;border-radius: 4px;text-align: center;color: #fff;line-height: 30px;}
 
 
 

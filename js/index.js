@@ -1314,5 +1314,27 @@ $(function(){
                 $(this).siblings('.ope_num').html(_num);
             }
         })
-    }
+    };
+    // 编辑按钮
+    $('.edit').live('click',function(){
+        var _content = $(this).html();
+        if (_content == '编辑'){
+            $(this).html('完成');
+            $('.delete_btn').removeClass('dis-no');
+            $('.num_change').addClass('dis-no');
+        }else{
+            $(this).html('编辑');
+            $('.delete_btn').addClass('dis-no');
+            $('.num_change').removeClass('dis-no');
+        }
+    })
+    // 删除按钮
+    $('.delete_btn').live('click',function(){
+        $(this).parents('.weui-cell.weui-check__label').remove();
+    })
+    // 单选按钮
+    $('.weui-icon-checked').live('click',function(){
+        console.log(22);
+        console.log($('.weui-cell.weui-check__label'));
+    })
 });
