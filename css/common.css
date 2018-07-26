@@ -439,6 +439,11 @@ animation: myfade_in .2s;
 .sku_operate .iconfont{font-size: 18px;width: 30px;text-align: center;}
 .sku_operate .flex-1 p{height: 28px;line-height: 28px;}
 .sku_room .icon-shanchu3{position: absolute;top: 10px;right: 15px;font-size: 18px;}
+/* 购物车 */
+.cart .weui-cells{margin-top:0;}
+.cart  .store_small_pic img{width: 50px;height: 50px;border-radius: 50%;}
+.cart  .my_store p{line-height: 55px;margin-left: 10px;}
+.cart .good_describe{margin-bottom: 10px;background-color: #fff;}
 
 
 
