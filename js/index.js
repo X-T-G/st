@@ -1269,9 +1269,9 @@ $(function(){
                 map:map,
             }
         });
-    }else if($('.store_index').size()>0){
+    }else if($('.store_index').size()>0){//商品首页
       
-    }else if($('.goood_detail').size()>0){
+    }else if($('.goood_detail').size()>0){//商品详情页
         $('.buy_btn').live('click',function(){
             if($('.sku_mask').hasClass('fade_in')){//如果有蒙版
                 $('.sku_mask').removeClass('fade_in');
@@ -1289,9 +1289,7 @@ $(function(){
         })
         // 数量增减
         $('.sku_operate .iconfont').live('click',function(){
-            console.log(2222);
             var _num = $('.ope_num').html();
-            console.log(_num);
             if($(this).hasClass('icon-jian') && _num >1){//减
                 _num--;
                 $('.ope_num').html(_num);
@@ -1302,5 +1300,7 @@ $(function(){
                 $('.ope_num').html(_num);
             }
         })
+    }else if($('.cart').size()>0){
+        
     }
 });
