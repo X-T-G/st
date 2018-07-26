@@ -457,7 +457,7 @@ animation: myfade_in .2s;
 .cart .compute_btn .btn{width:100px;color: #fff;background:#f17355;-webkit-box-pack: center;-webkit-justify-content: center;justify-content: center;-webkit-box-align: center;-webkit-align-items: center;align-items: center;display: -webkit-box;margin-left:10px;display: -webkit-flex;display: flex;height: 50px;line-height: 50px;border-top: 1px solid #f17355;}
 .cart .compute_btn .weui-cells:after,.cart .compute_btn .weui-cells:before{border-bottom:none;border-top:none;}
 .cart .delete_btn{width: 60px;height: 30px;background-color: #f14731;border-radius: 4px;text-align: center;color: #fff;line-height: 30px;}
-
+.cart .compute_btn .weui-cell{height: 50px;}
 
 
 

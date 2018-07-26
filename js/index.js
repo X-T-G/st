@@ -1334,7 +1334,23 @@ $(function(){
     })
     // 单选按钮
     $('.weui-icon-checked').live('click',function(){
-        console.log(22);
-        console.log($('.weui-cell.weui-check__label'));
+        var all_num = $('.weui-cell.weui-check__label').length-1;
+        var ck_num = $("input[type='checkbox']:checked").length+1;
+        if (all_num == ck_num) {
+            $('.compute_btn .weui-check').prop("checked",true);
+        }else{
+            $('.compute_btn .weui-check').prop("checked",false);
+        }
+    })
+    // 全选
+    $('.compute_btn .weui-cell.weui-check__label').live('click',function(){
+        var flag = $(this).find('.weui-check').is(':checked');
+        if(flag){
+            console.log(1);
+            $('.cart_container .weui-check').prop("checked",true);
+        }else{
+            console.log(2);
+            $('.cart_container .weui-check').prop("checked",false);
+        }
     })
 });
