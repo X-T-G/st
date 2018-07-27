@@ -1318,6 +1318,7 @@ $(function(){
     // 编辑按钮
     $('.edit').live('click',function(){
         var _content = $(this).html();
+        $('.weui-check').prop("checked",false);
         if (_content == '编辑'){
             $(this).html('完成');
             $('.delete_btn').removeClass('dis-no');
@@ -1335,7 +1336,9 @@ $(function(){
     // 单选按钮
     $('.weui-icon-checked').live('click',function(){
         var all_num = $('.weui-cell.weui-check__label').length-1;
-        var ck_num = $("input[type='checkbox']:checked").length+1;
+        var ck_num = $(".cart_container input[type='checkbox']:checked").length+1;
+        console.log(ck_num);
+        console.log(all_num);
         if (all_num == ck_num) {
             $('.compute_btn .weui-check').prop("checked",true);
         }else{
