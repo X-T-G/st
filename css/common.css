@@ -470,6 +470,21 @@ animation: myfade_in .2s;
 .cart .cart_container .good_check:checked+.icon-checked:before{content: "\e623"; color: #09bb07;}/*选中*/
 .cart .cart_container .good_check{left: -10000px;position: absolute;}
 
+/* 地址管理 */
+.all_address .van-address-list .van-cell__value {color: #333;padding-right: 34px;position: relative;}
+.all_address .van-cell__value--alone {text-align: left;}
+.all_address .van-cell__value {overflow: hidden;text-align: right;vertical-align: middle;}
+.all_address .van-cell__title,.all_address .van-cell__value {-webkit-box-flex: 1;-webkit-flex: 1;flex: 1;}
+.all_address .van-radio {overflow: hidden;-webkit-user-select: none;user-select: none;}
+.all_address .van-address-list .van-radio__input {top: 50%;left: 0;position: absolute;-webkit-transform: translate(0, -50%);transform: translate(0, -50%);height: 20px;display: inline-block;vertical-align: middle;}
+.all_address .van-address-list .van-radio__label {margin-left: 32px;line-height: 20px;}
+.all_address .van-address-list__name {font-size: 14px;line-height: 1.5;}
+
+
+
+
+
+
 
 
 
