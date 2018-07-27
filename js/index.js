@@ -1333,27 +1333,26 @@ $(function(){
     $('.delete_btn').live('click',function(){
         $(this).parents('.weui-cell.weui-check__label').remove();
     })
-    // 单选按钮
-    $('.weui-icon-checked').live('click',function(){
-        var all_num = $('.weui-cell.weui-check__label').length-1;
-        var ck_num = $(".cart_container input[type='checkbox']:checked").length+1;
-        console.log(ck_num);
-        console.log(all_num);
-        if (all_num == ck_num) {
-            $('.compute_btn .weui-check').prop("checked",true);
-        }else{
-            $('.compute_btn .weui-check').prop("checked",false);
-        }
-    })
+    
     // 全选
     $('.compute_btn .weui-cell.weui-check__label').live('click',function(){
         var flag = $(this).find('.weui-check').is(':checked');
         if(flag){
-            console.log(1);
-            $('.cart_container .weui-check').prop("checked",true);
+            $(".cart_container input[type='checkbox']").prop("checked",true);
         }else{
-            console.log(2);
-            $('.cart_container .weui-check').prop("checked",false);
+            $(".cart_container input[type='checkbox']").prop("checked",false);
+        }
+    })
+    // 单选按钮
+    $('.left_radio').live('click',function(){
+        var flag = $(this).find("input[type='checkbox']").is(':checked');
+        $(this).find("input[type='checkbox']").prop("checked",!flag);
+        var all_num = $(".cart_container input[type='checkbox']").length;
+        var ck_num = $(".cart_container input[type='checkbox']:checked").length;
+        if (all_num == ck_num) {
+            $('.compute_btn .weui-check').prop("checked",true);
+        }else{
+            $('.compute_btn .weui-check').prop("checked",false);
         }
     })
 });
