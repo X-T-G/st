@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>神庭医馆</title>
+        <link type="image/x-icon" rel="shortcut icon" href="../images/logo.png">
+        <link rel="stylesheet" href="../css/weui.min.css">
+        <link rel="stylesheet" href="../css/common.css">
+        <script src="../js/zepto.min.js"></script>
+        <script src="../js/vue.min.js"></script>
+        <script src="../js/index.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    </head>
+    <body>
+        <div class="header">
+            我的神庭币
+            <span>
+                <img src="../images/back_gery.png" alt="">
+            </span>
+        </div>
+        <div class="m_coupon" id="my_coupon">
+            <div class="bar_option flex">
+                <div class="flex-1 can_use" :class=[{"active":(status=='can_use')}] v-on:click="change_status">可选用</div>
+                <div class="flex-1 history" :class=[{"active":(status=='history')}] v-on:click="change_status">历史</div>
+            </div>
+            <div class="my_coupon" :class=[{"dis-no":(show_page==false)}]>
+                <div class="each_coupon" v-for="my_coupon in my_coupons">
+                    <div class="mycoupon clearfix" v-if="my_coupon.discountCode == 'half_year'" style="background: url(../images/halfyear_coupon_samll.png) no-repeat;background-size: 100%;">
+                        <div class="fr">
+                                <p>{{my_coupon.name}}</p>
+                                <p>{{my_coupon.limitDesc}}</p>
+                                <p>{{my_coupon.startTime}}-{{my_coupon.expirationTime}}</p>
+                            </div>
+                        </div>
+                    <div class="mycoupon clearfix" v-else-if="my_coupon.discountCode == 'whole_year'" style="background: url(../images/year_coupon_small.png) no-repeat;background-size: 100%;">
+                        <div class="fr">
+                            <p>{{my_coupon.name}}</p>
+                            <p>{{my_coupon.limitDesc}}</p>
+                            <p>{{my_coupon.startTime}}至{{my_coupon.expirationTime}}</p>
+                        </div>
+                    </div>
+                    <div class="mycoupon clearfix" v-else-if="my_coupon.discountCode == 'all'" style="background: url(../images/coupon_usable_small.png) no-repeat;background-size: 100%;">
+                        <div class="fr">
+                            <p>{{my_coupon.name}}</p>
+                            <p>{{my_coupon.limitDesc}}</p>
+                            <p>{{my_coupon.startTime}}至{{my_coupon.expirationTime}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 神庭币转增按钮 -->
+            <div class="bottom_operate">
+                <button>转赠神庭币</button>
+            </div>
+            <!-- 没有数据 -->
+            <div class="has_noinfo" :class=[{"dis-no":(has_noinfo==false)}]>
+                <img src="../images/bg_nodata.png" alt="">
+            </div>
+            <!-- 加载效果 -->
+            <div class="weui-loadmore" :class=[{"dis-no":(loading==false)}]>
+                <i class="weui-loading"></i>
+                <span class="weui-loadmore__tips">正在加载</span>
+            </div>
+        </div>
+    </body>
+</html>
