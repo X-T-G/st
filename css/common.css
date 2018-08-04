@@ -479,10 +479,11 @@ animation: myfade_in .2s;
 .all_address .van-address-list .van-radio__input {top: 50%;left: 0;position: absolute;-webkit-transform: translate(0, -50%);transform: translate(0, -50%);height: 20px;display: inline-block;vertical-align: middle;}
 .all_address .van-address-list .van-radio__label {margin-left: 32px;line-height: 20px;}
 .all_address .van-address-list__name {font-size: 14px;line-height: 1.5;}
+/* .balance .bottom_operate button{position: fixed;border-top: 1px solid #e5e5e5;bottom: 0;width: 100%;max-width: 768px;display: -webkit-box;display: -webkit-flex;display: flex;z-index: 110;-webkit-box-orient: horizontal;-webkit-box-direction: normal;-webkit-flex-direction: row;flex-direction: row;-webkit-box-align: center;-webkit-align-items: center;align-items: center;background-color: #fff;} */
 
-
-
-
+/* 神庭币 */
+.m_balance{text-align: center;padding: 40px;border-bottom: 1px solid #e5e5e5;}
+.m_balance img{width: 80px;height: 80px;margin: 0 auto 10px;border-radius: 50%;}
 
 
 
