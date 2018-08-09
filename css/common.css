@@ -453,7 +453,7 @@ animation: myfade_in .2s;
 .cart .weui-cell__bd p.good_name{display: -webkit-box;margin-bottom: 20px;padding-top: 30px;overflow: hidden;text-overflow: ellipsis;word-wrap: break-word;white-space: normal !important;-webkit-line-clamp: 1;-webkit-box-orient: vertical;}
 .cart .thumb .good_price {color: #ff473c;}
 .cart .thumb .good_price span {color: #ff473c;font-size: 18px;margin-left: 3px;}
-.cart .thumb .iconfont {font-size: 16px;width: 30px;text-align: center;}
+.cart .thumb .iconfont {height: 30px;font-size: 16px;width: 30px;text-align: center;}
 .cart .thumb .ope_num {margin: 0 15px;display: inline-block;width: 20px;height: 26px;line-height: 26px;text-align: center;}
 .weui-cells_checkbox{padding-bottom: 51px;}
 .cart .weui-cells_checkbox .weui-icon-checked:before{font-size: 20px;}
