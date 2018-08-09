@@ -230,11 +230,11 @@ $(function(){
         $('.regist .pass').live('click',function(){
             var password =  $('.pass_name').val();
             var invitedNum = $('.invitedNum').val();//邀请码
-            if (invitedNum.length == 0) {//未输入验证码
-                $('.weui-dialog .weui-dialog__bd').html('请输入邀请码！'); 
-                var $androidDialog2 = $('#Dialog2');
-                $androidDialog2.fadeIn(200);
-            }else if(invitedNum.length !== 0 ){
+            // if (invitedNum.length == 0) {//未输入验证码
+            //     $('.weui-dialog .weui-dialog__bd').html('请输入邀请码！'); 
+            //     var $androidDialog2 = $('#Dialog2');
+            //     $androidDialog2.fadeIn(200);
+            // }else if(invitedNum.length !== 0 ){
                 var invitedNum = invitedNum;
                 var once_pass = $('.once_pass').val();
                 var twice_pass = $('.twice_pass').val();
@@ -303,7 +303,7 @@ $(function(){
                     var $androidDialog2 = $('#Dialog2');
                     $androidDialog2.fadeIn(200);
                 }
-            }
+            // }
         });
     }else if($('.person').size()>0){//个人中心
         var _token = localStorage.getItem('access_token');
