@@ -907,7 +907,6 @@ $(function(){
                                         that.is_work = false;
                                         $('.DatePicker .weui-cell__bd').html('');
                                         $('.weui-skin_android').removeClass('dis-no');
-                                        console.log(that.is_work);
                                     }else{//格式正确
                                         $('.DatePicker .weui-cell__bd').html(_content);
                                         var date = $('.re_date').html();
