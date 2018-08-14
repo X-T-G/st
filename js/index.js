@@ -904,9 +904,10 @@ $(function(){
                                         $('.reservse_time').css('opacity','1');
                                         $('.DatePicker .weui-cell__bd').html('');
                                     }else if(not_work == true){
-                                        console.log(22);
                                         that.is_work = false;
                                         $('.DatePicker .weui-cell__bd').html('');
+                                        $('.weui-skin_android').removeClass('dis-no');
+                                        console.log(that.is_work);
                                     }else{//格式正确
                                         $('.DatePicker .weui-cell__bd').html(_content);
                                         var date = $('.re_date').html();
@@ -1011,10 +1012,8 @@ $(function(){
                                     }
                                 }else if (data.code == 1){//医生当天不上班
                                     that.is_work = false;
-                                    console.log(333);
                                 }else if(data.code == 99){
                                     that.is_work = false;
-                                    console.log(444);
                                 }
                                 to_login(data);
                             }
