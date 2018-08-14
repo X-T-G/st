@@ -673,6 +673,7 @@ $(function(){
                 loading:true,//加载
                 show_page:false,//是否显示页面
                 week:[],//数据初始化
+                doctorAppointmentDisableTimeMap:[],//医生不上班日期
             },
             created:function(){
                 var that =this;
@@ -694,6 +695,7 @@ $(function(){
                             }else{//请求到数据
                                 that.doctors = data.doctors;//改变页面内容
                                 that.week = data.doctorAppointmentScheduleMap;
+                                that.doctorAppointmentDisableTimeMap = data.doctorAppointmentDisableTimeMap;
                                 that.show_page = true;
                                 that.has_noinfo = false;
                                 that.loading = false;
@@ -710,11 +712,12 @@ $(function(){
                     localStorage.setItem("map",JSON.stringify(map));
                     window.location.href='./doctor-detail.html';
                 },
-                reserve:function(doctor,week){
+                reserve:function(doctor,week,doctorAppointmentDisableTimeMap){
                     localStorage.setItem("doctor_detail",JSON.stringify(doctor));
                     window.location.href='./reserve.html?id='+doctor.id;
                     localStorage.setItem("doctor",doctor.name);
                     localStorage.setItem("doctor_map",JSON.stringify(week));
+                    localStorage.setItem("doctorAppointmentDisableTimeMap",JSON.stringify(doctorAppointmentDisableTimeMap));
                 },
             }
         });
@@ -740,6 +743,7 @@ $(function(){
                     work_time:[],
                     is_work:false,//医生是否上班
                     appointmentName:[],//预约人
+                    doctorAppointmentDisableTimeMap:[],//不上班日期
                 },
                 created:function(){
                     var that = this;
@@ -755,8 +759,11 @@ $(function(){
                     }
                     that.doctor_id = arr2.id;//医生的id
                     var doctor = localStorage.getItem('doctor');
+                    var doctorAppointmentDisableTimeMap = localStorage.getItem('doctorAppointmentDisableTimeMap');//不上班日期
+                    that.doctorAppointmentDisableTimeMap = doctorAppointmentDisableTimeMap;
                     that.doctor_name = doctor;
                     that.doctor = doctor;
+                    that.is_work = true;
                     $.ajax({
                         headers: {
                             'Authorization': 'bearer '+_token
@@ -814,6 +821,9 @@ $(function(){
                                     var la_m = Number(month);
                                     var la_d = Number(day) + 21;//三周为21天，所以以21天计,截止天
                                     var to_day = year +'-'+ month +'-'+  day;
+                                    var _id = JSON.parse(localStorage.getItem('doctor_detail')).id;
+                                    var doctorAppointmentDisableTimeMap =JSON.parse(that.doctorAppointmentDisableTimeMap);
+                                    var _data = doctorAppointmentDisableTimeMap[_id];
                                     switch(la_m){
                                         case 1:
                                         case 3:
@@ -883,9 +893,19 @@ $(function(){
                                             }
                                             break;
                                     }
+                                    var not_work;
+                                    for (var i=0;i<_data.length;i++) {
+                                        if (_data[i] == _dd) {
+                                            not_work = true;
+                                        }
+                                    }
                                     if (_dd > last_date || _dd < to_day){//预约时间不正确(超出预约最终时间或小于今天时间)
                                         $('.reservse_time').css('display','block');
                                         $('.reservse_time').css('opacity','1');
+                                        $('.DatePicker .weui-cell__bd').html('');
+                                    }else if(not_work == true){
+                                        console.log(22);
+                                        that.is_work = false;
                                         $('.DatePicker .weui-cell__bd').html('');
                                     }else{//格式正确
                                         $('.DatePicker .weui-cell__bd').html(_content);
@@ -991,6 +1011,10 @@ $(function(){
                                     }
                                 }else if (data.code == 1){//医生当天不上班
                                     that.is_work = false;
+                                    console.log(333);
+                                }else if(data.code == 99){
+                                    that.is_work = false;
+                                    console.log(444);
                                 }
                                 to_login(data);
                             }
