@@ -21,19 +21,80 @@
         </div>
         <div class="m_balance" id="m_balance">
             <div class="balance_top">
-                <img src="../images/a (1).jpg" alt="">
-                <div class="flex">
+                <img src="../images/st_coin2.png" alt="">
+                <div class="text_center">
                     <p>2000个</p>
-                    <button>我愿转增</button>
                 </div>
             </div>
-            <div></div>
+            <!-- 神庭币使用详情 -->
+            <div class="balance_detail">
+                <p class="tint cion_detail">神庭币明细</p>
+                <div>
+                    <div class="each_cou">
+                        <div class="flex">
+                            <div class="flex-1">
+                                <p>购物消费</p>
+                                <p class="tint">2018-08-21 11:09</p>
+                            </div>
+                            <p class="cou_price pay">-40元</p>
+                        </div>
+                    </div>
+                    <div class="each_cou">
+                        <div class="flex">
+                            <div class="flex-1">
+                                <p>充值</p>
+                                <div class="tint">2018-08-21 11:09</div>                                
+                            </div>
+                            <p class="cou_price">+40元</p>
+                        </div>
+                    </div>
+                    <div class="each_cou">
+                        <div class="flex">
+                            <div class="flex-1">
+                                <p>购物消费</p>
+                                <p class="tint">2018-08-21 11:09</p>
+                            </div>
+                            <p class="cou_price pay">-40元</p>
+                        </div>
+                    </div>
+                    <div class="each_cou">
+                        <div class="flex">
+                            <div class="flex-1">
+                                <p>充值</p>
+                                <div class="tint">2018-08-21 11:09</div>                                
+                            </div>
+                            <p class="cou_price">+40元</p>
+                        </div>
+                    </div>
+                    <div class="each_cou">
+                        <div class="flex">
+                            <div class="flex-1">
+                                <p>购物消费</p>
+                                <p class="tint">2018-08-21 11:09</p>
+                            </div>
+                            <p class="cou_price pay">-40元</p>
+                        </div>
+                    </div>
+                    <div class="each_cou">
+                        <div class="flex">
+                            <div class="flex-1">
+                                <p>充值</p>
+                                <div class="tint">2018-08-21 11:09</div>                                
+                            </div>
+                            <p class="cou_price">+40元</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="send_btn">
+                <button>我愿转增</button>
+            </div>
             <!-- 没有数据 -->
-            <div class="has_noinfo" :class=[{"dis-no":(has_noinfo==false)}]>
+            <div class="has_noinfo dis-no" :class=[{"dis-no":(has_noinfo==false)}]>
                 <img src="../images/bg_nodata.png" alt="">
             </div>
             <!-- 加载效果 -->
-            <div class="weui-loadmore" :class=[{"dis-no":(loading==false)}]>
+            <div class="weui-loadmore dis-no" :class=[{"dis-no":(loading==false)}]>
                 <i class="weui-loading"></i>
                 <span class="weui-loadmore__tips">正在加载</span>
             </div>
