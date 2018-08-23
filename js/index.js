@@ -4,9 +4,14 @@ $(function(){
     // var assistant_url = "http://192.168.0.155:8036/stassistant";// 测试预约
     // var weixin_url = "http://192.168.0.155:8046/stweixin";// 测试微信
     //线上  
-    var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
-    var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
-    var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
+    // var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
+    // var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
+    // var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
+
+       // 测试 tao
+    var medicine_url = "http://192.168.0.2:8006/stmedicine";// 测试个人信息
+    var assistant_url = "http://192.168.0.2:8036/stassistant";// 测试预约
+    var weixin_url = "http://192.168.0.2:8046/stweixin";// 测试微信
 
     // 公共方法401跳转
     function to_login(data){
@@ -364,7 +369,8 @@ $(function(){
                                         sex:data.object.gender,
                                         age:age,
                                         vip:data.object.memberType,
-                                        inviteNumber:data.object.inviteNumber
+                                        inviteNumber:data.object.inviteNumber,
+                                        person:data.object
                                     }
                                 });
                             }
@@ -1337,8 +1343,29 @@ $(function(){
             }
         })
     }else if($('.balance_detail').size()>0){
-        console.log(3333);
-        
+        $('.quit_account').live('click',function(e){//退出弹窗
+            // 弹窗
+            var $androidActionSheet = $('#quit_account');
+            var $androidMask = $androidActionSheet.find('.weui-mask2');
+            $androidActionSheet.fadeIn(200);
+            $androidMask.on('click',function () {
+                $androidActionSheet.fadeOut(200);
+            });
+        });
+        $('.m_balance .quit_sure').live('click',function(){//退出弹窗
+            var $androidActionSheet = $('#quit_account');
+            var $androidMask = $androidActionSheet.find('.weui-mask2');
+            $androidActionSheet.fadeOut(200);
+            $androidMask.on('click',function () {
+                $androidActionSheet.fadeIn(200);
+            });
+            if ($(this).hasClass('quit_sure')) {//退出确认
+                localStorage.removeItem("access_token");
+                window.location.href='./login.html';
+            }else if ($(this).hasClass('time_cancel')) {//退出取消
+                return false;
+            }
+        });
     };
     // 编辑按钮
     $('.edit').live('click',function(){
