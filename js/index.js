@@ -1322,7 +1322,7 @@ $(function(){
                 $('.ope_num').html(_num);
             }
         })
-    }else if($('.cart').size()>0){
+    }else if($('.cart').size()>0){//购物车页面
           // 数量增减
           $('.cart .thumb .iconfont').live('click',function(){
             var _num = $(this).siblings('.ope_num').html();
@@ -1336,6 +1336,9 @@ $(function(){
                 $(this).siblings('.ope_num').html(_num);
             }
         })
+    }else if($('.balance_detail').size()>0){
+        console.log(3333);
+        
     };
     // 编辑按钮
     $('.edit').live('click',function(){

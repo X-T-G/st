@@ -89,6 +89,23 @@
             <div class="send_btn">
                 <button>我愿转增</button>
             </div>
+            <!-- 弹窗 -->
+            <div class="weui-skin_android" id="quit_account" style="opacity: 0; display: none;">
+                <div class="weui-mask2"></div>
+                <div class="weui-actionsheet">
+                    <div class="weui-actionsheet__menu">
+                        <div class="text_info">确定退出此帐号？</div>
+                        <div class="flex">
+                            <div class="flex-1">
+                                <button type="button" class="quit_sure">确认</button>
+                            </div>
+                            <div class="flex-1">
+                                <button type="button" class="time_cancel">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- 没有数据 -->
             <div class="has_noinfo dis-no" :class=[{"dis-no":(has_noinfo==false)}]>
                 <img src="../images/bg_nodata.png" alt="">
