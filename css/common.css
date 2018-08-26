@@ -494,7 +494,7 @@ animation: myfade_in .2s;
 .m_balance .weui-skin_android .weui-actionsheet__menu{padding: 20px;text-align: center;background-color: #fcfcfd;}
 .m_balance .weui-actionsheet__menu .text_info,.m_balance .weui-actionsheet__menu input{font-size: 16px;margin: 10px 0 0;}
 .m_balance .weui-actionsheet__menu input{font-size: 14px;height: 30px;line-height: 30px;padding-left: 6px;margin-bottom: 10px;-webkit-appearance: none;border: 1px solid #e5e5e5;outline: none;box-shadow: none;}
-
+.m_balance .weui-actionsheet__menu button{width: 60px;height: 28px;background-color: #fff;outline: none;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 4px;}
 
 
 

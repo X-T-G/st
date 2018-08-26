@@ -1347,7 +1347,7 @@ $(function(){
                 $androidActionSheet.fadeOut(200);
             });
         });
-        $('.m_balance .quit_sure').live('click',function(){//退出弹窗
+        $('.m_balance .weui-actionsheet button').live('click',function(){//退出弹窗
             var $androidActionSheet = $('#quit_account');
             var $androidMask = $androidActionSheet.find('.weui-mask2');
             $androidActionSheet.fadeOut(200);
@@ -1355,8 +1355,8 @@ $(function(){
                 $androidActionSheet.fadeIn(200);
             });
             if ($(this).hasClass('quit_sure')) {//退出确认
-                localStorage.removeItem("access_token");
-                window.location.href='./login.html';
+              
+                // ajax请求的方法
             }else if ($(this).hasClass('time_cancel')) {//退出取消
                 return false;
             }
