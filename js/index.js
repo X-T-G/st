@@ -1337,7 +1337,94 @@ $(function(){
                 $(this).siblings('.ope_num').html(_num);
             }
         })
-    }else if($('.balance_detail').size()>0){
+    }else if($('#my_coin').size()>0){//我的神庭币页面
+        var _token = localStorage.getItem('access_token');
+        var page = 0;//默认第一页
+        var app = new Vue({
+            el: '#my_coin',
+            data: {
+                has_noinfo:false,//没有数据
+                loading:true,//加载
+                show_page:false,//是否显示页面
+                page:[],
+                current:1,//当前页面
+                my_balance:[],//数据
+            },
+            created:function(){
+                var that = this;
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: "GET",
+                    url:weixin_url + '/coin/consume-list?page='+page,
+                    contentType:"application/json",
+                    success: function(data){
+                        if (data.code == 0) {
+                            that.current = 1;
+                            var Data_length =  data.page.content.length;
+                            if (Data_length == 0) {
+                                that.show_page = false;
+                                that.has_noinfo = true;
+                                that.loading = false;
+                                return;
+                            }else{//请求到数据
+                                that.my_balance = data.page.content;
+                                that.show_page = true;
+                                that.page = data.page;
+                                that.has_noinfo = false;
+                                that.loading = false;
+                            }
+                        }
+                        to_login(data);
+                    }
+                });
+            },
+            methods:{
+                change_page:function(event){
+                    var that =this;
+                    var class_name = event.target.className;
+                    var num = event.target.innerHTML;
+                    var is_active = class_name.indexOf('active');
+                    if (is_active !==-1) {//被选中
+                        console.log(333);
+                        return;
+                    }else{
+                        that.show_page = false;
+                        that.has_noinfo = false;
+                        that.loading = true;
+                        that.current = num;
+                        var page = num-1;
+                        $.ajax({//发起请求
+                            headers: {
+                                'Authorization': 'bearer '+_token
+                            },
+                            type: "GET",
+                            url:weixin_url + '/coin/consume-list?page='+page,
+                            contentType:"application/json",
+                            success: function(data){
+                                if (data.code == 0) {
+                                    var Data_length =  data.page.content.length;
+                                    if (Data_length == 0) {
+                                        that.show_page = false;
+                                        that.has_noinfo = true;
+                                        that.loading = false;
+                                        return;
+                                    }else{//请求到数据
+                                        that.my_balance = data.page.content;
+                                        that.show_page = true;
+                                        that.page = data.page;
+                                        that.has_noinfo = false;
+                                        that.loading = false;
+                                    }
+                                }
+                                to_login(data);
+                            }
+                        });
+                    }
+                },
+            }
+        });
         $('.quit_account').live('click',function(e){//退出弹窗
             // 弹窗
             var $androidActionSheet = $('#quit_account');

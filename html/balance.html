@@ -19,75 +19,36 @@
                 <img src="../images/back_gery.png" alt="">
             </span>
         </div>
-        <div class="m_balance" id="m_balance">
-            <div class="balance_top">
-                <img src="../images/st_coin2.png" alt="">
-                <div class="text_center">
-                    <p>2000个</p>
+        <div id="my_coin">
+            <div class="m_balance" :class=[{"dis-no":(show_page==false)}] id="m_balance">
+                <div class="balance_top">
+                    <img src="../images/st_coin2.png" alt="">
+                    <div class="text_center">
+                        <p>2000个</p>
+                    </div>
                 </div>
-            </div>
-            <!-- 神庭币使用详情 -->
-            <div class="balance_detail">
-                <p class="tint cion_detail">神庭币明细</p>
-                <div>
-                    <div class="each_cou">
-                        <div class="flex">
-                            <div class="flex-1">
-                                <p>购物消费</p>
-                                <p class="tint">2018-08-21 11:09</p>
+                <!-- 神庭币使用详情 -->
+                <div class="balance_detail clearfix">
+                    <p class="tint cion_detail">神庭币明细</p>
+                    <div v-for="balance in my_balance">
+                        <div class="each_cou">
+                            <div class="flex">
+                                <div class="flex-1">
+                                    <p>{{balance.consumeType.dictName}}</p>
+                                    <p class="tint">{{balance.createtime}}</p>
+                                </div>
+                                <p class="cou_price"  v-if="balance.coin > 0">{{balance.coin}}</p>
+                                <p class="cou_price pay" v-if="balance.coin < 0">{{balance.coin}}</p>
                             </div>
-                            <p class="cou_price pay">-40元</p>
-                        </div>
-                    </div>
-                    <div class="each_cou">
-                        <div class="flex">
-                            <div class="flex-1">
-                                <p>充值</p>
-                                <div class="tint">2018-08-21 11:09</div>                                
-                            </div>
-                            <p class="cou_price">+40元</p>
-                        </div>
-                    </div>
-                    <div class="each_cou">
-                        <div class="flex">
-                            <div class="flex-1">
-                                <p>购物消费</p>
-                                <p class="tint">2018-08-21 11:09</p>
-                            </div>
-                            <p class="cou_price pay">-40元</p>
-                        </div>
-                    </div>
-                    <div class="each_cou">
-                        <div class="flex">
-                            <div class="flex-1">
-                                <p>充值</p>
-                                <div class="tint">2018-08-21 11:09</div>                                
-                            </div>
-                            <p class="cou_price">+40元</p>
-                        </div>
-                    </div>
-                    <div class="each_cou">
-                        <div class="flex">
-                            <div class="flex-1">
-                                <p>购物消费</p>
-                                <p class="tint">2018-08-21 11:09</p>
-                            </div>
-                            <p class="cou_price pay">-40元</p>
-                        </div>
-                    </div>
-                    <div class="each_cou">
-                        <div class="flex">
-                            <div class="flex-1">
-                                <p>充值</p>
-                                <div class="tint">2018-08-21 11:09</div>                                
-                            </div>
-                            <p class="cou_price">+40元</p>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="send_btn quit_account">
-                <button>我愿转赠</button>
+                <div class="clearfix fr cli_page">
+                    <div class="fl  order_page" v-on:click="change_page" :class=[{'active':(page==current)}]  v-for="page in page.totalPages">{{page}}</div>
+                </div>
+                <div class="send_btn quit_account">
+                    <button>我愿转赠</button>
+                </div>
             </div>
             <!-- 弹窗 -->
             <div class="weui-skin_android" id="quit_account" style="opacity: 0; display: none;">
@@ -110,14 +71,15 @@
                 </div>
             </div>
             <!-- 没有数据 -->
-            <div class="has_noinfo dis-no" :class=[{"dis-no":(has_noinfo==false)}]>
+            <div class="has_noinfo" :class=[{"dis-no":(has_noinfo==false)}]>
                 <img src="../images/bg_nodata.png" alt="">
             </div>
             <!-- 加载效果 -->
-            <div class="weui-loadmore dis-no" :class=[{"dis-no":(loading==false)}]>
+            <div class="weui-loadmore" :class=[{"dis-no":(loading==false)}]>
                 <i class="weui-loading"></i>
                 <span class="weui-loadmore__tips">正在加载</span>
             </div>
         </div>
+        
     </body>
 </html>

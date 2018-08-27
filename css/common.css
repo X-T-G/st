@@ -490,11 +490,19 @@ animation: myfade_in .2s;
 .m_balance .balance_detail .cou_price{line-height: 44px;font-size: 16px;color: #f14731;}
 .m_balance .balance_detail .cou_price.pay{color: #9abd00;}
 .m_balance .send_btn button{background-color: #F17355;position: fixed;border:none;bottom: 0;width: 100%;height:40px;line-height: 40px;text-align: center;color: #fff;z-index: 1000;border-radius: 0;}
-.m_balance .weui-skin_android .weui-actionsheet{border: 1px solid #e5e5e5;}
-.m_balance .weui-skin_android .weui-actionsheet__menu{padding: 20px;text-align: center;background-color: #fcfcfd;}
-.m_balance .weui-actionsheet__menu .text_info,.m_balance .weui-actionsheet__menu input{font-size: 16px;margin: 10px 0 0;}
-.m_balance .weui-actionsheet__menu input{font-size: 14px;height: 30px;line-height: 30px;padding-left: 6px;margin-bottom: 10px;-webkit-appearance: none;border: 1px solid #e5e5e5;outline: none;box-shadow: none;}
-.m_balance .weui-actionsheet__menu button{width: 60px;height: 28px;background-color: #fff;outline: none;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 4px;}
+#my_coin .weui-skin_android .weui-actionsheet{border: 1px solid #e5e5e5;}
+#my_coin .weui-skin_android .weui-actionsheet__menu{padding: 20px;text-align: center;background-color: #fcfcfd;}
+#my_coin .weui-actionsheet__menu .text_info,#my_coin .weui-actionsheet__menu input{font-size: 16px;margin: 10px 0 0;}
+#my_coin .weui-actionsheet__menu input{font-size: 14px;height: 30px;line-height: 30px;padding-left: 6px;margin-bottom: 10px;-webkit-appearance: none;border: 1px solid #e5e5e5;outline: none;box-shadow: none;}
+#my_coin .weui-actionsheet__menu button{width: 60px;height: 28px;background-color: #fff;outline: none;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 4px;}
+#my_coin .cli_page{margin: 20px;margin-bottom: 40px;}
+#my_coin .cli_page .order_page {margin-left: 4px;padding: 4px 8px;width: 30px;height: 30px;text-align: center;line-height: 23px;}
+#my_coin .order_page {border: 1px solid #f57d64;color: #f57d64;background-color: #fff;}
+#my_coin .cli_page div.active {border: none;background-color: #f7f4ef;}
+
+
+
+
 
 
 
