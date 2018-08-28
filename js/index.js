@@ -1470,14 +1470,14 @@ $(function(){
                 },
                 type: "POST",
                 url:weixin_url + '/user/pay-password',
-                // contentType:"application/json",
-                // data: {password:password},
                 contentType:"application/json",
-                // visitName:就诊人，appointmentName：预约人
-                data: JSON.stringify({password:password}),
+                data: JSON.stringify({payPassword:password}),
                 success: function(data){
                     if (data.code == 0) {
                         $('#regist_info').css('display','block');
+                        setTimeout(function(){
+                            $('#regist_info').css('display','none');
+                        },2000);
                     }
                     to_login(data);
                 }
