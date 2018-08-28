@@ -1424,16 +1424,66 @@ $(function(){
                 },
             }
         });
-        $('#my_coin .quit_account').live('click',function(e){//退出弹窗
-            // 弹窗
-            var $androidActionSheet = $('#quit_account');
-            var $androidMask = $androidActionSheet.find('.weui-mask2');
-            $androidActionSheet.fadeIn(200);
-            $androidMask.on('click',function () {
-                $androidActionSheet.fadeOut(200);
+        $('#my_coin .quit_account button').live('click',function(){
+            // ajax请求的方法
+            var _token = localStorage.getItem('access_token');
+            var that = this;
+            $.ajax({//发起请求
+                headers: {
+                    'Authorization': 'bearer '+_token
+                },
+                type: "GET",
+                url:weixin_url + '/user/pay-password',
+                contentType:"application/json",
+                success: function(data){
+                    if (data.code == 0) {
+                        if(data.payPassword){//如果已经设置支付密码
+                            // 弹窗
+                            var $androidActionSheet = $('#quit_account');
+                            var $androidMask = $androidActionSheet.find('.weui-mask2');
+                            $androidActionSheet.fadeIn(200);
+                            $androidMask.on('click',function () {
+                                $androidActionSheet.fadeOut(200);
+                            });
+                        }else{
+                            // 弹窗
+                            var $androidActionSheet = $('#quit_account2');
+                            var $androidMask = $androidActionSheet.find('.weui-mask3');
+                            $androidActionSheet.fadeIn(200);
+                            $androidMask.on('click',function () {
+                                $androidActionSheet.fadeOut(200);
+                            });
+                        }
+                    }
+                    to_login(data);
+                }
             });
         });
-        $('#my_coin .weui-actionsheet button').live('click',function(){//退出弹窗
+        $('#my_coin #quit_account2 .quit_sure').live('click',function(e){//设置交易密码
+            // ajax请求的方法
+            var _token = localStorage.getItem('access_token');
+            var that = this;
+            var password = $(this).parents('.weui-actionsheet__menu').find('input').val();
+            $.ajax({//发起请求
+                headers: {
+                    'Authorization': 'bearer '+_token
+                },
+                type: "POST",
+                url:weixin_url + '/user/pay-password',
+                // contentType:"application/json",
+                // data: {password:password},
+                contentType:"application/json",
+                // visitName:就诊人，appointmentName：预约人
+                data: JSON.stringify({password:password}),
+                success: function(data){
+                    if (data.code == 0) {
+                        $('#regist_info').css('display','block');
+                    }
+                    to_login(data);
+                }
+            });
+        });
+        $('#my_coin #quit_account .weui-actionsheet button').live('click',function(){//设置交易密码
             var $androidActionSheet = $('#quit_account');
             var $androidMask = $androidActionSheet.find('.weui-mask2');
             $androidActionSheet.fadeOut(200);
@@ -1441,67 +1491,65 @@ $(function(){
                 $androidActionSheet.fadeIn(200);
             });
             if ($(this).hasClass('quit_sure')) {//退出确认
-                // ajax请求的方法
-                var _token = localStorage.getItem('access_token');
-                var that = this;
-                $.ajax({//发起请求
-                    headers: {
-                        'Authorization': 'bearer '+_token
-                    },
-                    type: "GET",
-                    url:weixin_url + '/user/pay-password',
-                    contentType:"application/json",
-                    success: function(data){
-                        console.log(data);
-                        if (data.code == 0) {
-                            console.log(333);
-                        }
-                        to_login(data);
-                    }
-                });
+        //  aaaaaaaaaaaa
             }else if ($(this).hasClass('time_cancel')) {//退出取消
                 return false;
             }
         });
+        $('#my_coin #quit_account2 .weui-actionsheet button').live('click',function(){//填写交易密码
+            var $androidActionSheet = $('#quit_account2');
+            var $androidMask = $androidActionSheet.find('.weui-mask3');
+            $androidActionSheet.fadeOut(200);
+            $androidMask.on('click',function () {
+                $androidActionSheet.fadeIn(200);
+            });
+            if ($(this).hasClass('quit_sure')) {//退出确认
+        //  aaaaaaaaaaaa
+            }else if ($(this).hasClass('time_cancel')) {//退出取消
+                return false;
+            }
+        });
+    }else if ($('').size>0){//购物车
+        // 编辑按钮
+        $('.edit').live('click',function(){
+            var _content = $(this).html();
+            $('.weui-check').prop("checked",false);
+            if (_content == '编辑'){
+                $(this).html('完成');
+                $('.delete_btn').removeClass('dis-no');
+                $('.num_change').addClass('dis-no');
+            }else{
+                $(this).html('编辑');
+                $('.delete_btn').addClass('dis-no');
+                $('.num_change').removeClass('dis-no');
+            }
+        })
+        // 删除按钮
+        $('.delete_btn').live('click',function(){
+            $(this).parents('.weui-cell.weui-check__label').remove();
+        })
+
+        // 全选
+        $('.compute_btn .weui-cell.weui-check__label').live('click',function(){
+            var flag = $(this).find('.weui-check').is(':checked');
+            if(flag){
+                $(".cart_container input[type='checkbox']").prop("checked",true);
+            }else{
+                $(".cart_container input[type='checkbox']").prop("checked",false);
+            }
+        })
+        // 单选按钮
+        $('.left_radio').live('click',function(){
+            var flag = $(this).find("input[type='checkbox']").is(':checked');
+            $(this).find("input[type='checkbox']").prop("checked",!flag);
+            var all_num = $(".cart_container input[type='checkbox']").length;
+            var ck_num = $(".cart_container input[type='checkbox']:checked").length;
+            if (all_num == ck_num) {
+                $('.compute_btn .weui-check').prop("checked",true);
+            }else{
+                $('.compute_btn .weui-check').prop("checked",false);
+            }
+        })
     };
-    // 编辑按钮
-    $('.edit').live('click',function(){
-        var _content = $(this).html();
-        $('.weui-check').prop("checked",false);
-        if (_content == '编辑'){
-            $(this).html('完成');
-            $('.delete_btn').removeClass('dis-no');
-            $('.num_change').addClass('dis-no');
-        }else{
-            $(this).html('编辑');
-            $('.delete_btn').addClass('dis-no');
-            $('.num_change').removeClass('dis-no');
-        }
-    })
-    // 删除按钮
-    $('.delete_btn').live('click',function(){
-        $(this).parents('.weui-cell.weui-check__label').remove();
-    })
     
-    // 全选
-    $('.compute_btn .weui-cell.weui-check__label').live('click',function(){
-        var flag = $(this).find('.weui-check').is(':checked');
-        if(flag){
-            $(".cart_container input[type='checkbox']").prop("checked",true);
-        }else{
-            $(".cart_container input[type='checkbox']").prop("checked",false);
-        }
-    })
-    // 单选按钮
-    $('.left_radio').live('click',function(){
-        var flag = $(this).find("input[type='checkbox']").is(':checked');
-        $(this).find("input[type='checkbox']").prop("checked",!flag);
-        var all_num = $(".cart_container input[type='checkbox']").length;
-        var ck_num = $(".cart_container input[type='checkbox']:checked").length;
-        if (all_num == ck_num) {
-            $('.compute_btn .weui-check').prop("checked",true);
-        }else{
-            $('.compute_btn .weui-check').prop("checked",false);
-        }
-    })
 });

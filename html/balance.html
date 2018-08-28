@@ -35,9 +35,9 @@
                             <div class="flex">
                                 <div class="flex-1">
                                     <p>{{balance.consumeType.dictName}}</p>
-                                    <p class="tint">{{balance.createtime}}</p>
+                                    <p class="tint">{{balance.createtime.substring(0,19)}}</p>
                                 </div>
-                                <p class="cou_price"  v-if="balance.coin > 0">{{balance.coin}}</p>
+                                <p class="cou_price"  v-if="balance.coin > 0">+{{balance.coin}}</p>
                                 <p class="cou_price pay" v-if="balance.coin < 0">{{balance.coin}}</p>
                             </div>
                         </div>
@@ -50,12 +50,12 @@
                     <button>我愿转赠</button>
                 </div>
             </div>
-            <!-- 弹窗1 -->
-            <!-- <div class="weui-skin_android" id="quit_account2" style="opacity: 0; display: none;">
+            <!-- 弹窗1 设置交易密码-->
+            <div class="weui-skin_android" id="quit_account2" style="opacity: 0; display: none;">
                 <div class="weui-mask2"></div>
                 <div class="weui-actionsheet">
                     <div class="weui-actionsheet__menu">
-                        <div class="text_info">请输入支付密码：<input type="text" placeholder="支付密码"></div>
+                        <div class="text_info">请设置支付密码：<input type="text" placeholder="支付密码"></div>
                         <div class="flex">
                             <div class="flex-1">
                                 <button type="button" class="quit_sure">确认</button>
@@ -66,10 +66,10 @@
                         </div>
                     </div>
                 </div>
-            </div> -->
-            <!-- 弹窗2 -->
+            </div>
+            <!-- 弹窗2 填写交易密码-->
             <div class="weui-skin_android" id="quit_account" style="opacity: 0; display: none;">
-                <div class="weui-mask2"></div>
+                <div class="weui-mask3"></div>
                 <div class="weui-actionsheet">
                     <div class="weui-actionsheet__menu">
                         <div class="text_info">请输入支付密码：<input type="text" placeholder="支付密码"></div>
@@ -84,6 +84,8 @@
                     </div>
                 </div>
             </div>
+            <!-- 弹窗 -->
+            <div class="weui-toptips weui-toptips_warn js_tooltips" style="display: none;" id = "regist_info">密码设置成功！</div>
             <!-- 没有数据 -->
             <div class="has_noinfo" :class=[{"dis-no":(has_noinfo==false)}]>
                 <img src="../images/bg_nodata.png" alt="">
