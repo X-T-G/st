@@ -176,7 +176,7 @@ img.store_pic{width: 108px;height:108px;}
 .my_order .order_page{border: 1px solid #f57d64;color: #f57d64;background-color: #fff;}
 .my_order .cli_page{margin: 20px;}
 .my_order .cli_page .order_page{margin-left: 4px;padding: 4px 8px;width: 30px;height: 30px;text-align: center;line-height: 23px;}
-.my_order .cli_page div.active{border: none;background-color: #f7f4ef;}
+.my_order .cli_page div.active{border: 1px solid #F17355;background-color: #F17355;color: #fff;}
 
 /* 我的优惠券 */
 .m_coupon .bar_option,.m_regist .bar_option{margin: 0 auto;max-width: 200px;height: 40px;line-height: 40px;text-align: center;border: none;}
@@ -321,7 +321,7 @@ img.store_pic{width: 108px;height:108px;}
 #order_detail .weui-toptips{height: 40px;line-height: 40px;background-color:#1AAD19;}
 #order_detail .order_detail {border-bottom:none;}
 #order_detail .cance_order{width: 56px;height: 26px;float: right;background-color: #F17355;color: #fff;margin: 0 15px 10px 0;border: none;border-radius: 3px;line-height: 26px;font-size: 13px;text-align: center;}
-#order_detail .cli_page div.active {border: none;background-color: #f7f4ef;}
+#order_detail .cli_page div.active {border: 1px solid #F17355;background-color: #F17355;color: #fff;}
 #order_detail .order_page {border: 1px solid #f57d64;color: #f57d64;background-color: #fff;}
 #order_detail .cli_page .order_page {margin-left: 4px;padding: 4px 8px;width: 30px;height: 30px;text-align: center;line-height: 23px;}
 #order_detail .cli_page{margin: 20px;}
@@ -484,7 +484,7 @@ animation: myfade_in .2s;
 /* 神庭币 */
 .m_balance .balance_top{text-align: center;padding: 20px;border-bottom: 1px solid #e5e5e5;}
 .m_balance img{width: 80px;height: 80px;margin: 0 auto;border-radius: 50%;}
-.m_balance .balance_detail{background-color: #fff;max-height: 400px;overflow-y: scroll;}
+.m_balance .balance_detail{background-color: #fff;max-height: 370px;overflow-y: scroll;}
 .m_balance .balance_detail .each_cou{border-top: 1px solid #e5e5e5;}
 .m_balance .balance_detail p.cion_detail,.m_balance .balance_detail div.each_cou{padding:10px 20px;}
 .m_balance .balance_detail .cou_price{line-height: 44px;font-size: 16px;color: #f14731;}
@@ -498,7 +498,7 @@ animation: myfade_in .2s;
 #my_coin .cli_page{margin: 20px;margin-bottom: 40px;}
 #my_coin .cli_page .order_page {margin-left: 4px;padding: 4px 8px;width: 30px;height: 30px;text-align: center;line-height: 23px;}
 #my_coin .order_page {border: 1px solid #f57d64;color: #f57d64;background-color: #fff;}
-#my_coin .cli_page div.active {border: none;background-color: #f7f4ef;}
+#my_coin .cli_page div.active {border: 1px solid #F17355;background-color: #F17355;color: #fff;}
 
 
 

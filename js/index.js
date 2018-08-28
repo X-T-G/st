@@ -1440,12 +1440,26 @@ $(function(){
             $androidMask.on('click',function () {
                 $androidActionSheet.fadeIn(200);
             });
-                console.log(1);
             if ($(this).hasClass('quit_sure')) {//退出确认
-                console.log(2);              
                 // ajax请求的方法
+                var _token = localStorage.getItem('access_token');
+                var that = this;
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: "GET",
+                    url:weixin_url + '/user/pay-password',
+                    contentType:"application/json",
+                    success: function(data){
+                        console.log(data);
+                        if (data.code == 0) {
+                            console.log(333);
+                        }
+                        to_login(data);
+                    }
+                });
             }else if ($(this).hasClass('time_cancel')) {//退出取消
-                console.log(3);                
                 return false;
             }
         });
