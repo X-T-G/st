@@ -1424,7 +1424,7 @@ $(function(){
                 },
             }
         });
-        $('#my_coin .quit_account button').live('click',function(){
+        $('#my_coin .quit_account button').live('click',function(){//点击“我愿转赠”按钮
             // ajax请求的方法
             var _token = localStorage.getItem('access_token');
             var that = this;
@@ -1442,10 +1442,11 @@ $(function(){
                             var $androidActionSheet = $('#quit_account');
                             var $androidMask = $androidActionSheet.find('.weui-mask2');
                             $androidActionSheet.fadeIn(200);
+                            $('#quit_account .text_info span').html('请输入转赠数量：');
                             $androidMask.on('click',function () {
                                 $androidActionSheet.fadeOut(200);
                             });
-                        }else{
+                        }else{//若未设置支付密码
                             // 弹窗
                             var $androidActionSheet = $('#quit_account2');
                             var $androidMask = $androidActionSheet.find('.weui-mask3');
@@ -1483,7 +1484,7 @@ $(function(){
                 }
             });
         });
-        $('#my_coin #quit_account .weui-actionsheet button').live('click',function(){//设置交易密码
+        $('#my_coin #quit_account .quit_sure').live('click',function(){//转赠数量
             var $androidActionSheet = $('#quit_account');
             var $androidMask = $androidActionSheet.find('.weui-mask2');
             $androidActionSheet.fadeOut(200);
