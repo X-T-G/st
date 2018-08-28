@@ -1387,7 +1387,6 @@ $(function(){
                     var num = event.target.innerHTML;
                     var is_active = class_name.indexOf('active');
                     if (is_active !==-1) {//被选中
-                        console.log(333);
                         return;
                     }else{
                         that.show_page = false;
