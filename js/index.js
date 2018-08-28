@@ -1424,7 +1424,7 @@ $(function(){
                 },
             }
         });
-        $('.quit_account').live('click',function(e){//退出弹窗
+        $('#my_coin .quit_account').live('click',function(e){//退出弹窗
             // 弹窗
             var $androidActionSheet = $('#quit_account');
             var $androidMask = $androidActionSheet.find('.weui-mask2');
@@ -1433,17 +1433,19 @@ $(function(){
                 $androidActionSheet.fadeOut(200);
             });
         });
-        $('.m_balance .weui-actionsheet button').live('click',function(){//退出弹窗
+        $('#my_coin .weui-actionsheet button').live('click',function(){//退出弹窗
             var $androidActionSheet = $('#quit_account');
             var $androidMask = $androidActionSheet.find('.weui-mask2');
             $androidActionSheet.fadeOut(200);
             $androidMask.on('click',function () {
                 $androidActionSheet.fadeIn(200);
             });
+                console.log(1);
             if ($(this).hasClass('quit_sure')) {//退出确认
-              
+                console.log(2);              
                 // ajax请求的方法
             }else if ($(this).hasClass('time_cancel')) {//退出取消
+                console.log(3);                
                 return false;
             }
         });

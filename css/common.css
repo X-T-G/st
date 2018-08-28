@@ -482,8 +482,8 @@ animation: myfade_in .2s;
 /* .balance .bottom_operate button{position: fixed;border-top: 1px solid #e5e5e5;bottom: 0;width: 100%;max-width: 768px;display: -webkit-box;display: -webkit-flex;display: flex;z-index: 110;-webkit-box-orient: horizontal;-webkit-box-direction: normal;-webkit-flex-direction: row;flex-direction: row;-webkit-box-align: center;-webkit-align-items: center;align-items: center;background-color: #fff;} */
 
 /* 神庭币 */
-.m_balance .balance_top{text-align: center;padding: 40px;border-bottom: 1px solid #e5e5e5;}
-.m_balance img{width: 80px;height: 80px;margin: 0 auto 10px;border-radius: 50%;}
+.m_balance .balance_top{text-align: center;padding: 20px;border-bottom: 1px solid #e5e5e5;}
+.m_balance img{width: 80px;height: 80px;margin: 0 auto;border-radius: 50%;}
 .m_balance .balance_detail{background-color: #fff;max-height: 400px;overflow-y: scroll;}
 .m_balance .balance_detail .each_cou{border-top: 1px solid #e5e5e5;}
 .m_balance .balance_detail p.cion_detail,.m_balance .balance_detail div.each_cou{padding:10px 20px;}
