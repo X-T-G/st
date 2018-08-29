@@ -499,7 +499,7 @@ animation: myfade_in .2s;
 #my_coin .cli_page .order_page {margin-left: 4px;padding: 4px 8px;width: 30px;height: 30px;text-align: center;line-height: 23px;}
 #my_coin .order_page {border: 1px solid #f57d64;color: #f57d64;background-color: #fff;}
 #my_coin .cli_page div.active {border: 1px solid #F17355;background-color: #F17355;color: #fff;}
-#my_coin .weui-mask3,#my_coin .weui-mask2{height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 1000;transition: none 0.5s ease;display: none;}
+#my_coin .weui-mask3,#my_coin .weui-mask2,.person .middle_person .weui-mask2{height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 1000;transition: none 0.5s ease;display: none;}
 #my_coin .weui-toptips{padding: 0;font-size: 18px;height: 40px;line-height: 40px;background-color:#1AAD19;}
 
 

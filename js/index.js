@@ -1,13 +1,17 @@
 $(function(){
-    // 测试
+    // 测试 di
     // var medicine_url = "http://192.168.0.155:8006/stmedicine";// 测试个人信息
     // var assistant_url = "http://192.168.0.155:8036/stassistant";// 测试预约
     // var weixin_url = "http://192.168.0.155:8046/stweixin";// 测试微信
     //线上  
-    var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
-    var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
-    var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
-
+    // var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
+    // var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
+    // var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
+    
+     // 测试 tao
+    var medicine_url = "http://192.168.0.2:8006/stmedicine";// 测试个人信息
+    var assistant_url = "http://192.168.0.2:8036/stassistant";// 测试预约
+    var weixin_url = "http://192.168.0.2:8046/stweixin";// 测试微信
     // 公共方法401跳转
     function to_login(data){
         if (data !== undefined && data.code !== undefined){
@@ -397,7 +401,9 @@ $(function(){
             var $androidActionSheet = $('#quit_account');
             var $androidMask = $androidActionSheet.find('.weui-mask2');
             $androidActionSheet.fadeIn(200);
+            $androidMask.css('display','block');
             $androidMask.on('click',function () {
+                $androidMask.css('display','none');
                 $androidActionSheet.fadeOut(200);
             });
         });
@@ -1349,6 +1355,7 @@ $(function(){
                 page:[],
                 current:1,//当前页面
                 my_balance:[],//数据
+                datas:[],//初始数据
             },
             created:function(){
                 var that = this;
@@ -1374,6 +1381,7 @@ $(function(){
                                 that.page = data.page;
                                 that.has_noinfo = false;
                                 that.loading = false;
+                                that.datas = data;
                             }
                         }
                         to_login(data);
@@ -1438,21 +1446,22 @@ $(function(){
                 success: function(data){
                     if (data.code == 0) {
                         if(data.payPassword){//如果已经设置支付密码
-                            // 弹窗
-                            var $androidActionSheet = $('#quit_account');
-                            var $androidMask = $androidActionSheet.find('.weui-mask2');
-                            $androidActionSheet.fadeIn(200);
-                            $androidMask.css('display','block');
-                            $androidMask.fadeIn(200);
-                            $('#quit_account .text_info span').html('请输入转赠人姓名：');
-                            $androidMask.on('click',function () {
-                                $androidMask.css('display','none');
-                                $androidActionSheet.fadeOut(200);
-                            });
+                            // // 弹窗
+                            // var $androidActionSheet = $('#quit_account');
+                            // var $androidMask = $androidActionSheet.find('.weui-mask3');
+                            // $androidActionSheet.fadeIn(200);
+                            // $androidMask.css('display','block');
+                            // $androidMask.fadeIn(200);
+                            // $('#quit_account .text_info span').html('请输入转赠人姓名：');
+                            // $androidMask.on('click',function () {
+                            //     $androidMask.css('display','none');
+                            //     $androidActionSheet.fadeOut(200);
+                            // });
+                            window.location.href='./gift.html';
                         }else{//若未设置支付密码
                             // 弹窗
                             var $androidActionSheet = $('#quit_account2');
-                            var $androidMask = $androidActionSheet.find('.weui-mask3');
+                            var $androidMask = $androidActionSheet.find('.weui-mask2');
                             $androidActionSheet.fadeIn(200);
                             $androidMask.css('display','block');
                             $androidMask.fadeIn(200);
