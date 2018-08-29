@@ -25,10 +25,30 @@
                     <input class="" type="text" placeholder="请输入对方手机号/邮箱/神庭君id">
                     <span class="iconfont icon-sousuo-copy" v-on:click="search"></span>
                 </div>
-                <div class="user_info" :class=[{"dis-no":(show_user==false)}]>
+                <div class="user_info tint" :class=[{"dis-no":(show_user==false)}]>
                     <p>{{datas.userInfo.userName}}</p>
                     <p>{{datas.userInfo.phone}}</p>
                     <p>{{datas.userInfo.email}}</p>
+                    <input class="gift_num" type="text" placeholder="请输入转赠数量"><span>个</span>
+                    <button class="sure_gift" v-on:click="sure_gift">确认转赠</button>
+                </div>
+            </div>
+            <!-- 输入交易密码-->
+            <div class="weui-skin_android" id="quit_account2" style="opacity: 0; display: none;">
+                <div class="weui-mask2"></div>
+                <div class="weui-actionsheet">
+                    <div class="weui-actionsheet__menu gift_menu">
+                        <div class="text_info" v-if="realName">对方全名：<input type="text" class="user_name">{{datas.userInfo.userName.substring(1)}}</div>
+                        <div class="text_info">支付密码：<input class="user_pass" type="number" maxlength="6" placeholder="6位数字" oninput="if(value.length>6)value=value.slice(0,6)" ></div>
+                        <div class="flex">
+                            <div class="flex-1">
+                                <button type="button" class="quit_sure">确认</button>
+                            </div>
+                            <div class="flex-1">
+                                <button type="button" class="time_cancel">取消</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- 没有数据 -->

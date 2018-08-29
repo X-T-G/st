@@ -501,13 +501,31 @@ animation: myfade_in .2s;
 #my_coin .cli_page .order_page {margin-left: 4px;padding: 4px 8px;width: 30px;height: 30px;text-align: center;line-height: 23px;}
 #my_coin .order_page {border: 1px solid #f57d64;color: #f57d64;background-color: #fff;}
 #my_coin .cli_page div.active {border: 1px solid #F17355;background-color: #F17355;color: #fff;}
-#my_coin .weui-mask3,#my_coin .weui-mask2,.person .middle_person .weui-mask2{height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 1000;transition: none 0.5s ease;display: none;}
+#my_coin .weui-mask3,#my_coin .weui-mask2,.person .middle_person .weui-mask2,.my_gift .weui-mask2{height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 1000;transition: none 0.5s ease;display: none;}
 #my_coin .weui-toptips{padding: 0;font-size: 18px;height: 40px;line-height: 40px;background-color:#1AAD19;}
 /* 转赠页面 */
-.my_gift .search_contain{margin: 20px auto;padding:0 70px 0 20px;position: relative;border: 1px solid #e5e5e5;background-color: #fff;border-radius: 22px;height: 40px;line-height: 40px;width: 90%;}
+.my_gift .search_contain{margin: 50px auto;padding:0 70px 0 20px;position: relative;border: 1px solid #e5e5e5;background-color: #fff;border-radius: 22px;height: 40px;line-height: 40px;width: 90%;}
 .my_gift .search_contain input{width: 100%;border: none;outline: none;box-shadow: none;height: 32px;line-height: 32px;}
 .my_gift .search_contain span.iconfont{position: absolute;right: 0px;top: 0;font-size: 18px;width: 70px;display: inline-block;text-align: center;border-bottom-right-radius: 22px;border-top-right-radius: 22px;}
 .gift_bg{background-color: #fff;}
+.my_gift .user_info{text-align: center;margin-top: 70px;}
+.my_gift .gift_num{text-align:center;font-size:30px;width:140px;border: none;border-bottom: 1px solid #e5e5e5;height: 40px;line-height: 40px;}
+.my_gift .user_info p{margin-bottom: 10px;}
+.my_gift .user_info input::-ms-input-placeholder{font-size: 14px;}
+.my_gift .user_info input::-webkit-input-placeholder{font-size: 14px;}
+.my_gift .user_info span{color:#686b6d;}
+.my_gift button.sure_gift{display:inline;width: 90%;margin: 50px auto 0;height: 40px;line-height: 40px;text-align: center;border: none;background-color: #F17355;color: #fff;font-size: 18px;}
+.my_gift .weui-skin_android .weui-actionsheet{border: 1px solid #e5e5e5;}
+.my_gift .weui-skin_android .weui-actionsheet__menu{padding: 20px;text-align: center;background-color: #fcfcfd;}
+.my_gift .weui-actionsheet__menu .text_info,.my_gift .weui-actionsheet__menu input{font-size: 16px;margin: 10px 0 0;}
+.my_gift .weui-actionsheet__menu input{font-size: 14px;height: 30px;line-height: 30px;padding-left: 6px;margin-bottom: 10px;-webkit-appearance: none;border:none;text-align:center;border-bottom: 1px solid #e5e5e5;outline: none;box-shadow: none;}
+.my_gift .weui-actionsheet__menu button{width: 60px;height: 28px;background-color: #fff;outline: none;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 4px;}
+.my_gift .weui-actionsheet__menu.gift_menu input.user_name{width: 40px;margin-top: 0;border: none;border-bottom: 1px solid #e5e5e5;text-align: center;font-size: 16px;}
+.my_gift .weui-actionsheet__menu.gift_menu input.user_pass{width: 70px;margin-top: 0;}
+
+
+
+
 
 
 

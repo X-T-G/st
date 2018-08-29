@@ -1446,17 +1446,6 @@ $(function(){
                 success: function(data){
                     if (data.code == 0) {
                         if(data.payPassword){//如果已经设置支付密码
-                            // // 弹窗
-                            // var $androidActionSheet = $('#quit_account');
-                            // var $androidMask = $androidActionSheet.find('.weui-mask3');
-                            // $androidActionSheet.fadeIn(200);
-                            // $androidMask.css('display','block');
-                            // $androidMask.fadeIn(200);
-                            // $('#quit_account .text_info span').html('请输入转赠人姓名：');
-                            // $androidMask.on('click',function () {
-                            //     $androidMask.css('display','none');
-                            //     $androidActionSheet.fadeOut(200);
-                            // });
                             window.location.href='./gift.html';
                         }else{//若未设置支付密码
                             // 弹窗
@@ -1500,7 +1489,7 @@ $(function(){
                 }
             });
         });
-        $('#my_coin .weui-skin_android .weui-actionsheet button.time_cancel').live('click',function(){//填写交易密码
+        $('#my_coin .weui-skin_android .weui-actionsheet button.time_cancel').live('click',function(){
             var $androidActionSheet2 = $('#quit_account2');
             var $androidActionSheet = $('#quit_account');
             var $androidMask2 = $androidActionSheet.find('.weui-mask2');
@@ -1515,16 +1504,15 @@ $(function(){
             });
         });
     }else if($('#my_gift').size()>0){//神庭币转赠页面
-        console.log(5555);
         var _token = localStorage.getItem('access_token');
-        var page = 0;//默认第一页
         var app = new Vue({
             el: '#my_gift',
             data: {
-                has_noinfo:false,//没有数据
+                has_noinfo:true,//没有数据
                 loading:false,//加载
                 show_page:true,//是否显示页面
                 show_user:false,
+                realName:false,
                 datas:{"userInfo":{"userName":"","phone":"","email":""}},//初始数据
             },
             methods:{
@@ -1541,21 +1529,69 @@ $(function(){
                         contentType:"application/json",
                         success: function(data){
                             if (data.code == 0) {
-                                console.log(data);
+                                that.has_noinfo = false;
                                 that.show_user = true;
                                 that.datas = data;
-                                // $('#regist_info').css('display','block');
-                                // setTimeout(function(){
-                                //     $('#regist_info').css('display','none');
-                                //     window.location.href='./gift.html';
-                                // },2000);
+                                that.realName = data.userInfo.realName;
+                            }else{
+                                that.show_user = false;
+                                that.datas = {"userInfo":{"userName":"","phone":"","email":""}};
+                                that.has_noinfo = true;
                             }
                             to_login(data);
                         }
                     });
+                },
+                sure_gift:function(){
+                    // 弹窗
+                    var $androidActionSheet = $('#quit_account2');
+                    var $androidMask = $androidActionSheet.find('.weui-mask2');
+                    $androidActionSheet.fadeIn(200);
+                    $androidMask.css('display','block');
+                    $androidMask.fadeIn(200);
+                    $androidMask.on('click',function () {
+                        $androidMask.css('display','none');
+                        $androidActionSheet.fadeOut(200);
+                    });
                 }
             }
-        })
+        });
+        $('#my_gift #quit_account2 button.time_cancel').live('click',function(){//取消按钮
+            var $androidActionSheet2 = $('#quit_account2');
+            var $androidMask2 = $androidActionSheet2.find('.weui-mask2');
+            $androidActionSheet2.fadeOut(200);
+            $androidMask2.fadeOut(200);
+        });
+        $('#my_gift #quit_account2 button.quit_sure').live('click',function(){//确认按钮
+            var _token = localStorage.getItem('access_token');
+            var that = this;
+            var username = $('.search_contain').find('input').val();
+
+            $.ajax({//发起请求
+                headers: {
+                    'Authorization': 'bearer '+_token
+                },
+                type: "GET",
+                url:weixin_url + '/coin/transfer',
+                contentType:"application/json",
+                success: function(data){
+                    if (data.code == 0) {
+                        that.has_noinfo = false;
+                        that.show_user = true;
+                        that.datas = data;
+                    }else{
+                        that.show_user = false;
+                        that.datas = {"userInfo":{"userName":"","phone":"","email":""}};
+                        that.has_noinfo = true;
+                    }
+                    to_login(data);
+                }
+            });
+            var $androidActionSheet2 = $('#quit_account2');
+            var $androidMask2 = $androidActionSheet2.find('.weui-mask2');
+            $androidActionSheet2.fadeOut(200);
+            $androidMask2.fadeOut(200);
+        });
     }else if ($('#cart').size()>0){//购物车
         // 编辑按钮
         $('.edit').live('click',function(){
