@@ -1514,6 +1514,7 @@ $(function(){
                 show_user:false,
                 realName:false,
                 datas:{"userInfo":{"userName":"","phone":"","email":""}},//初始数据
+                messege:[],//提示信息
             },
             methods:{
                 search:function(){
@@ -1544,6 +1545,7 @@ $(function(){
                 },
                 sure_gift:function(){
                     // 弹窗
+                    $('input.user_pass').html("");
                     var $androidActionSheet = $('#quit_account2');
                     var $androidMask = $androidActionSheet.find('.weui-mask2');
                     $androidActionSheet.fadeIn(200);
@@ -1562,35 +1564,55 @@ $(function(){
             $androidActionSheet2.fadeOut(200);
             $androidMask2.fadeOut(200);
         });
-        $('#my_gift #quit_account2 button.quit_sure').live('click',function(){//确认按钮
+        $('#my_gift #quit_account2 button.quit_sure').live('click',function(){//填写密码确认按钮
             var _token = localStorage.getItem('access_token');
             var that = this;
-            var username = $('.search_contain').find('input').val();
-
+            if ($('.gift_menu .text_info').hasClass('realName')) {//已实名
+                var familyName =$('.gift_menu').find('input.realName').val();
+            }else{  
+                var familyName ="";
+            }
+            var price = $('.user_info').find('input.gift_num').val();
+            var username =  $('.search_contain').find('input.user_messege').val();
+            var payPassword = $('.gift_menu').find('input.user_pass').val();
             $.ajax({//发起请求
                 headers: {
                     'Authorization': 'bearer '+_token
                 },
-                type: "GET",
+                type: "POST",
                 url:weixin_url + '/coin/transfer',
                 contentType:"application/json",
+                data: JSON.stringify({username:username,price:price,familyName:familyName,payPassword:payPassword}),
                 success: function(data){
                     if (data.code == 0) {
-                        that.has_noinfo = false;
-                        that.show_user = true;
-                        that.datas = data;
+                        var $androidActionSheet2 = $('#quit_account2');
+                        var $androidMask2 = $androidActionSheet2.find('.weui-mask2');
+                        $androidActionSheet2.fadeOut(200);
+                        $androidMask2.fadeOut(200);
+                        window.location.href='./gift-success.html';
                     }else{
-                        that.show_user = false;
-                        that.datas = {"userInfo":{"userName":"","phone":"","email":""}};
-                        that.has_noinfo = true;
+                        var $androidActionSheet2 = $('#quit_account2');
+                        $androidActionSheet2.fadeOut(200);
+                        var _content = data.message;
+                        $('.info_te').html(_content);
+                        var $androidActionSheet2 = $('#quit_account');
+                        var $androidMask2 = $androidActionSheet2.find('.weui-mask2');
+                        $androidMask2.css('display','block');
+                        $androidActionSheet2.fadeIn(200);
+                        $androidMask2.on('click',function () {
+                            $androidMask2.css('display','none');
+                            $androidActionSheet2.fadeOut(200);
+                        });
                     }
                     to_login(data);
                 }
             });
-            var $androidActionSheet2 = $('#quit_account2');
-            var $androidMask2 = $androidActionSheet2.find('.weui-mask2');
-            $androidActionSheet2.fadeOut(200);
-            $androidMask2.fadeOut(200);
+            $('#my_gift #quit_account button').live('click',function(){//提醒消息确认
+                var $androidActionSheet = $('#quit_account');
+                var $androidMask2 = $androidActionSheet.find('.weui-mask2');
+                $androidActionSheet.fadeOut(200);
+                $androidMask2.css('display','none');
+            });
         });
     }else if ($('#cart').size()>0){//购物车
         // 编辑按钮
