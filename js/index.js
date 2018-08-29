@@ -1493,6 +1493,7 @@ $(function(){
                         $('#regist_info').css('display','block');
                         setTimeout(function(){
                             $('#regist_info').css('display','none');
+                            window.location.href='./gift.html';
                         },2000);
                     }
                     to_login(data);
@@ -1513,9 +1514,6 @@ $(function(){
                 $androidActionSheet.fadeOut(200);
             });
         });
-        // $('#my_coin #quit_account .quit_sure').live('click',function(){//转赠人查询及转赠数量
-            
-        // });
     }else if($('#my_gift').size()>0){//神庭币转赠页面
         console.log(5555);
         var _token = localStorage.getItem('access_token');
@@ -1526,11 +1524,38 @@ $(function(){
                 has_noinfo:false,//没有数据
                 loading:false,//加载
                 show_page:true,//是否显示页面
-                datas:[],//初始数据
+                show_user:false,
+                datas:{"userInfo":{"userName":"","phone":"","email":""}},//初始数据
             },
+            methods:{
+                search:function(){
+                    var _token = localStorage.getItem('access_token');
+                    var that = this;
+                    var username = $('.search_contain').find('input').val();
+                    $.ajax({//发起请求
+                        headers: {
+                            'Authorization': 'bearer '+_token
+                        },
+                        type: "GET",
+                        url:weixin_url + '/coin/user-info/'+username,
+                        contentType:"application/json",
+                        success: function(data){
+                            if (data.code == 0) {
+                                console.log(data);
+                                that.show_user = true;
+                                that.datas = data;
+                                // $('#regist_info').css('display','block');
+                                // setTimeout(function(){
+                                //     $('#regist_info').css('display','none');
+                                //     window.location.href='./gift.html';
+                                // },2000);
+                            }
+                            to_login(data);
+                        }
+                    });
+                }
+            }
         })
-
-
     }else if ($('#cart').size()>0){//购物车
         // 编辑按钮
         $('.edit').live('click',function(){

@@ -504,10 +504,10 @@ animation: myfade_in .2s;
 #my_coin .weui-mask3,#my_coin .weui-mask2,.person .middle_person .weui-mask2{height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 1000;transition: none 0.5s ease;display: none;}
 #my_coin .weui-toptips{padding: 0;font-size: 18px;height: 40px;line-height: 40px;background-color:#1AAD19;}
 /* 转赠页面 */
-.my_gift .search_contain{margin: 20px auto;padding:0 20px 0 10px;position: relative;border: 1px solid #e5e5e5;background-color: #fff;border-radius: 22px;height: 40px;line-height: 40px;width: 90%;}
+.my_gift .search_contain{margin: 20px auto;padding:0 70px 0 20px;position: relative;border: 1px solid #e5e5e5;background-color: #fff;border-radius: 22px;height: 40px;line-height: 40px;width: 90%;}
 .my_gift .search_contain input{width: 100%;border: none;outline: none;box-shadow: none;height: 32px;line-height: 32px;}
-.my_gift .search_contain span.iconfont{position: absolute;right: 0px;top: 0;font-size: 18px;width: 50px;display: inline-block;text-align: center;border-bottom-right-radius: 22px;border-top-right-radius: 22px;}
-/* .my_gift p{padding-left: 14px;} */
+.my_gift .search_contain span.iconfont{position: absolute;right: 0px;top: 0;font-size: 18px;width: 70px;display: inline-block;text-align: center;border-bottom-right-radius: 22px;border-top-right-radius: 22px;}
+.gift_bg{background-color: #fff;}
 
 
 

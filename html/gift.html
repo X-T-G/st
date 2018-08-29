@@ -12,7 +12,7 @@
         <script src="../js/index.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     </head>
-    <body>
+    <body class="gift_bg">
         <div class="header">
             我的转赠
             <span>
@@ -22,8 +22,13 @@
         <div class="my_gift" id="my_gift">
             <div :class=[{"dis-no":(show_page==false)}]>
                 <div class="search_contain">
-                    <input class="" type="text" placeholder="对方手机号/邮箱/神庭君id">
-                    <span class="iconfont icon-sousuo-copy"></span>
+                    <input class="" type="text" placeholder="请输入对方手机号/邮箱/神庭君id">
+                    <span class="iconfont icon-sousuo-copy" v-on:click="search"></span>
+                </div>
+                <div class="user_info" :class=[{"dis-no":(show_user==false)}]>
+                    <p>{{datas.userInfo.userName}}</p>
+                    <p>{{datas.userInfo.phone}}</p>
+                    <p>{{datas.userInfo.email}}</p>
                 </div>
             </div>
             <!-- 没有数据 -->
