@@ -1513,10 +1513,25 @@ $(function(){
                 $androidActionSheet.fadeOut(200);
             });
         });
-        $('#my_coin #quit_account .quit_sure').live('click',function(){//转赠人查询及转赠数量
+        // $('#my_coin #quit_account .quit_sure').live('click',function(){//转赠人查询及转赠数量
             
-        });
-    }else if ($('').size>0){//购物车
+        // });
+    }else if($('#my_gift').size()>0){//神庭币转赠页面
+        console.log(5555);
+        var _token = localStorage.getItem('access_token');
+        var page = 0;//默认第一页
+        var app = new Vue({
+            el: '#my_gift',
+            data: {
+                has_noinfo:false,//没有数据
+                loading:false,//加载
+                show_page:true,//是否显示页面
+                datas:[],//初始数据
+            },
+        })
+
+
+    }else if ($('#cart').size()>0){//购物车
         // 编辑按钮
         $('.edit').live('click',function(){
             var _content = $(this).html();
