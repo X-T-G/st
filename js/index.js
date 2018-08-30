@@ -1382,6 +1382,7 @@ $(function(){
                                 that.has_noinfo = false;
                                 that.loading = false;
                                 that.datas = data;
+
                             }
                         }
                         to_login(data);

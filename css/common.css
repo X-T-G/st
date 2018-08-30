@@ -176,8 +176,8 @@ img.store_pic{width: 108px;height:108px;}
 .m_order .weui-cells .clearfix .updata_time{font-size: 12px;}
 .m_order .weui-cells{margin-top: 10px;}
 .my_order .order_page{border: 1px solid #f57d64;color: #f57d64;background-color: #fff;}
-.my_order .cli_page{margin: 20px;}
-.my_order .cli_page .order_page{margin-left: 4px;padding: 4px 8px;width: 30px;height: 30px;text-align: center;line-height: 23px;}
+.my_order .cli_page{margin: 10px;}
+.my_order .cli_page .order_page{margin-bottom:5px;margin-left: 4px;padding: 4px 8px;width: 30px;height: 30px;text-align: center;line-height: 23px;}
 .my_order .cli_page div.active{border: 1px solid #F17355;background-color: #F17355;color: #fff;}
 
 /* 我的优惠券 */
@@ -325,8 +325,8 @@ img.store_pic{width: 108px;height:108px;}
 #order_detail .cance_order{width: 56px;height: 26px;float: right;background-color: #F17355;color: #fff;margin: 0 15px 10px 0;border: none;border-radius: 3px;line-height: 26px;font-size: 13px;text-align: center;}
 #order_detail .cli_page div.active {border: 1px solid #F17355;background-color: #F17355;color: #fff;}
 #order_detail .order_page {border: 1px solid #f57d64;color: #f57d64;background-color: #fff;}
-#order_detail .cli_page .order_page {margin-left: 4px;padding: 4px 8px;width: 30px;height: 30px;text-align: center;line-height: 23px;}
-#order_detail .cli_page{margin: 20px;}
+#order_detail .cli_page .order_page {margin-bottom:10px;margin-left: 4px;padding: 4px 8px;width: 30px;height: 30px;text-align: center;line-height: 23px;}
+#order_detail .cli_page{margin: 10px;}
 
 /* 商品列表页 */
 .goods_container{padding: 10px 0;}
@@ -497,8 +497,8 @@ animation: myfade_in .2s;
 #my_coin .weui-actionsheet__menu .text_info,#my_coin .weui-actionsheet__menu input{font-size: 16px;margin: 10px 0 0;}
 #my_coin .weui-actionsheet__menu input{font-size: 14px;height: 30px;line-height: 30px;padding-left: 6px;margin-bottom: 10px;-webkit-appearance: none;border: 1px solid #e5e5e5;outline: none;box-shadow: none;}
 #my_coin .weui-actionsheet__menu button{width: 60px;height: 28px;background-color: #fff;outline: none;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 4px;}
-#my_coin .cli_page{margin: 20px;margin-bottom: 40px;}
-#my_coin .cli_page .order_page {margin-left: 4px;padding: 4px 8px;width: 30px;height: 30px;text-align: center;line-height: 23px;}
+#my_coin .cli_page{margin: 10px;margin-bottom: 60px;}
+#my_coin .cli_page .order_page {margin-bottom: 5px;margin-left: 4px;padding: 4px 8px;width: 30px;height: 30px;text-align: center;line-height: 23px;}
 #my_coin .order_page {border: 1px solid #f57d64;color: #f57d64;background-color: #fff;}
 #my_coin .cli_page div.active {border: 1px solid #F17355;background-color: #F17355;color: #fff;}
 #my_coin .weui-mask3,#my_coin .weui-mask2,.person .middle_person .weui-mask2,.my_gift .weui-mask2{height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 1000;transition: none 0.5s ease;display: none;}
