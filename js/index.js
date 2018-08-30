@@ -1534,6 +1534,7 @@ $(function(){
                                 that.show_user = true;
                                 that.datas = data;
                                 that.realName = data.userInfo.realName;
+                                $('input.gift_num').val("");
                             }else{
                                 that.show_user = false;
                                 that.datas = {"userInfo":{"userName":"","phone":"","email":""}};
@@ -1545,7 +1546,12 @@ $(function(){
                 },
                 sure_gift:function(){
                     // 弹窗
-                    $('input.user_pass').html("");
+                    $('input.user_pass').val("");
+                    if($('.text_info').hasClass('realName')){//若实名
+                        $('.text_info.realName input').val("");
+                    }
+                    $('input.user_pass').val("");
+                    $('#quit_account').css('display','none');
                     var $androidActionSheet = $('#quit_account2');
                     var $androidMask = $androidActionSheet.find('.weui-mask2');
                     $androidActionSheet.fadeIn(200);
@@ -1575,38 +1581,45 @@ $(function(){
             var price = $('.user_info').find('input.gift_num').val();
             var username =  $('.search_contain').find('input.user_messege').val();
             var payPassword = $('.gift_menu').find('input.user_pass').val();
-            $.ajax({//发起请求
-                headers: {
-                    'Authorization': 'bearer '+_token
-                },
-                type: "POST",
-                url:weixin_url + '/coin/transfer',
-                contentType:"application/json",
-                data: JSON.stringify({username:username,price:price,familyName:familyName,payPassword:payPassword}),
-                success: function(data){
-                    if (data.code == 0) {
-                        var $androidActionSheet2 = $('#quit_account2');
-                        var $androidMask2 = $androidActionSheet2.find('.weui-mask2');
-                        $androidActionSheet2.fadeOut(200);
-                        $androidMask2.fadeOut(200);
-                        window.location.href='./gift-success.html';
-                    }else{
-                        var $androidActionSheet2 = $('#quit_account2');
-                        $androidActionSheet2.fadeOut(200);
-                        var _content = data.message;
-                        $('.info_te').html(_content);
-                        var $androidActionSheet2 = $('#quit_account');
-                        var $androidMask2 = $androidActionSheet2.find('.weui-mask2');
-                        $androidMask2.css('display','block');
-                        $androidActionSheet2.fadeIn(200);
-                        $androidMask2.on('click',function () {
-                            $androidMask2.css('display','none');
+            if(payPassword.length>0){
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: "POST",
+                    url:weixin_url + '/coin/transfer',
+                    contentType:"application/json",
+                    data: JSON.stringify({username:username,price:price,familyName:familyName,payPassword:payPassword}),
+                    success: function(data){
+                        if (data.code == 0) {
+                            console.log(3);
+                            var $androidActionSheet2 = $('#quit_account2');
+                            var $androidMask2 = $androidActionSheet2.find('.weui-mask2');
                             $androidActionSheet2.fadeOut(200);
-                        });
+                            $androidMask2.fadeOut(200);
+                            window.location.href='./gift-success.html';
+                        }else{
+                            var $androidActionSheet2 = $('#quit_account2');
+                            $androidActionSheet2.fadeOut(200);
+                            var _content = data.message;
+                            $('.info_te').html(_content);
+                            var $androidActionSheet2 = $('#quit_account');
+                            var $androidMask2 = $androidActionSheet2.find('.weui-mask2');
+                            $androidMask2.css('display','block');
+                            $("#quit_account2 .weui-mask2").css('display','none');
+                            $androidMask2.css('display','block');
+                            $androidActionSheet2.fadeIn(200);
+                            $androidMask2.on('click',function () {
+                                $androidMask2.css('display','none');
+                                $androidActionSheet2.fadeOut(200);
+                            });
+                        }
+                        to_login(data);
                     }
-                    to_login(data);
-                }
-            });
+                });
+            }else{
+                return false;
+            }
             $('#my_gift #quit_account button').live('click',function(){//提醒消息确认
                 var $androidActionSheet = $('#quit_account');
                 var $androidMask2 = $androidActionSheet.find('.weui-mask2');
