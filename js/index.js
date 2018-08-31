@@ -443,7 +443,7 @@ $(function(){
                         'Authorization': 'bearer '+_token
                     },
                     type: "POST",
-                    url: weixin_url + '/order/prescription-order/list?page='+page+'&size=3',
+                    url: weixin_url + '/order/prescription-order/list?page='+page,
                     contentType:"application/json",
                     data: JSON.stringify({status:order_status}),
                     dataType: "json",
@@ -485,40 +485,79 @@ $(function(){
                         }else if(class_name2 == 'ordered'){
                             var order_status = 'complete';
                             that.status = 'ordered';//改变页面内容
+                        }else if(class_name2 == 'notpay'){
+                            var order_status = 'notpay';
+                            that.status = 'notpay';//改变页面内容
                         }
-                        that.show_page = false;
-                        that.has_noinfo = false;
-                        that.loading = true;
-                        var page = 0;
-                        $.ajax({
-                            headers: {
-                                'Authorization': 'bearer '+_token
-                            },
-                            type: "POST",
-                            url: weixin_url + '/order/prescription-order/list?page='+page+'&size=3',
-                            contentType:"application/json",
-                            data: JSON.stringify({status:order_status}),
-                            dataType: "json",
-                            success: function(data){
-                                if(data.code == 0){//请求数据正常
-                                    that.current = 1;
-                                    var Data_length =  data.page.content.length;
-                                    if (Data_length == 0) {
-                                        that.show_page = false;
-                                        that.has_noinfo = true;
-                                        that.loading = false;
-                                        return;
-                                    }else{//请求到数据
-                                        that.orders = data.page.content;//改变页面内容
-                                        that.page = data.page;
-                                        that.show_page = true;
-                                        that.has_noinfo = false;
-                                        that.loading = false;
-                                    }
-                                }   
-                                to_login(data);
-                            }
-                        });
+                        if(class_name2 == 'notpay'){//请求未支付订单
+                            that.show_page = false;
+                            that.has_noinfo = false;
+                            that.loading = true;
+                            var page = 0;
+                            $.ajax({
+                                headers: {
+                                    'Authorization': 'bearer '+_token
+                                },
+                                type: "GET",
+                                url: weixin_url + '/order/prescription/wait-for-pay?page='+page,
+                                contentType:"application/json",
+                                dataType: "json",
+                                success: function(data){
+                                    console.log(data);
+                                    if(data.code == 0){//请求数据正常
+                                        that.current = 1;
+                                        var Data_length =  data.page.content.length;
+                                        if (Data_length == 0) {
+                                            that.show_page = false;
+                                            that.has_noinfo = true;
+                                            that.loading = false;
+                                            return;
+                                        }else{//请求到数据
+                                            that.orders = data.page.content;//改变页面内容
+                                            that.page = data.page;
+                                            that.show_page = true;
+                                            that.has_noinfo = false;
+                                            that.loading = false;
+                                        }
+                                    }   
+                                    to_login(data);
+                                }
+                            });
+                        }else{
+                            that.show_page = false;
+                            that.has_noinfo = false;
+                            that.loading = true;
+                            var page = 0;
+                            $.ajax({
+                                headers: {
+                                    'Authorization': 'bearer '+_token
+                                },
+                                type: "POST",
+                                url: weixin_url + '/order/prescription-order/list?page='+page,
+                                contentType:"application/json",
+                                data: JSON.stringify({status:order_status}),
+                                dataType: "json",
+                                success: function(data){
+                                    if(data.code == 0){//请求数据正常
+                                        that.current = 1;
+                                        var Data_length =  data.page.content.length;
+                                        if (Data_length == 0) {
+                                            that.show_page = false;
+                                            that.has_noinfo = true;
+                                            that.loading = false;
+                                            return;
+                                        }else{//请求到数据
+                                            that.orders = data.page.content;//改变页面内容
+                                            that.page = data.page;
+                                            that.show_page = true;
+                                            that.has_noinfo = false;
+                                            that.loading = false;
+                                        }
+                                    }   
+                                    to_login(data);
+                                }
+                            });
+                        }
                     }
                 },
                 change_page:function(event){
@@ -547,7 +586,7 @@ $(function(){
                                 'Authorization': 'bearer '+_token
                             },
                             type: "POST",
-                            url: weixin_url + '/order/prescription-order/list?page='+page+'&size=3',
+                            url: weixin_url + '/order/prescription-order/list?page='+page,
                             contentType:"application/json",
                             data: JSON.stringify({status:order_status}),
                             dataType: "json",

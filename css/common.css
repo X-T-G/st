@@ -158,7 +158,7 @@ img.store_pic{width: 108px;height:108px;}
 .m_order .bar_option div.flex-1,.m_consume .bar_option div.flex-1{background-color: #fff;color: #f57d64;}
 .m_order .bar_option div.active,.m_consume .bar_option div.active{color: #fff;background-color:#f57d64;height: 29px;}
 .m_order .bar_option div.all_order,.m_consume .bar_option div.all_order,.m_coupon .bar_option div.all_order{border-top-left-radius: 6px;border-bottom-left-radius: 6px;}
-.m_order .bar_option div.ordered,.m_consume .bar_option div.ordered,.m_coupon .bar_option div.ordered{border-top-right-radius: 6px;border-bottom-right-radius: 6px;}
+.m_order .bar_option div.notpay,.m_consume .bar_option div.ordered,.m_coupon .bar_option div.ordered{border-top-right-radius: 6px;border-bottom-right-radius: 6px;}
 .m_order .bar_option div.ordering,.m_consume .bar_option div.ordering,.m_coupon .bar_option div.ordering{border-left: 1px solid #f57d64;border-right: 1px solid #f57d64;}
 .has_noinfo{width: 160px;height: 160px;margin: 140px auto;}
 .m_order .weui-loadmore,.m_consume .weui-loadmore,.m_coupon .weui-loadmore{margin: 160px auto;}
@@ -169,6 +169,7 @@ img.store_pic{width: 108px;height:108px;}
 .ask_record .img_container img{width: 46px;height: 46px;border-radius: 50%;}
 .m_order .weui-cell img{width: 80px;height: 80px;margin-right: 10px;}
 .m_order .weui-cell{padding: 10px;}
+.m_order .bar_option div.ordered{border-right: 1px solid #f57d64;}
 .m_order .weui-cells .create{margin-bottom:14px;color: #939399;}
 .m_order .weui-cells .payprice,.m_order .weui-cells .payprice span{color: #939399;font-size: 12px;}
 .m_order .weui-cells .clearfix{color: #939399;margin-right: 10px;border-top: 1px solid #e5e5e5;margin: 0 10px;padding: 6px;}

@@ -24,13 +24,14 @@
                 <div class="flex-1 all_order"  :class=[{"active":(status=='all_order')}] v-on:click="change_status">全部</div>
                 <div class="flex-1 ordering" :class=[{"active":(status=='ordering')}] v-on:click="change_status">进行</div>
                 <div class="flex-1 ordered" :class=[{"active":(status=='ordered')}] v-on:click="change_status">完成</div>
+                <div class="flex-1 notpay" :class=[{"active":(status=='notpay')}] v-on:click="change_status">未支付</div>
             </div>
             <div class="my_order" :class=[{"dis-no":(show_page==false)}]>
                 <div class="weui-cells" v-for="order in orders">
                     <div class="weui-cell">
                         <div class="weui-cell__hd"><img src="../images/bg_medicinal.png"></div>
                         <div class="weui-cell__bd">
-                            <p class="create"><span>{{order.createTime.split(" ")[0]}}</span>处方药材订单</p>
+                            <p class="create"><span>{{order.createtime.split(" ")[0]}}</span>处方药材订单</p>
                             <p class="payprice">总价：¥<span>{{order.payPrice.toFixed(2)}}</span></p>
                         </div>
                     </div>
