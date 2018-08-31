@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     <div class="clearfix">
-                        <div class="fr">
+                        <div class="fr" v-if="not_pay == false">
                             <span class="or_status" v-if="order.status == 'CREATED'">未打印</span>
                             <span class="or_status" v-else-if="order.status == 'OPERATE'">正在处理,已打印</span>
                             <span class="or_status" v-else-if="order.status == 'FILLED'">已抓药</span>
@@ -45,7 +45,12 @@
                             <span class="or_status" v-else-if="order.status == 'WAIT_FOR_TAKE'">等待自取</span>
                             <span class="or_status" v-else-if="order.status == 'FINISHED'">完成</span>
                             <span class="or_status" v-else-if="order.status == 'ERROR'">异常订单</span>
-                            <span class="updata_time">{{order.updateTime.split(" ")[0]}}</span>
+                            <span class="updata_time">{{order.updatetime.split(" ")[0]}}</span>
+                        </div>
+                        <div class="fr" v-if="not_pay == true">
+                            <span class="or_status" v-if="order.status == 'CREATED'">待支付</span>
+                            <span class="or_status" v-else-if="order.status == 'WAIT_FOR_PAY'">待支付</span>
+                            <span class="updata_time">{{order.updatetime.split(" ")[0]}}</span>
                         </div>
                     </div>
                 </div>

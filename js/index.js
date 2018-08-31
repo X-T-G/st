@@ -435,6 +435,7 @@ $(function(){
                 has_noinfo:false,//没有数据
                 loading:true,//加载
                 show_page:false,//是否显示页面
+                not_pay:false,//默认已支付
             },
             created:function(){
                 var that = this;
@@ -493,6 +494,7 @@ $(function(){
                             that.show_page = false;
                             that.has_noinfo = false;
                             that.loading = true;
+                            that.not_pay = true;
                             var page = 0;
                             $.ajax({
                                 headers: {
@@ -503,7 +505,6 @@ $(function(){
                                 contentType:"application/json",
                                 dataType: "json",
                                 success: function(data){
-                                    console.log(data);
                                     if(data.code == 0){//请求数据正常
                                         that.current = 1;
                                         var Data_length =  data.page.content.length;
@@ -523,10 +524,12 @@ $(function(){
                                     to_login(data);
                                 }
                             });
+
                         }else{
                             that.show_page = false;
                             that.has_noinfo = false;
                             that.loading = true;
+                            that.not_pay = false;
                             var page = 0;
                             $.ajax({
                                 headers: {
@@ -580,35 +583,72 @@ $(function(){
                             var order_status = 'underway';
                         }else if(order_status == 'ordered'){
                             var order_status = 'complete';
+                        }else if(order_status == 'notpay'){
+                            var order_status = 'notpay';
                         }
-                        $.ajax({
-                            headers: {
-                                'Authorization': 'bearer '+_token
-                            },
-                            type: "POST",
-                            url: weixin_url + '/order/prescription-order/list?page='+page,
-                            contentType:"application/json",
-                            data: JSON.stringify({status:order_status}),
-                            dataType: "json",
-                            success: function(data){
-                                if(data.code == 0){//请求数据正常
-                                    var Data_length =  data.page.content.length;
-                                    if (Data_length == 0) {
-                                        that.show_page = false;
-                                        that.has_noinfo = true;
-                                        that.loading = false;
-                                        return;
-                                    }else{//请求到数据
-                                        that.orders = data.page.content;//改变页面内容
-                                        that.page = data.page;
-                                        that.show_page = true;
-                                        that.has_noinfo = false;
-                                        that.loading = false;
-                                    }
-                                }   
-                                to_login(data);
-                            }
-                        });
+                        if(order_status == 'notpay'){//请求未支付订单
+                            that.show_page = false;
+                            that.has_noinfo = false;
+                            that.loading = true;
+                            that.not_pay = true;
+                            var page = page;
+                            $.ajax({
+                                headers: {
+                                    'Authorization': 'bearer '+_token
+                                },
+                                type: "GET",
+                                url: weixin_url + '/order/prescription/wait-for-pay?page='+page,
+                                contentType:"application/json",
+                                dataType: "json",
+                                success: function(data){
+                                    if(data.code == 0){//请求数据正常
+                                        var Data_length =  data.page.content.length;
+                                        if (Data_length == 0) {
+                                            that.show_page = false;
+                                            that.has_noinfo = true;
+                                            that.loading = false;
+                                            return;
+                                        }else{//请求到数据
+                                            that.orders = data.page.content;//改变页面内容
+                                            that.page = data.page;
+                                            that.show_page = true;
+                                            that.has_noinfo = false;
+                                            that.loading = false;
+                                        }
+                                    }   
+                                    to_login(data);
+                                }
+                            });
+                        }else{
+                            $.ajax({
+                                headers: {
+                                    'Authorization': 'bearer '+_token
+                                },
+                                type: "POST",
+                                url: weixin_url + '/order/prescription-order/list?page='+page,
+                                contentType:"application/json",
+                                data: JSON.stringify({status:order_status}),
+                                dataType: "json",
+                                success: function(data){
+                                    if(data.code == 0){//请求数据正常
+                                        var Data_length =  data.page.content.length;
+                                        if (Data_length == 0) {
+                                            that.show_page = false;
+                                            that.has_noinfo = true;
+                                            that.loading = false;
+                                            return;
+                                        }else{//请求到数据
+                                            that.orders = data.page.content;//改变页面内容
+                                            that.page = data.page;
+                                            that.show_page = true;
+                                            that.has_noinfo = false;
+                                            that.loading = false;
+                                        }
+                                    }   
+                                    to_login(data);
+                                }
+                            });
+                        }
                     }
                 },
             }
