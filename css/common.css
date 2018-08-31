@@ -526,8 +526,8 @@ animation: myfade_in .2s;
 .my_order .weui-cell__bd button.to_pay{float: right;width: 50px;height: 25px;border-radius: 4px;border: none;background-color: #F17355;color: #fff;}
 
 /* 待支付详情 */
-
-
+.order_info .my_order_info .info_addr,.order_info .my_order_info .medecine_detail,.order_info .my_order_info .other_info,.order_info .my_order_info .remark{background-color: #fff;padding: 10px 15px;}
+.order_info .weui-cell_access .weui-cell__ft:after{border-style: none;width: 0;height: 0;content: none;padding-right: none;}
 
 
 
