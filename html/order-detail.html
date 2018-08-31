@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>神庭医馆</title>
+        <link type="image/x-icon" rel="shortcut icon" href="../images/logo.png">
+        <link rel="stylesheet" href="../css/common.css">
+        <link rel="stylesheet" href="../css/weui.min.css">
+        <script src="../js/zepto.min.js"></script>
+        <script src="../js/vue.min.js"></script>
+        <script src="../js/index.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    </head>
+    <body>
+        <div class="header">
+            确认订单
+            <span>
+                <img src="../images/back_gery.png" alt="">
+            </span>
+        </div>
+        <div class="order_info" id="order_info">
+            <div class="my_order_info" :class=[{"dis-no":(show_page==false)}]>
+                <div class="info_addr">
+                    <p>收货地址</p>
+                    <div>
+                        <div class="flex tint">
+                            <p>舒海涛</p>
+                            <p>18200295732</p>
+                        </div>
+                        <div>
+                            <span class="iconfont icon-"></span>
+                            <span class="tint">四川省成都市双流县</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="medecine_detail">
+                    <p>订单</p>
+                    <div>鹿衔草15g、薄荷20g</div>
+                </div>
+                <div class="other_info">
+                    <div class="weui-cell weui-cell_access">
+                        <div class="weui-cell__bd">
+                            <p>单副价格</p>
+                        </div>
+                        <div class="weui-cell__ft">¥235</div>
+                    </div>
+                    <div class="weui-cell weui-cell_access">
+                        <div class="weui-cell__bd">
+                            <p>购买副数</p>
+                        </div>
+                        <div class="weui-cell__ft">5</div>
+                    </div>
+                    <div class="weui-cell weui-cell_access">
+                        <div class="weui-cell__bd">
+                            <p>加工情况</p>
+                        </div>
+                        <div class="weui-cell__ft">不代熬</div>
+                    </div>
+                    <div class="weui-cell weui-cell_access">
+                        <div class="weui-cell__bd">
+                            <p>加工费</p>
+                        </div>
+                        <div class="weui-cell__ft">¥0.0</div>
+                    </div>
+                    <div class="weui-cell weui-cell_access">
+                        <div class="weui-cell__bd">
+                            <p>配送费</p>
+                        </div>
+                        <div class="weui-cell__ft">¥0.0</div>
+                    </div>
+                    <div class="weui-cell weui-cell_access">
+                        <div class="weui-cell__bd">
+                            <p>积分抵扣</p>
+                        </div>
+                        <div class="weui-cell__ft">45</div>
+                    </div>
+                </div>
+                <div class="remark">
+                    <input type="text" placeholder="单行输入">
+                </div>
+                <div class="flex">
+                    <div class="flex-1"></div>
+                    <button>确认支付</button>
+                </div>
+            </div>
+            <!-- 没有数据 -->
+            <div class="has_noinfo" :class=[{"dis-no":(has_noinfo==false)}]>
+                <img src="../images/bg_nodata.png" alt="">
+            </div>
+            <!-- 加载效果 -->
+            <div class="weui-loadmor" :class=[{"dis-no":(loading==false)}]>
+                <i class="weui-loading"></i>
+                <span class="weui-loadmore__tips">正在加载</span>
+            </div>
+        </div>
+    </body>
+</html>

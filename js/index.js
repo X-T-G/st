@@ -651,6 +651,10 @@ $(function(){
                         }
                     }
                 },
+                to_pay:function(order){//跳转到待支付页面
+                    localStorage.setItem("order_info",JSON.stringify(order));
+                    window.location.href='./order-detail.html';
+                }
             }
         });
     }else if($('.m_coupon').size()>0){//优惠券页面
@@ -1767,6 +1771,8 @@ $(function(){
                 $('.compute_btn .weui-check').prop("checked",false);
             }
         })
+    }else if($('.order_info').size()>0){
+        console.log(222);
+        
     };
-    
 });
