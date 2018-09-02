@@ -1730,49 +1730,8 @@ $(function(){
                 $androidMask2.css('display','none');
             })
         });
-    }else if ($('#cart').size()>0){//购物车
-        // 编辑按钮
-        $('.edit').live('click',function(){
-            var _content = $(this).html();
-            $('.weui-check').prop("checked",false);
-            if (_content == '编辑'){
-                $(this).html('完成');
-                $('.delete_btn').removeClass('dis-no');
-                $('.num_change').addClass('dis-no');
-            }else{
-                $(this).html('编辑');
-                $('.delete_btn').addClass('dis-no');
-                $('.num_change').removeClass('dis-no');
-            }
-        })
-        // 删除按钮
-        $('.delete_btn').live('click',function(){
-            $(this).parents('.weui-cell.weui-check__label').remove();
-        })
-
-        // 全选
-        $('.compute_btn .weui-cell.weui-check__label').live('click',function(){
-            var flag = $(this).find('.weui-check').is(':checked');
-            if(flag){
-                $(".cart_container input[type='checkbox']").prop("checked",true);
-            }else{
-                $(".cart_container input[type='checkbox']").prop("checked",false);
-            }
-        })
-        // 单选按钮
-        $('.left_radio').live('click',function(){
-            var flag = $(this).find("input[type='checkbox']").is(':checked');
-            $(this).find("input[type='checkbox']").prop("checked",!flag);
-            var all_num = $(".cart_container input[type='checkbox']").length;
-            var ck_num = $(".cart_container input[type='checkbox']:checked").length;
-            if (all_num == ck_num) {
-                $('.compute_btn .weui-check').prop("checked",true);
-            }else{
-                $('.compute_btn .weui-check').prop("checked",false);
-            }
-        })
     }else if($('.order_info').size()>0){
-        console.log(222);
+        // console.log(222);
         
-    };
+    }
 });
