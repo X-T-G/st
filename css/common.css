@@ -529,7 +529,12 @@ animation: myfade_in .2s;
 .order_info .my_order_info .info_addr,.order_info .my_order_info .medecine_detail,.order_info .my_order_info .other_info,.order_info .my_order_info .remark{background-color: #fff;margin-bottom: 10px;padding: 10px 0;}
 .order_info .weui-cell_access .weui-cell__ft:after{border-style: none;width: 0;height: 0;content: none;padding-right: none;}
 .order_info .my_order_info .info_addr{margin-top: 10px;}
-/* .order_info  .weui-cell{padding: 20px 0;} */
+.order_info  .im_info{padding: 0 15px;border-left: 3px solid #F17355;font-size: 16px;color: #f17355;line-height: 25px;}
+
+
+
+
+
 
 
 
