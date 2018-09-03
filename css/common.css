@@ -571,7 +571,7 @@ animation: myfade_in .2s;
 .payfor_order .pay_contain .good_check{left: -10000px;position: absolute;}
 .payfor_order .pay_contain p.info{padding-top: 10px;padding-bottom: 10px;padding-left: 15px;border-bottom: 1px solid #e5e5e5;}
 .payfor_order .pay_contain .thumb span.tint{line-height: 30px;}
-.payfor_order .pay_contain .surepay{width:320px;height:40px;background-color: #F17355;color: #fff;font-size: 18px;text-align: center;line-height: 40px;border: none;border-radius: 10px;}
+.payfor_order .pay_contain .surepay{width:320px;height:40px;background-color: #F17355;color: #fff;font-size: 18px;text-align: center;line-height: 40px;border: none;border-radius: 6px;}
 .payfor_order .surepay_contain{width: 320px;margin: 20px auto;}
 
 

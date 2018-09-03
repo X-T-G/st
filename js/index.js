@@ -1733,5 +1733,12 @@ $(function(){
     }else if($('.order_info').size()>0){
         // console.log(222);
         
+    }else if($('.payfor_order').size()>0){
+        // 单选按钮
+        $('.left_radio').live('click',function(){
+            var flag = $(this).find("input[type='checkbox']").is(':checked');
+            $("input[type='checkbox']").prop("checked",false);
+            $(this).find("input[type='checkbox']").prop("checked",!flag);
+        })
     }
 });
