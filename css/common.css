@@ -548,7 +548,8 @@ animation: myfade_in .2s;
 .order_info .pay_btn .total_price{font-size: 18px;text-align: center;color: #686b6d;width: 60%;display: inline-block;}
 .order_info .pay_btn .total_price span{font-size: 19px;margin-left:3px;color:#f17355;}
 .order_info .pay_btn .pay_sure{width: 40%;display: inline-block;}
-
+.order_info .medecine_detail span::after{content: "、";}
+.order_info .medecine_detail span:last-child::after{content: "";}
 
 /* 最后支付页面 */
 .payfor_order .info_me{background-color: #fff;margin-bottom: 10px;}
@@ -573,7 +574,6 @@ animation: myfade_in .2s;
 .payfor_order .pay_contain .thumb span.tint{line-height: 30px;}
 .payfor_order .pay_contain .surepay{width:320px;height:40px;background-color: #F17355;color: #fff;font-size: 18px;text-align: center;line-height: 40px;border: none;border-radius: 6px;}
 .payfor_order .surepay_contain{width: 320px;margin: 20px auto;}
-
 
 
 

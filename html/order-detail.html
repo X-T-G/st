@@ -20,79 +20,79 @@
             </span>
         </div>
         <div class="order_info" id="order_info">
-            <div class="my_order_info" :class=[{"dis-no":(show_page==false)}]>
-                <div class="info_addr">
-                    <p class="im_info">收货地址</p>
-                    <div style="padding: 10px 15px;">
-                        <div class="flex tint" style="margin-bottom: 6px;">
-                            <p  class="flex-1">舒海涛</p>
-                            <p>18200295732</p>
-                        </div>
-                        <div class="flex">
-                            <p class="iconfont icon-dingwei"></p>
-                            <p class="tint addr_detail">四川省成都市双流县四川省成都市双流县四川省成都市双流县四川省成都市双流县</p>
+            <div class="my_order_info">
+                <div v-if="datas.transWay == 1">
+                    <div class="info_addr" v-if="datas.logisticsAddress !==null">
+                        <p class="im_info">收货地址</p>
+                        <div style="padding: 10px 15px;">
+                            <div class="flex tint" style="margin-bottom: 6px;">
+                                <p class="flex-1">{{datas.logisticsAddress.name}}</p>
+                                <p>{{datas.logisticsAddress.phone}}</p>
+                            </div>
+                            <div class="flex">
+                                <p class="iconfont icon-dingwei"></p>
+                                <p class="tint addr_detail">{{datas.logisticsAddress.location.seqCn}}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="medecine_detail">
                     <p class="im_info">订单</p>
-                    <div style="padding: 10px 15px;">鹿衔草15g、薄荷20g</div>
+                    <div style="padding: 10px 15px;">
+                        <span  v-for="medecine in datas.prescription.prescriptionMedicine">{{medecine.medicine.name}}{{medecine.dosage}}{{medecine.medicine.unit}}</span>
+                    </div>
                 </div>
                 <div class="other_info">
                     <div class="weui-cell weui-cell_access">
                         <div class="weui-cell__bd">
                             <p>单副价格</p>
                         </div>
-                        <div class="weui-cell__ft">¥235</div>
+                        <div class="weui-cell__ft">¥{{datas.prescriptionOriginalUnitPrice}}</div>
                     </div>
                     <div class="weui-cell weui-cell_access">
                         <div class="weui-cell__bd">
                             <p>购买副数</p>
                         </div>
-                        <div class="weui-cell__ft">5</div>
+                        <div class="weui-cell__ft">{{datas.number}}</div>
                     </div>
                     <div class="weui-cell weui-cell_access">
                         <div class="weui-cell__bd">
                             <p>加工情况</p>
                         </div>
-                        <div class="weui-cell__ft">不代熬</div>
+                        <div class="weui-cell__ft">
+                            <span>{{datas.medicineProcessType.medicineProcessEntity.name}}</span>
+                            <span v-if="datas.medicineProcessType.medicineProcessTypeEnum == 'SELF'">不加工</span>
+                            <span v-if="datas.medicineProcessType.medicineProcessTypeEnum == 'PROXY'">代加工</span>
+                        </div>
                     </div>
                     <div class="weui-cell weui-cell_access">
                         <div class="weui-cell__bd">
                             <p>加工费</p>
                         </div>
-                        <div class="weui-cell__ft">¥0.0</div>
+                        <div class="weui-cell__ft">¥{{datas.processPrice}}</div>
                     </div>
                     <div class="weui-cell weui-cell_access">
                         <div class="weui-cell__bd">
                             <p>配送费</p>
                         </div>
-                        <div class="weui-cell__ft">¥0.0</div>
+                        <div class="weui-cell__ft">¥{{datas.transPrice}}</div>
                     </div>
                     <div class="weui-cell weui-cell_access">
                         <div class="weui-cell__bd">
                             <p>积分抵扣</p>
                         </div>
-                        <div class="weui-cell__ft">45</div>
+                        <div class="weui-cell__ft" v-if="datas.credits !== null">{{datas.credits}}</div>
+                        <div class="weui-cell__ft" v-if="datas.credits == null">0</div>
                     </div>
                 </div>
-                <div class="remark flex ">
+                <div class="remark flex" style="margin-bottom:50px;">
                     <span>备注</span>
-                    <input class="flex-1" type="text" placeholder="单行输入">
+                    <input class="flex-1" type="text" placeholder="单行输入" :value="datas.remark">
                 </div>
                 <div class="clearfix pay_btn">
-                    <div class="total_price fl">共计<span>¥309.2</span></div>
-                    <button class="pay_sure fl">确认支付</button>
+                    <div class="total_price fl">共计<span>¥{{datas.totalPrice}}</span></div>
+                    <button class="pay_sure fl" v-on:click="pay_sure">确认支付</button>
                 </div>
-            </div>
-            <!-- 没有数据 -->
-            <div class="has_noinfo" :class=[{"dis-no":(has_noinfo==false)}]>
-                <img src="../images/bg_nodata.png" alt="">
-            </div>
-            <!-- 加载效果 -->
-            <div class="weui-loadmor" :class=[{"dis-no":(loading==false)}]>
-                <i class="weui-loading"></i>
-                <span class="weui-loadmore__tips">正在加载</span>
             </div>
         </div>
     </body>

@@ -1731,9 +1731,32 @@ $(function(){
             })
         });
     }else if($('.order_info').size()>0){
-        // console.log(222);
-        
-    }else if($('.payfor_order').size()>0){
+        var datas = JSON.parse(localStorage.getItem('order_info'));
+        var app = new Vue({
+            el: '#order_info',
+            data: {
+                datas:datas,//初始数据
+            },
+            methods:{
+                pay_sure:function(){
+                   window.location.href="./pay.html";
+                },
+            }
+        });
+    }else if($('.payfor_order').size()>0){//支付订单页面
+        var _token = localStorage.getItem('access_token');
+        var datas = JSON.parse(localStorage.getItem('order_info'));
+        var app = new Vue({
+            el: '#order_info',
+            data: {
+                datas:datas,//初始数据
+            },
+            methods:{
+                pay_sure:function(){
+                   window.location.href="./pay.html";
+                },
+            }
+        });
         // 单选按钮
         $('.left_radio').live('click',function(){
             var flag = $(this).find("input[type='checkbox']").is(':checked');
@@ -1742,3 +1765,7 @@ $(function(){
         })
     }
 });
+
+
+
+
