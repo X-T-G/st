@@ -554,7 +554,7 @@ animation: myfade_in .2s;
 .payfor_order .info_me{background-color: #fff;margin-bottom: 10px;}
 .payfor_order .info_me .weui-cell_access .weui-cell__ft:after{display: none;}
 .payfor_order .weui-cell__bd p.good_name{display: -webkit-box;margin-bottom: 20px;padding-top: 30px;overflow: hidden;text-overflow: ellipsis;word-wrap: break-word;white-space: normal !important;-webkit-line-clamp: 1;-webkit-box-orient: vertical;}
-.payfor_order .thumb .iconfont {height: 30px;font-size: 16px;width: 30px;text-align: center;}
+.payfor_order .thumb .iconfont {height: 30px;line-height: 30px;font-size: 24px;width: 30px;text-align: center;}
 .payfor_order .weui-cells_checkbox{padding-bottom: 51px;}
 .payfor_order .weui-cells_checkbox .weui-icon-checked:before{font-size: 20px;}
 .payfor_order .compute_btn{position: fixed;z-index: 2000;border-top: 1px solid #e5e5e5;width: 100%;bottom: 0;height: 50px;background-color: #fff;}
@@ -562,15 +562,15 @@ animation: myfade_in .2s;
 .payfor_order .compute_btn .weui-cells:after,.cart .compute_btn .weui-cells:before{border-bottom:none;border-top:none;}
 .payfor_order .delete_btn{width: 60px;height: 30px;background-color: #f14731;border-radius: 4px;text-align: center;color: #fff;line-height: 30px;}
 .payfor_order .compute_btn .weui-cell{height: 50px;}
-.payfor_order .pay_contain .each_row{padding: 15px;background-color: #fff;}
-.payfor_order .pay_contain .each_row .left_radio{height: 100px;width: 20px;line-height: 100px;margin-right: 10px;}
+.payfor_order .pay_contain .each_row{border-bottom: 1px solid #e5e5e5;padding: 15px;background-color: #fff;}
+.payfor_order .pay_contain .each_row .left_radio{height: 30px;width: 20px;line-height: 30px;margin-right: 10px;}
 .payfor_order .pay_contain .left_radio label{position: relative;}
 .payfor_order .pay_contain .icon-checked{position: absolute;font-size: 20px;}
 .payfor_order .pay_contain .good_check+.icon-checked:before{ content: "\e625";}/*未选中*/
 .payfor_order .pay_contain .good_check:checked+.icon-checked:before{content: "\e623"; color: #09bb07;}/*选中*/
 .payfor_order .pay_contain .good_check{left: -10000px;position: absolute;}
-
-
+.payfor_order .pay_contain p.info{padding-top: 10px;padding-bottom: 10px;padding-left: 15px;border-bottom: 1px solid #e5e5e5;}
+.payfor_order .pay_contain .thumb span.tint{line-height: 30px;}
 
 
 

@@ -35,11 +35,12 @@
                     </div>
                 </div>
                 <div class="pay_contain" id="pay_contain">
-                    <div class="">
+                    <div style="background-color:#FFF;">
+                        <p class="info">您需支付<span style="color:#f14731;margin-left: 4px;">¥0.80</span></p>
                         <div class="each_row flex">
                             <div class="weui-cell__bd flex-1">
                                 <div class="thumb flex">
-                                    <span class="iconfont icon-"></span>
+                                    <span class="iconfont icon-weixinzhifu" style="color: #2CA43A;"></span>
                                     <span class="tint">微信支付</span>
                                 </div>
                             </div>
@@ -53,7 +54,7 @@
                         <div class="each_row flex">
                             <div class="weui-cell__bd flex-1">
                                 <div class="thumb flex">
-                                    <span class="iconfont icon-"></span>
+                                    <span class="iconfont icon-zhifubaozhifu" style="color:#44aed8;"></span>
                                     <span class="tint">支付宝支付</span>
                                 </div>
                             </div>
@@ -67,11 +68,8 @@
                         <div class="each_row flex">
                             <div class="weui-cell__bd flex-1">
                                 <div class="thumb flex">
-                                    <span class="iconfont icon-"></span>
-                                    <div class="tint">
-                                        <p>余额支付（可用余额¥0.00）</p>
-                                        <p>余额不足，可用余额¥0.00</p>
-                                    </div>
+                                    <span class="iconfont icon-yue" style="color:#ffb236;"></span>
+                                    <span class="tint">神庭币支付（可用神庭币20个）</span>
                                 </div>
                             </div>
                             <div class="left_radio">
@@ -83,7 +81,6 @@
                         </div>
                     </div>
                 </div>
-                
             </div>
             <!-- 没有数据 -->
             <div class="has_noinfo" :class=[{"dis-no":(has_noinfo==false)}]>
