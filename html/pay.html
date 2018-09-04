@@ -20,13 +20,13 @@
             </span>
         </div>
         <div class="payfor_order" id="payfor_order">
-            <div class="pay_order" :class=[{"dis-no":(show_page==false)}]>
+            <div class="pay_order">
                 <div class="info_me">
                     <div class="weui-cell weui-cell_access">
-                        <div class="weui-cell__bd">
+                        <div class="">
                             <p>购买处方</p>
                         </div>
-                        <div class="weui-cell__ft">¥235</div>
+                        <div class="weui-cell__ft" style="color:#f14731;margin-left: 4px;">¥{{datas.totalPrice}}</div>
                     </div>
                     <div class="weui-cell weui-cell_access">
                         <div class="weui-cell__bd">
@@ -36,7 +36,7 @@
                 </div>
                 <div class="pay_contain" id="pay_contain">
                     <div class="all_choose" style="background-color:#FFF;">
-                        <p class="info">您需支付<span style="color:#f14731;margin-left: 4px;">¥0.80</span></p>
+                        <p class="info">您需支付<span style="color:#f14731;margin-left: 4px;">¥{{datas.totalPrice}}</span></p>
                         <div class="each_row flex">
                             <div class="weui-cell__bd flex-1">
                                 <div class="thumb flex">
@@ -82,18 +82,29 @@
                     </div>
                     <!-- 支付按钮 -->
                     <div class="surepay_contain">
-                        <button class="surepay">确认支付</button>
+                        <button class="surepay" v-on:click="surepay">确认支付</button>
                     </div>
                 </div>
             </div>
-            <!-- 没有数据 -->
-            <div class="has_noinfo" :class=[{"dis-no":(has_noinfo==false)}]>
-                <img src="../images/bg_nodata.png" alt="">
-            </div>
-            <!-- 加载效果 -->
-            <div class="weui-loadmor" :class=[{"dis-no":(loading==false)}]>
-                <i class="weui-loading"></i>
-                <span class="weui-loadmore__tips">正在加载</span>
+        </div>
+        <div class="form_contain">
+
+        </div>
+        <!-- 错误提示弹窗 -->
+        <div class="weui-skin_android" id="quit_account" style="opacity: 0; display: none;">
+            <div class="weui-mask2"></div>
+            <div class="weui-actionsheet">
+                <div class="weui-actionsheet__menu">
+                    <div class="text_info"></div>
+                    <div class="flex">
+                        <div class="flex-1">
+                            <button type="button" class="quit_sure">确认</button>
+                        </div>
+                        <div class="flex-1">
+                            <button type="button" class="time_cancel">取消</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </body>

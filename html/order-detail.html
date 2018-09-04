@@ -73,6 +73,13 @@
                     </div>
                     <div class="weui-cell weui-cell_access">
                         <div class="weui-cell__bd">
+                            <p>配送方式</p>
+                        </div>
+                        <div class="weui-cell__ft"  v-if="datas.transWay == 1">快递</div>
+                        <div class="weui-cell__ft"  v-if="datas.transWay == 0">自取</div>
+                    </div>
+                    <div class="weui-cell weui-cell_access">
+                        <div class="weui-cell__bd">
                             <p>配送费</p>
                         </div>
                         <div class="weui-cell__ft">¥{{datas.transPrice}}</div>

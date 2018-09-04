@@ -1747,22 +1747,72 @@ $(function(){
         var _token = localStorage.getItem('access_token');
         var datas = JSON.parse(localStorage.getItem('order_info'));
         var app = new Vue({
-            el: '#order_info',
+            el: '#payfor_order',
             data: {
                 datas:datas,//初始数据
             },
             methods:{
-                pay_sure:function(){
-                   window.location.href="./pay.html";
-                },
+                surepay:function(){
+                    var that = this;
+                     // ajax请求的方法
+                    var datas = that.datas;
+                    var _token = localStorage.getItem('access_token');
+                    var orderNum = datas.orderNum;
+                    var pay_way = $("input[type='checkbox']:checked").parents('.each_row').find('.thumb span:first-child');
+                    if (pay_way.hasClass('icon-weixinzhifu')) {//如果是微信支付
+                        var coinPay ='1';
+                        var thirdPay = 'WEIXIN_PAY';
+                    }else if (pay_way.hasClass('icon-zhifubaozhifu')){//支付宝支付
+                        var coinPay ='1';
+                        var thirdPay = 'ALI_PAY';
+                    }else if(pay_way.hasClass('icon-yue')){//余额支付
+                        var coinPay ='0';
+                        var thirdPay = '';
+                    }
+                    $.ajax({//发起请求
+                        headers: {
+                            'Authorization': 'bearer '+_token
+                        },
+                        type: "POST",
+                        url:weixin_url + '/order/pay',
+                        contentType:"application/json",
+                        data: JSON.stringify({orderNum:orderNum,coinPay:coinPay,thirdPay:thirdPay}),
+                        success: function(data){
+                            if (data.code == 0) {
+                                if (pay_way.hasClass('icon-weixinzhifu')) {//如果是微信支付
+                                    var _url = data.str;
+                                    window.location.href =_url;
+                                }else if (pay_way.hasClass('icon-zhifubaozhifu')){//支付宝支付
+                                    $('#payfor_order').css('display','none');
+                                    var _content = data.str;
+                                    // $('.form_contain').html(_content);
+                                }else if(pay_way.hasClass('icon-yue')){//余额支付
+                                    console.log(5555);
+                                }
+                            }
+                            to_login(data);
+                        }
+                    });
+                }
             }
         });
         // 单选按钮
-        $('.left_radio').live('click',function(){
+        $('.payfor_order .each_row').live('click',function(){
             var flag = $(this).find("input[type='checkbox']").is(':checked');
             $("input[type='checkbox']").prop("checked",false);
             $(this).find("input[type='checkbox']").prop("checked",!flag);
         })
+        // $('.quit_account').live('click',function(e){//弹窗
+        //     // 弹窗
+        //     var $androidActionSheet = $('#quit_account');
+        //     var $androidMask = $androidActionSheet.find('.weui-mask2');
+        //     $androidActionSheet.fadeIn(200);
+        //     $androidMask.css('display','block');
+        //     $androidMask.on('click',function () {
+        //         $androidMask.css('display','none');
+        //         $androidActionSheet.fadeOut(200);
+        //     });
+        // });
     }
 });
 
