@@ -1789,6 +1789,17 @@ $(function(){
                                 }else if(pay_way.hasClass('icon-yue')){//余额支付
                                     console.log(5555);
                                 }
+                            }else{
+                                // 弹窗
+                                var $androidActionSheet = $('#quit_account');
+                                var $androidMask = $androidActionSheet.find('.weui-mask2');
+                                $androidActionSheet.fadeIn(200);
+                                $androidMask.css('display','block');
+                                $('.text_info').html(data.message);
+                                $androidMask.on('click',function () {
+                                    $androidMask.css('display','none');
+                                    $androidActionSheet.fadeOut(200);
+                                });
                             }
                             to_login(data);
                         }
@@ -1802,17 +1813,13 @@ $(function(){
             $("input[type='checkbox']").prop("checked",false);
             $(this).find("input[type='checkbox']").prop("checked",!flag);
         })
-        // $('.quit_account').live('click',function(e){//弹窗
-        //     // 弹窗
-        //     var $androidActionSheet = $('#quit_account');
-        //     var $androidMask = $androidActionSheet.find('.weui-mask2');
-        //     $androidActionSheet.fadeIn(200);
-        //     $androidMask.css('display','block');
-        //     $androidMask.on('click',function () {
-        //         $androidMask.css('display','none');
-        //         $androidActionSheet.fadeOut(200);
-        //     });
-        // });
+        $('#quit_account button').live('click',function(e){//弹窗
+            // 弹窗
+            var $androidActionSheet = $('#quit_account');
+            var $androidMask = $androidActionSheet.find('.weui-mask2');
+            $androidMask.css('display','none');
+            $androidActionSheet.fadeOut(200);
+        });
     }
 });
 

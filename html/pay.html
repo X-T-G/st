@@ -92,16 +92,16 @@
         </div>
         <!-- 错误提示弹窗 -->
         <div class="weui-skin_android" id="quit_account" style="opacity: 0; display: none;">
-            <div class="weui-mask2"></div>
+            <div class="weui-mask2" style="height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 1000;transition: none 0.5s ease;display: none;"></div>
             <div class="weui-actionsheet">
-                <div class="weui-actionsheet__menu">
+                <div class="weui-actionsheet__menu" style="text-align: center;padding: 20px;">
                     <div class="text_info"></div>
-                    <div class="flex">
+                    <div class="flex" style="margin-top:10px;">
                         <div class="flex-1">
-                            <button type="button" class="quit_sure">确认</button>
+                            <button type="button" style="border: none;color: #f17355;margin: 10px auto 0;background-color: #fff;" class="quit_sure">确认</button>
                         </div>
                         <div class="flex-1">
-                            <button type="button" class="time_cancel">取消</button>
+                            <button type="button" style="border: none;color: #f17355;margin: 10px auto 0;background-color: #fff;" class="time_cancel">取消</button>
                         </div>
                     </div>
                 </div>
