@@ -1785,7 +1785,7 @@ $(function(){
                                 }else if (pay_way.hasClass('icon-zhifubaozhifu')){//支付宝支付
                                     $('#payfor_order').css('display','none');
                                     var _content = data.str;
-                                    // $('.form_contain').html(_content);
+                                    $('.form_contain').html(_content);
                                 }else if(pay_way.hasClass('icon-yue')){//余额支付
                                     console.log(5555);
                                 }
