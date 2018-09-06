@@ -1623,6 +1623,16 @@ $(function(){
                                 that.show_user = false;
                                 that.datas = {"userInfo":{"userName":"","phone":"","email":""}};
                                 that.has_noinfo = true;
+                                var _content = data.message;
+                                $('#quit_account4 .info_te').html(_content);
+                                var $androidActionSheet = $('#quit_account4');
+                                var $androidMask2 = $androidActionSheet.find('.weui-mask4');
+                                $androidMask2.css('display','block');
+                                $androidActionSheet.fadeIn(200);
+                                $androidMask2.on('click',function () {
+                                    $androidMask2.css('display','none');
+                                    $androidActionSheet.fadeOut(200);
+                                });
                             }
                             to_login(data);
                         }
@@ -1641,6 +1651,21 @@ $(function(){
                     $androidActionSheet.fadeIn(200);
                     $androidMask.css('display','block');
                     $androidMask.fadeIn(200);
+                    $androidMask.on('click',function () {
+                        $androidMask.css('display','none');
+                        $androidActionSheet.fadeOut(200);
+                    });
+                },
+                forget_password:function(){//忘记密码
+                    $('#quit_account').css('display','none');
+                    var $androidActionSheet = $('#quit_account3');
+                    var $androidActionSheet2 = $('#quit_account2');
+                    var $androidMask = $androidActionSheet.find('.weui-mask3');
+                    var $androidMask2 = $androidActionSheet2.find('.weui-mask2');
+                    $androidMask2.css('display','none');
+                    $androidMask.css('display','block');
+                    $androidActionSheet2.fadeOut(200);
+                    $androidActionSheet.fadeIn(200);
                     $androidMask.on('click',function () {
                         $androidMask.css('display','none');
                         $androidActionSheet.fadeOut(200);
@@ -1704,10 +1729,6 @@ $(function(){
             }
             $('#my_gift #quit_account button.quit_sure').live('click',function(){//提醒消息确认
                 $('input.user_pass').val("");
-                if($('.text_info').hasClass('realName')){//若实名
-                    $('.text_info.realName input').val("");
-                }
-                $('input.user_pass').val("");
                 $('#quit_account').css('display','none');
                 var $androidActionSheet = $('#quit_account2');
                 var $androidActionSheet2 = $('#quit_account');
@@ -1730,6 +1751,19 @@ $(function(){
                 $androidMask2.css('display','none');
             })
         });
+        $('#my_gift #quit_account4 button.quit_sure').live('click',function(){//提醒消息确认
+            $('#quit_account').css('display','none');
+            var $androidActionSheet2 = $('#quit_account4');
+            var $androidMask2 = $androidActionSheet2.find('.weui-mask4');
+            $androidMask2.css('display','none');
+            $androidActionSheet2.fadeOut(200);
+        });
+        $('#my_gift #quit_account4 button.time_cancel').live('click',function(){//提醒消息确认
+            var $androidActionSheet = $('#quit_account4');
+            var $androidMask2 = $androidActionSheet.find('.weui-mask4');
+            $androidActionSheet.fadeOut(200);
+            $androidMask2.css('display','none');
+        })
     }else if($('.order_info').size()>0){
         var datas = JSON.parse(localStorage.getItem('order_info'));
         var app = new Vue({
@@ -1750,6 +1784,31 @@ $(function(){
             el: '#payfor_order',
             data: {
                 datas:datas,//初始数据
+                coin:[],
+            },
+            created:function(){
+                var that = this;
+                var page = 0;
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: "GET",
+                    url:weixin_url + '/coin/consume-list?page='+page,
+                    contentType:"application/json",
+                    success: function(data){
+                        if (data.code == 0) {
+                            that.current = 1;
+                            var Data_length =  data.page.content.length;
+                            if (Data_length == 0) {
+                                return;
+                            }else{//请求到数据
+                                that.coin = data.totalCoin;
+                            }
+                        }
+                        to_login(data);
+                    }
+                });
             },
             methods:{
                 surepay:function(){
@@ -1780,7 +1839,10 @@ $(function(){
                         success: function(data){
                             if (data.code == 0) {
                                 if (pay_way.hasClass('icon-weixinzhifu')) {//如果是微信支付
-                                    var _url = data.str;
+                                    var return_url = "https://www.shentingkeji.com/html/pay-success.html";
+                                    var re = encodeURIComponent(return_url);
+                                    var _url = data.str+'&redirect_url='+re;
+                                    console.log(_url);
                                     window.location.href =_url;
                                 }else if (pay_way.hasClass('icon-zhifubaozhifu')){//支付宝支付
                                     $('#payfor_order').css('display','none');

@@ -575,7 +575,8 @@ animation: myfade_in .2s;
 .payfor_order .pay_contain .surepay{width:320px;height:40px;background-color: #F17355;color: #fff;font-size: 18px;text-align: center;line-height: 40px;border: none;border-radius: 6px;}
 .payfor_order .surepay_contain{width: 320px;margin: 20px auto;}
 .payfor_order .weui-skin_android .weui-actionsheet__menu{text-align: center;}
-
+.my_gift #quit_account4 .weui-mask4,.my_gift #quit_account3 .weui-mask3{height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 1000;transition: none 0.5s ease;display: none;}
+.my_gift .regist .input_row .flex-1 input{background-color:#fff;}
 
 
 
