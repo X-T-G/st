@@ -576,7 +576,21 @@ animation: myfade_in .2s;
 .payfor_order .surepay_contain{width: 320px;margin: 20px auto;}
 .payfor_order .weui-skin_android .weui-actionsheet__menu{text-align: center;}
 .my_gift #quit_account4 .weui-mask4,.my_gift #quit_account3 .weui-mask3{height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 1000;transition: none 0.5s ease;display: none;}
-.my_gift .regist .input_row .flex-1 input{background-color:#fff;}
+.my_gift .look_for_pass .regist .input_row .flex-1 input{background-color:#fff;}
+.my_gift .look_for_pass.weui-skin_android .weui-actionsheet__menu{padding: 10px;}
+.my_gift .look_for_pass .regist .input_row .flex-1 input{height:24px;}
+.my_gift .look_for_pass .regist .input_row .flex-1 input.pass_code{width:120px;}
+.my_gift .look_for_pass .weui-actionsheet__menu button{width:74px;}
+.my_gift .look_for_pass.weui-skin_android .weui-actionsheet__menu input{text-align: left;}
+.my_gift .look_for_pass .weui-actionsheet__menu input{margin-bottom:0;line-height: 24px;}
+.my_gift .look_for_pass .weui-actionsheet__menu .btn_contain{margin: 20px 0;}
+
+
+
+
+
+
+
 
 
 
