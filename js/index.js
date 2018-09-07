@@ -1764,6 +1764,54 @@ $(function(){
             $androidActionSheet.fadeOut(200);
             $androidMask2.css('display','none');
         })
+        // 头部菜单切换
+        $('#my_gift .bar_option').on('click','.flex-1',function(){
+            // clearTimeout(set_time);
+            // $('.get_code .remain_time').html('60');//初始化
+            if($(this).hasClass('active')){
+                $(this).siblings().removeClass('active');
+            }else{
+                $(this).addClass('active').siblings().removeClass('active');
+                // $('.weui-loadmore').removeClass('dis-no');
+                // $('.has_noinfo').addClass('dis-no');
+            }
+            if($(this).hasClass('re_phone')){//如果是手机注册
+                if($('.phone_input').hasClass('dis-no')){
+                    $('.phone_input').removeClass('dis-no');
+                    $('.email_input').addClass('dis-no');
+                    $('.phone_input').val('');
+                }else{
+                    return;
+                }
+            }else if($(this).hasClass('re_email')){//如果是邮箱注册
+                if($('.email_input').hasClass('dis-no')){
+                    $('.email_input').removeClass('dis-no');
+                    $('.phone_input').addClass('dis-no');
+                    $('.email_input').val('');
+                }else{
+                    return;
+                }
+            }
+            // $('button.get_code_btn.hasinput').removeClass('dis-no');  
+            // $('button.get_code_btn.hasinput').removeClass('hasinput');
+            // $('.get_code').addClass('dis-no');
+        });
+        // 输入手机号，获取验证码变化
+        $('#my_gift .input_row input.re_input').on('keyup',function(){
+            var reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;//邮箱格式验证
+            var reg2 = /^[1][3,4,5,7,8][0-9]{9}$/;//手机号码正则
+            var _val = $('.email_input').val();
+            var _val2 = $('.phone_input').val();
+            var obj = reg.test(_val);
+            var obj2 = reg2.test(_val2);
+            if(obj2 == true && $(this).hasClass('phone_input')){//手机注册
+                $('.get_code_btn').addClass('hasinput');
+            }else if(obj == true && $(this).hasClass('email_input')){
+                $('.get_code_btn').addClass('hasinput');
+            }else{
+                $('.get_code_btn').removeClass('hasinput');
+            }
+        });
     }else if($('.order_info').size()>0){
         var datas = JSON.parse(localStorage.getItem('order_info'));
         var app = new Vue({

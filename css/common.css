@@ -592,7 +592,8 @@ animation: myfade_in .2s;
 .my_gift .look_for_pass .input_row .flex-1{line-height: 30px;}
 .my_gift .look_for_pass .weui-actionsheet__menu .btn_contain{margin: 20px 0;}
 .my_gift .look_for_pass .input_row{margin-top: 10px;}
-
+.my_gift .look_for_pass .input_row .flex-1 .get_code_btn.hasinput{background-color: #F17355;color: #fff;}
+.my_gift .next_btn button.next_step{}
 
 
 
