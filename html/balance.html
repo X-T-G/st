@@ -67,6 +67,42 @@
                     </div>
                 </div>
             </div>
+            <!-- 欢迎页面 -->
+            <div class="weui-skin_android welcome_page" :class=[{"dis-no":(show_modal==false)}] id="quit_account">
+                <div class="weui-mask2"  :class=[{"dis-no":(show_modal==false)}]  style="display:block;"></div>
+                <div class="weui-actionsheet">
+                    <div class="weui-actionsheet__menu" style="text-align:left;">
+                        <div class="text_info" style="text-align:center;">神庭币使用须知</div>
+                        <div style="font-size:12px;">
+                            <p>1.神庭币由成都神庭科技公司为回馈广大用户，根据一定运算规则而赠与神庭君用户使用；</p>
+                            <p>2.可用于抵扣用户在神庭医馆进行消费，不得用于其他目的；</p>
+                            <p>3.可在神庭君注册用户之间进行转赠；</p>
+                            <p>4.在转赠或抵扣消费时需要输入支付密码进行确认，支付后不可退还</p>
+                            <p>5.用户须妥善保护好自己的神庭君账号及密码，若因个人原因密码泄露导致神庭币错误转移，责任由用户个人自行承担；</p>
+                            <p>6.神庭币在神庭君注册用户之间进行转移时，若发生经济方面的一切纠纷均由用户自行承担责任，与神庭科技公司和医馆无关；</p>
+                            <p>7.用户在使用过程中若有疑问和问题可与公司客服联系；</p>
+                            <p>8.成都神庭科技公司对本使用须知保留适时进行修改和发布的权利；</p>
+                            <p>9.神庭币发放和使用的最终解释权归成都神庭科技公司所有。</p>
+                        </div>
+                        <div class="input_row flex">
+                            <label for="weuiAgree" class="weui-agree" style="margin: 0 auto;">
+                                <input id="weuiAgree" type="checkbox" class="weui-agree__checkbox">
+                                <span class="weui-agree__text">
+                                    我已阅读并同意以上须知
+                                </span>
+                            </label>
+                        </div>
+                        <div class="flex" style="text-align:center;margin: 10px;">
+                            <div class="flex-1">
+                                <button type="button" class="quit_sure">确认</button>
+                            </div>
+                            <div class="flex-1">
+                                <button type="button" class="time_cancel">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- 弹窗 -->
             <div class="weui-toptips weui-toptips_warn js_tooltips" style="display: none;" id = "regist_info">密码设置成功！</div>
             <!-- 没有数据 -->

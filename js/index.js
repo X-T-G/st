@@ -1439,6 +1439,7 @@ $(function(){
                 current:1,//当前页面
                 my_balance:[],//数据
                 datas:[],//初始数据
+                show_modal:true,//欢迎页弹窗
             },
             created:function(){
                 var that = this;
@@ -1605,38 +1606,41 @@ $(function(){
                     var _token = localStorage.getItem('access_token');
                     var that = this;
                     var username = $('.search_contain').find('input').val();
-                    $.ajax({//发起请求
-                        headers: {
-                            'Authorization': 'bearer '+_token
-                        },
-                        type: "GET",
-                        url:weixin_url + '/coin/user-info/'+username,
-                        contentType:"application/json",
-                        success: function(data){
-                            if (data.code == 0) {
-                                that.has_noinfo = false;
-                                that.show_user = true;
-                                that.datas = data;
-                                that.realName = data.userInfo.realName;
-                                $('input.gift_num').val("");
-                            }else{
-                                that.show_user = false;
-                                that.datas = {"userInfo":{"userName":"","phone":"","email":""}};
-                                that.has_noinfo = true;
-                                var _content = data.message;
-                                $('#quit_account4 .info_te').html(_content);
-                                var $androidActionSheet = $('#quit_account4');
-                                var $androidMask2 = $androidActionSheet.find('.weui-mask4');
-                                $androidMask2.css('display','block');
-                                $androidActionSheet.fadeIn(200);
-                                $androidMask2.on('click',function () {
-                                    $androidMask2.css('display','none');
-                                    $androidActionSheet.fadeOut(200);
-                                });
+                    if(username.length>0){
+                        $.ajax({//发起请求
+                            headers: {
+                                'Authorization': 'bearer '+_token
+                            },
+                            type: "GET",
+                            url:weixin_url + '/coin/user-info/'+username,
+                            contentType:"application/json",
+                            success: function(data){
+                                if (data.code == 0) {
+                                    that.has_noinfo = false;
+                                    that.show_user = true;
+                                    that.datas = data;
+                                    that.realName = data.userInfo.realName;
+                                    $('input.gift_num').val("");
+                                }else{
+                                    console.log(222);
+                                    that.show_user = false;
+                                    that.datas = {"userInfo":{"userName":"","phone":"","email":""}};
+                                    that.has_noinfo = true;
+                                    var _content = data.message;
+                                    $('#quit_account4 .info_te').html(_content);
+                                    var $androidActionSheet = $('#quit_account4');
+                                    var $androidMask2 = $androidActionSheet.find('.weui-mask4');
+                                    $androidMask2.css('display','block');
+                                    $androidActionSheet.fadeIn(200);
+                                    $androidMask2.on('click',function () {
+                                        $androidMask2.css('display','none');
+                                        $androidActionSheet.fadeOut(200);
+                                    });
+                                }
+                                to_login(data);
                             }
-                            to_login(data);
-                        }
-                    });
+                        });
+                    }
                 },
                 sure_gift:function(){
                     // 弹窗

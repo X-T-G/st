@@ -512,8 +512,9 @@ animation: myfade_in .2s;
 #my_coin .cli_page div.active {border: 1px solid #F17355;background-color: #F17355;color: #fff;}
 #my_coin .weui-mask3,#my_coin .weui-mask2,.person .middle_person .weui-mask2,.my_gift .weui-mask2{height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 1000;transition: none 0.5s ease;display: none;}
 #my_coin .weui-toptips{padding: 0;font-size: 18px;height: 40px;line-height: 40px;background-color:#1AAD19;}
+#my_coin .weui-skin_android .weui-mask2{display: block;}
 /* 转赠页面 */
-.my_gift .search_contain{margin: 50px auto;padding:0 70px 0 20px;position: relative;border: 1px solid #e5e5e5;background-color: #fff;border-radius: 22px;height: 40px;line-height: 40px;width: 90%;}
+.my_gift .search_contain{margin: 50px auto 0;padding:0 70px 0 20px;position: relative;border: 1px solid #e5e5e5;background-color: #fff;border-radius: 22px;height: 40px;line-height: 40px;width: 90%;}
 .my_gift .search_contain input{width: 100%;border: none;outline: none;box-shadow: none;height: 32px;line-height: 32px;}
 .my_gift .search_contain span.iconfont{position: absolute;right: 0px;top: 0;font-size: 18px;width: 70px;display: inline-block;text-align: center;border-bottom-right-radius: 22px;border-top-right-radius: 22px;}
 .gift_bg{background-color: #fff;}
@@ -593,10 +594,10 @@ animation: myfade_in .2s;
 .my_gift .look_for_pass .weui-actionsheet__menu .btn_contain{margin: 20px 0;}
 .my_gift .look_for_pass .input_row{margin-top: 10px;}
 .my_gift .look_for_pass .input_row .flex-1 .get_code_btn.hasinput{background-color: #F17355;color: #fff;}
-.my_gift .next_btn button.next_step{}
-
-
-
+/* .my_gift .next_btn button.next_step{} */
+.my_gift .error_info{color:#fd5749;}
+.weui-skin_android.welcome_page .weui-actionsheet{width: 320px;}
+#my_coin .weui-actionsheet__menu input#weuiAgree{margin-bottom:0;-webkit-appearance: none;appearance: none;outline: 0;font-size: 0;border: 1px solid #d1d1d1;background-color: #fff;border-radius: 3px;width: 13px;height: 13px;position: relative;vertical-align: 0;top: 2px;}
 
 
 
