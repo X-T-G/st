@@ -1457,8 +1457,13 @@ $(function(){
                             var Data_length =  data.page.content.length;
                             if (Data_length == 0) {
                                 that.show_page = false;
-                                that.has_noinfo = true;
+                                that.datas = data;
                                 that.loading = false;
+                                if(record_agree == 'agree'){//用户同意
+                                    that.show_modal = false;
+                                }else{
+                                    that.show_modal = true; 
+                                }
                                 return;
                             }else{//请求到数据
                                 that.my_balance = data.page.content;
@@ -1774,7 +1779,7 @@ $(function(){
                             $("#quit_account2 .weui-mask2").css('display','none');
                             $androidActionSheet2.fadeOut(200);
                             var _content = data.message;
-                            $('.info_te').html(_content);
+                            $('#quit_account .info_te').html(_content);
                             var $androidActionSheet = $('#quit_account');
                             var $androidMask2 = $androidActionSheet.find('.weui-mask2');
                             $androidMask2.css('display','block');

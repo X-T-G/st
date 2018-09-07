@@ -20,7 +20,7 @@
             </span>
         </div>
         <div id="my_coin">
-            <div class="m_balance" :class=[{"dis-no":(show_page==false)}] id="m_balance">
+            <div class="m_balance" id="m_balance">
                 <div class="balance_top">
                     <img src="../images/st_coin2.png" alt="">
                     <div class="text_center">
@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <!-- 神庭币使用详情 -->
-                <div class="balance_detail clearfix">
+                <div class="balance_detail clearfix"  :class=[{"dis-no":(show_page==false)}]>
                     <p class="tint cion_detail">神庭币明细</p>
                     <div v-for="balance in my_balance">
                         <div class="each_cou">

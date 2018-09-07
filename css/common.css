@@ -598,7 +598,7 @@ animation: myfade_in .2s;
 .weui-skin_android.welcome_page .weui-actionsheet{width: 320px;}
 #my_coin .weui-actionsheet__menu input#weuiAgree{margin-bottom:0;-webkit-appearance: none;appearance: none;outline: 0;font-size: 0;border: 1px solid #d1d1d1;background-color: #fff;border-radius: 3px;width: 13px;height: 13px;position: relative;vertical-align: 0;top: 2px;}
 #my_gift .weui-actionsheet div.phone_input,#my_gift .weui-actionsheet div.email_input{border-bottom: 1px solid #e5e5e5;line-height: 30px;text-align: left;padding-left: 10px;}
-
+#my_gift .weui-toptips_warn{background-color:#1AAD19;height: 40px;line-height: 40px;}
 
 
 
