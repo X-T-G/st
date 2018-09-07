@@ -1439,10 +1439,11 @@ $(function(){
                 current:1,//当前页面
                 my_balance:[],//数据
                 datas:[],//初始数据
-                show_modal:true,//欢迎页弹窗
+                show_modal:false,//欢迎页弹窗
             },
             created:function(){
                 var that = this;
+                var record_agree = localStorage.getItem('record_agree');
                 $.ajax({//发起请求
                     headers: {
                         'Authorization': 'bearer '+_token
@@ -1466,6 +1467,11 @@ $(function(){
                                 that.has_noinfo = false;
                                 that.loading = false;
                                 that.datas = data;
+                                if(record_agree == 'agree'){//用户同意
+                                    that.show_modal = false;
+                                }else{
+                                    that.show_modal = true; 
+                                }
 
                             }
                         }
@@ -1474,7 +1480,19 @@ $(function(){
                 });
             },
             methods:{
-                change_page:function(event){
+                agree_sure:function(){//同意神庭币使用须知
+                    var that = this;
+                    var is_agree = $('.welcome_page').find('.weui-agree__checkbox').prop('checked');
+                    if (is_agree) {//如果同意
+                        that.show_modal = false;
+                    }else{
+                        that.show_modal = true;        
+                    }
+                },
+                agree_cancel:function(){//不同意神庭币使用须知
+                    window.history.go(-1);
+                },
+                change_page:function(event){//下一页
                     var that =this;
                     var class_name = event.target.className;
                     var num = event.target.innerHTML;
@@ -1515,6 +1533,15 @@ $(function(){
                         });
                     }
                 },
+                record_agree:function(){//记录是否同意神庭币须知
+                    var that = this;
+                    var is_agree = $('.welcome_page').find('.weui-agree__checkbox').prop('checked');
+                    if (is_agree) {//如果同意
+                        localStorage.setItem("record_agree", 'agree');
+                    }else{
+                        localStorage.removeItem("record_agree");
+                    }
+                }
             }
         });
         $('#my_coin .quit_account button').live('click',function(){//点击“我愿转赠”按钮
@@ -1622,7 +1649,6 @@ $(function(){
                                     that.realName = data.userInfo.realName;
                                     $('input.gift_num').val("");
                                 }else{
-                                    console.log(222);
                                     that.show_user = false;
                                     that.datas = {"userInfo":{"userName":"","phone":"","email":""}};
                                     that.has_noinfo = true;
@@ -1661,18 +1687,51 @@ $(function(){
                     });
                 },
                 forget_password:function(){//忘记密码
-                    $('#quit_account').css('display','none');
-                    var $androidActionSheet = $('#quit_account3');
-                    var $androidActionSheet2 = $('#quit_account2');
-                    var $androidMask = $androidActionSheet.find('.weui-mask3');
-                    var $androidMask2 = $androidActionSheet2.find('.weui-mask2');
-                    $androidMask2.css('display','none');
-                    $androidMask.css('display','block');
-                    $androidActionSheet2.fadeOut(200);
-                    $androidActionSheet.fadeIn(200);
-                    $androidMask.on('click',function () {
-                        $androidMask.css('display','none');
-                        $androidActionSheet.fadeOut(200);
+                    $.ajax({//发起请求
+                        headers: {
+                            'Authorization': 'bearer '+_token
+                        },
+                        type: 'GET',
+                        url:weixin_url + '/user/user-info',
+                        contentType:"application/json",
+                        success: function(data){
+                            if (data.code == 0) {
+                                $('#quit_account').css('display','none');
+                                var $androidActionSheet = $('#quit_account3');
+                                var $androidActionSheet2 = $('#quit_account2');
+                                var $androidMask = $androidActionSheet.find('.weui-mask3');
+                                var $androidMask2 = $androidActionSheet2.find('.weui-mask2');
+                                $androidMask2.css('display','none');
+                                $androidMask.css('display','block');
+                                $androidActionSheet2.fadeOut(200);
+                                $androidActionSheet.fadeIn(200);
+                                $androidMask.on('click',function () {
+                                    $androidMask.css('display','none');
+                                    $androidActionSheet.fadeOut(200);
+                                });
+                                var email = data.userInfo.email;
+                                var phone = data.userInfo.phone;
+                                if(email.length>0 && phone.length==0){//只有邮箱
+                                    $('.re_phone').addClass('dis-no');
+                                    $('.re_email').addClass('active');
+                                    $('.email_input').html(email);
+                                    $('.phone_input').addClass('dis-no');
+                                }else if(email.length==0 && phone.length>0){//只有电话
+                                    $('.re_email').addClass('dis-no');
+                                    $('.re_phone').addClass('active');
+                                    $('.phone_input').html(phone);
+                                    $('.email_input').addClass('dis-no');
+                                }else{
+                                    $('.email_input').html(email);
+                                    $('.phone_input').html(phone);
+                                    $('.email_input').addClass('dis-no');
+                                    $('.re_phone').addClass('active');
+                                }
+                            }else{
+
+                            }
+                            to_login(data);
+                        }
                     });
                 }
             }
@@ -1770,20 +1829,17 @@ $(function(){
         })
         // 头部菜单切换
         $('#my_gift .bar_option').on('click','.flex-1',function(){
-            // clearTimeout(set_time);
-            // $('.get_code .remain_time').html('60');//初始化
+            clearTimeout(set_time);
+            $('.get_code .remain_time').html('60');//初始化
             if($(this).hasClass('active')){
                 $(this).siblings().removeClass('active');
             }else{
                 $(this).addClass('active').siblings().removeClass('active');
-                // $('.weui-loadmore').removeClass('dis-no');
-                // $('.has_noinfo').addClass('dis-no');
             }
             if($(this).hasClass('re_phone')){//如果是手机注册
                 if($('.phone_input').hasClass('dis-no')){
                     $('.phone_input').removeClass('dis-no');
                     $('.email_input').addClass('dis-no');
-                    $('.phone_input').val('');
                 }else{
                     return;
                 }
@@ -1791,30 +1847,179 @@ $(function(){
                 if($('.email_input').hasClass('dis-no')){
                     $('.email_input').removeClass('dis-no');
                     $('.phone_input').addClass('dis-no');
-                    $('.email_input').val('');
                 }else{
                     return;
                 }
             }
-            // $('button.get_code_btn.hasinput').removeClass('dis-no');  
-            // $('button.get_code_btn.hasinput').removeClass('hasinput');
-            // $('.get_code').addClass('dis-no');
+            $('.password').val("");
+            $('.pass_name').val("");
+            $('button.get_code_btn.hasinput').removeClass('dis-no');  
+            $('.get_code').addClass('dis-no');
         });
-        // 输入手机号，获取验证码变化
-        $('#my_gift .input_row input.re_input').on('keyup',function(){
-            var reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;//邮箱格式验证
-            var reg2 = /^[1][3,4,5,7,8][0-9]{9}$/;//手机号码正则
-            var _val = $('.email_input').val();
-            var _val2 = $('.phone_input').val();
-            var obj = reg.test(_val);
-            var obj2 = reg2.test(_val2);
-            if(obj2 == true && $(this).hasClass('phone_input')){//手机注册
-                $('.get_code_btn').addClass('hasinput');
-            }else if(obj == true && $(this).hasClass('email_input')){
-                $('.get_code_btn').addClass('hasinput');
-            }else{
-                $('.get_code_btn').removeClass('hasinput');
+        $('.look_for_pass button.get_code_btn.hasinput').live('click',function(){//此处用live因为class为后面动态生成，所以on('click')无效
+            var _token = localStorage.getItem('access_token');
+            if($('.re_phone').hasClass('active')) {//手机找回
+                $.ajax({//手机注册请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: "GET",
+                    url: weixin_url +'/user/forget-pay-password/sms-code',
+                    dataType: "json",
+                    success: function(data){
+                        if(data.code==0){
+                            clearTimeout(set_time);
+                            $('.get_code .remain_time').html('60');//初始化
+                            $('.get_code_btn').addClass('dis-no'); 
+                            $('.get_code').removeClass('dis-no'); 
+                            var _Time = 60;
+                            function _time(){
+                                if (_Time>0){
+                                    set_time = setTimeout(function(){
+                                        _Time--;
+                                        var remain_time = _Time;
+                                        $('.get_code .remain_time').html(remain_time);
+                                        _time();
+                                    },1000);
+                                }else{
+                                    $('button.get_code_btn.hasinput').removeClass('dis-no');  
+                                    $('.get_code').addClass('dis-no');
+                                }
+                            }
+                            _time();
+                        }else{
+                            $('.error_info').html(data.message);
+                            setTimeout(function(){
+                                $('.error_info').html('');
+                            }, 5000);
+                            return;
+                        }
+                    }
+                });
+            }else if($('.re_email').hasClass('active')){//邮箱找回
+                $.ajax({//邮箱注册请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: "GET",
+                    url: weixin_url +'/user/forget-pay-password/email-code',
+                    dataType: "json",
+                    success: function(data){
+                        if(data.code !== 0){//事件处理
+                            $('.error_info').html(data.message);
+                            setTimeout(function(){
+                                $('.error_info').html('');
+                            }, 5000);
+                            return;
+                        }else{
+                            clearTimeout(set_time);
+                            $('.get_code .remain_time').html('60');//初始化
+                            $('.get_code_btn').addClass('dis-no'); 
+                            $('.get_code').removeClass('dis-no'); 
+                            var _Time = 60;
+                        
+                            function _time(){
+                                if (_Time>0){
+                                    set_time = setTimeout(function(){
+                                        _Time--;
+                                        var remain_time = _Time;
+                                        $('.get_code .remain_time').html(remain_time);
+                                        _time();
+                                    },1000);
+                                }else{
+                                    $('button.get_code_btn.hasinput').removeClass('dis-no');  
+                                    $('.get_code').addClass('dis-no');
+                                }
+                            }
+                            _time();
+                        }
+                    }
+                }); 
             }
+        });
+        $('.look_for_pass .quit_sure').live('click',function(){//忘记密码确认
+            var _token = localStorage.getItem('access_token');
+            var code = $('.password').val();
+            var newPayPassword = $('.pass_name').val();
+            if (code.length>0 && newPayPassword.length>0) {
+                if($('.re_phone').hasClass('active')) {//手机找回
+                    $.ajax({//发起请求
+                        headers: {
+                            'Authorization': 'bearer '+_token
+                        },
+                        type: "POST",
+                        url:weixin_url + '/user/forget-pay-password/phone/reset',
+                        contentType:"application/json",
+                        data: JSON.stringify({code:code,newPayPassword:newPayPassword}),
+                        success: function(data){
+                            if (data.code == 0) {
+                                $('#look_info').css('display','block');
+                                setTimeout(function(){
+                                    $('#look_info').css('display','none');
+                                    var $androidActionSheet = $('#quit_account3');
+                                    var $androidActionSheet2 = $('#quit_account2');
+                                    var $androidMask = $androidActionSheet.find('.weui-mask3');
+                                    var $androidMask2 = $androidActionSheet2.find('.weui-mask2');
+                                    $androidMask2.css('display','block');
+                                    $androidMask.css('display','none');
+                                    $androidActionSheet.fadeOut(200);
+                                    $androidActionSheet2.fadeIn(200);
+                                    $androidMask2.on('click',function () {
+                                        $androidMask2.css('display','none');
+                                        $androidActionSheet2.fadeOut(200);
+                                    });
+                                },2000);
+                            }
+                            to_login(data);
+                        }
+                    });
+                }else if($('.re_email').hasClass('active')){//邮箱找回
+                    $.ajax({//发起请求
+                        headers: {
+                            'Authorization': 'bearer '+_token
+                        },
+                        type: "POST",
+                        url:weixin_url + '/coin/consume-list?page='+page,
+                        contentType:"application/json",
+                        data: JSON.stringify({code:code,newPayPassword:newPayPassword}),
+                        success: function(data){
+                            if (data.code == 0) {
+                                $('#look_info').css('display','block');
+                                setTimeout(function(){
+                                    $('#look_info').css('display','none');
+                                    var $androidActionSheet = $('#quit_account3');
+                                    var $androidActionSheet2 = $('#quit_account2');
+                                    var $androidMask = $androidActionSheet.find('.weui-mask3');
+                                    var $androidMask2 = $androidActionSheet2.find('.weui-mask2');
+                                    $androidMask2.css('display','block');
+                                    $androidMask.css('display','none');
+                                    $androidActionSheet.fadeOut(200);
+                                    $androidActionSheet2.fadeIn(200);
+                                    $androidMask2.on('click',function () {
+                                        $androidMask2.css('display','none');
+                                        $androidActionSheet2.fadeOut(200);
+                                    });
+                                },2000);
+                            }
+                            to_login(data);
+                        }
+                    });
+                }
+            }
+        });
+        $('.look_for_pass .time_cancel').live('click',function(){//忘记密码取消
+            var $androidActionSheet = $('#quit_account3');
+            var $androidActionSheet2 = $('#quit_account2');
+            var $androidMask = $androidActionSheet.find('.weui-mask3');
+            var $androidMask2 = $androidActionSheet2.find('.weui-mask2');
+            $androidMask2.css('display','block');
+            $androidMask.css('display','none');
+            $androidActionSheet.fadeOut(200);
+            $androidActionSheet2.fadeIn(200);
+            $androidMask2.on('click',function () {
+                $androidMask2.css('display','none');
+                $androidActionSheet2.fadeOut(200);
+            });
         });
     }else if($('.order_info').size()>0){
         var datas = JSON.parse(localStorage.getItem('order_info'));
@@ -1894,14 +2099,12 @@ $(function(){
                                     var return_url = "https://www.shentingkeji.com/html/pay-success.html";
                                     var re = encodeURIComponent(return_url);
                                     var _url = data.str+'&redirect_url='+re;
-                                    console.log(_url);
                                     window.location.href =_url;
                                 }else if (pay_way.hasClass('icon-zhifubaozhifu')){//支付宝支付
                                     $('#payfor_order').css('display','none');
                                     var _content = data.str;
                                     $('.form_contain').html(_content);
                                 }else if(pay_way.hasClass('icon-yue')){//余额支付
-                                    console.log(5555);
                                 }
                             }else{
                                 // 弹窗

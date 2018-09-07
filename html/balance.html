@@ -84,7 +84,7 @@
                             <p>8.成都神庭科技公司对本使用须知保留适时进行修改和发布的权利；</p>
                             <p>9.神庭币发放和使用的最终解释权归成都神庭科技公司所有。</p>
                         </div>
-                        <div class="input_row flex">
+                        <div class="input_row flex" v-on:click="record_agree">
                             <label for="weuiAgree" class="weui-agree" style="margin: 0 auto;">
                                 <input id="weuiAgree" type="checkbox" class="weui-agree__checkbox">
                                 <span class="weui-agree__text">
@@ -94,10 +94,10 @@
                         </div>
                         <div class="flex" style="text-align:center;margin: 10px;">
                             <div class="flex-1">
-                                <button type="button" class="quit_sure">确认</button>
+                                <button type="button" class="agree_sure" v-on:click="agree_sure">确认</button>
                             </div>
                             <div class="flex-1">
-                                <button type="button" class="time_cancel">取消</button>
+                                <button type="button" class="agree_cancel" v-on:click="agree_cancel">取消</button>
                             </div>
                         </div>
                     </div>

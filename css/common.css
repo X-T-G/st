@@ -593,11 +593,17 @@ animation: myfade_in .2s;
 .my_gift .look_for_pass .input_row .flex-1{line-height: 30px;}
 .my_gift .look_for_pass .weui-actionsheet__menu .btn_contain{margin: 20px 0;}
 .my_gift .look_for_pass .input_row{margin-top: 10px;}
-.my_gift .look_for_pass .input_row .flex-1 .get_code_btn.hasinput{background-color: #F17355;color: #fff;}
-/* .my_gift .next_btn button.next_step{} */
-.my_gift .error_info{color:#fd5749;}
+.my_gift .look_for_pass .input_row .flex-1 .get_code_btn.hasinput{background-color: #F17355;color: #fff;width: 93px;}
+#my_gift .error_info{color:#fd5749;}
 .weui-skin_android.welcome_page .weui-actionsheet{width: 320px;}
 #my_coin .weui-actionsheet__menu input#weuiAgree{margin-bottom:0;-webkit-appearance: none;appearance: none;outline: 0;font-size: 0;border: 1px solid #d1d1d1;background-color: #fff;border-radius: 3px;width: 13px;height: 13px;position: relative;vertical-align: 0;top: 2px;}
+#my_gift .weui-actionsheet div.phone_input,#my_gift .weui-actionsheet div.email_input{border-bottom: 1px solid #e5e5e5;line-height: 30px;text-align: left;padding-left: 10px;}
+
+
+
+
+
+
 
 
 
