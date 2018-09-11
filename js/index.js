@@ -1536,7 +1536,7 @@ $(function(){
             // ajax请求的方法
             var _token = localStorage.getItem('access_token');
             var that = this;
-            $.ajax({//发起请求
+            $.ajax({//发起请求,查询是否设置支付密码
                 headers: {
                     'Authorization': 'bearer '+_token
                 },
@@ -1546,7 +1546,14 @@ $(function(){
                 success: function(data){
                     if (data.code == 0) {
                         if(data.payPassword){//如果已经设置支付密码
-                            window.location.href='./gift.html';
+                            var totalCoin = $('.balance_top .text_center p').html();
+                            var _totalCoin = Number(totalCoin.split('个')[0]);
+                            if (_totalCoin > 0) {
+                                localStorage.setItem("_totalCoin", _totalCoin);
+                                window.location.href='./gift.html';
+                            }else{
+                                return;
+                            }
                         }else{//若未设置支付密码
                             // 弹窗
                             var $androidActionSheet = $('#quit_account2');
@@ -1657,22 +1664,36 @@ $(function(){
                     }
                 },
                 sure_gift:function(){
-                    // 弹窗
-                    $('input.user_pass').val("");
-                    if($('.text_info').hasClass('realName')){//若实名
-                        $('.text_info.realName input').val("");
+                    var _num = $('.gift_num').val();
+                    var input_length =Number($('.user_messege').val());
+                    var _totalCoin = Number(localStorage.getItem('_totalCoin'));
+                    var can_use = input_length <=_totalCoin;
+                    console.log(_totalCoin);
+                    console.log(can_use);
+                    if (_num > 0 && input_length > 0 ){
+                        // 弹窗
+                        $('input.user_pass').val("");
+                        if($('.text_info').hasClass('realName')){//若实名
+                            $('.text_info.realName input').val("");
+                        }
+                        $('input.user_pass').val("");
+                        $('#quit_account').css('display','none');
+                        var $androidActionSheet = $('#quit_account2');
+                        var $androidMask = $androidActionSheet.find('.weui-mask2');
+                        $androidActionSheet.fadeIn(200);
+                        $androidMask.css('display','block');
+                        $androidMask.fadeIn(200);
+                        $androidMask.on('click',function () {
+                            $androidMask.css('display','none');
+                            $androidActionSheet.fadeOut(200);
+                        });
+                    }else if(_num > 0 && input_length == 0){
+                        var input_length = $('.user_messege').val("请输入用户信息！");
+                        $('.user_messege').css('color','#fd5749;');
+                        return;
+                    }else if(_num == 0 && input_length > 0){
+                        return;
                     }
-                    $('input.user_pass').val("");
-                    $('#quit_account').css('display','none');
-                    var $androidActionSheet = $('#quit_account2');
-                    var $androidMask = $androidActionSheet.find('.weui-mask2');
-                    $androidActionSheet.fadeIn(200);
-                    $androidMask.css('display','block');
-                    $androidMask.fadeIn(200);
-                    $androidMask.on('click',function () {
-                        $androidMask.css('display','none');
-                        $androidActionSheet.fadeOut(200);
-                    });
                 },
                 forget_password:function(){//忘记密码
                     $.ajax({//发起请求
@@ -1724,6 +1745,9 @@ $(function(){
                 }
             }
         });
+        $('.user_messege').on('focus',function(){
+            $('.user_messege').css('color','#686b6d;;');
+        }),
         $('#my_gift #quit_account2 button.time_cancel').live('click',function(){//取消按钮
             var $androidActionSheet2 = $('#quit_account2');
             var $androidMask2 = $androidActionSheet2.find('.weui-mask2');
@@ -1957,6 +1981,11 @@ $(function(){
                                         $androidActionSheet2.fadeOut(200);
                                     });
                                 },2000);
+                            }else{
+                                $('.error_info').html(data.message);
+                                setTimeout(function(){
+                                    $('.error_info').html('');
+                                }, 5000); 
                             }
                             to_login(data);
                         }
@@ -1967,7 +1996,7 @@ $(function(){
                             'Authorization': 'bearer '+_token
                         },
                         type: "POST",
-                        url:weixin_url + '/coin/consume-list?page='+page,
+                        url:weixin_url + '/user/forget-pay-password/email/reset',
                         contentType:"application/json",
                         data: JSON.stringify({code:code,newPayPassword:newPayPassword}),
                         success: function(data){
@@ -1988,6 +2017,11 @@ $(function(){
                                         $androidActionSheet2.fadeOut(200);
                                     });
                                 },2000);
+                            }else{
+                                $('.error_info').html(data.message);
+                                setTimeout(function(){
+                                    $('.error_info').html('');
+                                }, 5000);
                             }
                             to_login(data);
                         }
