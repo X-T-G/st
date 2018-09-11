@@ -26,6 +26,9 @@
                     <div class="text_center">
                         <p>{{datas.totalCoin}}个</p>
                     </div>
+                    <div class="clearfix">
+                        <p v-on:click="modal_page" class="fr" style="color:#f57d64;margin-right:6px;">神庭币使用须知</p>
+                    </div>
                 </div>
                 <!-- 神庭币使用详情 -->
                 <div class="balance_detail clearfix"  :class=[{"dis-no":(show_page==false)}]>
@@ -84,14 +87,14 @@
                             <p>8.成都神庭科技公司对本使用须知保留适时进行修改和发布的权利；</p>
                             <p>9.神庭币发放和使用的最终解释权归成都神庭科技公司所有。</p>
                         </div>
-                        <div class="input_row flex" v-on:click="record_agree">
+                        <!-- <div class="input_row flex">
                             <label for="weuiAgree" class="weui-agree" style="margin: 0 auto;">
                                 <input id="weuiAgree" type="checkbox" class="weui-agree__checkbox">
                                 <span class="weui-agree__text">
                                     我已阅读并同意以上须知
                                 </span>
                             </label>
-                        </div>
+                        </div> -->
                         <div class="flex" style="text-align:center;margin: 10px;">
                             <div class="flex-1">
                                 <button type="button" class="agree_sure" v-on:click="agree_sure">确认</button>

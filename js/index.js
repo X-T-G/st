@@ -4,14 +4,14 @@ $(function(){
     // var assistant_url = "http://192.168.0.155:8036/stassistant";// 测试预约
     // var weixin_url = "http://192.168.0.155:8046/stweixin";// 测试微信
     //线上  
-    var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
-    var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
-    var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
+    // var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
+    // var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
+    // var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
     
      // 测试 tao
-    // var medicine_url = "http://192.168.0.2:8006/stmedicine";// 测试个人信息
-    // var assistant_url = "http://192.168.0.2:8036/stassistant";// 测试预约
-    // var weixin_url = "http://192.168.0.2:8046/stweixin";// 测试微信
+    var medicine_url = "http://192.168.0.2:8006/stmedicine";// 测试个人信息
+    var assistant_url = "http://192.168.0.2:8036/stassistant";// 测试预约
+    var weixin_url = "http://192.168.0.2:8046/stweixin";// 测试微信
     // 公共方法401跳转
     function to_login(data){
         if (data !== undefined && data.code !== undefined){
@@ -1443,7 +1443,6 @@ $(function(){
             },
             created:function(){
                 var that = this;
-                var record_agree = localStorage.getItem('record_agree');
                 $.ajax({//发起请求
                     headers: {
                         'Authorization': 'bearer '+_token
@@ -1459,11 +1458,6 @@ $(function(){
                                 that.show_page = false;
                                 that.datas = data;
                                 that.loading = false;
-                                if(record_agree == 'agree'){//用户同意
-                                    that.show_modal = false;
-                                }else{
-                                    that.show_modal = true; 
-                                }
                                 return;
                             }else{//请求到数据
                                 that.my_balance = data.page.content;
@@ -1472,12 +1466,6 @@ $(function(){
                                 that.has_noinfo = false;
                                 that.loading = false;
                                 that.datas = data;
-                                if(record_agree == 'agree'){//用户同意
-                                    that.show_modal = false;
-                                }else{
-                                    that.show_modal = true; 
-                                }
-
                             }
                         }
                         to_login(data);
@@ -1487,15 +1475,15 @@ $(function(){
             methods:{
                 agree_sure:function(){//同意神庭币使用须知
                     var that = this;
-                    var is_agree = $('.welcome_page').find('.weui-agree__checkbox').prop('checked');
-                    if (is_agree) {//如果同意
+                    // var is_agree = $('.welcome_page').find('.weui-agree__checkbox').prop('checked');
+                    // if (is_agree) {//如果同意
                         that.show_modal = false;
-                    }else{
-                        that.show_modal = true;        
-                    }
+                    // }else{
+                    //     that.show_modal = true;        
+                    // }
                 },
                 agree_cancel:function(){//不同意神庭币使用须知
-                    window.history.go(-1);
+                    this.show_modal = false;
                 },
                 change_page:function(event){//下一页
                     var that =this;
@@ -1538,14 +1526,9 @@ $(function(){
                         });
                     }
                 },
-                record_agree:function(){//记录是否同意神庭币须知
+                modal_page:function(){
                     var that = this;
-                    var is_agree = $('.welcome_page').find('.weui-agree__checkbox').prop('checked');
-                    if (is_agree) {//如果同意
-                        localStorage.setItem("record_agree", 'agree');
-                    }else{
-                        localStorage.removeItem("record_agree");
-                    }
+                    that.show_modal = true;
                 }
             }
         });
