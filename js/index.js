@@ -2096,51 +2096,67 @@ $(function(){
                     if (pay_way.hasClass('icon-weixinzhifu')) {//如果是微信支付
                         var coinPay ='1';
                         var thirdPay = 'WEIXIN_PAY';
+                        var payPassword = "";
                     }else if (pay_way.hasClass('icon-zhifubaozhifu')){//支付宝支付
                         var coinPay ='1';
                         var thirdPay = 'ALI_PAY';
-                    }else if(pay_way.hasClass('icon-yue')){//余额支付
+                        var payPassword = "";
+                    }
+                    if(pay_way.hasClass('icon-yue')){//余额支付
                         var coinPay ='0';
                         var thirdPay = '';
-                    }
-                    $.ajax({//发起请求
-                        headers: {
-                            'Authorization': 'bearer '+_token
-                        },
-                        type: "POST",
-                        url:weixin_url + '/order/pay',
-                        contentType:"application/json",
-                        data: JSON.stringify({orderNum:orderNum,coinPay:coinPay,thirdPay:thirdPay}),
-                        success: function(data){
-                            if (data.code == 0) {
-                                if (pay_way.hasClass('icon-weixinzhifu')) {//如果是微信支付
-                                    var return_url = "https://www.shentingkeji.com/html/pay-success.html";
-                                    var re = encodeURIComponent(return_url);
-                                    var _url = data.str+'&redirect_url='+re;
-                                    window.location.href =_url;
-                                }else if (pay_way.hasClass('icon-zhifubaozhifu')){//支付宝支付
-                                    $('#payfor_order').css('display','none');
-                                    var _content = data.str;
-                                    $('.form_contain').html(_content);
-                                }else if(pay_way.hasClass('icon-yue')){//余额支付
-                                    var return_url = "https://www.shentingkeji.com/html/pay-success.html";
-                                    windows.location.href=return_url;
+                    ////////////////////////////////////////////////////////
+                        // 弹窗
+                        var $androidActionSheet = $('#quit_account2');
+                        var $androidMask = $androidActionSheet.find('.weui-mask2');
+                        $androidActionSheet.fadeIn(200);
+                        $androidMask.css('display','block');
+                        $androidMask.fadeIn(200);
+                        $androidMask.on('click',function () {
+                            $androidMask.css('display','none');
+                            $androidActionSheet.fadeOut(200);
+                        });
+                    }else{
+                        $.ajax({//发起请求
+                            headers: {
+                                'Authorization': 'bearer '+_token
+                            },
+                            type: "POST",
+                            url:weixin_url + '/order/pay',
+                            contentType:"application/json",
+                            data: JSON.stringify({orderNum:orderNum,coinPay:coinPay,thirdPay:thirdPay}),
+                            success: function(data){
+                                if (data.code == 0) {
+                                    if (pay_way.hasClass('icon-weixinzhifu')) {//如果是微信支付
+                                        var return_url = "https://www.shentingkeji.com/html/pay-success.html";
+                                        var re = encodeURIComponent(return_url);
+                                        var _url = data.str+'&redirect_url='+re;
+                                        window.location.href =_url;
+                                    }else if (pay_way.hasClass('icon-zhifubaozhifu')){//支付宝支付
+                                        $('#payfor_order').css('display','none');
+                                        var _content = data.str;
+                                        $('.form_contain').html(_content);
+                                    }else if(pay_way.hasClass('icon-yue')){//余额支付
+                                        var return_url = "https://www.shentingkeji.com/html/pay-success.html";
+                                        windows.location.href=return_url;
+                                    }
+                                }else{
+                                    // 弹窗
+                                    var $androidActionSheet = $('#quit_account');
+                                    var $androidMask = $androidActionSheet.find('.weui-mask2');
+                                    $androidActionSheet.fadeIn(200);
+                                    $androidMask.css('display','block');
+                                    $('.text_info').html(data.message);
+                                    $androidMask.on('click',function () {
+                                        $androidMask.css('display','none');
+                                        $androidActionSheet.fadeOut(200);
+                                    });
                                 }
-                            }else{
-                                // 弹窗
-                                var $androidActionSheet = $('#quit_account');
-                                var $androidMask = $androidActionSheet.find('.weui-mask2');
-                                $androidActionSheet.fadeIn(200);
-                                $androidMask.css('display','block');
-                                $('.text_info').html(data.message);
-                                $androidMask.on('click',function () {
-                                    $androidMask.css('display','none');
-                                    $androidActionSheet.fadeOut(200);
-                                });
+                                to_login(data);
                             }
-                            to_login(data);
-                        }
-                    });
+                        });
+                    }
+                    
                 }
             }
         });
