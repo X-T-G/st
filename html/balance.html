@@ -49,8 +49,11 @@
                 <div class="clearfix fr cli_page">
                     <div class="fl  order_page" v-on:click="change_page" :class=[{'active':(page==current)}]  v-for="page in page.totalPages">{{page}}</div>
                 </div>
-                <div class="send_btn quit_account">
+                <div class="send_btn quit_account" v-if="datas.totalCoin>0">
                     <button>我愿转赠</button>
+                </div>
+                <div class="send_btn"  v-if="datas.totalCoin <= 0">
+                    <button style="color:#fff;background-color:#CDC6C5;">我愿转赠</button>
                 </div>
             </div>
             <!-- 弹窗1 设置交易密码-->

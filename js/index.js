@@ -1664,13 +1664,11 @@ $(function(){
                     }
                 },
                 sure_gift:function(){
-                    var _num = $('.gift_num').val();
-                    var input_length =Number($('.user_messege').val());
-                    var _totalCoin = Number(localStorage.getItem('_totalCoin'));
-                    var can_use = input_length <=_totalCoin;
-                    console.log(_totalCoin);
-                    console.log(can_use);
-                    if (_num > 0 && input_length > 0 ){
+                    var _num = Number($('.gift_num').val());//输入框转赠金额
+                    var input_length =($('.user_messege').val()).length;//搜索框
+                    var _totalCoin = Number(localStorage.getItem('_totalCoin'));//总共的神庭币
+                    var can_use = _num <= _totalCoin;
+                    if (input_length > 0 && can_use && _num>0){
                         // 弹窗
                         $('input.user_pass').val("");
                         if($('.text_info').hasClass('realName')){//若实名
@@ -1687,11 +1685,18 @@ $(function(){
                             $androidMask.css('display','none');
                             $androidActionSheet.fadeOut(200);
                         });
-                    }else if(_num > 0 && input_length == 0){
-                        var input_length = $('.user_messege').val("请输入用户信息！");
-                        $('.user_messege').css('color','#fd5749;');
+                    }else if(input_length <= 0 && can_use && _num>0){
+                        $('#quit_account4 .info_te').html("搜索框内容不能为空！");
+                        var $androidActionSheet = $('#quit_account4');
+                        var $androidMask2 = $androidActionSheet.find('.weui-mask4');
+                        $androidMask2.css('display','block');
+                        $androidActionSheet.fadeIn(200);
+                        $androidMask2.on('click',function () {
+                            $androidMask2.css('display','none');
+                            $androidActionSheet.fadeOut(200);
+                        });
                         return;
-                    }else if(_num == 0 && input_length > 0){
+                    }else if(!can_use ||  _num ==0){
                         return;
                     }
                 },
@@ -1745,9 +1750,6 @@ $(function(){
                 }
             }
         });
-        $('.user_messege').on('focus',function(){
-            $('.user_messege').css('color','#686b6d;;');
-        }),
         $('#my_gift #quit_account2 button.time_cancel').live('click',function(){//取消按钮
             var $androidActionSheet2 = $('#quit_account2');
             var $androidMask2 = $androidActionSheet2.find('.weui-mask2');
@@ -1756,12 +1758,6 @@ $(function(){
         });
         $('#my_gift #quit_account2 button.quit_sure').live('click',function(){//填写密码确认按钮
             var _token = localStorage.getItem('access_token');
-            var that = this;
-            if ($('.gift_menu .text_info').hasClass('realName')) {//已实名
-                var familyName =$('.gift_menu .realName').find('input').val();
-            }else{  
-                var familyName ="";
-            }
             var price = $('.user_info').find('input.gift_num').val();
             var username =  $('.search_contain').find('input.user_messege').val();
             var payPassword = $('.gift_menu').find('input.user_pass').val();
@@ -1773,7 +1769,7 @@ $(function(){
                     type: "POST",
                     url:weixin_url + '/coin/transfer',
                     contentType:"application/json",
-                    data: JSON.stringify({familyName:familyName,username:username,price:price,payPassword:payPassword}),
+                    data: JSON.stringify({username:username,price:price,payPassword:payPassword}),
                     success: function(data){
                         if (data.code == 0) {
                             var $androidActionSheet2 = $('#quit_account2');
@@ -2127,6 +2123,8 @@ $(function(){
                                     var _content = data.str;
                                     $('.form_contain').html(_content);
                                 }else if(pay_way.hasClass('icon-yue')){//余额支付
+                                    var return_url = "https://www.shentingkeji.com/html/pay-success.html";
+                                    windows.location.href=return_url;
                                 }
                             }else{
                                 // 弹窗
