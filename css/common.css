@@ -600,8 +600,8 @@ animation: myfade_in .2s;
 #my_gift .weui-actionsheet div.phone_input,#my_gift .weui-actionsheet div.email_input{border-bottom: 1px solid #e5e5e5;line-height: 30px;text-align: left;padding-left: 10px;}
 #my_gift .weui-toptips_warn{background-color:#1AAD19;height: 40px;line-height: 40px;}
 .login,.regist,.person,#doctor_list,#doctor_detail,#my_serve,#order_detail,#my_coupon{padding-top: 40px;}
-
-
+.pay_for_modal .weui-mask3{height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 1000;transition: none 0.5s ease;display: none;}
+.pay_for_modal .weui-actionsheet__menu button{border: none;color: #f17355;margin: 10px auto 0;background-color: #fff;}
 
 
 

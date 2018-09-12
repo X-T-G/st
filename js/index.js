@@ -2109,10 +2109,9 @@ $(function(){
                     if(pay_way.hasClass('icon-yue')){//余额支付
                         var coinPay ='0';
                         var thirdPay = '';
-                    ////////////////////////////////////////////////////////
                         // 弹窗
-                        var $androidActionSheet = $('#quit_account2');
-                        var $androidMask = $androidActionSheet.find('.weui-mask2');
+                        var $androidActionSheet = $('#quit_account3');
+                        var $androidMask = $androidActionSheet.find('.weui-mask3');
                         $androidActionSheet.fadeIn(200);
                         $androidMask.css('display','block');
                         $androidMask.fadeIn(200);
