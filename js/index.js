@@ -2090,7 +2090,7 @@ $(function(){
                 });
             },
             methods:{
-                surepay:function(){
+                surepay:function(){//点击确认支付
                     var that = this;
                      // ajax请求的方法
                     var datas = that.datas;
@@ -2107,8 +2107,6 @@ $(function(){
                         var payPassword = "";
                     }
                     if(pay_way.hasClass('icon-yue')){//余额支付
-                        var coinPay ='0';
-                        var thirdPay = '';
                         // 弹窗
                         var $androidActionSheet = $('#quit_account3');
                         var $androidMask = $androidActionSheet.find('.weui-mask3');
@@ -2139,9 +2137,6 @@ $(function(){
                                         $('#payfor_order').css('display','none');
                                         var _content = data.str;
                                         $('.form_contain').html(_content);
-                                    }else if(pay_way.hasClass('icon-yue')){//余额支付
-                                        var return_url = "https://www.shentingkeji.com/html/pay-success.html";
-                                        windows.location.href=return_url;
                                     }
                                 }else{
                                     // 弹窗
@@ -2149,7 +2144,7 @@ $(function(){
                                     var $androidMask = $androidActionSheet.find('.weui-mask2');
                                     $androidActionSheet.fadeIn(200);
                                     $androidMask.css('display','block');
-                                    $('.text_info').html(data.message);
+                                    $('#quit_account .text_info').html(data.message);
                                     $androidMask.on('click',function () {
                                         $androidMask.css('display','none');
                                         $androidActionSheet.fadeOut(200);
@@ -2158,9 +2153,58 @@ $(function(){
                                 to_login(data);
                             }
                         });
+                    } 
+                },
+                balance_pay:function(){//余额支付确认
+                    var _content = $('#quit_account3 input').val();
+                    var payPassword = _content;
+                    var that = this;
+                    var coinPay ='0';
+                    var thirdPay = '';
+                    // ajax请求的方法
+                   var datas = that.datas;
+                   var _token = localStorage.getItem('access_token');
+                   var orderNum = datas.orderNum;
+                    if (_content.length == 6) {
+                        $.ajax({//发起请求
+                            headers: {
+                                'Authorization': 'bearer '+_token
+                            },
+                            type: "POST",
+                            url:weixin_url + '/order/pay',
+                            contentType:"application/json",
+                            data: JSON.stringify({orderNum:orderNum,coinPay:coinPay,thirdPay:thirdPay,payPassword:payPassword}),
+                            success: function(data){
+                                if (data.code == 0) {
+                                    var return_url = "./pay-success.html";
+                                    window.location.href=return_url;
+                                }else{
+                                    // 弹窗
+                                    var $androidActionSheet = $('#quit_account');
+                                    var $androidActionSheet3 = $('#quit_account3');
+                                    var $androidMask = $androidActionSheet.find('.weui-mask2');
+                                    var $androidMask3 = $androidActionSheet3.find('.weui-mask3');
+                                    $androidActionSheet.fadeIn(200);
+                                    $androidActionSheet3.fadeOut(200);
+                                    $androidMask.css('display','block');
+                                    $androidMask3.css('display','none');
+                                    $('#quit_account .text_info').html(data.message);
+                                    $androidMask.on('click',function () {
+                                        $androidMask.css('display','none');
+                                        $androidActionSheet.fadeOut(200);
+                                    });
+                                    $androidMask3.on('click',function () {
+                                        $androidMask3.css('display','none');
+                                        $androidActionSheet3.fadeOut(200);
+                                    });
+                                }
+                                to_login(data);
+                            }
+                        });
+                    }else{
+                        return;
                     }
-                    
-                }
+                },
             }
         });
         // 单选按钮
