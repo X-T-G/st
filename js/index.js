@@ -1529,6 +1529,10 @@ $(function(){
                 modal_page:function(){
                     var that = this;
                     that.show_modal = true;
+                },
+                hide_modal:function(){
+                    var that = this;
+                    that.show_modal = false;
                 }
             }
         });

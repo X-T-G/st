@@ -19,7 +19,7 @@
                 <img src="../images/back_gery.png" alt="">
             </span>
         </div>
-        <div id="my_coin">
+        <div id="my_coin" style="padding-top:40px;">
             <div class="m_balance" id="m_balance">
                 <div class="balance_top">
                     <img src="../images/st_coin2.png" alt="">
@@ -75,7 +75,7 @@
             </div>
             <!-- 欢迎页面 -->
             <div class="weui-skin_android welcome_page" :class=[{"dis-no":(show_modal==false)}] id="quit_account">
-                <div class="weui-mask2"  :class=[{"dis-no":(show_modal==false)}]  style="display:block;"></div>
+                <div class="weui-mask2"  :class=[{"dis-no":(show_modal==false)}] v-on:click="hide_modal"  style="display:block;"></div>
                 <div class="weui-actionsheet">
                     <div class="weui-actionsheet__menu" style="text-align:left;max-height: 560px;overflow-y: scroll;">
                         <div class="text_info" style="text-align:center;">神庭币使用须知</div>
