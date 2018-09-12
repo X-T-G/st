@@ -24,6 +24,8 @@ $(function(){
     $('.header').on('click','span',function(){
         window.history.go(-1);
     });
+    // 公共方法：分页
+    
     if($('.lead').size()>0){//导航页面
         $('.lead_button').on('click',function(){
             wx.openLocation({
