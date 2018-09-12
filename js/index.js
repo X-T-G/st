@@ -2097,27 +2097,81 @@ $(function(){
                     var _token = localStorage.getItem('access_token');
                     var orderNum = datas.orderNum;
                     var pay_way = $("input[type='checkbox']:checked").parents('.each_row').find('.thumb span:first-child');
-                    if (pay_way.hasClass('icon-weixinzhifu')) {//如果是微信支付
-                        var coinPay ='1';
-                        var thirdPay = 'WEIXIN_PAY';
+                    var is_joint = pay_way.length;
+                    if (is_joint == 1) {//单种支付
+                        if (pay_way.hasClass('icon-weixinzhifu')) {//如果是微信支付
+                            var coinPay ='1';
+                            var thirdPay = 'WEIXIN_PAY';
+                        }else if (pay_way.hasClass('icon-zhifubaozhifu')){//支付宝支付
+                            var coinPay ='1';
+                            var thirdPay = 'ALI_PAY';
+                        }
+                        if(pay_way.hasClass('icon-yue')){//余额支付
+                            // 弹窗
+                            var $androidActionSheet = $('#quit_account3');
+                            var $androidMask = $androidActionSheet.find('.weui-mask3');
+                            $androidActionSheet.fadeIn(200);
+                            $androidMask.css('display','block');
+                            $androidMask.fadeIn(200);
+                            $androidMask.on('click',function () {
+                                $androidMask.css('display','none');
+                                $androidActionSheet.fadeOut(200);
+                            });
+                        }else{
+                            $.ajax({//发起请求
+                                headers: {
+                                    'Authorization': 'bearer '+_token
+                                },
+                                type: "POST",
+                                url:weixin_url + '/order/pay',
+                                contentType:"application/json",
+                                data: JSON.stringify({orderNum:orderNum,coinPay:coinPay,thirdPay:thirdPay}),
+                                success: function(data){
+                                    if (data.code == 0) {
+                                        if (pay_way.hasClass('icon-weixinzhifu')) {//如果是微信支付
+                                            var return_url = "https://www.shentingkeji.com/html/pay-success.html";
+                                            var re = encodeURIComponent(return_url);
+                                            var _url = data.str+'&redirect_url='+re;
+                                            window.location.href =_url;
+                                        }else if (pay_way.hasClass('icon-zhifubaozhifu')){//支付宝支付
+                                            $('#payfor_order').css('display','none');
+                                            var _content = data.str;
+                                            $('.form_contain').html(_content);
+                                        }
+                                    }else{
+                                        // 弹窗
+                                        var $androidActionSheet = $('#quit_account');
+                                        var $androidMask = $androidActionSheet.find('.weui-mask2');
+                                        $androidActionSheet.fadeIn(200);
+                                        $androidMask.css('display','block');
+                                        $('#quit_account .text_info').html(data.message);
+                                        $androidMask.on('click',function () {
+                                            $androidMask.css('display','none');
+                                            $androidActionSheet.fadeOut(200);
+                                        });
+                                    }
+                                    to_login(data);
+                                }
+                            });
+                        } 
+                    }else if(is_joint == 2){//联合支付
+                        var thirdPay = JSON.stringify(pay_way[0]);
+                        var is_ali = thirdPay.indexOf('icon-zhifubaozhifu');
+                        if (is_ali ==-1) {//微信
+                            var thirdPay = 'WEIXIN_PAY';
+                            console.log(1);
+                        }else if(is_wei !==-1){//支付宝
+                            var thirdPay = 'ALI_PAY';
+                            console.log(2);                        
+                        }
                         var payPassword = "";
-                    }else if (pay_way.hasClass('icon-zhifubaozhifu')){//支付宝支付
-                        var coinPay ='1';
-                        var thirdPay = 'ALI_PAY';
-                        var payPassword = "";
-                    }
-                    if(pay_way.hasClass('icon-yue')){//余额支付
-                        // 弹窗
-                        var $androidActionSheet = $('#quit_account3');
-                        var $androidMask = $androidActionSheet.find('.weui-mask3');
-                        $androidActionSheet.fadeIn(200);
-                        $androidMask.css('display','block');
-                        $androidMask.fadeIn(200);
-                        $androidMask.on('click',function () {
-                            $androidMask.css('display','none');
-                            $androidActionSheet.fadeOut(200);
-                        });
-                    }else{
+                        var that = this;
+                        var coinPay ='0';
+                        var thirdPay = '';
+                        // ajax请求的方法
+                       var datas = that.datas;
+                       var _token = localStorage.getItem('access_token');
+                       var orderNum = datas.orderNum;
                         $.ajax({//发起请求
                             headers: {
                                 'Authorization': 'bearer '+_token
@@ -2125,35 +2179,38 @@ $(function(){
                             type: "POST",
                             url:weixin_url + '/order/pay',
                             contentType:"application/json",
-                            data: JSON.stringify({orderNum:orderNum,coinPay:coinPay,thirdPay:thirdPay}),
+                            data: JSON.stringify({orderNum:orderNum,coinPay:coinPay,thirdPay:thirdPay,payPassword:payPassword}),
                             success: function(data){
                                 if (data.code == 0) {
-                                    if (pay_way.hasClass('icon-weixinzhifu')) {//如果是微信支付
-                                        var return_url = "https://www.shentingkeji.com/html/pay-success.html";
-                                        var re = encodeURIComponent(return_url);
-                                        var _url = data.str+'&redirect_url='+re;
-                                        window.location.href =_url;
-                                    }else if (pay_way.hasClass('icon-zhifubaozhifu')){//支付宝支付
-                                        $('#payfor_order').css('display','none');
-                                        var _content = data.str;
-                                        $('.form_contain').html(_content);
-                                    }
+                                    var return_url = "./pay-success.html";
+                                    window.location.href=return_url;
                                 }else{
                                     // 弹窗
                                     var $androidActionSheet = $('#quit_account');
+                                    var $androidActionSheet3 = $('#quit_account3');
                                     var $androidMask = $androidActionSheet.find('.weui-mask2');
+                                    var $androidMask3 = $androidActionSheet3.find('.weui-mask3');
                                     $androidActionSheet.fadeIn(200);
+                                    $androidActionSheet3.fadeOut(200);
                                     $androidMask.css('display','block');
+                                    $androidMask3.css('display','none');
                                     $('#quit_account .text_info').html(data.message);
                                     $androidMask.on('click',function () {
                                         $androidMask.css('display','none');
                                         $androidActionSheet.fadeOut(200);
                                     });
+                                    $androidMask3.on('click',function () {
+                                        $androidMask3.css('display','none');
+                                        $androidActionSheet3.fadeOut(200);
+                                    });
                                 }
                                 to_login(data);
                             }
                         });
-                    } 
+                    }else{//未选中
+                        return;
+                    }
+                 
                 },
                 balance_pay:function(){//余额支付确认
                     var _content = $('#quit_account3 input').val();
@@ -2209,9 +2266,30 @@ $(function(){
         });
         // 单选按钮
         $('.payfor_order .each_row').live('click',function(){
+            var _totalCoin = Number($('.thumb  span i').html());//总共的神庭币
+            var datas = JSON.parse(localStorage.getItem('order_info'));
+            var totalPrice = datas.totalPrice;
             var flag = $(this).find("input[type='checkbox']").is(':checked');
-            $("input[type='checkbox']").prop("checked",false);
             $(this).find("input[type='checkbox']").prop("checked",!flag);
+            var pay_type = $(this).find('.thumb span:first-child');
+            if (totalPrice<=_totalCoin){//神庭币够用，只能单选
+                $("input[type='checkbox']").prop("checked",false);
+            }else{//神庭币不够用
+                $(this).find("input[type='checkbox']").prop("checked",!flag);
+                if (pay_type.hasClass('icon-weixinzhifu')) {//微信支付
+                    var ali_pay = $('.icon-zhifubaozhifu').parents('.each_row').find('input').is(':checked');
+                    if(ali_pay){//若支付宝已经被选定
+                        $(this).find("input[type='checkbox']").prop("checked",false);
+                    }
+                }else if(pay_type.hasClass('icon-zhifubaozhifu')){//支付宝支付
+                    var wei_pay = $('.icon-weixinzhifu').parents('.each_row').find('input').is(':checked');
+                    if(wei_pay){//若微信已经被选定
+                        $(this).find("input[type='checkbox']").prop("checked",false);
+                    }
+                }else if(pay_type.hasClass('icon-yue')){//余额支付
+                    return;
+                }
+            }
         })
         $('#quit_account button').live('click',function(e){//弹窗
             // 弹窗
