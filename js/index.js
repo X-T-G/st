@@ -2159,7 +2159,7 @@ $(function(){
                         var is_ali = thirdPay.indexOf('icon-zhifubaozhifu');
                         if (is_ali ==-1) {//微信
                             var thirdPay = 'WEIXIN_PAY';
-                        }else if(is_wei !==-1){//支付宝
+                        }else if(is_ali !==-1){//支付宝
                             var thirdPay = 'ALI_PAY';
                         }
                         var payPassword = "";
@@ -2179,8 +2179,16 @@ $(function(){
                             data: JSON.stringify({orderNum:orderNum,coinPay:coinPay,thirdPay:thirdPay,payPassword:payPassword}),
                             success: function(data){
                                 if (data.code == 0) {
-                                    var return_url = "./pay-success.html";
-                                    window.location.href=return_url;
+                                    if (is_ali ==-1) {//微信
+                                        var return_url = "https://www.shentingkeji.com/html/pay-success.html";
+                                        var re = encodeURIComponent(return_url);
+                                        var _url = data.str+'&redirect_url='+re;
+                                        window.location.href =_url;
+                                    }else if(is_ali !==-1){//支付宝
+                                        $('#payfor_order').css('display','none');
+                                        var _content = data.str;
+                                        $('.form_contain').html(_content);
+                                    }
                                 }else{
                                     // 弹窗
                                     var $androidActionSheet = $('#quit_account');
@@ -2258,12 +2266,13 @@ $(function(){
             var _totalCoin = Number($('.thumb  span i').html());//总共的神庭币
             var datas = JSON.parse(localStorage.getItem('order_info'));
             var totalPrice = datas.totalPrice;
-            var flag = $(this).find("input[type='checkbox']").is(':checked');
-            $(this).find("input[type='checkbox']").prop("checked",!flag);
             var pay_type = $(this).find('.thumb span:first-child');
-            if (totalPrice<=_totalCoin){//神庭币够用，只能单选
+            if (totalPrice<=_totalCoin && _totalCoin>0){//神庭币够用，只能单选
                 $("input[type='checkbox']").prop("checked",false);
-            }else{//神庭币不够用
+                var flag = $(this).find("input[type='checkbox']").is(':checked');
+                $(this).find("input[type='checkbox']").prop("checked",!flag);
+            }else if (totalPrice > _totalCoin && _totalCoin>0){//神庭币不够用
+                var flag = $(this).find("input[type='checkbox']").is(':checked');
                 $(this).find("input[type='checkbox']").prop("checked",!flag);
                 if (pay_type.hasClass('icon-weixinzhifu')) {//微信支付
                     var ali_pay = $('.icon-zhifubaozhifu').parents('.each_row').find('input').is(':checked');
@@ -2278,6 +2287,8 @@ $(function(){
                 }else if(pay_type.hasClass('icon-yue')){//余额支付
                     return;
                 }
+            }else{
+                return;
             }
         })
         $('#quit_account button').live('click',function(e){//弹窗
