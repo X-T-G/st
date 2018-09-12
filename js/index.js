@@ -25,7 +25,7 @@ $(function(){
         window.history.go(-1);
     });
     // 公共方法：分页
-    
+
     if($('.lead').size()>0){//导航页面
         $('.lead_button').on('click',function(){
             wx.openLocation({
@@ -2131,7 +2131,7 @@ $(function(){
                                 success: function(data){
                                     if (data.code == 0) {
                                         if (pay_way.hasClass('icon-weixinzhifu')) {//如果是微信支付
-                                            var return_url = "https://www.shentingkeji.com/html/pay-success.html";
+                                            var return_url = "http://www.shentingkeji.com/html/pay-success.html";
                                             var re = encodeURIComponent(return_url);
                                             var _url = data.str+'&redirect_url='+re;
                                             window.location.href =_url;
@@ -2182,7 +2182,7 @@ $(function(){
                             success: function(data){
                                 if (data.code == 0) {
                                     if (is_ali ==-1) {//微信
-                                        var return_url = "https://www.shentingkeji.com/html/pay-success.html";
+                                        var return_url = "http://www.shentingkeji.com/html/pay-success.html";
                                         var re = encodeURIComponent(return_url);
                                         var _url = data.str+'&redirect_url='+re;
                                         window.location.href =_url;
