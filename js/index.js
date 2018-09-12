@@ -2159,15 +2159,12 @@ $(function(){
                         var is_ali = thirdPay.indexOf('icon-zhifubaozhifu');
                         if (is_ali ==-1) {//微信
                             var thirdPay = 'WEIXIN_PAY';
-                            console.log(1);
                         }else if(is_wei !==-1){//支付宝
                             var thirdPay = 'ALI_PAY';
-                            console.log(2);                        
                         }
                         var payPassword = "";
                         var that = this;
                         var coinPay ='0';
-                        var thirdPay = '';
                         // ajax请求的方法
                        var datas = that.datas;
                        var _token = localStorage.getItem('access_token');
@@ -2187,21 +2184,13 @@ $(function(){
                                 }else{
                                     // 弹窗
                                     var $androidActionSheet = $('#quit_account');
-                                    var $androidActionSheet3 = $('#quit_account3');
                                     var $androidMask = $androidActionSheet.find('.weui-mask2');
-                                    var $androidMask3 = $androidActionSheet3.find('.weui-mask3');
                                     $androidActionSheet.fadeIn(200);
-                                    $androidActionSheet3.fadeOut(200);
                                     $androidMask.css('display','block');
-                                    $androidMask3.css('display','none');
                                     $('#quit_account .text_info').html(data.message);
                                     $androidMask.on('click',function () {
                                         $androidMask.css('display','none');
                                         $androidActionSheet.fadeOut(200);
-                                    });
-                                    $androidMask3.on('click',function () {
-                                        $androidMask3.css('display','none');
-                                        $androidActionSheet3.fadeOut(200);
                                     });
                                 }
                                 to_login(data);
