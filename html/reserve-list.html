@@ -21,42 +21,44 @@
         </div>
         <div id = "order_detail">
             <div class="order_detail" :class=[{"dis-no":(show_page==false)}]>
-                <div class="each_reserve clearfix" v-for="my_order in my_orders">
-                    <div class="weui-cell">
-                        <div class="weui-cell__bd">
-                            <p>医生：<span>{{my_order.doctorEntity.name}}</span></p>
+                <div style="max-height:550px;overflow-y:scroll;">
+                    <div class="each_reserve clearfix" v-for="my_order in my_orders">
+                        <div class="weui-cell">
+                            <div class="weui-cell__bd">
+                                <p>医生：<span>{{my_order.doctorEntity.name}}</span></p>
+                            </div>
+                            <div class="weui-cell__ft">时间: <span>{{my_order.appointmentTime.split("T")[0]+' '+my_order.appointmentTime.split("T")[1]}}</span> </div>
                         </div>
-                        <div class="weui-cell__ft">时间: <span>{{my_order.appointmentTime.split("T")[0]+' '+my_order.appointmentTime.split("T")[1]}}</span> </div>
-                    </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__bd">
-                            <p>姓名：<span>{{my_order.visitName}}</span></p>
+                        <div class="weui-cell">
+                            <div class="weui-cell__bd">
+                                <p>姓名：<span>{{my_order.visitName}}</span></p>
+                            </div>
+                            <div class="weui-cell__ft">
+                                <span>手机:</span> 
+                                <span>{{my_order.phone}}</span>
+                            </div>
                         </div>
-                        <div class="weui-cell__ft">
-                            <span>手机:</span> 
-                            <span>{{my_order.phone}}</span>
+                        <div class="clearfix" v-if="my_order.status.dictId=='appointment_status_accept'">
+                            <button class="re_cancel" v-on:click="cancel_reserve(my_order)">取消预约</button>
                         </div>
-                    </div>
-                    <div class="clearfix" v-if="my_order.status.dictId=='appointment_status_accept'">
-                        <button class="re_cancel" v-on:click="cancel_reserve(my_order)">取消预约</button>
-                    </div>
-                    <div class="clearfix cance_order" v-else-if="my_order.status.dictId=='appointment_status_cancel'">
-                        已取消
-                    </div>
-                    <div class="clearfix cance_order" v-else-if="my_order.status.dictId=='appointment_status_finish'">
-                        已接待
-                    </div>
-                    <div class="clearfix cance_order" v-else-if="my_order.status.dictId=='appointment_status_accepting'">
-                        接待中
-                    </div>
-                    <div class="clearfix cance_order" v-else-if="my_order.status.dictId=='appointment_status_close'">
-                        已关闭
-                    </div>
-                    <div class="clearfix cance_order" v-else-if="my_order.status.dictId=='appointment_status_makePrescription'">
-                        已开方
-                    </div>
-                    <div class="clearfix cance_order" v-else-if="my_order.status.dictId=='appointment_status_cached'">
-                        医助已保存
+                        <div class="clearfix cance_order" v-else-if="my_order.status.dictId=='appointment_status_cancel'">
+                            已取消
+                        </div>
+                        <div class="clearfix cance_order" v-else-if="my_order.status.dictId=='appointment_status_finish'">
+                            已接待
+                        </div>
+                        <div class="clearfix cance_order" v-else-if="my_order.status.dictId=='appointment_status_accepting'">
+                            接待中
+                        </div>
+                        <div class="clearfix cance_order" v-else-if="my_order.status.dictId=='appointment_status_close'">
+                            已关闭
+                        </div>
+                        <div class="clearfix cance_order" v-else-if="my_order.status.dictId=='appointment_status_makePrescription'">
+                            已开方
+                        </div>
+                        <div class="clearfix cance_order" v-else-if="my_order.status.dictId=='appointment_status_cached'">
+                            医助已保存
+                        </div>
                     </div>
                 </div>
                 <!-- 分页 -->
