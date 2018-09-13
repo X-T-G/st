@@ -1211,9 +1211,9 @@ $(function(){
             window.location.href='./login.html';
         }
     }else if($('.msg_success').size()>0){//预约成功页面
-        $('.go_last').on('click',function(){
-            window.history.go(-1);
-        });
+        // $('.go_last').on('click',function(){
+        //     window.history.go(-1);
+        // });
 
     }else if($('.order_detail').size()>0){
         var _token = localStorage.getItem('access_token');
@@ -2100,6 +2100,10 @@ $(function(){
                     var orderNum = datas.orderNum;
                     var pay_way = $("input[type='checkbox']:checked").parents('.each_row').find('.thumb span:first-child');
                     var is_joint = pay_way.length;
+                    var _totalCoin = Number($('.thumb  span i').html());//总共的神庭币
+                    var datas = JSON.parse(localStorage.getItem('order_info'));
+                    var totalPrice = datas.totalPrice;
+                    
                     if (is_joint == 1) {//单种支付
                         if (pay_way.hasClass('icon-weixinzhifu')) {//如果是微信支付
                             var coinPay ='1';
@@ -2109,16 +2113,29 @@ $(function(){
                             var thirdPay = 'ALI_PAY';
                         }
                         if(pay_way.hasClass('icon-yue')){//余额支付
-                            // 弹窗
-                            var $androidActionSheet = $('#quit_account3');
-                            var $androidMask = $androidActionSheet.find('.weui-mask3');
-                            $androidActionSheet.fadeIn(200);
-                            $androidMask.css('display','block');
-                            $androidMask.fadeIn(200);
-                            $androidMask.on('click',function () {
-                                $androidMask.css('display','none');
-                                $androidActionSheet.fadeOut(200);
-                            });
+                            if (totalPrice<=_totalCoin) {//神庭币够支付
+                                // 弹窗
+                                var $androidActionSheet = $('#quit_account3');
+                                var $androidMask = $androidActionSheet.find('.weui-mask3');
+                                $androidActionSheet.fadeIn(200);
+                                $androidMask.css('display','block');
+                                $androidMask.fadeIn(200);
+                                $androidMask.on('click',function () {
+                                    $androidMask.css('display','none');
+                                    $androidActionSheet.fadeOut(200);
+                                });
+                            }else{
+                                 // 弹窗
+                                 var $androidActionSheet = $('#quit_account');
+                                 var $androidMask = $androidActionSheet.find('.weui-mask2');
+                                 $androidActionSheet.fadeIn(200);
+                                 $androidMask.css('display','block');
+                                 $('#quit_account .text_info').html('余额不足以单独支付订单，请选择支付宝或者微信支付剩余金额！');
+                                 $androidMask.on('click',function () {
+                                     $androidMask.css('display','none');
+                                     $androidActionSheet.fadeOut(200);
+                                 });
+                            }
                         }else{
                             $.ajax({//发起请求
                                 headers: {
@@ -2131,7 +2148,7 @@ $(function(){
                                 success: function(data){
                                     if (data.code == 0) {
                                         if (pay_way.hasClass('icon-weixinzhifu')) {//如果是微信支付
-                                            var return_url = "http://www.shentingkeji.com/html/pay-success.html";
+                                            var return_url = "https://wx.shentingkeji.com/html/pay-success.html";
                                             var re = encodeURIComponent(return_url);
                                             var _url = data.str+'&redirect_url='+re;
                                             window.location.href =_url;
@@ -2182,7 +2199,7 @@ $(function(){
                             success: function(data){
                                 if (data.code == 0) {
                                     if (is_ali ==-1) {//微信
-                                        var return_url = "http://www.shentingkeji.com/html/pay-success.html";
+                                        var return_url = "https://wx.shentingkeji.com/html/pay-success.html";
                                         var re = encodeURIComponent(return_url);
                                         var _url = data.str+'&redirect_url='+re;
                                         window.location.href =_url;
@@ -2308,6 +2325,14 @@ $(function(){
             $androidMask.css('display','none');
             $androidActionSheet.fadeOut(200);
         });
+        // 弹窗消失
+        $('#quit_account3 .time_cancel').live('click',function(){
+             // 弹窗
+             var $androidActionSheet = $('#quit_account3');
+             var $androidMask = $androidActionSheet.find('.weui-mask3');
+             $androidMask.css('display','none');
+             $androidActionSheet.fadeOut(200);
+        })
     }else if($('.forget-pay').size()>0){//找回支付密码和登录密码/修改登录密码和支付密码
             // 页面请求发ajax
             var _token = localStorage.getItem('access_token');
