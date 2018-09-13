@@ -2395,87 +2395,166 @@ $(function(){
         });
         // 获取验证码
         $('.forget-pay button.get_code_btn.hasinput').live('click',function(){//此处用live因为class为后面动态生成，所以on('click')无效
-            
             var _token = localStorage.getItem('access_token');
             if($('.re_phone').hasClass('active')) {//手机找回
-                $.ajax({//手机注册请求
-                    headers: {
-                        'Authorization': 'bearer '+_token
-                    },
-                    type: "GET",
-                    url: weixin_url +'/user/forget-pay-password/sms-code',
-                    dataType: "json",
-                    success: function(data){
-                        if(data.code==0){
-                            clearTimeout(set_time);
-                            $('.get_code .remain_time').html('60');//初始化
-                            $('.get_code_btn').addClass('dis-no'); 
-                            $('.get_code').removeClass('dis-no'); 
-                            var _Time = 60;
-                            function _time(){
-                                if (_Time>0){
-                                    set_time = setTimeout(function(){
-                                        _Time--;
-                                        var remain_time = _Time;
-                                        $('.get_code .remain_time').html(remain_time);
-                                        _time();
-                                    },1000);
-                                }else{
-                                    $('button.get_code_btn.hasinput').removeClass('dis-no');  
-                                    $('.get_code').addClass('dis-no');
+                if($('#forget-login').size()>0){//忘记登录密码
+                    var _phone = $('.phone_input').val();
+                    $.ajax({//手机注册请求
+                        type: "GET",
+                        url: medicine_url +'/v1.0.0/signup/forget-password/getSmsCode/'+_phone,
+                        dataType: "json",
+                        success: function(data){
+                            if(data.code==0){
+                                clearTimeout(set_time);
+                                $('.get_code .remain_time').html('60');//初始化
+                                $('.get_code_btn').addClass('dis-no'); 
+                                $('.get_code').removeClass('dis-no'); 
+                                var _Time = 60;
+                                function _time(){
+                                    if (_Time>0){
+                                        set_time = setTimeout(function(){
+                                            _Time--;
+                                            var remain_time = _Time;
+                                            $('.get_code .remain_time').html(remain_time);
+                                            _time();
+                                        },1000);
+                                    }else{
+                                        $('button.get_code_btn.hasinput').removeClass('dis-no');  
+                                        $('.get_code').addClass('dis-no');
+                                    }
                                 }
+                                _time();
+                            }else{
+                                $('.error_info').html(data.message);
+                                setTimeout(function(){
+                                    $('.error_info').html('');
+                                    // to_login(data);
+                                }, 5000);
+                                return;
                             }
-                            _time();
-                        }else{
-                            $('.error_info').html(data.message);
-                            setTimeout(function(){
-                                $('.error_info').html('');
-                                to_login(data);
-                            }, 5000);
-                            return;
                         }
-                    }
-                });
+                    });
+                }else if ($('#forget-pay').size()>0){//忘记支付密码
+                    $.ajax({//手机注册请求
+                        headers: {
+                            'Authorization': 'bearer '+_token
+                        },
+                        type: "GET",
+                        url: weixin_url +'/user/forget-pay-password/sms-code',
+                        dataType: "json",
+                        success: function(data){
+                            if(data.code==0){
+                                clearTimeout(set_time);
+                                $('.get_code .remain_time').html('60');//初始化
+                                $('.get_code_btn').addClass('dis-no'); 
+                                $('.get_code').removeClass('dis-no'); 
+                                var _Time = 60;
+                                function _time(){
+                                    if (_Time>0){
+                                        set_time = setTimeout(function(){
+                                            _Time--;
+                                            var remain_time = _Time;
+                                            $('.get_code .remain_time').html(remain_time);
+                                            _time();
+                                        },1000);
+                                    }else{
+                                        $('button.get_code_btn.hasinput').removeClass('dis-no');  
+                                        $('.get_code').addClass('dis-no');
+                                    }
+                                }
+                                _time();
+                            }else{
+                                $('.error_info').html(data.message);
+                                setTimeout(function(){
+                                    $('.error_info').html('');
+                                    to_login(data);
+                                }, 5000);
+                                return;
+                            }
+                        }
+                    });
+                }
+                
             }else if($('.re_email').hasClass('active')){//邮箱找回
-                $.ajax({//邮箱注册请求
-                    headers: {
-                        'Authorization': 'bearer '+_token
-                    },
-                    type: "GET",
-                    url: weixin_url +'/user/forget-pay-password/email-code',
-                    dataType: "json",
-                    success: function(data){
-                        if(data.code !== 0){//事件处理
-                            $('.error_info').html(data.message);
-                            setTimeout(function(){
-                                $('.error_info').html('');
-                                to_login(data);
-                            }, 5000);
-                            return;
-                        }else{
-                            clearTimeout(set_time);
-                            $('.get_code .remain_time').html('60');//初始化
-                            $('.get_code_btn').addClass('dis-no'); 
-                            $('.get_code').removeClass('dis-no'); 
-                            var _Time = 60;
-                        
-                            function _time(){
-                                if (_Time>0){
-                                    set_time = setTimeout(function(){
-                                        _Time--;
-                                        var remain_time = _Time;
-                                        $('.get_code .remain_time').html(remain_time);
-                                        _time();
-                                    },1000);
-                                }else{
-                                    $('button.get_code_btn.hasinput').removeClass('dis-no');  
-                                    $('.get_code').addClass('dis-no');
+                if($('#forget-login').size()>0){//忘记登录密码
+                    var _email = $('.email_input').val();
+                    $.ajax({//邮箱注册请求
+                        type: "GET",
+                        url: medicine_url +'/v1.0.0/signup/forget-password/getSmsCode/'+_email,
+                        dataType: "json",
+                        success: function(data){
+                            if(data.code !== 0){//事件处理
+                                $('.error_info').html(data.message);
+                                setTimeout(function(){
+                                    $('.error_info').html('');
+                                    to_login(data);
+                                }, 5000);
+                                return;
+                            }else{
+                                clearTimeout(set_time);
+                                $('.get_code .remain_time').html('60');//初始化
+                                $('.get_code_btn').addClass('dis-no'); 
+                                $('.get_code').removeClass('dis-no'); 
+                                var _Time = 60;
+                            
+                                function _time(){
+                                    if (_Time>0){
+                                        set_time = setTimeout(function(){
+                                            _Time--;
+                                            var remain_time = _Time;
+                                            $('.get_code .remain_time').html(remain_time);
+                                            _time();
+                                        },1000);
+                                    }else{
+                                        $('button.get_code_btn.hasinput').removeClass('dis-no');  
+                                        $('.get_code').addClass('dis-no');
+                                    }
                                 }
+                                _time();
                             }
-                            _time();
                         }
-                    }
-                }); 
+                    }); 
+                }else if ($('#forget-pay').size()>0){//忘记支付密码
+                    $.ajax({//邮箱注册请求
+                        headers: {
+                            'Authorization': 'bearer '+_token
+                        },
+                        type: "GET",
+                        url: weixin_url +'/user/forget-pay-password/email-code',
+                        dataType: "json",
+                        success: function(data){
+                            if(data.code !== 0){//事件处理
+                                $('.error_info').html(data.message);
+                                setTimeout(function(){
+                                    $('.error_info').html('');
+                                    to_login(data);
+                                }, 5000);
+                                return;
+                            }else{
+                                clearTimeout(set_time);
+                                $('.get_code .remain_time').html('60');//初始化
+                                $('.get_code_btn').addClass('dis-no'); 
+                                $('.get_code').removeClass('dis-no'); 
+                                var _Time = 60;
+                            
+                                function _time(){
+                                    if (_Time>0){
+                                        set_time = setTimeout(function(){
+                                            _Time--;
+                                            var remain_time = _Time;
+                                            $('.get_code .remain_time').html(remain_time);
+                                            _time();
+                                        },1000);
+                                    }else{
+                                        $('button.get_code_btn.hasinput').removeClass('dis-no');  
+                                        $('.get_code').addClass('dis-no');
+                                    }
+                                }
+                                _time();
+                            }
+                        }
+                    }); 
+                }
             }
         });
         $('.forget-pay .forget_menu .quit_sure').live('click',function(){//忘记密码确认
@@ -2484,55 +2563,106 @@ $(function(){
             var newPayPassword = $('.pass_name').val();
             if (code.length>0 && newPayPassword.length>0) {
                 if($('.re_phone').hasClass('active')) {//手机找回
-                    $.ajax({//发起请求
-                        headers: {
-                            'Authorization': 'bearer '+_token
-                        },
-                        type: "POST",
-                        url:weixin_url + '/user/forget-pay-password/phone/reset',
-                        contentType:"application/json",
-                        data: JSON.stringify({code:code,newPayPassword:newPayPassword}),
-                        success: function(data){
-                            if (data.code == 0) {
-                                $('#look_info').css('display','block');
-                                setTimeout(function(){
-                                    $('#look_info').css('display','none');
-                                    window.location.href="../html/pass-manage.html";
-                                },2000);
-                            }else{
-                                $('.error_info').html(data.message);
-                                setTimeout(function(){
-                                    $('.error_info').html('');
-                                }, 5000); 
+                    if($('#forget-login').size()>0){//忘记登录密码
+                        var _phone = $('.phone_input').val();
+                        $.ajax({//发起请求
+                            type: "PUT",
+                            url:medicine_url + '/v1.0.0/signup/forget-password',
+                            contentType:"application/json",
+                            data: JSON.stringify({phone:_phone,smsCode:code,newPassword:newPayPassword}),
+                            success: function(data){
+                                if (data.code == 0) {
+                                    $('#look_info').css('display','block');
+                                    setTimeout(function(){
+                                        $('#look_info').css('display','none');
+                                        window.location.href="../html/login.html";
+                                    },2000);
+                                }else{
+                                    $('.error_info').html(data.message);
+                                    setTimeout(function(){
+                                        $('.error_info').html('');
+                                    }, 5000); 
+                                }
+                                to_login(data);
                             }
-                            to_login(data);
-                        }
-                    });
+                        });
+                    }else if ($('#forget-pay').size()>0){//忘记支付密码
+                        $.ajax({//发起请求
+                            headers: {
+                                'Authorization': 'bearer '+_token
+                            },
+                            type: "POST",
+                            url:weixin_url + '/user/forget-pay-password/phone/reset',
+                            contentType:"application/json",
+                            data: JSON.stringify({code:code,newPayPassword:newPayPassword}),
+                            success: function(data){
+                                if (data.code == 0) {
+                                    $('#look_info').css('display','block');
+                                    setTimeout(function(){
+                                        $('#look_info').css('display','none');
+                                        window.location.href="../html/pass-manage.html";
+                                    },2000);
+                                }else{
+                                    $('.error_info').html(data.message);
+                                    setTimeout(function(){
+                                        $('.error_info').html('');
+                                    }, 5000); 
+                                }
+                                to_login(data);
+                            }
+                        });
+                    }  
+                   
                 }else if($('.re_email').hasClass('active')){//邮箱找回
-                    $.ajax({//发起请求
-                        headers: {
-                            'Authorization': 'bearer '+_token
-                        },
-                        type: "POST",
-                        url:weixin_url + '/user/forget-pay-password/email/reset',
-                        contentType:"application/json",
-                        data: JSON.stringify({code:code,newPayPassword:newPayPassword}),
-                        success: function(data){
-                            if (data.code == 0) {
-                                $('#look_info').css('display','block');
-                                setTimeout(function(){
-                                    $('#look_info').css('display','none');
-                                    window.location.href="../html/pass-manage.html";
-                                },2000);
-                            }else{
-                                $('.error_info').html(data.message);
-                                setTimeout(function(){
-                                    $('.error_info').html('');
-                                }, 5000);
+                    if($('#forget-login').size()>0){//忘记登录密码
+                        var _email = $('.email_input').val();
+                        $.ajax({//发起请求
+                            type: "PUT",
+                            url:medicine_url + '/v1.0.0/signup/forget-password',
+                            contentType:"application/json",
+                            data: JSON.stringify({phone:_email,smsCode:code,newPassword:newPayPassword}),
+                            success: function(data){
+                                if (data.code == 0) {
+                                    $('#look_info').css('display','block');
+                                    setTimeout(function(){
+                                        $('#look_info').css('display','none');
+                                        window.location.href="../html/login.html";
+                                    },2000);
+                                }else{
+                                    $('.error_info').html(data.message);
+                                    setTimeout(function(){
+                                        $('.error_info').html('');
+                                    }, 5000); 
+                                }
+                                to_login(data);
                             }
-                            to_login(data);
-                        }
-                    });
+                        });
+                    }else if ($('#forget-pay').size()>0){//忘记支付密码
+                        $.ajax({//发起请求
+                            headers: {
+                                'Authorization': 'bearer '+_token
+                            },
+                            type: "POST",
+                            url:weixin_url + '/user/forget-pay-password/email/reset',
+                            contentType:"application/json",
+                            data: JSON.stringify({code:code,newPayPassword:newPayPassword}),
+                            success: function(data){
+                                if (data.code == 0) {
+                                    $('#look_info').css('display','block');
+                                    setTimeout(function(){
+                                        $('#look_info').css('display','none');
+                                        window.location.href="../html/pass-manage.html";
+                                    },2000);
+                                }else{
+                                    $('.error_info').html(data.message);
+                                    setTimeout(function(){
+                                        $('.error_info').html('');
+                                    }, 5000);
+                                }
+                                to_login(data);
+                            }
+                        });
+                    } 
                 }
             }
         });

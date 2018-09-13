@@ -617,12 +617,12 @@ animation: myfade_in .2s;
 .forget-pay .forget_menu div.phone_input,.forget-pay .forget_menu div.email_input {border-bottom: 1px solid #e5e5e5;line-height: 30px;text-align: left;padding-left: 10px;}
 .forget-pay .forget_menu p.error_info {color: #fd5749;height: 24px;line-height: 24px;text-align: left;padding-left: 30px;}
 .forget-pay .forget_menu.weui-actionsheet__menu input{text-align: left;height: 30px;background-color: #fff;line-height: 30px;font-size: 14px;padding-left: 6px;margin-bottom: 10px;-webkit-appearance: none;border: none;border-bottom: 1px solid #e5e5e5;outline: none;box-shadow: none;}
-.forget-pay .forget_menu .input_row .flex-1 .get_code_btn {height: 26px;padding: 4px 6px;border-radius: 5px;font-size: 12px;background-color: #939399;color: #fff;border: none;outline: none;box-shadow: none;}
+.forget-pay .forget_menu .input_row .flex-1 .get_code_btn {width:93px;height: 26px;padding: 4px 6px;border-radius: 5px;font-size: 12px;background-color: #939399;color: #fff;border: none;outline: none;box-shadow: none;}
 .forget-pay .forget_menu .input_row .flex-1 .get_code_btn.hasinput{background-color: #F17355;color: #fff;width: 93px;}
 .forget-pay .forget_menu .btn_contain button {width: 80%;height: 40px;border-radius: 6px;color: #fff;background-color: #F17355;outline: none;margin-top: 30px;box-shadow: none;border: 1px solid #e5e5e5;}
-
-
-
+.forget-pay .forget_menu .get_code span{display: inline-block;width: 20px;}
+.forget-pay .forget_menu .get_code_btn .get_code{display: inline-block;width: 97px;}
+.forget-pay .forget_menu .input_row .flex-1 .get_code_btn.hasinput{width: 97px;}
 
 
 
