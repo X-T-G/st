@@ -2310,53 +2310,59 @@ $(function(){
         });
     }else if($('.forget-pay').size()>0){//找回支付密码和登录密码/修改登录密码和支付密码
             // 页面请求发ajax
-            var _token = localStorage.getItem('access_token');            
-            $.ajax({//发起请求
-                headers: {
-                    'Authorization': 'bearer '+_token
-                },
-                type: 'GET',
-                url:weixin_url + '/user/user-info',
-                contentType:"application/json",
-                success: function(data){
-                    if (data.code == 0) {
-                        // $('#quit_account').css('display','none');
-                        // var $androidActionSheet = $('#quit_account3');
-                        // var $androidActionSheet2 = $('#quit_account2');
-                        // var $androidMask = $androidActionSheet.find('.weui-mask3');
-                        // var $androidMask2 = $androidActionSheet2.find('.weui-mask2');
-                        // $androidMask2.css('display','none');
-                        // $androidMask.css('display','block');
-                        // $androidActionSheet2.fadeOut(200);
-                        // $androidActionSheet.fadeIn(200);
-                        // $androidMask.on('click',function () {
-                        //     $androidMask.css('display','none');
-                        //     $androidActionSheet.fadeOut(200);
-                        // });
-                        var email = data.userInfo.email;
-                        var phone = data.userInfo.phone;
-                        if(email.length>0 && phone.length==0){//只有邮箱
-                            $('.re_phone').addClass('dis-no');
-                            $('.re_email').addClass('active');
-                            $('.email_input').html(email);
-                            $('.phone_input').addClass('dis-no');
-                        }else if(email.length==0 && phone.length>0){//只有电话
-                            $('.re_email').addClass('dis-no');
-                            $('.re_phone').addClass('active');
-                            $('.phone_input').html(phone);
-                            $('.email_input').addClass('dis-no');
+            var _token = localStorage.getItem('access_token');
+            if ($('#forget-pay').size()>0) {//找回支付密码
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: 'GET',
+                    url:weixin_url + '/user/user-info',
+                    contentType:"application/json",
+                    success: function(data){
+                        if (data.code == 0) {
+                            var email = data.userInfo.email;
+                            var phone = data.userInfo.phone;
+                            if(email.length>0 && phone.length==0){//只有邮箱
+                                $('.re_phone').addClass('dis-no');
+                                $('.re_email').addClass('active');
+                                $('.email_input').html(email);
+                                $('.phone_input').addClass('dis-no');
+                            }else if(email.length==0 && phone.length>0){//只有电话
+                                $('.re_email').addClass('dis-no');
+                                $('.re_phone').addClass('active');
+                                $('.phone_input').html(phone);
+                                $('.email_input').addClass('dis-no');
+                            }else{
+                                $('.email_input').html(email);
+                                $('.phone_input').html(phone);
+                                $('.email_input').addClass('dis-no');
+                                $('.re_phone').addClass('active');
+                            }
                         }else{
-                            $('.email_input').html(email);
-                            $('.phone_input').html(phone);
-                            $('.email_input').addClass('dis-no');
-                            $('.re_phone').addClass('active');
+    
                         }
-                    }else{
-
+                        to_login(data);
                     }
-                    to_login(data);
-                }
-            });
+                });
+            }else if($('#forget-login').size()>0){//找回登录密码
+                // 输入手机号，获取验证码变化
+                $('#forget-login .input_row input.re_input').on('keyup',function(){
+                    var reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;//邮箱格式验证
+                    var reg2 = /^[1][3,4,5,7,8][0-9]{9}$/;//手机号码正则
+                    var _val = $('.email_input').val();
+                    var _val2 = $('.phone_input').val();
+                    var obj = reg.test(_val);
+                    var obj2 = reg2.test(_val2);
+                    if(obj2 == true && $(this).hasClass('phone_input')){//手机注册
+                        $('.get_code_btn').addClass('hasinput');
+                    }else if(obj == true && $(this).hasClass('email_input')){
+                        $('.get_code_btn').addClass('hasinput');
+                    }else{
+                        $('.get_code_btn').removeClass('hasinput');
+                    }
+                });
+            }            
            // 头部菜单切换
            $('.forget-pay .bar_option').on('click','.flex-1',function(){
             var set_time;
