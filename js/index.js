@@ -4,14 +4,14 @@ $(function(){
     // var assistant_url = "http://192.168.0.155:8036/stassistant";// 测试预约
     // var weixin_url = "http://192.168.0.155:8046/stweixin";// 测试微信
     //线上  
-    // var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
-    // var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
-    // var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
+    var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
+    var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
+    var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
     
      // 测试 tao
-    var medicine_url = "http://192.168.0.2:8006/stmedicine";// 测试个人信息
-    var assistant_url = "http://192.168.0.2:8036/stassistant";// 测试预约
-    var weixin_url = "http://192.168.0.2:8046/stweixin";// 测试微信
+    // var medicine_url = "http://192.168.0.2:8006/stmedicine";// 测试个人信息
+    // var assistant_url = "http://192.168.0.2:8036/stassistant";// 测试预约
+    // var weixin_url = "http://192.168.0.2:8046/stweixin";// 测试微信
     // 公共方法401跳转
     function to_login(data){
         if (data !== undefined && data.code !== undefined){
@@ -2082,6 +2082,7 @@ $(function(){
                             that.current = 1;
                             var Data_length =  data.page.content.length;
                             if (Data_length == 0) {
+                                that.coin = data.totalCoin;
                                 return;
                             }else{//请求到数据
                                 that.coin = data.totalCoin;
@@ -2148,9 +2149,7 @@ $(function(){
                                 success: function(data){
                                     if (data.code == 0) {
                                         if (pay_way.hasClass('icon-weixinzhifu')) {//如果是微信支付
-                                            var return_url = "https://wx.shentingkeji.com/html/pay-success.html";
-                                            var re = encodeURIComponent(return_url);
-                                            var _url = data.str+'&redirect_url='+re;
+                                            var _url = data.str;
                                             window.location.href =_url;
                                         }else if (pay_way.hasClass('icon-zhifubaozhifu')){//支付宝支付
                                             $('#payfor_order').css('display','none');
@@ -2199,9 +2198,7 @@ $(function(){
                             success: function(data){
                                 if (data.code == 0) {
                                     if (is_ali ==-1) {//微信
-                                        var return_url = "https://wx.shentingkeji.com/html/pay-success.html";
-                                        var re = encodeURIComponent(return_url);
-                                        var _url = data.str+'&redirect_url='+re;
+                                        var _url = data.str;
                                         window.location.href =_url;
                                     }else if(is_ali !==-1){//支付宝
                                         $('#payfor_order').css('display','none');
