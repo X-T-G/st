@@ -602,6 +602,10 @@ animation: myfade_in .2s;
 .login,.regist,.person,#doctor_list,#doctor_detail,#my_serve,#order_detail,#my_coupon,#order_info,#payfor_order{padding-top: 40px;}
 .pay_for_modal .weui-mask3{height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 1000;transition: none 0.5s ease;display: none;}
 .pay_for_modal .weui-actionsheet__menu button{border: none;color: #f17355;margin: 10px auto 0;background-color: #fff;}
+.person .pass_manage:after{content: " ";display: inline-block;height: 6px;width: 6px;border-width: 2px 2px 0 0;border-color: #c8c8cd;border-style: solid;-webkit-transform: matrix(.71,.71,-.71,.71,0,0);transform: matrix(.71,.71,-.71,.71,0,0);position: relative;top: -2px;position: absolute;top: 50%;margin-top: -4px;right: 2px;}
+
+
+
 
 
 

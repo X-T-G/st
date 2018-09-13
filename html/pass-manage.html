@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>神庭医馆</title>
+        <link type="image/x-icon" rel="shortcut icon" href="../images/logo.png">
+        <link rel="stylesheet" href="../css/common.css">
+        <link rel="stylesheet" href="../css/weui.min.css">
+        <script src="../js/zepto.min.js"></script>
+        <script src="../js/vue.min.js"></script>
+        <script src="../js/index.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    </head>
+    <body>
+        <div class="header">
+            密码管理
+            <span>
+                <img src="../images/back_gery.png" alt="">
+            </span>
+        </div>
+        <div class="payfor_order" id="payfor_order">
+            <div class="pay_order">
+                <div class="info_me">
+                    <div class="weui-cell weui-cell_access">
+                        <div class="">
+                            <p>购买处方</p>
+                        </div>
+                        <div class="weui-cell__ft" style="color:#f14731;margin-left: 4px;">¥{{datas.totalPrice}}</div>
+                    </div>
+                    <div class="weui-cell weui-cell_access">
+                        <div class="weui-cell__bd">
+                            <p>注意：付款后，概不退还</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="pay_contain" id="pay_contain">
+                    <div class="all_choose" style="background-color:#FFF;">
+                        <p class="info">您需支付<span style="color:#f14731;margin-left: 4px;">¥{{datas.totalPrice}}</span></p>
+                        <div class="each_row flex">
+                            <div class="weui-cell__bd flex-1">
+                                <div class="thumb flex">
+                                    <span class="iconfont icon-weixinzhifu" style="color: #2CA43A;"></span>
+                                    <span class="tint">微信支付</span>
+                                </div>
+                            </div>
+                            <div class="left_radio">
+                                <label class="" for="s1">
+                                    <input type="checkbox" class="good_check"  id="s1">
+                                    <i class="icon-checked iconfont"></i>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="each_row flex">
+                            <div class="weui-cell__bd flex-1">
+                                <div class="thumb flex">
+                                    <span class="iconfont icon-zhifubaozhifu" style="color:#44aed8;"></span>
+                                    <span class="tint">支付宝支付</span>
+                                </div>
+                            </div>
+                            <div class="left_radio">
+                                <label class="" for="s3">
+                                    <input type="checkbox" class="good_check"  id="s3">
+                                    <i class="icon-checked iconfont"></i>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="each_row flex">
+                            <div class="weui-cell__bd flex-1">
+                                <div class="thumb flex">
+                                    <span class="iconfont icon-yue" style="color:#ffb236;"></span>
+                                    <span class="tint">神庭币支付（可用神庭币<i style="font-style: normal;">{{coin}}</i>个）</span>
+                                </div>
+                            </div>
+                            <div class="left_radio">
+                                <label class="" for="s4">
+                                    <input type="checkbox" class="good_check"  id="s4">
+                                    <i class="icon-checked iconfont"></i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 支付按钮 -->
+                    <div class="surepay_contain">
+                        <button class="surepay" v-on:click="surepay">确认支付</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 输入交易密码-->
+            <div class="weui-skin_android pay_for_modal" id="quit_account3" style="opacity: 0; display: none;">
+                <div class="weui-mask3"></div>
+                <div class="weui-actionsheet">
+                    <div class="weui-actionsheet__menu gift_menu" style="padding: 20px;text-align: center;">
+                        <div class="text_info" style="font-size: 16px;margin: 10px 0;">请输入支付密码：
+                            <input style="height: 30px;line-height: 30px;padding: 0 10px;border: 1px solid #e5e5e5;margin-top: 10px;" class="user_pass" type="password" maxlength="6" placeholder="6位数字" oninput="if(value.length>6)value=value.slice(0,6)" >
+                        </div>
+                        <div class="flex">
+                            <div class="flex-1">
+                                <button type="button" class="quit_sure" v-on:click="balance_pay">确认</button>
+                            </div>
+                            <div class="flex-1">
+                                <button type="button" class="time_cancel">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form_contain">
+
+        </div>
+        <!-- 错误提示弹窗 -->
+        <div class="weui-skin_android" id="quit_account" style="opacity: 0; display: none;">
+            <div class="weui-mask2" style="height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 1000;transition: none 0.5s ease;display: none;"></div>
+            <div class="weui-actionsheet">
+                <div class="weui-actionsheet__menu" style="text-align: center;padding: 20px;">
+                    <div class="text_info"></div>
+                    <div class="flex" style="margin-top:10px;">
+                        <div class="flex-1">
+                            <button type="button" style="border: none;color: #f17355;margin: 10px auto 0;background-color: #fff;" class="quit_sure">确认</button>
+                        </div>
+                        <div class="flex-1">
+                            <button type="button" style="border: none;color: #f17355;margin: 10px auto 0;background-color: #fff;" class="time_cancel">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
