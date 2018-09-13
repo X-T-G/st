@@ -12,37 +12,67 @@
         <script src="../js/index.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     </head>
-    <body>
+    <body style="background-color: #fcfcfd;">
         <div class="header">
             找回支付密码
             <span>
                 <img src="../images/back_gery.png" alt="">
             </span>
         </div>
-        <div class="manage_password" id="manage_password">
-            <div style="background-color: #fff;">
-                <a class="weui-cell weui-cell_access my_order" href="change-login.html">
-                    <div class="weui-cell__bd">
-                        <p>修改登录密码</p>
+        <div class="forget-pay" id="forget-pay">
+            <div class="weui-actionsheet__menu forget_menu">
+                <div class="info_te" style="display:inline-block;margin-bottom: 10px;" >
+                    <div class="bar_option flex">
+                        <div class="flex-1 can_use re_phone active">手机号找回</div>
+                        <div class="flex-1 history  re_email">邮箱找回</div>
                     </div>
-                    <div class="weui-cell__ft">
+                    <div class="input_row flex">
+                        <img src="../images/login_phone.png" alt="">
+                        <div class="flex-1">
+                            <div class="phone_input re_input"></div>
+                            <div class="email_input re_input dis-no"></div>
+                        </div>
                     </div>
-                </a>
-                <a class="weui-cell weui-cell_access my_order" href="change-pay.html">
-                    <div class="weui-cell__bd">
-                        <p>修改支付密码</p>
+                    <div class="input_row flex">
+                        <img src="../images/iv_code.png" alt="">
+                        <div class="flex-1">
+                            <input class="password pass_code" type="text" placeholder="验证码">
+                            <button class="get_code_btn hasinput" type="button">获取验证码</button>
+                            <span class="get_code dis-no"><span class="remain_time">60</span>s后重新获取</span>
+                        </div>
                     </div>
-                    <div class="weui-cell__ft">
+                    <div class="input_row flex">
+                        <img src="../images/enroll_key.png" alt="">
+                        <div class="flex-1">
+                            <input   style="width: 100%;" class="pass_name once_pass" type="password" placeholder="请输入密码（6位数字）" oninput="if(value.length>6)value=value.slice(0,6)">
+                        </div>
                     </div>
-                </a>
-                <a class="weui-cell weui-cell_access my_order" href="forget-pay.html">
-                    <div class="weui-cell__bd">
-                        <p>忘记支付密码</p>
+                    <p class="error_info" style="height: 24px;line-height: 24px;text-align: left;padding-left: 30px;"></p>
+                </div>
+                <div class="flex btn_contain">
+                    <div class="flex-1">
+                        <button type="button" class="quit_sure">找回密码</button>
                     </div>
-                    <div class="weui-cell__ft">
-                    </div>
-                </a>
+                </div>
             </div>
+            <!-- 错误提示-->
+            <div class="weui-skin_android" id="quit_account4" style="opacity: 0; display: none;">
+                <div class="weui-mask4"></div>
+                <div class="weui-actionsheet">
+                    <div class="weui-actionsheet__menu gift_menu">
+                        <div class="info_te" style="display:inline-block;height:30px;line-height:30px;margin-bottom: 10px;" ></div>
+                        <div class="flex">
+                            <div class="flex-1">
+                                <button type="button" class="quit_sure">确认</button>
+                            </div>
+                            <div class="flex-1">
+                                <button type="button" class="time_cancel">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="weui-toptips weui-toptips_warn rese" style="display: none;" id = "look_info">请注意保存密码！</div>
         </div>
     </body>
 </html>

@@ -259,7 +259,7 @@ img.store_pic{width: 108px;height:108px;}
 .reserve_detail .re_persons .weui-cell__hd{width: 100%;}
 .reserve_detail .weui-cell{background-color: #fff;}
 .each_doctor .doctor_pic input{margin-top: 46px;width: 16px;height: 16px;}
-.rese.weui-toptips{height: 40px;line-height: 40px;background-color:#1AAD19;}
+.rese.weui-toptips{height: 40px;line-height: 40px;font-size:18px;background-color:#1AAD19;}
 .fail.weui-toptips{height: 40px;line-height: 40px;}
 .reserve_detail .weui-label{width: 152px;}
 .reserve_detail .weui-cell_select{padding: 10px 15px;}
@@ -603,6 +603,24 @@ animation: myfade_in .2s;
 .pay_for_modal .weui-mask3{height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 1000;transition: none 0.5s ease;display: none;}
 .pay_for_modal .weui-actionsheet__menu button{border: none;color: #f17355;margin: 10px auto 0;background-color: #fff;}
 .person .addr .weui-cell_access .weui-cell__ft.pass_manage:after{content: " ";display: inline-block;height: 6px;width: 6px;border-width: 2px 2px 0 0;border-color: #c8c8cd;border-style: solid;-webkit-transform: matrix(.71,.71,-.71,.71,0,0);transform: matrix(.71,.71,-.71,.71,0,0);position: relative;top: -2px;position: absolute;top: 50%;margin-top: -4px;right: 2px;}
+
+/* 找回支付密码 */
+.forget-pay{padding-top: 40px;}
+.forget-pay .forget_menu.weui-actionsheet__menu{padding:60px 10px;text-align: center;}
+.forget-pay .forget_menu .info_te{display: inline-block;height: 30px;line-height: 30px;margin-bottom: 10px;}
+.forget-pay .forget_menu .bar_option{margin: 0 auto;max-width: 230px;height: 40px;line-height: 40px;text-align: center;border: none;}
+.forget-pay .forget_menu .bar_option div{width: 50%;border-bottom: 1px solid #e4e4e4;}
+.forget-pay .forget_menu .bar_option div.active{border-bottom: 1px solid #f57d64;color: #f57d64;}
+.forget-pay .forget_menu .input_row{margin-top: 20px;}
+.forget-pay .forget_menu .input_row img{margin-right: 0px;width: 30px;height: 30px;}
+.forget-pay .forget_menu .input_row .flex-1{line-height: 30px;}
+.forget-pay .forget_menu div.phone_input,.forget-pay .forget_menu div.email_input {border-bottom: 1px solid #e5e5e5;line-height: 30px;text-align: left;padding-left: 10px;}
+.forget-pay .forget_menu p.error_info {color: #fd5749;height: 24px;line-height: 24px;text-align: left;padding-left: 30px;}
+.forget-pay .forget_menu.weui-actionsheet__menu input{text-align: left;height: 30px;background-color: #fff;line-height: 30px;font-size: 14px;padding-left: 6px;margin-bottom: 10px;-webkit-appearance: none;border: none;border-bottom: 1px solid #e5e5e5;outline: none;box-shadow: none;}
+.forget-pay .forget_menu .input_row .flex-1 .get_code_btn {height: 26px;padding: 4px 6px;border-radius: 5px;font-size: 12px;background-color: #939399;color: #fff;border: none;outline: none;box-shadow: none;}
+.forget-pay .forget_menu .input_row .flex-1 .get_code_btn.hasinput{background-color: #F17355;color: #fff;width: 93px;}
+.forget-pay .forget_menu .btn_contain button {width: 80%;height: 40px;border-radius: 6px;color: #fff;background-color: #F17355;outline: none;margin-top: 30px;box-shadow: none;border: 1px solid #e5e5e5;}
+
 
 
 
