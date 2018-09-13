@@ -599,10 +599,10 @@ animation: myfade_in .2s;
 #my_coin .weui-actionsheet__menu input#weuiAgree{margin-bottom:0;-webkit-appearance: none;appearance: none;outline: 0;font-size: 0;border: 1px solid #d1d1d1;background-color: #fff;border-radius: 3px;width: 13px;height: 13px;position: relative;vertical-align: 0;top: 2px;}
 #my_gift .weui-actionsheet div.phone_input,#my_gift .weui-actionsheet div.email_input{border-bottom: 1px solid #e5e5e5;line-height: 30px;text-align: left;padding-left: 10px;}
 #my_gift .weui-toptips_warn{background-color:#1AAD19;height: 40px;line-height: 40px;}
-.login,.regist,.person,#doctor_list,#doctor_detail,#my_serve,#order_detail,#my_coupon,#order_info,#payfor_order{padding-top: 40px;}
+.login,.regist,.person,#doctor_list,#doctor_detail,#my_serve,#order_detail,#my_coupon,#order_info,#payfor_order,.manage_password{padding-top: 40px;}
 .pay_for_modal .weui-mask3{height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 1000;transition: none 0.5s ease;display: none;}
 .pay_for_modal .weui-actionsheet__menu button{border: none;color: #f17355;margin: 10px auto 0;background-color: #fff;}
-.person .pass_manage:after{content: " ";display: inline-block;height: 6px;width: 6px;border-width: 2px 2px 0 0;border-color: #c8c8cd;border-style: solid;-webkit-transform: matrix(.71,.71,-.71,.71,0,0);transform: matrix(.71,.71,-.71,.71,0,0);position: relative;top: -2px;position: absolute;top: 50%;margin-top: -4px;right: 2px;}
+.person .addr .weui-cell_access .weui-cell__ft.pass_manage:after{content: " ";display: inline-block;height: 6px;width: 6px;border-width: 2px 2px 0 0;border-color: #c8c8cd;border-style: solid;-webkit-transform: matrix(.71,.71,-.71,.71,0,0);transform: matrix(.71,.71,-.71,.71,0,0);position: relative;top: -2px;position: absolute;top: 50%;margin-top: -4px;right: 2px;}
 
 
 

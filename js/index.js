@@ -2289,6 +2289,22 @@ $(function(){
                 }else if(pay_type.hasClass('icon-yue')){//余额支付
                     return;
                 }
+            }else if(_totalCoin==0){//神庭币为0
+                var flag = $(this).find("input[type='checkbox']").is(':checked');
+                $(this).find("input[type='checkbox']").prop("checked",!flag);
+                if (pay_type.hasClass('icon-weixinzhifu')) {//微信支付
+                    var ali_pay = $('.icon-zhifubaozhifu').parents('.each_row').find('input').is(':checked');
+                    if(ali_pay){//若支付宝已经被选定
+                        $(this).find("input[type='checkbox']").prop("checked",false);
+                    }
+                }else if(pay_type.hasClass('icon-zhifubaozhifu')){//支付宝支付
+                    var wei_pay = $('.icon-weixinzhifu').parents('.each_row').find('input').is(':checked');
+                    if(wei_pay){//若微信已经被选定
+                        $(this).find("input[type='checkbox']").prop("checked",false);
+                    }
+                }else if(pay_type.hasClass('icon-yue')){//余额支付
+                    return;
+                }
             }else{
                 return;
             }
