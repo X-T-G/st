@@ -21,39 +21,41 @@
         </div>
         <div id="my_coin" style="padding-top:40px;">
             <div class="m_balance" id="m_balance">
-                <div class="balance_top">
-                    <img src="../images/st_coin2.png" alt="">
-                    <div class="text_center">
-                        <p>{{datas.totalCoin}}个</p>
+                <div :class=[{"dis-no":(loading==true)}]>
+                    <div class="balance_top">
+                        <img src="../images/st_coin2.png" alt="">
+                        <div class="text_center">
+                            <p>{{datas.totalCoin}}个</p>
+                        </div>
+                        <div class="clearfix">
+                            <p v-on:click="modal_page" class="fr" style="color:#f57d64;margin-right:6px;">神庭币使用须知</p>
+                        </div>
                     </div>
-                    <div class="clearfix">
-                        <p v-on:click="modal_page" class="fr" style="color:#f57d64;margin-right:6px;">神庭币使用须知</p>
-                    </div>
-                </div>
-                <!-- 神庭币使用详情 -->
-                <div class="balance_detail clearfix"  :class=[{"dis-no":(show_page==false)}]>
-                    <p class="tint cion_detail">神庭币明细</p>
-                    <div v-for="balance in my_balance">
-                        <div class="each_cou">
-                            <div class="flex">
-                                <div class="flex-1">
-                                    <p>{{balance.consumeType.dictName}}</p>
-                                    <p class="tint">{{balance.createtime.substring(0,19)}}</p>
+                    <!-- 神庭币使用详情 -->
+                    <div class="balance_detail clearfix"  :class=[{"dis-no":(show_page==false)}]>
+                        <p class="tint cion_detail">神庭币明细</p>
+                        <div v-for="balance in my_balance">
+                            <div class="each_cou">
+                                <div class="flex">
+                                    <div class="flex-1">
+                                        <p>{{balance.consumeType.dictName}}</p>
+                                        <p class="tint">{{balance.createtime.substring(0,19)}}</p>
+                                    </div>
+                                    <p class="cou_price"  v-if="balance.coin > 0">+{{balance.coin}}</p>
+                                    <p class="cou_price pay" v-if="balance.coin < 0">{{balance.coin}}</p>
                                 </div>
-                                <p class="cou_price"  v-if="balance.coin > 0">+{{balance.coin}}</p>
-                                <p class="cou_price pay" v-if="balance.coin < 0">{{balance.coin}}</p>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="clearfix fr cli_page">
-                    <div class="fl  order_page" v-on:click="change_page" :class=[{'active':(page==current)}]  v-for="page in page.totalPages">{{page}}</div>
-                </div>
-                <div class="send_btn quit_account" v-if="datas.totalCoin>0">
-                    <button>我愿转赠</button>
-                </div>
-                <div class="send_btn"  v-if="datas.totalCoin <= 0">
-                    <button style="color:#fff;background-color:#CDC6C5;">我愿转赠</button>
+                    <div class="clearfix fr cli_page">
+                        <div class="fl  order_page" v-on:click="change_page" :class=[{'active':(page==current)}]  v-for="page in page.totalPages">{{page}}</div>
+                    </div>
+                    <div class="send_btn quit_account" v-if="datas.totalCoin>0">
+                        <button>我愿转赠</button>
+                    </div>
+                    <div class="send_btn"  v-if="datas.totalCoin <= 0">
+                        <button style="color:#fff;background-color:#CDC6C5;">我愿转赠</button>
+                    </div>
                 </div>
             </div>
             <!-- 弹窗1 设置交易密码-->
