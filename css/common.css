@@ -284,7 +284,7 @@ img.store_pic{width: 108px;height:108px;}
 .login .input_row .flex-1,.regist .input_row .flex-1{line-height: 30px;}
 .login .input_row .flex-1 input,.regist .input_row .flex-1 input{border: 1px solid #e5e5e5;outline: none;box-shadow: none;height: 36px;padding: 0 0 0 10px;width: 100%;}
 .login .login_btn,.regist .login_btn{width: 100%;height: 36px;border-radius:6px;line-height: 36px;background-color:#aaaaaa;width: 100%;background-color: #aaaaaa;border: none;color: #fff; }
-.bottom_btn{padding: 0 40px;margin-top: 40px;}
+.bottom_btn{padding: 0 40px;margin-top: 20px;}
 .bottom_img{height:110px;background: url(../images/login_background.png);background-repeat:no-repeat ;background-size:cover;}
 .login .login_btn.pass,.regist .login_btn.pass{background-color:#F17355;}
 .login .weui-skin_android .weui-dialog__ft,.regist .weui-skin_android .weui-dialog__ft{text-align: center;}
