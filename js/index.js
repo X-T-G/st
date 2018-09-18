@@ -4,14 +4,14 @@ $(function(){
     // var assistant_url = "http://192.168.0.155:8036/stassistant";// 测试预约
     // var weixin_url = "http://192.168.0.155:8046/stweixin";// 测试微信
     //线上  
-    var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
-    var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
-    var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
+    // var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
+    // var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
+    // var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
     
      // 测试 tao
-    // var medicine_url = "http://192.168.0.2:8006/stmedicine";// 测试个人信息
-    // var assistant_url = "http://192.168.0.2:8036/stassistant";// 测试预约
-    // var weixin_url = "http://192.168.0.2:8046/stweixin";// 测试微信
+    var medicine_url = "http://192.168.0.2:8006/stmedicine";// 测试个人信息
+    var assistant_url = "http://192.168.0.2:8036/stassistant";// 测试预约
+    var weixin_url = "http://192.168.0.2:8046/stweixin";// 测试微信
     // 公共方法401跳转
     function to_login(data){
         if (data !== undefined && data.code !== undefined){
@@ -2054,7 +2054,10 @@ $(function(){
             },
             methods:{
                 pay_sure:function(){
-                   window.location.href="./pay.html";
+                    var redirect_url1=encodeURI("http://wx.shentingkeji.com/html/pay.html");
+                    var _url ='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd5f1284e96745441&redirect_uri='+redirect_url1+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+                    window.location.href=_url;
+                //    window.location.href="./pay.html";
                 },
             }
         });
@@ -2094,6 +2097,7 @@ $(function(){
             },
             methods:{
                 surepay:function(){//点击确认支付
+
                     var that = this;
                      // ajax请求的方法
                     var datas = that.datas;
@@ -2138,6 +2142,9 @@ $(function(){
                                  });
                             }
                         }else{
+                            var _url = window.location.href
+                            var code = _url.match(/=(\S*)&/)[1];
+                            // alert(code);
                             $.ajax({//发起请求
                                 headers: {
                                     'Authorization': 'bearer '+_token
@@ -2145,30 +2152,31 @@ $(function(){
                                 type: "POST",
                                 url:weixin_url + '/order/pay',
                                 contentType:"application/json",
-                                data: JSON.stringify({orderNum:orderNum,coinPay:coinPay,thirdPay:thirdPay}),
+                                data: JSON.stringify({orderNum:orderNum,coinPay:coinPay,thirdPay:thirdPay,code:code}),
                                 success: function(data){
-                                    if (data.code == 0) {
-                                        if (pay_way.hasClass('icon-weixinzhifu')) {//如果是微信支付
-                                            var _url = data.str;
-                                            window.location.href =_url;
-                                        }else if (pay_way.hasClass('icon-zhifubaozhifu')){//支付宝支付
-                                            $('#payfor_order').css('display','none');
-                                            var _content = data.str;
-                                            $('.form_contain').html(_content);
-                                        }
-                                    }else{
-                                        // 弹窗
-                                        var $androidActionSheet = $('#quit_account');
-                                        var $androidMask = $androidActionSheet.find('.weui-mask2');
-                                        $androidActionSheet.fadeIn(200);
-                                        $androidMask.css('display','block');
-                                        $('#quit_account .text_info').html(data.message);
-                                        $androidMask.on('click',function () {
-                                            $androidMask.css('display','none');
-                                            $androidActionSheet.fadeOut(200);
-                                        });
-                                    }
-                                    to_login(data);
+                                    alert(data);
+                                    // if (data.code == 0) {
+                                    //     if (pay_way.hasClass('icon-weixinzhifu')) {//如果是微信支付
+                                    //         var _url = data.str;
+                                    //         window.location.href =_url;
+                                    //     }else if (pay_way.hasClass('icon-zhifubaozhifu')){//支付宝支付
+                                    //         $('#payfor_order').css('display','none');
+                                    //         var _content = data.str;
+                                    //         $('.form_contain').html(_content);
+                                    //     }
+                                    // }else{
+                                    //     // 弹窗
+                                    //     var $androidActionSheet = $('#quit_account');
+                                    //     var $androidMask = $androidActionSheet.find('.weui-mask2');
+                                    //     $androidActionSheet.fadeIn(200);
+                                    //     $androidMask.css('display','block');
+                                    //     $('#quit_account .text_info').html(data.message);
+                                    //     $androidMask.on('click',function () {
+                                    //         $androidMask.css('display','none');
+                                    //         $androidActionSheet.fadeOut(200);
+                                    //     });
+                                    // }
+                                    // to_login(data);
                                 }
                             });
                         } 
@@ -2330,7 +2338,7 @@ $(function(){
              $androidMask.css('display','none');
              $androidActionSheet.fadeOut(200);
         })
-    }else if($('.forget-pay').size()>0){//找回支付密码和登录密码/修改登录密码和支付密码
+    }else if($('.forget-pay.forget_pass').size()>0){//找回支付密码和登录密码/修改登录密码和支付密码
             // 页面请求发ajax
             var _token = localStorage.getItem('access_token');
             if ($('#forget-pay').size()>0) {//找回支付密码
@@ -2622,7 +2630,7 @@ $(function(){
                                     $('#look_info').css('display','block');
                                     setTimeout(function(){
                                         $('#look_info').css('display','none');
-                                        window.location.href="../html/pass-manage.html";
+                                        window.location.href="../html/person.html";
                                     },2000);
                                 }else{
                                     $('.error_info').html(data.message);
@@ -2673,7 +2681,7 @@ $(function(){
                                     $('#look_info').css('display','block');
                                     setTimeout(function(){
                                         $('#look_info').css('display','none');
-                                        window.location.href="../html/pass-manage.html";
+                                        window.location.href="../html/person.html";
                                     },2000);
                                 }else{
                                     $('.error_info').html(data.message);
@@ -2688,6 +2696,103 @@ $(function(){
                 }
             }
         });
+    }else if($('.change-pass').size()>0){//修改登录/支付密码
+        // 页面请求发ajax
+        var _token = localStorage.getItem('access_token');
+        if($('#change-login').size()>0){//修改登录
+            $.ajax({//发起请求
+                headers: {
+                    'Authorization': 'bearer '+_token
+                },
+                type: 'GET',
+                url:weixin_url + '/user/user-info',
+                contentType:"application/json",
+                success: function(data){
+                    if (data.code == 0) {
+                        var email = data.userInfo.email;
+                        var phone = data.userInfo.phone;
+                        if(email.length>0 && phone.length==0){//只有邮箱
+                            $('.my_email').removeClass('dis-no');
+                            $('.my_email').html(email);
+                        }else if(email.length==0 && phone.length>0){//只有电话
+                            $('.my_phone').removeClass('dis-no');
+                            $('.my_phone').html(phone);
+                        }else{
+                            $('.my_phone').removeClass('dis-no');
+                            $('.my_phone').html(phone);
+                        }
+                    }else{
+
+                    }
+                    to_login(data);
+                }
+            });
+        }
+        $('.change-pass .quit_sure').live('click',function(){
+            if($('#change-login').size()>0){//修改登录
+                var oldPassword = $('.ori_pass').val();
+                var newPassword = $('.new_pass').val();
+                var once_pass = $('.once_pass').val();
+                var _url = medicine_url +'/v1.0.0/modification-password';
+                if (oldPassword.length>0 && newPassword.length>0 && once_pass.length>0 && once_pass== newPassword) {
+                    $.ajax({//发起请求
+                        headers: {
+                            'Authorization': 'bearer '+_token
+                        },
+                        type: 'PUT',
+                        url:_url,
+                        contentType:"application/json",
+                        data: JSON.stringify({oldPassword:oldPassword,newPassword:newPassword}),
+                        success: function(data){
+                            if (data.code == 0) {
+                                $('#look_info').css('display','block');
+                                setTimeout(function(){
+                                    $('#look_info').css('display','none');
+                                    window.location.href="../html/login.html";
+                                },2000);
+                            }else{
+                                $('.error_info').html(data.message);
+                                setTimeout(function(){
+                                    $('.error_info').html('');
+                                }, 5000); 
+                            }
+                            to_login(data);
+                        }
+                    });
+                }
+            }else if($('#change-pay').size()>0){//修改支付
+                var oldPayPassword = $('.ori_pass').val();
+                var newPayPassword = $('.new_pass').val();
+                var once_pass = $('.once_pass').val();
+                var _url = weixin_url +'/user/modify-pay-password';
+                if (oldPayPassword.length>0 && newPayPassword.length>0 && once_pass.length>0 && once_pass== newPayPassword) {
+                    $.ajax({//发起请求
+                        headers: {
+                            'Authorization': 'bearer '+_token
+                        },
+                        type: 'POST',
+                        url:_url,
+                        contentType:"application/json",
+                        data: JSON.stringify({oldPayPassword:oldPayPassword,newPayPassword:newPayPassword}),
+                        success: function(data){
+                            if (data.code == 0) {
+                                $('#look_info').css('display','block');
+                                setTimeout(function(){
+                                    $('#look_info').css('display','none');
+                                    window.location.href="../html/person.html";
+                                },2000);
+                            }else{
+                                $('.error_info').html(data.message);
+                                setTimeout(function(){
+                                    $('.error_info').html('');
+                                }, 5000); 
+                            }
+                            to_login(data);
+                        }
+                    });
+                }
+            }
+        })
     }
 });
 

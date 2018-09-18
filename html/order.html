@@ -34,7 +34,7 @@
                             <div class="weui-cell__bd">
                                 <p class="create"><span>{{order.createtime.split(" ")[0]}}</span>处方药材订单</p>
                                 <p class="payprice">总价：¥<span>{{order.payPrice.toFixed(2)}}</span></p>
-                                <!-- <button v-if="not_pay == true" class="to_pay" v-on:click="to_pay(order)">去支付</button> -->
+                                <button v-if="not_pay == true" class="to_pay" v-on:click="to_pay(order)">去支付</button>
                             </div>
                         </div>
                         <div class="clearfix">

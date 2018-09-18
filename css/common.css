@@ -623,7 +623,7 @@ animation: myfade_in .2s;
 .forget-pay .forget_menu .get_code span{display: inline-block;width: 20px;}
 .forget-pay .forget_menu .get_code_btn .get_code{display: inline-block;width: 97px;}
 .forget-pay .forget_menu .input_row .flex-1 .get_code_btn.hasinput{width: 97px;}
-
+.change-pass .info_te .input_row span{display: inline-block;width:70px;text-align: right;}
 
 
 

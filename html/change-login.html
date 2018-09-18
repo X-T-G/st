@@ -12,37 +12,48 @@
         <script src="../js/index.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     </head>
-    <body>
+    <body style="background-color:#fff;">
         <div class="header">
             修改登录密码
             <span>
                 <img src="../images/back_gery.png" alt="">
             </span>
         </div>
-        <div class="manage_password" id="manage_password">
-            <div style="background-color: #fff;">
-                <a class="weui-cell weui-cell_access my_order" href="change-login.html">
-                    <div class="weui-cell__bd">
-                        <p>修改登录密码</p>
+        <div class="forget-pay change-login change-pass" id="change-login">
+            <div class="weui-actionsheet__menu forget_menu">
+                <div class="info_te" style="display:inline-block;margin-bottom: 10px;" >
+                    <div class="input_row flex">
+                        <span>手机号：</span>
+                        <div class="flex-1 my_phone dis-no" style="text-align:left;"></div>
+                        <div class="flex-1 my_email dis-no" style="text-align:left;"></div>
                     </div>
-                    <div class="weui-cell__ft">
+                    <div class="input_row flex">
+                        <span>原密码：</span>
+                        <div class="flex-1">
+                            <input   style="width: 100%;" class="ori_pass" type="password" placeholder="请输入原密码">
+                        </div>
                     </div>
-                </a>
-                <a class="weui-cell weui-cell_access my_order" href="change-pay.html">
-                    <div class="weui-cell__bd">
-                        <p>修改支付密码</p>
+                    <div class="input_row flex">
+                        <span>新密码：</span>
+                        <div class="flex-1">
+                            <input   style="width: 100%;" class="new_pass" type="password" placeholder="请输入新密码">
+                        </div>
                     </div>
-                    <div class="weui-cell__ft">
+                    <div class="input_row flex">
+                        <span>确认密码：</span>
+                        <div class="flex-1">
+                            <input   style="width: 100%;" class="once_pass" type="password" placeholder="请再次输入新密码">
+                        </div>
                     </div>
-                </a>
-                <a class="weui-cell weui-cell_access my_order" href="forget-pay.html">
-                    <div class="weui-cell__bd">
-                        <p>忘记支付密码</p>
+                    <p class="error_info" style="height: 24px;line-height: 24px;text-align: left;padding-left: 30px;"></p>
+                </div>
+                <div class="flex btn_contain">
+                    <div class="flex-1">
+                        <button type="button" class="quit_sure">确认修改</button>
                     </div>
-                    <div class="weui-cell__ft">
-                    </div>
-                </a>
+                </div>
             </div>
+            <div class="weui-toptips weui-toptips_warn rese" style="display: none;" id = "look_info">请注意保存密码！</div>
         </div>
     </body>
 </html>
