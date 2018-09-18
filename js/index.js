@@ -2055,7 +2055,7 @@ $(function(){
             methods:{
                 pay_sure:function(){
                     var redirect_url1=encodeURI("http://wx.shentingkeji.com/html/pay.html");
-                    var _url ='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd5f1284e96745441&redirect_uri='+redirect_url1+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+                    var _url ='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe5516c95d26581bf&redirect_uri='+redirect_url1+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
                     window.location.href=_url;
                 //    window.location.href="./pay.html";
                 },
