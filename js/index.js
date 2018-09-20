@@ -2145,18 +2145,7 @@ $(function(){
                                  });
                             }
                         }else{
-                            $.ajax({//发起请求
-                                headers: {
-                                    'Authorization': 'bearer '+_token
-                                },
-                                type: "GET",
-                                url:weixin_url + '/order/status/'+orderNum,
-                                contentType:"application/json",
-                                success: function(data){
-                                   
-                                    to_login(data);
-                                }
-                            });
+                            
                             var _url = window.location.href
                             var code = _url.match(/=(\S*)&/)[1];
                             $.ajax({//发起请求
@@ -2182,66 +2171,78 @@ $(function(){
                                             WeixinJSBridge.invoke(
                                                'getBrandWCPayRequest', _data,
                                                function(res){
-                                               if(res.err_msg == "get_brand_wcpay_request:ok" ){
-                                               // 使用以上方式判断前端返回,微信团队郑重提示：
-                                                     //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
-                                                     window.location.href='../html/pay-success.html';
-                                               }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
-                                                    // 弹窗
-                                                    var $androidActionSheet = $('#quit_account');
-                                                    var $androidMask = $androidActionSheet.find('.weui-mask2');
-                                                    $androidActionSheet.fadeIn(200);
-                                                    $androidMask.css('display','block');
-                                                    $('#quit_account .text_info').html('支付取消!');
-                                                    $androidMask.on('click',function () {
-                                                        $androidMask.css('display','none');
-                                                        $androidActionSheet.fadeOut(200);
+                                                    $.ajax({//发起请求
+                                                        headers: {
+                                                            'Authorization': 'bearer '+_token
+                                                        },
+                                                        type: "GET",
+                                                        url:weixin_url + '/order/status/'+orderNum,
+                                                        contentType:"application/json",
+                                                        success: function(data){
+                                                        
+                                                            to_login(data);
+                                                        }
                                                     });
-                                                    setTimeout(function(){
-                                                        window.location.href='../html/person.html';
-                                                    },1000)
-                                               }else if(res.err_msg == "get_brand_wcpay_request:fail"){
-                                                    // 弹窗
-                                                    var $androidActionSheet = $('#quit_account');
-                                                    var $androidMask = $androidActionSheet.find('.weui-mask2');
-                                                    $androidActionSheet.fadeIn(200);
-                                                    $androidMask.css('display','block');
-                                                    $('#quit_account .text_info').html('支付失败!');
-                                                    $androidMask.on('click',function () {
-                                                        $androidMask.css('display','none');
-                                                        $androidActionSheet.fadeOut(200);
-                                                    });
-                                                    setTimeout(function(){
-                                                        window.location.href='../html/person.html';
-                                                    },1000)
-                                               }else{
-                                                    return;
-                                               } 
-                                            }); 
-                                         }
-                                         if (typeof WeixinJSBridge == "undefined"){
-                                            if( document.addEventListener ){
-                                                document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-                                            }else if (document.attachEvent){
-                                                document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
-                                                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                                                    if(res.err_msg == "get_brand_wcpay_request:ok" ){
+                                                    // 使用以上方式判断前端返回,微信团队郑重提示：
+                                                            //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+                                                            window.location.href='../html/pay-success.html';
+                                                    }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
+                                                            // 弹窗
+                                                            var $androidActionSheet = $('#quit_account');
+                                                            var $androidMask = $androidActionSheet.find('.weui-mask2');
+                                                            $androidActionSheet.fadeIn(200);
+                                                            $androidMask.css('display','block');
+                                                            $('#quit_account .text_info').html('支付取消!');
+                                                            $androidMask.on('click',function () {
+                                                                $androidMask.css('display','none');
+                                                                $androidActionSheet.fadeOut(200);
+                                                            });
+                                                            setTimeout(function(){
+                                                                window.location.href='../html/person.html';
+                                                            },1000)
+                                                    }else if(res.err_msg == "get_brand_wcpay_request:fail"){
+                                                            // 弹窗
+                                                            var $androidActionSheet = $('#quit_account');
+                                                            var $androidMask = $androidActionSheet.find('.weui-mask2');
+                                                            $androidActionSheet.fadeIn(200);
+                                                            $androidMask.css('display','block');
+                                                            $('#quit_account .text_info').html('支付失败!');
+                                                            $androidMask.on('click',function () {
+                                                                $androidMask.css('display','none');
+                                                                $androidActionSheet.fadeOut(200);
+                                                            });
+                                                            setTimeout(function(){
+                                                                window.location.href='../html/person.html';
+                                                            },1000)
+                                                    }else{
+                                                            return;
+                                                    } 
+                                                }); 
                                             }
-                                         }else{
-                                            onBridgeReady();
-                                         }
-                                    }else{
-                                        // 弹窗
-                                        var $androidActionSheet = $('#quit_account');
-                                        var $androidMask = $androidActionSheet.find('.weui-mask2');
-                                        $androidActionSheet.fadeIn(200);
-                                        $androidMask.css('display','block');
-                                        $('#quit_account .text_info').html(data.message);
-                                        $androidMask.on('click',function () {
-                                            $androidMask.css('display','none');
-                                            $androidActionSheet.fadeOut(200);
-                                        });
-                                    }
-                                    to_login(data);
+                                            if (typeof WeixinJSBridge == "undefined"){
+                                                if( document.addEventListener ){
+                                                    document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+                                                }else if (document.attachEvent){
+                                                    document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+                                                    document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                                                }
+                                            }else{
+                                                onBridgeReady();
+                                            }
+                                        }else{
+                                            // 弹窗
+                                            var $androidActionSheet = $('#quit_account');
+                                            var $androidMask = $androidActionSheet.find('.weui-mask2');
+                                            $androidActionSheet.fadeIn(200);
+                                            $androidMask.css('display','block');
+                                            $('#quit_account .text_info').html(data.message);
+                                            $androidMask.on('click',function () {
+                                                $androidMask.css('display','none');
+                                                $androidActionSheet.fadeOut(200);
+                                            });
+                                        }
+                                        to_login(data);
                                 }
                             });
                         } 
@@ -2294,18 +2295,7 @@ $(function(){
                     //             to_login(data);
                     //         }
                     //     });
-                    $.ajax({//发起请求
-                        headers: {
-                            'Authorization': 'bearer '+_token
-                        },
-                        type: "GET",
-                        url:weixin_url + '/order/status/'+orderNum,
-                        contentType:"application/json",
-                        success: function(data){
-                           
-                            to_login(data);
-                        }
-                    });
+                   
                     var thirdPay = 'WEIXIN_PAY';
                     var coinPay ='0';
                     var _url = window.location.href
@@ -2333,53 +2323,65 @@ $(function(){
                                     WeixinJSBridge.invoke(
                                         'getBrandWCPayRequest', _data,
                                         function(res){
-                                        if(res.err_msg == "get_brand_wcpay_request:ok" ){
-                                        // 使用以上方式判断前端返回,微信团队郑重提示：
-                                                //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
-                                                window.location.href='../html/pay-success.html';
-                                        }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
-                                            // 弹窗
-                                            var $androidActionSheet = $('#quit_account');
-                                            var $androidMask = $androidActionSheet.find('.weui-mask2');
-                                            $androidActionSheet.fadeIn(200);
-                                            $androidMask.css('display','block');
-                                            $('#quit_account .text_info').html('支付取消!');
-                                            $androidMask.on('click',function () {
-                                                $androidMask.css('display','none');
-                                                $androidActionSheet.fadeOut(200);
+                                            $.ajax({//发起请求
+                                                headers: {
+                                                    'Authorization': 'bearer '+_token
+                                                },
+                                                type: "GET",
+                                                url:weixin_url + '/order/status/'+orderNum,
+                                                contentType:"application/json",
+                                                success: function(data){
+                                                   
+                                                    to_login(data);
+                                                }
                                             });
-                                            setTimeout(function(){
-                                                window.location.href='../html/person.html';
-                                            },1000)
-                                        }else if(res.err_msg == "get_brand_wcpay_request:fail"){
-                                            // 弹窗
-                                            var $androidActionSheet = $('#quit_account');
-                                            var $androidMask = $androidActionSheet.find('.weui-mask2');
-                                            $androidActionSheet.fadeIn(200);
-                                            $androidMask.css('display','block');
-                                            $('#quit_account .text_info').html('支付失败!');
-                                            $androidMask.on('click',function () {
-                                                $androidMask.css('display','none');
-                                                $androidActionSheet.fadeOut(200);
-                                            });
-                                            setTimeout(function(){
-                                                window.location.href='../html/person.html';
-                                            },1000)
-                                        }else{
-                                            return;
-                                        } 
+                                            if(res.err_msg == "get_brand_wcpay_request:ok" ){
+                                            // 使用以上方式判断前端返回,微信团队郑重提示：
+                                                    //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+                                                    window.location.href='../html/pay-success.html';
+                                            }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
+                                                // 弹窗
+                                                var $androidActionSheet = $('#quit_account');
+                                                var $androidMask = $androidActionSheet.find('.weui-mask2');
+                                                $androidActionSheet.fadeIn(200);
+                                                $androidMask.css('display','block');
+                                                $('#quit_account .text_info').html('支付取消!');
+                                                $androidMask.on('click',function () {
+                                                    $androidMask.css('display','none');
+                                                    $androidActionSheet.fadeOut(200);
+                                                });
+                                                setTimeout(function(){
+                                                    window.location.href='../html/person.html';
+                                                },1000)
+                                            }else if(res.err_msg == "get_brand_wcpay_request:fail"){
+                                                // 弹窗
+                                                var $androidActionSheet = $('#quit_account');
+                                                var $androidMask = $androidActionSheet.find('.weui-mask2');
+                                                $androidActionSheet.fadeIn(200);
+                                                $androidMask.css('display','block');
+                                                $('#quit_account .text_info').html('支付失败!');
+                                                $androidMask.on('click',function () {
+                                                    $androidMask.css('display','none');
+                                                    $androidActionSheet.fadeOut(200);
+                                                });
+                                                setTimeout(function(){
+                                                    window.location.href='../html/person.html';
+                                                },1000)
+                                            }else{
+                                                return;
+                                            } 
                                     }); 
-                                    }
-                                    if (typeof WeixinJSBridge == "undefined"){
+                                }
+                                if (typeof WeixinJSBridge == "undefined"){
                                     if( document.addEventListener ){
                                         document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
                                     }else if (document.attachEvent){
                                         document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
                                         document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
                                     }
-                                    }else{
+                                }else{
                                     onBridgeReady();
-                                    }
+                                }
                             }else{
                                 // 弹窗
                                 var $androidActionSheet = $('#quit_account');
