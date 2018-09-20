@@ -2145,6 +2145,18 @@ $(function(){
                                  });
                             }
                         }else{
+                            $.ajax({//发起请求
+                                headers: {
+                                    'Authorization': 'bearer '+_token
+                                },
+                                type: "GET",
+                                url:weixin_url + '/order/status/'+orderNum,
+                                contentType:"application/json",
+                                success: function(data){
+                                   
+                                    to_login(data);
+                                }
+                            });
                             var _url = window.location.href
                             var code = _url.match(/=(\S*)&/)[1];
                             $.ajax({//发起请求
@@ -2282,6 +2294,18 @@ $(function(){
                     //             to_login(data);
                     //         }
                     //     });
+                    $.ajax({//发起请求
+                        headers: {
+                            'Authorization': 'bearer '+_token
+                        },
+                        type: "GET",
+                        url:weixin_url + '/order/status/'+orderNum,
+                        contentType:"application/json",
+                        success: function(data){
+                           
+                            to_login(data);
+                        }
+                    });
                     var thirdPay = 'WEIXIN_PAY';
                     var coinPay ='0';
                     var _url = window.location.href
