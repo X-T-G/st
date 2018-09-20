@@ -39,7 +39,7 @@
                 <div class="medecine_detail">
                     <p class="im_info">订单</p>
                     <div style="padding: 10px 15px;">
-                        <span  v-for="medecine in datas.prescription.prescriptionMedicine">{{medecine.medicine.name}}{{medecine.dosage}}{{medecine.medicine.unit}}</span>
+                        <span  v-for="medecine in datas.prescription.prescriptionMedicine" v-if="medecine.deletedState==0">{{medecine.medicine.name}}{{medecine.dosage}}{{medecine.medicine.unit}}</span>
                     </div>
                 </div>
                 <div class="other_info">
