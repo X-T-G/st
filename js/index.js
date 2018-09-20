@@ -1484,6 +1484,7 @@ $(function(){
                     success: function(data){
                         if (data.code == 0) {
                             that.is_agree = data.confirm;
+                            that.show_modal = !data.confirm;
                         }
                         to_login(data);
                     }
