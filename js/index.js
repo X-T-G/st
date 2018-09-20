@@ -1441,7 +1441,8 @@ $(function(){
                 current:1,//当前页面
                 my_balance:[],//数据
                 datas:[],//初始数据
-                show_modal:false,//欢迎页弹窗
+                show_modal:true,//欢迎页弹窗
+                is_agree:false
             },
             created:function(){
                 var that = this;
@@ -1473,16 +1474,45 @@ $(function(){
                         to_login(data);
                     }
                 });
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: "GET",
+                    url:weixin_url + '/agreement/confirm/agreement_type_coin_use',
+                    contentType:"application/json",
+                    success: function(data){
+                        if (data.code == 0) {
+                            that.is_agree = data.confirm;
+                        }
+                        to_login(data);
+                    }
+                });
             },
             methods:{
                 agree_sure:function(){//同意神庭币使用须知
                     var that = this;
-                    // var is_agree = $('.welcome_page').find('.weui-agree__checkbox').prop('checked');
-                    // if (is_agree) {//如果同意
+                    var is_agree = $('.welcome_page').find('.weui-agree__checkbox').prop('checked');
+                    if (is_agree) {//如果同意
                         that.show_modal = false;
-                    // }else{
-                    //     that.show_modal = true;        
-                    // }
+                        $.ajax({//发起请求
+                            headers: {
+                                'Authorization': 'bearer '+_token
+                            },
+                            type: "POST",
+                            url:weixin_url + '/agreement/confirm/agreement_type_coin_use',
+                            contentType:"application/json",
+                            success: function(data){
+                                if (data.code == 0) {
+                                    that.is_agree = true;
+                                }
+                                to_login(data);
+                            }
+                        });
+                    }else{
+                        that.show_modal = true; 
+                        return;       
+                    }
                 },
                 agree_cancel:function(){//不同意神庭币使用须知
                     this.show_modal = false;
@@ -1532,10 +1562,6 @@ $(function(){
                     var that = this;
                     that.show_modal = true;
                 },
-                hide_modal:function(){
-                    var that = this;
-                    that.show_modal = false;
-                }
             }
         });
         $('#my_coin .quit_account button').live('click',function(){//点击“我愿转赠”按钮
@@ -1602,20 +1628,20 @@ $(function(){
                 }
             });
         });
-        $('#my_coin .weui-skin_android .weui-actionsheet button.time_cancel').live('click',function(){
-            var $androidActionSheet2 = $('#quit_account2');
-            var $androidActionSheet = $('#quit_account');
-            var $androidMask2 = $androidActionSheet.find('.weui-mask2');
-            var $androidMask3 = $androidActionSheet.find('.weui-mask3');
-            $androidActionSheet2.fadeOut(200);
-            $androidActionSheet.fadeOut(200);
-            $androidMask2.on('click',function () {
-                $androidActionSheet.fadeOut(200);
-            });
-            $androidMask3.on('click',function () {
-                $androidActionSheet.fadeOut(200);
-            });
-        });
+        // $('#my_coin .weui-skin_android .weui-actionsheet button.time_cancel').live('click',function(){
+        //     var $androidActionSheet2 = $('#quit_account2');
+        //     var $androidActionSheet = $('#quit_account');
+        //     var $androidMask2 = $androidActionSheet.find('.weui-mask2');
+        //     var $androidMask3 = $androidActionSheet.find('.weui-mask3');
+        //     $androidActionSheet2.fadeOut(200);
+        //     $androidActionSheet.fadeOut(200);
+        //     $androidMask2.on('click',function () {
+        //         $androidActionSheet.fadeOut(200);
+        //     });
+        //     $androidMask3.on('click',function () {
+        //         $androidActionSheet.fadeOut(200);
+        //     });
+        // });
     }else if($('#my_gift').size()>0){//神庭币转赠页面
         var _token = localStorage.getItem('access_token');
         var app = new Vue({
