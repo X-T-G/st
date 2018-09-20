@@ -2216,29 +2216,21 @@ $(function(){
                                                             window.location.href='../html/pay-success.html';
                                                     }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
                                                             // 弹窗
-                                                            var $androidActionSheet = $('#quit_account');
+                                                            var $androidActionSheet = $('#quit_account2');
                                                             var $androidMask = $androidActionSheet.find('.weui-mask2');
                                                             $androidActionSheet.fadeIn(200);
                                                             $androidMask.css('display','block');
-                                                            $('#quit_account .text_info').html('支付取消!');
-                                                            $androidMask.on('click',function () {
-                                                                $androidMask.css('display','none');
-                                                                $androidActionSheet.fadeOut(200);
-                                                            });
+                                                            $('#quit_account2 .text_info').html('支付取消!');
                                                             setTimeout(function(){
                                                                 window.location.href='../html/person.html';
                                                             },1000)
                                                     }else if(res.err_msg == "get_brand_wcpay_request:fail"){
                                                             // 弹窗
-                                                            var $androidActionSheet = $('#quit_account');
+                                                            var $androidActionSheet = $('#quit_account2');
                                                             var $androidMask = $androidActionSheet.find('.weui-mask2');
                                                             $androidActionSheet.fadeIn(200);
                                                             $androidMask.css('display','block');
-                                                            $('#quit_account .text_info').html('支付失败!');
-                                                            $androidMask.on('click',function () {
-                                                                $androidMask.css('display','none');
-                                                                $androidActionSheet.fadeOut(200);
-                                                            });
+                                                            $('#quit_account2 .text_info').html('支付失败!');
                                                             setTimeout(function(){
                                                                 window.location.href='../html/person.html';
                                                             },1000)
@@ -2368,29 +2360,21 @@ $(function(){
                                                     window.location.href='../html/pay-success.html';
                                             }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
                                                 // 弹窗
-                                                var $androidActionSheet = $('#quit_account');
+                                                var $androidActionSheet = $('#quit_account2');
                                                 var $androidMask = $androidActionSheet.find('.weui-mask2');
                                                 $androidActionSheet.fadeIn(200);
                                                 $androidMask.css('display','block');
-                                                $('#quit_account .text_info').html('支付取消!');
-                                                $androidMask.on('click',function () {
-                                                    $androidMask.css('display','none');
-                                                    $androidActionSheet.fadeOut(200);
-                                                });
+                                                $('#quit_account2 .text_info').html('支付取消!');
                                                 setTimeout(function(){
                                                     window.location.href='../html/person.html';
                                                 },1000)
                                             }else if(res.err_msg == "get_brand_wcpay_request:fail"){
                                                 // 弹窗
-                                                var $androidActionSheet = $('#quit_account');
+                                                var $androidActionSheet = $('#quit_account2');
                                                 var $androidMask = $androidActionSheet.find('.weui-mask2');
                                                 $androidActionSheet.fadeIn(200);
                                                 $androidMask.css('display','block');
-                                                $('#quit_account .text_info').html('支付失败!');
-                                                $androidMask.on('click',function () {
-                                                    $androidMask.css('display','none');
-                                                    $androidActionSheet.fadeOut(200);
-                                                });
+                                                $('#quit_account2 .text_info').html('支付失败!');
                                                 setTimeout(function(){
                                                     window.location.href='../html/person.html';
                                                 },1000)
