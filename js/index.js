@@ -1441,7 +1441,7 @@ $(function(){
                 current:1,//当前页面
                 my_balance:[],//数据
                 datas:[],//初始数据
-                show_modal:true,//欢迎页弹窗
+                show_modal:false,//欢迎页弹窗,默认没有
                 is_agree:false
             },
             created:function(){
