@@ -69,7 +69,9 @@
                             <div class="weui-cell__bd flex-1">
                                 <div class="thumb flex">
                                     <span class="iconfont icon-yue" style="color:#ffb236;"></span>
-                                    <span class="tint">神庭币支付（可用神庭币<i style="font-style: normal;">{{coin}}</i>个）</span>
+                                    <span class="tint"  v-if="datas.totalPrice<=coin && coin >0">神庭币支付（可用神庭币<i style="font-style: normal;">{{coin}}</i>个）</span>
+                                    <span class="tint"  v-if="datas.totalPrice>coin && coin >0">神庭币余额{{coin}}，还需微信支付<i style="font-style: normal;color:#f14731;">{{enogh}}</i>元</span>
+                                    <span class="tint"  v-if="coin == 0">神庭币为0不可选择！</span>
                                 </div>
                             </div>
                             <div class="left_radio">

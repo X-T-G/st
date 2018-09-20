@@ -2098,7 +2098,8 @@ $(function(){
             el: '#payfor_order',
             data: {
                 datas:datas,//初始数据
-                coin:[],
+                coin:[],//
+                enogh:[],
             },
             created:function(){
                 var that = this;
@@ -2119,6 +2120,7 @@ $(function(){
                                 return;
                             }else{//请求到数据
                                 that.coin = data.totalCoin;
+                                that.enogh = Number(Number(datas.totalPrice)-Number(data.totalCoin)).toFixed(2);
                             }
                         }
                         to_login(data);
