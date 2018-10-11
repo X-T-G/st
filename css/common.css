@@ -53,7 +53,7 @@ input[type="color"]:focus,
 .clearfix:after{content: "";display: block;clear: both;}
 input[type="radio"], input[type="checkbox"]{margin-top: 0;}
 button{outline: none;}
-body{background-color:#f7f4ef;}
+body{background-color:#ffff;}
 img{width: 100%;height: auto;}
 input[type="text"],input[type="password"]{-webkit-appearance: none;}/*苹果手机input内阴影*/
 textarea{-webkit-appearance: none;}/*苹果手机input内阴影*/
@@ -292,7 +292,7 @@ img.store_pic{width: 108px;height:108px;}
 
 /* 注册界面 */
 .regist{padding-top:0; }
-.regist .input_row .flex-1 input{border: none;border-bottom: 1px solid #e5e5e5;background-color:#f7f4ef;}
+.regist .input_row .flex-1 input{border: none;border-bottom: 1px solid #e5e5e5af;background-color:#fff;}
 .regist .input_row{padding: 0;}
 .regist .weui-agree__checkbox:checked:before{background-color:#F17355;color: #fff;}
 .regist .weui-agree a{color: #F17355;}
@@ -608,7 +608,7 @@ animation: myfade_in .2s;
 .forget-pay{padding-top: 40px;}
 .forget-pay .forget_menu.weui-actionsheet__menu{padding:60px 10px;text-align: center;}
 .forget-pay .forget_menu .info_te{display: inline-block;height: 30px;line-height: 30px;margin-bottom: 10px;}
-.forget-pay .forget_menu .bar_option{margin: 0 auto;max-width: 230px;height: 40px;line-height: 40px;text-align: center;border: none;}
+.forget-pay .forget_menu .bar_option{margin: 0 auto;min-width: 244px;height: 40px;line-height: 40px;text-align: center;border: none;}
 .forget-pay .forget_menu .bar_option div{width: 50%;border-bottom: 1px solid #e4e4e4;}
 .forget-pay .forget_menu .bar_option div.active{border-bottom: 1px solid #f57d64;color: #f57d64;}
 .forget-pay .forget_menu .input_row{margin-top: 20px;}
@@ -624,11 +624,9 @@ animation: myfade_in .2s;
 .forget-pay .forget_menu .get_code_btn .get_code{display: inline-block;width: 97px;}
 .forget-pay .forget_menu .input_row .flex-1 .get_code_btn.hasinput{width: 97px;}
 .change-pass .info_te .input_row span{display: inline-block;width:70px;text-align: right;}
-
-
-
-
-
+body input{background-color: #fff;}
+.look_pay::after{content: " ";position: absolute;left: 0;top: 42px;right: 0;height: 1px;border-bottom: 1px solid #e5e5e5;color: #e5e5e5;-webkit-transform-origin: 0 0;transform-origin: 0 0;-webkit-transform: scaleY(.5);transform: scaleY(.5);left: 15px;z-index: 2;}
+.m_balance .balance_detail div:last-child .each_cou{border-bottom: 1px solid #e5e5e5;}
 
 
 
