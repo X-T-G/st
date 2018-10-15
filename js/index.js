@@ -2537,11 +2537,13 @@ $(function(){
                             var phone = data.userInfo.phone;
                             if(email.length>0 && phone.length==0){//只有邮箱
                                 $('.re_phone').addClass('dis-no');
+                                $('.re_phone').removeClass('active');
                                 $('.re_email').addClass('active');
                                 $('.email_input').html(email);
                                 $('.phone_input').addClass('dis-no');
                             }else if(email.length==0 && phone.length>0){//只有电话
                                 $('.re_email').addClass('dis-no');
+                                $('.re_email').removeClass('active');
                                 $('.re_phone').addClass('active');
                                 $('.phone_input').html(phone);
                                 $('.email_input').addClass('dis-no');
@@ -2550,6 +2552,7 @@ $(function(){
                                 $('.phone_input').html(phone);
                                 $('.email_input').addClass('dis-no');
                                 $('.re_phone').addClass('active');
+                                $('.re_email').removeClass('active');
                             }
                         }else{
     
