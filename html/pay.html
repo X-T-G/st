@@ -88,6 +88,27 @@
                     </div>
                 </div>
             </div>
+             <!-- 输入交易密码-->
+             <div class="weui-skin_android pay_for_modal" id="quit_account4" style="opacity: 0; display: none;">
+                <div class="weui-mask4" style="height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 1000;transition: none 0.5s ease;display: none;"></div>
+                <div class="weui-actionsheet">
+                    <div class="weui-actionsheet__menu gift_menu" style="padding: 20px;text-align: center;">
+                        <div class="text_info" style="font-size: 16px;margin: 10px 0;">请设置支付密码：
+                            <input style="height: 30px;line-height: 30px;padding: 0 10px;border: 1px solid #e5e5e5;margin-top: 10px;" class="user_pass" type="password" maxlength="6" placeholder="6位数字" oninput="if(value.length>6)value=value.slice(0,6)" >
+                        </div>
+                        <p class="input_error dis-no" style="text-align:left;color:#fd5749;font-size: 12px;padding-left: 40px;padding-bottom: 5px;"></p>                        
+                        <div class="flex">
+                            <div class="flex-1">
+                                <button type="button" class="quit_sure" v-on:click="set_pass">确认</button>
+                            </div>
+                            <div class="flex-1">
+                                <button type="button" class="time_cancel">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="weui-toptips weui-toptips_warn js_tooltips" style="display: none;" id = "regist_info">密码设置成功！</div>
             <!-- 输入交易密码-->
             <div class="weui-skin_android pay_for_modal" id="quit_account3" style="opacity: 0; display: none;">
                 <div class="weui-mask3"></div>

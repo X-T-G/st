@@ -2166,16 +2166,46 @@ $(function(){
                         }
                         if(pay_way.hasClass('icon-yue')){//余额支付
                             if (totalPrice<=_totalCoin) {//神庭币够支付
-                                // 弹窗
-                                var $androidActionSheet = $('#quit_account3');
-                                var $androidMask = $androidActionSheet.find('.weui-mask3');
-                                $androidActionSheet.fadeIn(200);
-                                $androidMask.css('display','block');
-                                $androidMask.fadeIn(200);
-                                $androidMask.on('click',function () {
-                                    $androidMask.css('display','none');
-                                    $androidActionSheet.fadeOut(200);
+                                // ajax请求的方法
+                                var _token = localStorage.getItem('access_token');
+                                var that = this;
+                                $.ajax({//发起请求,查询是否设置支付密码
+                                    headers: {
+                                        'Authorization': 'bearer '+_token
+                                    },
+                                    type: "GET",
+                                    url:weixin_url + '/user/pay-password',
+                                    contentType:"application/json",
+                                    success: function(data){
+                                        if (data.code == 0) {
+                                            if(data.payPassword){//如果已经设置支付密码
+                                                // 弹窗
+                                                var $androidActionSheet = $('#quit_account3');
+                                                var $androidMask = $androidActionSheet.find('.weui-mask3');
+                                                $androidActionSheet.fadeIn(200);
+                                                $androidMask.css('display','block');
+                                                $androidMask.fadeIn(200);
+                                                $androidMask.on('click',function () {
+                                                    $androidMask.css('display','none');
+                                                    $androidActionSheet.fadeOut(200);
+                                                });
+                                            }else{//若未设置支付密码
+                                                // 弹窗
+                                                var $androidActionSheet = $('#quit_account4');
+                                                var $androidMask = $androidActionSheet.find('.weui-mask4');
+                                                $androidActionSheet.fadeIn(200);
+                                                $androidMask.css('display','block');
+                                                $androidMask.fadeIn(200);
+                                                $androidMask.on('click',function () {
+                                                    $androidMask.css('display','none');
+                                                    $androidActionSheet.fadeOut(200);
+                                                });
+                                            }
+                                        }
+                                        to_login(data);
+                                    }
                                 });
+                                
                             }else{
                                  // 弹窗
                                  var $androidActionSheet = $('#quit_account');
@@ -2480,6 +2510,7 @@ $(function(){
                         return;
                     }
                 },
+                
             }
         });
         // 单选按钮
@@ -2535,6 +2566,60 @@ $(function(){
              $androidMask.css('display','none');
              $androidActionSheet.fadeOut(200);
         })
+        $('#payfor_order #quit_account4 .quit_sure').live('click',function(e){//设置交易密码
+            // ajax请求的方法
+            var _token = localStorage.getItem('access_token');
+            var that = this;
+            var password = $(this).parents('.weui-actionsheet__menu').find('input').val();
+            if(password.length == 6){
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: "POST",
+                    url:weixin_url + '/user/pay-password',
+                    contentType:"application/json",
+                    data: JSON.stringify({payPassword:password}),
+                    success: function(data){
+                        if (data.code == 0) {
+                            $('#regist_info').css('display','block');
+                            setTimeout(function(){
+                                $('#regist_info').css('display','none');
+                            },2000);
+                             // 弹窗
+                             var $androidActionSheet = $('#quit_account3');
+                             var $androidActionSheet2 = $('#quit_account4');
+                             var $androidMask = $androidActionSheet.find('.weui-mask3');
+                             var $androidMask2 = $androidActionSheet2.find('.weui-mask4');
+                             $androidActionSheet.fadeIn(200);
+                             $androidActionSheet2.fadeOut(200);
+                             $androidMask.css('display','block');
+                             $androidMask2.css('display','none');
+                             $androidMask.fadeIn(200);
+                             $androidMask2.fadeOut(200);
+                             $androidMask.on('click',function () {
+                                 $androidMask.css('display','none');
+                                 $androidActionSheet.fadeOut(200);
+                             });
+                        }
+                        to_login(data);
+                    }
+                });
+            }else{
+                $('#payfor_order .input_error').removeClass('dis-no');
+                $('#payfor_order .input_error').html('密码格式错误！');
+                setTimeout(function(){
+                    $('#payfor_order .input_error').addClass('dis-no');
+                    $('#payfor_order .input_error').html(''); 
+                },1000)
+            }
+        });
+        $('#payfor_order #quit_account4 .time_cancel').live('click',function(e){//设置交易密码
+            var $androidActionSheet = $('#quit_account4');
+            var $androidMask = $androidActionSheet.find('.weui-mask4');
+            $androidActionSheet.fadeOut(200);
+            $androidMask.css('display','none');
+        });
     }else if($('.forget-pay.forget_pass').size()>0){//找回支付密码和登录密码/修改登录密码和支付密码
             // 页面请求发ajax
             var _token = localStorage.getItem('access_token');
