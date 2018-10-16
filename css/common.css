@@ -627,9 +627,9 @@ animation: myfade_in .2s;
 body input{background-color: #fff;}
 .look_pay::after{content: " ";position: absolute;left: 0;top: 42px;right: 0;height: 1px;border-bottom: 1px solid #e5e5e5;color: #e5e5e5;-webkit-transform-origin: 0 0;transform-origin: 0 0;-webkit-transform: scaleY(.5);transform: scaleY(.5);left: 15px;z-index: 2;}
 .m_balance .balance_detail div:last-child .each_cou{border-bottom: 1px solid #e5e5e5;}
-
-
-
-
-
+/* 神庭公益 */
+.welfare{padding: 40px 20px;}
+.welfare .welfare_container .flex-left{width:210px;font-size:16px;margin: 40px auto;background-color: #F17355;color: #fff;height: 40px;border-radius: 30px;line-height: 40px;text-align: center;}
+.welfare .welfare_container .flex-1{line-height:120px;font-size:14px;color: #f17355;margin-left:10px;padding-top: 10px; }
+.welfare .welfare_container .flex-left a{font-size:16px;color: #fff;}
 
