@@ -1609,25 +1609,40 @@ $(function(){
             var _token = localStorage.getItem('access_token');
             var that = this;
             var password = $(this).parents('.weui-actionsheet__menu').find('input').val();
-            $.ajax({//发起请求
-                headers: {
-                    'Authorization': 'bearer '+_token
-                },
-                type: "POST",
-                url:weixin_url + '/user/pay-password',
-                contentType:"application/json",
-                data: JSON.stringify({payPassword:password}),
-                success: function(data){
-                    if (data.code == 0) {
-                        $('#regist_info').css('display','block');
-                        setTimeout(function(){
-                            $('#regist_info').css('display','none');
-                            window.location.href='./gift.html';
-                        },2000);
+            if(password.length == 6){
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: "POST",
+                    url:weixin_url + '/user/pay-password',
+                    contentType:"application/json",
+                    data: JSON.stringify({payPassword:password}),
+                    success: function(data){
+                        if (data.code == 0) {
+                            $('#regist_info').css('display','block');
+                            setTimeout(function(){
+                                $('#regist_info').css('display','none');
+                                window.location.href='./gift.html';
+                            },2000);
+                        }
+                        to_login(data);
                     }
-                    to_login(data);
-                }
-            });
+                });
+            }else{
+                $('#my_coin .input_error').removeClass('dis-no');
+                $('#my_coin .input_error').html('密码格式错误！');
+                setTimeout(function(){
+                    $('#my_coin .input_error').addClass('dis-no');
+                    $('#my_coin .input_error').html(''); 
+                },1000)
+            }
+        });
+        $('#my_coin #quit_account2 .time_cancel').live('click',function(e){//设置交易密码
+            var $androidActionSheet = $('#quit_account2');
+            var $androidMask = $androidActionSheet.find('.weui-mask2');
+            $androidActionSheet.fadeOut(200);
+            $androidMask.css('display','none');
         });
         // $('#my_coin .weui-skin_android .weui-actionsheet button.time_cancel').live('click',function(){
         //     var $androidActionSheet2 = $('#quit_account2');
