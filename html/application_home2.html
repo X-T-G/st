@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>神庭医馆</title>
+        <link type="image/x-icon" rel="shortcut icon" href="../images/logo.png">
+        <link rel="stylesheet" href="../css/mui.min.css">        
+        <link rel="stylesheet" href="../css/common.css">
+        <link rel="stylesheet" href="../css/weui.min.css">
+        <link rel="stylesheet" href="../css/jquery-weui.min.css">
+        <script src="../js/zepto.min.js"></script>
+        <script src="../js/vue.min.js"></script>
+        <script src="../js/index.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    </head>
+    <body>
+        <div class="header">
+            申请神庭公益金
+            <span>
+                <img src="../images/back_gery.png" alt="">
+            </span>
+        </div>
+        <div class="welfare_home " id="welfare_home2">
+            <h2>病情陈述</h2>
+            <div class="flex info_row weui-cells">
+                <p class="left_info">病情程度：</p>
+                <div class="flex-1">
+                    <div class="weui-cell__bd">
+                        <select class="weui-select" name="select">
+                            <option value="0">请选择</option>
+                            <option value="1">普通</option>
+                            <option value="2">中等</option>
+                            <option value="3">严重</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="flex info_row weui-cells disease">
+                <p class="left_info">病情诊断：</p>
+                <div class="flex-1">
+                    <!-- <input type="text"> -->
+                    <textarea  class="flex-1 input_row" name="" id="" cols="30" rows="10"></textarea>
+                </div>
+            </div>
+            <!--图片上传-->
+            <div class="weui-gallery" id="gallery">
+                <span class="weui-gallery__img" id="galleryImg"></span>
+                <div class="weui-gallery__opr">
+                    <a href="javascript:" class="weui-gallery__del">
+                        <i class="weui-icon-delete weui-icon_gallery-delete"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <div class="weui-uploader">
+                            <div class="weui-uploader__hd">
+                                <p class="weui-uploader__title">图片上传</p>
+                            </div>
+                            <div class="weui-uploader__bd">
+                                <ul class="weui-uploader__files" id="uploaderFiles">
+                                    
+                                </ul>
+                                <div class="weui-uploader__input-box">
+                                    <input id="uploaderInput" class="weui-uploader__input zjxfjs_file" type="file" accept="image/*" multiple="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="apply_btn">
+                <a href="./application_home3.html">下一步</a>
+            </div>
+        </div>
+        <script src="../js/jquery-weui.min.js"></script>
+        <script type="text/javascript" src="../js/mui.min.js"></script>
+        <script>
+            mui.init();
+            $(function() {
+                var tmpl = '<li class="weui-uploader__file" style="background-image:url(#url#)"></li>',
+                    $gallery = $("#gallery"),
+                    $galleryImg = $("#galleryImg"),
+                    $uploaderInput = $("#uploaderInput"),
+                    $uploaderFiles = $("#uploaderFiles");
+        
+                    $uploaderInput.on("change", function(e) {
+                        var src, url = window.URL || window.webkitURL || window.mozURL,
+                        files = e.target.files;
+                        for(var i = 0, len = files.length; i < len; ++i) {
+                            var file = files[i];
+        
+                            if(url) {
+                                src = url.createObjectURL(file);
+                            } else {
+                                src = e.target.result;
+                            }
+        
+                            $uploaderFiles.append($(tmpl.replace('#url#', src)));
+                        }
+                    });
+                var index; //第几张图片
+                $uploaderFiles.on("click", "li", function() {
+                    index = $(this).index();
+                    $galleryImg.attr("style", this.getAttribute("style"));
+                    $gallery.fadeIn(100);
+                });
+                $gallery.on("click", function() {
+                    $gallery.fadeOut(100);
+                });
+                //删除图片
+                $(".weui-gallery__del").click(function() {
+                    $uploaderFiles.find("li").eq(index).remove();
+                });
+            });
+        </script>
+
+    </body>
+</html>
