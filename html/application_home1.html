@@ -6,11 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>神庭医馆</title>
     <link type="image/x-icon" rel="shortcut icon" href="../images/logo.png">
-    <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/weui.min.css">
+    <link rel="stylesheet" href="../css/LArea.css">
+    <link rel="stylesheet" href="../css/common.css">
     <script src="../js/zepto.min.js"></script>
     <script src="../js/vue.min.js"></script>
     <script src="../js/index.js"></script>
+    <script src="../js/LArea.js"></script>
+    <script src="../js/LAreaData1.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 </head>
 
@@ -83,12 +86,10 @@
             <p class="left_info">现居住地：</p>
             <div class="flex-1">
                 <div class="weui-cell__bd">
-                    <select class="weui-select" name="select1">
-                        <option value="0">请选择</option>
-                        <option value="1">已婚</option>
-                        <option value="2">未婚</option>
-                        <option value="3">离异</option>
-                    </select>
+                    <div class="content-block">
+                        <input id="demo1" type="text" readonly placeholder="城市选择特效"  value="广东省,深圳市,南山区"/>
+                        <input id="value1" type="hidden" value="20,234,504"/>
+                    </div>
                 </div>
             </div>
         </div>
@@ -98,10 +99,20 @@
                 <div class="weui-cell__bd">
                     <select class="weui-select" name="select1">
                         <option value="0">请选择</option>
-                        <option value="1">在职</option>
-                        <option value="2">待职</option>
-                        <option value="3">个体</option>
-                        <option value="3">个体</option>
+                        <option value="1">各级政府部门、企事业单位、党政机关和公众团体的领导者</option>
+                        <option value="2">专业技术人员（教师、医生、工程技术人员、作家等专业人员）</option>
+                        <option value="3">职员（从事一般性事务工作的人员）</option>
+                        <option value="4">商务人员</option>
+                        <option value="5">第三产业服务人员</option>
+                        <option value="6">商务人员</option>
+                        <option value="7">产业工人</option>
+                        <option value="8">从事农林牧渔业的劳动者</option>
+                        <option value="9">家庭主妇</option>
+                        <option value="10">学生</option>
+                        <option value="11">私营企业主</option>
+                        <option value="12">失业</option>
+                        <option value="13">离退休人员</option>
+                        <option value="14">其他</option>
                     </select>
                 </div>
             </div>
@@ -153,6 +164,19 @@
             </div>
         </div>
     </div>
+    <script>
+        var area1 = new LArea();
+        area1.init({
+            'trigger': '#demo1', //触发选择控件的文本框，同时选择完毕后name属性输出到该位置
+            'valueTo': '#value1', //选择完毕后id属性输出到该位置
+            'keys': {
+                id: 'id',
+                name: 'name'
+            }, //绑定数据源相关字段 id对应valueTo的value属性输出 name对应trigger的value属性输出
+            'type': 1, //数据源类型
+            'data': LAreaData //数据源
+        });
+        area1.value=[1,13,3];//控制初始位置，注意：该方法并不会影响到input的value
+    </script>
 </body>
-
 </html>

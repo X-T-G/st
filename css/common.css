@@ -663,6 +663,9 @@ body input{background-color: #fff;}
 #welfare_home .weui-mask{height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 1000;transition: none 0.5s ease;display: none;}
 #welfare_home .weui-skin_android.welcome_page .weui-actionsheet .weui-actionsheet__menu{text-align: left;max-height: 560px;overflow-y: scroll;padding: 20px;text-align: center;background-color: #fcfcfd;border-radius: 2px;box-shadow: 0 6px 30px 0 rgba(0,0,0,.1);}
 #welfare_home .weui-actionsheet__menu button {width: 60px;height: 28px;background-color: #fff;outline: none;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 4px;}
+#welfare_home input#demo1{height: 30px;line-height: 30px;border: 1px solid #e5e5e5;width: 100%;padding-left: 15px;}
+.gearArea .area_btn{color: #F17355;font-size: 14px;line-height: 1em;text-align: center;padding: .8em 1em;}
+
 
 
 
