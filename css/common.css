@@ -669,4 +669,14 @@ body input{background-color: #fff;}
 #welfare_home1 input#demo2::-moz-placeholder{   /* Mozilla Firefox 19+ */color:black;}
 #welfare_home1 input#demo2:-moz-placeholder{    /* Mozilla Firefox 4 to 18 */color:black;}
 #welfare_home1 input#demo2:-ms-input-placeholder{  /* Internet Explorer 10-11 */ color:black;}
+#welfare_home_all .weui-mask2{height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 1000;transition: none 0.5s ease;display: block;}
+#welfare_home_all  .weui-skin_android .weui-actionsheet__menu {padding: 20px;text-align: center;background-color: #fcfcfd;}
+#welfare_home_all .weui-actionsheet__menu .text_info, #my_coin .weui-actionsheet__menu input {font-size: 16px;margin: 10px 0 0;}
+#welfare_home_all .weui-actionsheet__menu button {width: 60px;height: 28px;background-color: #fff;outline: none;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 4px;}
+#welfare_home_all  .weui-actionsheet__menu input {font-size: 14px;height: 30px;line-height: 30px;padding-left: 6px;margin-bottom: 10px;-webkit-appearance: none;border: 1px solid #e5e5e5;outline: none;box-shadow: none;}
+
+
+
+
+
 
