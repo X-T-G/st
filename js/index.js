@@ -3082,6 +3082,11 @@ $(function(){
         $('#welfare_home1 .weui-mask,#welfare_home1 .agree_sure').live('click',function(){
             $('.welcome_page').css('display','none');
         })
+    }else if($('#welfare_home_all').size()>0){//捐赠最终确认页面
+        $('#welfare_home_all').live('click',function(){
+            $('#quit_account2').css('display','block');
+            $('#quit_account2').css('opacity','1');
+        })
     }
 });
 
