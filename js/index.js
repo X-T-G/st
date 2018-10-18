@@ -3078,6 +3078,10 @@ $(function(){
                 }
             }
         })
+    }else if($('#welfare_home1').size()>0){//神庭公益资助申请页面1
+        $('#welfare_home1 .weui-mask,#welfare_home1 .agree_sure').live('click',function(){
+            $('.welcome_page').css('display','none');
+        })
     }
 });
 
