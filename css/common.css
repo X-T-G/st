@@ -629,7 +629,8 @@ body input{background-color: #fff;}
 .m_balance .balance_detail div:last-child .each_cou{border-bottom: 1px solid #e5e5e5;}
 /* 神庭公益 */
 .welfare{padding: 80px 20px;}
-.welfare .welfare_container .flex-left{width:210px;font-size:16px;margin: 40px auto;background-color: #F17355;color: #fff;height: 40px;border-radius: 30px;line-height: 40px;text-align: center;}
+.welfare .welfare_container.can_apply .flex-left{width:210px;font-size:16px;margin: 40px auto;background-color: #F17355;color: #fff;height: 40px;border-radius: 30px;line-height: 40px;text-align: center;}
+.welfare .welfare_container .flex-left{background-color:#939399;color: #fff;width:210px;font-size:16px;margin: 40px auto;height: 40px;border-radius: 30px;line-height: 40px;text-align: center;}
 .welfare .welfare_container .flex-1{line-height:120px;font-size:14px;color: #f17355;margin-left:10px;padding-top: 10px; }
 .welfare .welfare_container .flex-left a{font-size:16px;color: #fff;}
 .welfare_home{padding-top: 60px;}
@@ -695,6 +696,23 @@ body input{background-color: #fff;}
         background-size: cover;
     }
 }
+#welfare_home1 .weui-skin_android.welcome_page .weui-actionsheet .weui-actionsheet__menu{max-height: 560px;}
+#my_coin .weui-skin_android .weui-actionsheet__menu{max-height: 560px;}
+@media screen and (max-width: 320px){
+    .weui-skin_android.welcome_page .weui-actionsheet {
+        width: 280px;
+    }
+    #my_coin .weui-skin_android .weui-actionsheet__menu{
+        max-height: 480px;
+    }
+    #welfare_home1 .weui-skin_android.welcome_page .weui-actionsheet .weui-actionsheet__menu{max-height: 480px;}
+}
+/* #welfare #look_info{background-color:#fd5749;color:#fff;} */
+#welfare .error_info{color:#fd5749;}
+
+
+
+
 
 
 

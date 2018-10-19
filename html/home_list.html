@@ -19,6 +19,24 @@
                 <img src="../images/back_gery.png" alt="">
             </span>
         </div>
-        
+        <!-- 神庭币使用详情 -->
+        <div class="balance_detail clearfix">
+            <p class="tint cion_detail">神庭币明细</p>
+            <div v-for="balance in my_balance">
+                <div class="each_cou">
+                    <div class="flex">
+                        <div class="flex-1">
+                            <p>{{balance.consumeType.dictName}}</p>
+                            <p class="tint">{{balance.createtime.substring(0,19)}}</p>
+                        </div>
+                        <p class="cou_price"  v-if="balance.coin > 0">+{{balance.coin}}</p>
+                        <p class="cou_price pay" v-if="balance.coin < 0">{{balance.coin}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix fr cli_page">
+            <div class="fl  order_page" v-on:click="change_page" :class=[{'active':(page==current)}]  v-for="page in page.totalPages">{{page}}</div>
+        </div>
     </body>
 </html>

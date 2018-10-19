@@ -3078,6 +3078,54 @@ $(function(){
                 }
             }
         })
+    }else if($('#welfare').size()>0){//神庭公益主页面
+        var _token = localStorage.getItem('access_token');
+        var _url = weixin_url+'/public-benefit/aidedQualification';
+        var app = new Vue({
+            el: '#welfare',
+            data: {
+                loading:true,
+                showpage:false,
+                can_apply:true,
+                datas:[],//初始数据
+            },
+            created:function(){
+                var that = this;
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: 'GET',
+                    url:_url,
+                    contentType:"application/json",
+                    success: function(data){
+                        that.loading = false;
+                        that.showpage = true;
+                        if (data.code !== 0) {
+                            that.can_apply = false;
+                        }else{
+                            that.can_apply = true;
+                        }
+                        to_login(data);
+                    }
+                });
+            },
+            methods:{
+                
+            }
+        });
+        $('#welfare .appli_home').live('click',function(){
+            if ($(this).hasClass('can_apply')) {
+                window.location.href="../html/application_home1.html";
+            }else{
+                $('.error_info').html('抱歉，您暂时不满足申请条件！');
+                $('.error_info').css('display','block');
+                setTimeout(function(){
+                    $('.error_info').html('');
+                    $('.error_info').css('display','none');
+                }, 5000); 
+            }
+        })
     }else if($('#welfare_home1').size()>0){//神庭公益资助申请页面1
         $('#welfare_home1 .weui-mask,#welfare_home1 .agree_sure').live('click',function(){
             $('.welcome_page').css('display','none');
@@ -3088,7 +3136,7 @@ $(function(){
             $('#quit_account2').css('opacity','1');
         })
         $('#welfare_home_all .weui-mask2').live('click',function(){
-            
+
         })
     }
 });

@@ -20,21 +20,29 @@
             </span>
         </div>
         <div class="welfare " id="welfare">
-            <div class="flex welfare_container">
-                <div class="flex-left"><a href="./application_way.html">捐赠神庭公益</a></div>
-                <!-- <div class="flex-1">加入须知</div> -->
-            </div>
-            <div class="flex  walfare_history">
-                    <div class="flex-left"><a href="./way_list.html">我的捐赠明细</a></div>
+            <div id="welfare_contain" :class=[{"dis-no":(showpage==false)}]>
+                <div class="flex welfare_container can_apply">
+                    <div class="flex-left"><a href="./application_way.html">捐赠神庭公益</a></div>
+                    <!-- <div class="flex-1">加入须知</div> -->
+                </div>
+                <div class="flex  walfare_history">
+                        <div class="flex-left"><a href="./way_list.html">我的捐赠明细</a></div>
+                        <!-- <div class="flex-1">申请须知</div> -->
+                    </div>
+                <div class="flex welfare_container appli_home"  :class=[{"can_apply":(can_apply==true)}]>
+                    <div class="flex-left"><a href="javascript:;">申请神庭公益资助</a></div>
                     <!-- <div class="flex-1">申请须知</div> -->
                 </div>
-            <div class="flex welfare_container">
-                <div class="flex-left"><a href="./application_home1.html">申请神庭公益资助</a></div>
-                <!-- <div class="flex-1">申请须知</div> -->
+                <p class="error_info" style="height: 24px;line-height: 24px;text-align: left;padding-left: 40px;"></p>
+                <div class="flex  walfare_history">
+                    <div class="flex-left"><a href="./home_list.html">我的接受资助明细</a></div>
+                    <!-- <div class="flex-1">申请须知</div> -->
+                </div>
             </div>
-            <div class="flex  walfare_history">
-                <div class="flex-left"><a href="./home_list.html">我的接受资助明细</a></div>
-                <!-- <div class="flex-1">申请须知</div> -->
+            <!-- 加载效果 -->
+            <div class="weui-loadmore" :class=[{"dis-no":(loading==false)}]>
+                <i class="weui-loading"></i>
+                <span class="weui-loadmore__tips">正在加载</span>
             </div>
         </div>
     </body>
