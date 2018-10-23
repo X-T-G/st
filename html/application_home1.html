@@ -26,157 +26,157 @@
         </span>
     </div>
     <div class="welfare_home " id="welfare_home1">
-        <h2>个人资料填写</h2>
-        <!-- <div class="info_container"> -->
-        <div class="flex info_row">
-            <p class="left_info">姓名：</p>
-            <!-- <input type="text" class="flex-1 input_row"> -->
-            <p>XXXX</p>
-        </div>
-        <!-- </div> -->
-        <!-- <div class="info_container"> -->
-        <div class="flex info_row">
-            <p class="left_info">性别：</p>
-            <!-- <input type="text" class="flex-1 input_row"> -->
-            <p>女</p>
-        </div>
-        <!-- </div> -->
-        <!-- <div class="info_container"> -->
-        <div class="flex info_row">
-            <p class="left_info">身份证号码：</p>
-            <!-- <input type="text" class="flex-1 input_row"> -->
-            <p>513030********</p>
-        </div>
-        <!-- </div>  -->
-        <!-- <div class="flex info_row">
-                <p class="left_info">家庭人口：</p>
-                <input type="text" class="flex-1 input_row">
-            </div>
+        <div :class=[{"dis-no":(showpage==false)}]>
+            <h2>个人资料填写</h2>
+            <!-- <div class="info_container"> -->
             <div class="flex info_row">
+                <p class="left_info">姓名：</p>
+                <!-- <input type="text" class="flex-1 input_row"> -->
+                <p>XXXX</p>
+            </div>
+            <!-- </div> -->
+            <!-- <div class="info_container"> -->
+            <div class="flex info_row">
+                <p class="left_info">性别：</p>
+                <!-- <input type="text" class="flex-1 input_row"> -->
+                <p>女</p>
+            </div>
+            <!-- </div> -->
+            <!-- <div class="info_container"> -->
+            <div class="flex info_row">
+                <p class="left_info">身份证号码：</p>
+                <!-- <input type="text" class="flex-1 input_row"> -->
+                <p>513030********</p>
+            </div>
+            <!-- </div>  -->
+            <!-- <div class="flex info_row">
+                    <p class="left_info">家庭人口：</p>
+                    <input type="text" class="flex-1 input_row">
+                </div>
+                <div class="flex info_row">
+                    <p class="left_info">婚姻状况：</p>
+                    <input type="text" class="flex-1 input_row">
+                </div> -->
+            <div class="flex info_row weui-cells">
+                <p class="left_info">家庭人口：</p>
+                <div class="flex-1">
+                    <div class="weui-cell__bd">
+                        <select class="weui-select" name="select">
+                            <option value="0">请选择</option>
+                            <option value="1">2人以内</option>
+                            <option value="2">2-4人</option>
+                            <option value="3">4-5人</option>
+                            <option value="4">5人以上</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="flex info_row weui-cells">
                 <p class="left_info">婚姻状况：</p>
-                <input type="text" class="flex-1 input_row">
-            </div> -->
-        <div class="flex info_row weui-cells">
-            <p class="left_info">家庭人口：</p>
-            <div class="flex-1">
-                <div class="weui-cell__bd">
-                    <select class="weui-select" name="select">
-                        <option value="0">请选择</option>
-                        <option value="1">2人以内</option>
-                        <option value="2">2-4人</option>
-                        <option value="3">4-5人</option>
-                        <option value="4">5人以上</option>
-                    </select>
+                <div class="flex-1">
+                    <div class="weui-cell__bd">
+                        <select class="weui-select" name="select1">
+                            <option value="0">请选择</option>
+                            <option value="1">已婚</option>
+                            <option value="2">未婚</option>
+                            <option value="3">离异</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="flex info_row weui-cells">
-            <p class="left_info">婚姻状况：</p>
-            <div class="flex-1">
-                <div class="weui-cell__bd">
-                    <select class="weui-select" name="select1">
-                        <option value="0">请选择</option>
-                        <option value="1">已婚</option>
-                        <option value="2">未婚</option>
-                        <option value="3">离异</option>
-                    </select>
+            <div class="flex info_row weui-cells">
+                <p class="left_info">现居住地：</p>
+                <div class="flex-1">
+                    <div class="weui-cell__bd">
+                        <div class="content-block">
+                            <input id="demo2" type="text" readonly placeholder="请选择" />
+                            <input id="value2" type="hidden" />
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="flex info_row weui-cells">
-            <p class="left_info">现居住地：</p>
-            <div class="flex-1">
-                <div class="weui-cell__bd">
-                    <div class="content-block">
-                        <input id="demo2" type="text" readonly placeholder="请选择" />
-                        <input id="value2" type="hidden" />
+            <div class="flex info_row weui-cells">
+                <p class="left_info">现工作情况：</p>
+                <div class="flex-1">
+                    <div class="weui-cell__bd">
+                        <select class="weui-select" name="select1">
+                            <option value="0">请选择</option>
+                            <option value="1">各级政府部门、企事业单位、党政机关和公众团体的领导者</option>
+                            <option value="2">专业技术人员（教师、医生、工程技术人员、作家等专业人员）</option>
+                            <option value="3">职员（从事一般性事务工作的人员）</option>
+                            <option value="4">商务人员</option>
+                            <option value="5">第三产业服务人员</option>
+                            <option value="6">商务人员</option>
+                            <option value="7">产业工人</option>
+                            <option value="8">从事农林牧渔业的劳动者</option>
+                            <option value="9">家庭主妇</option>
+                            <option value="10">学生</option>
+                            <option value="11">私营企业主</option>
+                            <option value="12">失业</option>
+                            <option value="13">离退休人员</option>
+                            <option value="14">其他</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="flex info_row weui-cells">
+                <p class="left_info">个人年收入：</p>
+                <div class="flex-1">
+                    <div class="weui-cell__bd">
+                        <select class="weui-select" name="select2">
+                            <option value="0">请选择</option>
+                            <option value="1">2万以内</option>
+                            <option value="2">2-5万</option>
+                            <option value="3">5-10万</option>
+                            <option value="4">10-20万</option>
+                            <option value="5">20万以上</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="apply_btn">
+                <a href="./application_home2.html">下一步</a>
+            </div>
+            <div id="quit_account" class="weui-skin_android welcome_page" :class=[{"dis-no":(show_modal==false)}]>
+                <div class="weui-mask" style="display:block;" :class=[{"dis-no":(show_modal==false)}]></div>
+                <div class="weui-actionsheet">
+                    <div class="weui-actionsheet__menu" style="text-align: left; overflow-y: scroll;">
+                        <div class="text_info" style="text-align: center;">神庭公益资助申请声明</div>
+                        <div style="font-size: 12px;">
+                            <p>1.申请人必须为神庭君实名认证半年以上用户；</p>
+                            <p>2.申请人需要如实填写资料，不得有虚假信息；</p>
+                            <p>3.申请账户不得替他人申请；</p>
+                            <p>4.申请人需要填写期望得到资助的金额和期限；</p>
+                            <p>5.申请人需提交病情陈述，并勾选同意诚信声明；</p>
+                            <p>6.申请提交后等待系统审核，审核的结果存在不通过、部分通过和完全通过的可能性；</p>
+                            <p>7.获得资助的神庭币在资助期限内平均按月分发到申请账号；</p>
+                            <p>8.获得资助的神庭币在资助期限内无权转赠给他人；</p>
+                            <p>9.获得资助的神庭币在资助期限到期时未使用的部分将被退回神庭公益；-84179918；</p>
+                            <p>10.申请人账户若发生虚假申请或其他损害他人利益情况时，该申请账户可能被冻结；</p>
+                            <p>11.神庭公益资助仅限于用户在神庭医馆消费时进行抵扣，不做其他用途；</p>
+                            <p>12.神庭公益资助旨在减轻用户在医疗方面的消费负担，对用户不承担疗效方面的承诺及相关责任。</p>
+                            <p>13.获赠的神庭币在使用时适用于神庭币使用须知及免责申明（201809版）；</p>
+                            <p>14.只要在成都神庭科技公司和神庭医馆（成都高新神庭诊所有限公司）存续期内，神庭君用户均可使用神庭币进行消费抵扣，若发生因各种不可抗拒因素如自然灾害、国家政策因素或公司关闭清算等情况，造成神庭币无法继续使用时，所有账户中的神庭币将被清零且成都神庭科技公司和神庭医馆不承担赔偿或补偿责任；</p>
+                            <p>15.用户在使用过程中若有疑问和问题可与公司客服联系，客服电话：028-84179918；</p>
+                            <p>16.成都神庭科技公司对本使用须知及免责申明保留适时进行修改和发布的权利；</p>
+                            <p>17.神庭币发放和使用的最终解释权归成都神庭科技公司所有。</p>
+                        </div>
+                        <div class="input_row flex"><label for="weuiAgree" class="weui-agree" style="margin: 0px auto;"><input
+                                    id="weuiAgree" type="checkbox" class="weui-agree__checkbox"> <span class="weui-agree__text">
+                                    我已阅读并同意以上须知
+                                </span></label></div>
+                        <div class="flex" style="text-align: center; margin: 10px;" v-on:click="agree_info">
+                            <div class="flex-1"><button type="button" class="agree_sure">确认</button></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="flex info_row weui-cells">
-            <p class="left_info">现工作情况：</p>
-            <div class="flex-1">
-                <div class="weui-cell__bd">
-                    <select class="weui-select" name="select1">
-                        <option value="0">请选择</option>
-                        <option value="1">各级政府部门、企事业单位、党政机关和公众团体的领导者</option>
-                        <option value="2">专业技术人员（教师、医生、工程技术人员、作家等专业人员）</option>
-                        <option value="3">职员（从事一般性事务工作的人员）</option>
-                        <option value="4">商务人员</option>
-                        <option value="5">第三产业服务人员</option>
-                        <option value="6">商务人员</option>
-                        <option value="7">产业工人</option>
-                        <option value="8">从事农林牧渔业的劳动者</option>
-                        <option value="9">家庭主妇</option>
-                        <option value="10">学生</option>
-                        <option value="11">私营企业主</option>
-                        <option value="12">失业</option>
-                        <option value="13">离退休人员</option>
-                        <option value="14">其他</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="flex info_row weui-cells">
-            <p class="left_info">个人年收入：</p>
-            <div class="flex-1">
-                <div class="weui-cell__bd">
-                    <select class="weui-select" name="select2">
-                        <option value="0">请选择</option>
-                        <option value="1">2万以内</option>
-                        <option value="2">2-5万</option>
-                        <option value="3">5-10万</option>
-                        <option value="4">10-20万</option>
-                        <option value="5">20万以上</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="apply_btn">
-            <a href="./application_home2.html">下一步</a>
-        </div>
-        <div id="quit_account" class="weui-skin_android welcome_page">
-            <div class="weui-mask" style="display:block;"></div>
-            <div class="weui-actionsheet">
-                <div class="weui-actionsheet__menu" style="text-align: left; overflow-y: scroll;">
-                    <div class="text_info" style="text-align: center;">神庭公益须知</div>
-                    <div style="font-size: 12px;">
-                        <p>1.神庭币由成都神庭科技公司为了回馈广大神庭君用户，由神庭君系统根据一定运算规则而赠与神庭君用户使用；</p>
-                        <p>2.神庭币可用于抵扣用户在神庭医馆（成都高新神庭诊所有限公司）进行消费，不得用于其他目的；</p>
-                        <p>3.神庭币可在神庭君注册用户之间进行转赠；</p>
-                        <p>4.用户在进行转赠或抵扣消费操作时需要输入支付密码进行确认，确认支付后不可退还；</p>
-                        <p>5.用户须妥善保存好自己的神庭君账号及密码，若因个人原因造成密码泄露并导致神庭币错误转移，一切责任均由用户个人自行承担；</p>
-                        <p>6.神庭币在神庭君注册用户之间进行转赠时，若发生经济方面的一切纠纷均由用户自行承担责任，与成都神庭科技公司和神庭医馆无关；</p>
-                        <p>7.对于在2年时间内无任何消费操作的神庭君账户，神庭币将自动清零并不再退回或补发；</p>
-                        <p>8.只要在成都神庭科技公司和神庭医馆（成都高新神庭诊所有限公司）存续期内，神庭君用户均可使用神庭币进行消费抵扣，若发生因各种不可抗拒因素如自然灾害、国家政策因素或公司关闭清算等情况，造成神庭币无法继续使用时，所有账户中的神庭币将被清零且成都神庭科技公司和神庭医馆不承担赔偿或补偿责任；</p>
-                        <p>9.用户在使用过程中若有疑问和问题可与公司客服联系，客服电话：028-84179918；</p>
-                        <p>10.成都神庭科技公司对本使用须知及免责申明保留适时进行修改和发布的权利；</p>
-                        <p>11.神庭币发放和使用的最终解释权归成都神庭科技公司所有。</p>
-                    </div>
-                    <div class="input_row flex"><label for="weuiAgree" class="weui-agree" style="margin: 0px auto;"><input
-                                id="weuiAgree" type="checkbox" class="weui-agree__checkbox"> <span class="weui-agree__text">
-                                我已阅读并同意以上须知
-                            </span></label></div>
-                    <div class="flex" style="text-align: center; margin: 10px;">
-                        <div class="flex-1"><button type="button" class="agree_sure">确认</button></div>
-                    </div>
-                </div>
-            </div>
+        <!-- 加载效果 -->
+        <div class="weui-loadmore" :class=[{"dis-no":(loading==false)}]>
+            <i class="weui-loading"></i>
+            <span class="weui-loadmore__tips">正在加载</span>
         </div>
     </div>
-    <script>
-        var area2 = new LArea();
-        area2.init({
-            'trigger': '#demo2',
-            'valueTo': '#value2',
-            'keys': {
-                id: 'value',
-                name: 'text'
-            },
-            'type': 2,
-            'data': [provs_data, citys_data, dists_data]
-        });
-    </script>
 </body>
 </html>

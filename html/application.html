@@ -29,15 +29,15 @@
                         <div class="flex-left"><a href="./way_list.html">我的捐赠明细</a></div>
                         <!-- <div class="flex-1">申请须知</div> -->
                     </div>
-                <div class="flex welfare_container appli_home"  :class=[{"can_apply":(can_apply==true)}]>
+                <div class="flex welfare_container appli_home" v-on:click="apply_fund"  :class=[{"can_apply":(can_apply==true)}]>
                     <div class="flex-left"><a href="javascript:;">申请神庭公益资助</a></div>
                     <!-- <div class="flex-1">申请须知</div> -->
                 </div>
-                <p class="error_info" style="height: 24px;line-height: 24px;text-align: left;padding-left: 40px;"></p>
                 <div class="flex  walfare_history">
                     <div class="flex-left"><a href="./home_list.html">我的接受资助明细</a></div>
                     <!-- <div class="flex-1">申请须知</div> -->
                 </div>
+                <p class="error_info" style="height: 24px;line-height: 24px;text-align: center;"></p>
             </div>
             <!-- 加载效果 -->
             <div class="weui-loadmore" :class=[{"dis-no":(loading==false)}]>

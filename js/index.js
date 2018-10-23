@@ -3088,6 +3088,7 @@ $(function(){
                 showpage:false,
                 can_apply:true,
                 datas:[],//初始数据
+                error_messege:[],//错误提示
             },
             created:function(){
                 var that = this;
@@ -3103,6 +3104,7 @@ $(function(){
                         that.showpage = true;
                         if (data.code !== 0) {
                             that.can_apply = false;
+                            that.error_messege = data.message;
                         }else{
                             that.can_apply = true;
                         }
@@ -3111,23 +3113,91 @@ $(function(){
                 });
             },
             methods:{
-                
+                apply_fund:function(event){
+                    var that = this;
+                    if ($('.appli_home').hasClass('can_apply')) {
+                        window.location.href="../html/application_home1.html";
+                    }else{
+                        var _content = that.error_messege;
+                        $('.error_info').html(_content);
+                        $('.error_info').css('display','block');
+                        setTimeout(function(){
+                            $('.error_info').html('');
+                            $('.error_info').css('display','none');
+                        }, 5000); 
+                    }
+                }
             }
         });
-        $('#welfare .appli_home').live('click',function(){
-            if ($(this).hasClass('can_apply')) {
-                window.location.href="../html/application_home1.html";
-            }else{
-                $('.error_info').html('抱歉，您暂时不满足申请条件！');
-                $('.error_info').css('display','block');
-                setTimeout(function(){
-                    $('.error_info').html('');
-                    $('.error_info').css('display','none');
-                }, 5000); 
-            }
-        })
     }else if($('#welfare_home1').size()>0){//神庭公益资助申请页面1
-        $('#welfare_home1 .weui-mask,#welfare_home1 .agree_sure').live('click',function(){
+        var _token = localStorage.getItem('access_token');
+        var _url = weixin_url+'/agreement/confirm/agreement_type_benefit_apply';
+        var app = new Vue({
+            el: '#welfare_home1',
+            data: {
+                loading:true,
+                show_modal:true,
+                showpage:false,
+            },
+            created:function(){
+                var that = this;
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: 'GET',
+                    url:_url,
+                    contentType:"application/json",
+                    success: function(data){
+                        that.loading = false;
+                        that.showpage = true;
+                        var area2 = new LArea();
+                        area2.init({
+                            'trigger': '#demo2',
+                            'valueTo': '#value2',
+                            'keys': {
+                                id: 'value',
+                                name: 'text'
+                            },
+                            'type': 2,
+                            'data': [provs_data, citys_data, dists_data]
+                        });
+                        if (data.code == 0) {
+                            that.show_modal = !data.confirm;
+                        }else{
+                            return;
+                        }
+                        to_login(data);
+                    }
+                });
+            },
+            methods:{
+                agree_info:function(event){
+                    var that = this;
+                    var is_agree = $('.welcome_page').find('.weui-agree__checkbox').prop('checked');
+                    if (is_agree) {//如果同意
+                        $.ajax({//发起请求
+                            headers: {
+                                'Authorization': 'bearer '+_token
+                            },
+                            type: "POST",
+                            url:_url,
+                            contentType:"application/json",
+                            success: function(data){
+                                if (data.code == 0) {
+                                    that.show_modal = false;
+                                }
+                                to_login(data);
+                            }
+                        });
+                    }else{
+                        that.show_modal = true; 
+                        return;       
+                    }
+                }
+            }
+        });
+        $('#welfare_home1 .agree_sure').live('click',function(){
             $('.welcome_page').css('display','none');
         })
     }else if($('#welfare_home_all').size()>0){//捐赠最终确认页面
