@@ -26,27 +26,46 @@
         </span>
     </div>
     <div class="welfare_home " id="welfare_home1">
-        <div :class=[{"dis-no":(showpage==false)}]>
+        <div :class=[{"dis-no":(showpage==false)}] style="padding-bottom:60px;">
             <h2>个人资料填写</h2>
             <!-- <div class="info_container"> -->
-            <div class="flex info_row">
+            <div class="flex info_row weui-cells">
                 <p class="left_info">姓名：</p>
-                <!-- <input type="text" class="flex-1 input_row"> -->
-                <p>XXXX</p>
+                <!-- <div class="flex-1">
+                    <input type="text" class=" input_row">
+                </div> -->
+                <p>{{user_info.name}}</p>
             </div>
             <!-- </div> -->
             <!-- <div class="info_container"> -->
-            <div class="flex info_row">
+            <div class="flex info_row weui-cells">
                 <p class="left_info">性别：</p>
-                <!-- <input type="text" class="flex-1 input_row"> -->
-                <p>女</p>
+                <!-- <div class="flex-1">
+                    <div class="weui-cell__bd">
+                        <select class="weui-select" name="select1">
+                            <option value="0">请选择</option>
+                            <option value="1">男</option>
+                            <option value="2">女</option>
+                        </select>
+                    </div>
+                </div> -->
+                <p>{{user_info.gender}}</p>
             </div>
             <!-- </div> -->
             <!-- <div class="info_container"> -->
-            <div class="flex info_row">
+            <div class="flex info_row weui-cells">
                 <p class="left_info">身份证号码：</p>
-                <!-- <input type="text" class="flex-1 input_row"> -->
-                <p>513030********</p>
+                <!-- <div class="flex-1">
+                    <input type="text" class=" input_row">
+                </div> -->
+                <p>{{user_info.idCard}}</p>
+            </div>
+            <div class="flex info_row weui-cells">
+                <p class="left_info">神庭君ID：</p>
+                <!-- <div class="flex-1">
+                    <input type="text" class=" input_row">
+                </div> -->
+                <p>{{user_info.inviteNum}}</p>
             </div>
             <!-- </div>  -->
             <!-- <div class="flex info_row">
@@ -134,8 +153,8 @@
                     </div>
                 </div>
             </div>
-            <div class="apply_btn">
-                <a href="./application_home2.html">下一步</a>
+            <div class="apply_btn" v-on:click="next_step">
+                <a href="javascript:;">下一步</a>
             </div>
             <div id="quit_account" class="weui-skin_android welcome_page" :class=[{"dis-no":(show_modal==false)}]>
                 <div class="weui-mask" style="display:block;" :class=[{"dis-no":(show_modal==false)}]></div>

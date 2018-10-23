@@ -3138,6 +3138,7 @@ $(function(){
                 loading:true,
                 show_modal:true,
                 showpage:false,
+                user_info:[],//初始化用户数据
             },
             created:function(){
                 var that = this;
@@ -3170,6 +3171,22 @@ $(function(){
                         to_login(data);
                     }
                 });
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: 'POST',
+                    url:weixin_url+'/public-benefit/addAidApply',
+                    contentType:"application/json",
+                    success: function(data){
+                        if (data.code == 0) {
+                            that.user_info = data.aidApply;
+                        }else{
+                            return;
+                        }
+                        to_login(data);
+                    }
+                });
             },
             methods:{
                 agree_info:function(event){
@@ -3194,6 +3211,10 @@ $(function(){
                         that.show_modal = true; 
                         return;       
                     }
+                },
+                next_step:function(){
+                    // var 
+                    
                 }
             }
         });

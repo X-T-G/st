@@ -709,6 +709,7 @@ body input{background-color: #fff;}
 }
 /* #welfare #look_info{background-color:#fd5749;color:#fff;} */
 #welfare .error_info{color:#fd5749;}
+#welfare_home1 .weui-cells input{height: 30px;line-height:30px;border: 1px solid #e5e5e5;-webkit-appearance: none;outline: 0;background-color: transparent;width: 100%;font-size: inherit;height: 29px;line-height: 45px;position: relative;z-index: 1;padding-left: 15px;}
 
 
 
