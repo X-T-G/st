@@ -1,17 +1,17 @@
 $(function(){
     // 测试 di
-    // var medicine_url = "http://192.168.0.155:8006/stmedicine";// 测试个人信息
-    // var assistant_url = "http://192.168.0.155:8036/stassistant";// 测试预约
-    // var weixin_url = "http://192.168.0.155:8046/stweixin";// 测试微信
+    var medicine_url = "http://192.168.0.155:8006/stmedicine";// 测试个人信息
+    var assistant_url = "http://192.168.0.155:8036/stassistant";// 测试预约
+    var weixin_url = "http://192.168.0.155:8046/stweixin";// 测试微信
     //线上  
     // var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
     // var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
     // var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
     
      // 测试 tao
-    var medicine_url = "http://192.168.0.2:8006/stmedicine";// 测试个人信息
-    var assistant_url = "http://192.168.0.2:8036/stassistant";// 测试预约
-    var weixin_url = "http://192.168.0.2:8046/stweixin";// 测试微信
+    // var medicine_url = "http://192.168.0.2:8006/stmedicine";// 测试个人信息
+    // var assistant_url = "http://192.168.0.2:8036/stassistant";// 测试预约
+    // var weixin_url = "http://192.168.0.2:8046/stweixin";// 测试微信
     // 公共方法401跳转
     function to_login(data){
         if (data !== undefined && data.code !== undefined){
@@ -3131,17 +3131,19 @@ $(function(){
         });
     }else if($('#welfare_home1').size()>0){//神庭公益资助申请页面1
         var _token = localStorage.getItem('access_token');
-        var _url = weixin_url+'/agreement/confirm/agreement_type_benefit_apply';
         var app = new Vue({
             el: '#welfare_home1',
             data: {
                 loading:true,
                 show_modal:true,
                 showpage:false,
+                ori_data:[],//传给后台的数据
                 user_info:[],//初始化用户数据
                 city_info:[],//城市信息,汇总
                 city_name:[],//市级
                 area_name:[],//地区级
+                is_three:false,//标记是否三层
+                is_select_last:false,//标记是否选择最后一层
             },
             created:function(){
                 var that = this;
@@ -3150,7 +3152,7 @@ $(function(){
                         'Authorization': 'bearer '+_token
                     },
                     type: 'GET',
-                    url:_url,
+                    url:weixin_url+'/agreement/confirm/agreement_type_benefit_apply',
                     contentType:"application/json",
                     success: function(data){
                         that.loading = false;
@@ -3173,6 +3175,7 @@ $(function(){
                     success: function(data){
                         if (data.code == 0) {
                             that.user_info = data.aidApply;
+                            that.ori_data = data.aidApply;
                         }else{
                             return;
                         }
@@ -3195,7 +3198,6 @@ $(function(){
                         to_login(data);
                     }
                 });
-
             },
             methods:{
                 agree_info:function(event){
@@ -3207,7 +3209,7 @@ $(function(){
                                 'Authorization': 'bearer '+_token
                             },
                             type: "POST",
-                            url:_url,
+                            url:weixin_url+'/agreement/confirm/agreement_type_benefit_apply',
                             contentType:"application/json",
                             success: function(data){
                                 if (data.code == 0) {
@@ -3230,7 +3232,9 @@ $(function(){
                         var city_info = that.city_info;
                         var city_length = city_info[_index].children.length;
                         $('.city_name').removeClass('dis-no');
-                        $('.area_name').addClass('dis-no'); 
+                        $('.city_name select').val('请选择');
+                        $('.area_name').addClass('dis-no');
+                        $('.area_name select').val('请选择');
                         if (city_length == 1) {//若为直辖市或者港澳台
                             is_urisdiction = city_info[_index].children[0].children;
                             if (is_urisdiction !== undefined){//直辖市
@@ -3241,6 +3245,8 @@ $(function(){
                         }else{//若非直辖市
                             that.city_name=city_info[_index].children;
                         }
+                        that.is_three = false;
+                        that.is_select_last = false;
                     }
                 },
                 selectVal2:function(){
@@ -3253,18 +3259,88 @@ $(function(){
                         that.area_name=city_name[_index].children;
                         if (city_name[_index].children !== undefined) {//普通省市
                             $('.area_name').removeClass('dis-no');
+                            that.is_three = true;
                         }else{//直辖市和港澳台等
-                            $('.area_name').addClass('dis-no');                        
+                            $('.area_name').addClass('dis-no'); 
+                            that.is_three = false;                       
                         }
                     }
                 },
+                selectVal3:function(){
+                    var that = this;
+                    var _index = $('.area_name .weui-select').val();
+                    if (_index == -1) {
+                        return;
+                    }else{
+                        that.is_select_last = true;//选完最后一级
+                    }
+                },
                 next_step:function(){
-                    var family_num = $('.family_num').val();//家庭人口
-                    var marital = $('.marital').val();//婚姻状况
-                    var work_status = $('.work_status').val();
-                    var year_bunus = $('.year_bunus').val();
-                    var value2 = $('#value2').val();
-                    console.log(value2);
+                    var that = this;
+                    var _token = localStorage.getItem('access_token');
+                    var members = $('.members').val();//家庭人口
+                    var maritalStatus = $('.maritalStatus').val();//婚姻状况
+                    var workDesc = $('.workDesc').val();//工作情况
+                    var income = $('.income').val();//个人年收入
+                    var city_province=document.getElementById('city_province');
+                    var index=city_province.selectedIndex ; // selectedIndex代表的是你所选中项的index
+                    var p_select = city_province.options[index].id;//省份id
+                    var city_name=document.getElementById('city_name');
+                    var index=city_name.selectedIndex ;
+                    var c_select = city_name.options[index].id;//城市id
+                    var area_name=document.getElementById('area_name');
+                    var index=area_name.selectedIndex ;
+                    if(area_name.options[index]==undefined){
+                        var a_select = 'p_select3';
+                    }else{
+                        var a_select = area_name.options[index].id;//地区id
+                    }
+                    if (p_select !== 'p_select1' && c_select == 'p_select2' && a_select == 'p_select3') {//只选了一个级别
+                        $('.error_info').removeClass('dis-no');
+                        setTimeout(function(){
+                            $('.error_info').addClass('dis-no');
+                        }, 3000); 
+                    }else if(p_select !== 'p_select1' && c_select !== 'p_select2' && a_select == 'p_select3'){//只选了两个级别
+                        var is_three = that.is_three;
+                        var is_select_last = that.is_select_last;
+                        if (is_three == false) {//只有两级
+                            var _id = c_select;
+                            var apartment = _id;
+                        }else if(is_three && is_select_last == false){
+                            $('.error_info').removeClass('dis-no');
+                            setTimeout(function(){
+                                $('.error_info').addClass('dis-no');
+                            }, 3000); 
+                        } 
+                    }else if(p_select !== 'p_select1' && c_select !== 'p_select2' && a_select !== 'p_select3'){//三个级别
+                        var _id = a_select;
+                        var apartment = _id;
+                    }else{//一个未选
+                        $('.error_info').removeClass('dis-no');
+                        setTimeout(function(){
+                            $('.error_info').addClass('dis-no');
+                        }, 3000); 
+                    }
+                    if(members!==0 && maritalStatus!==0 && workDesc!== 0 && income!==0 && apartment!==undefined){
+                        var ori_data = that.ori_data;
+                        console.log(ori_data);
+                        // $.ajax({//发起请求
+                        //     headers: {
+                        //         'Authorization': 'bearer '+_token
+                        //     },
+                        //     type: 'POST',
+                        //     url:weixin_url+'/public-benefit/saveAidApply',
+                        //     contentType:"application/json",
+                        //     // success: function(data){
+                        //     //     if (data.code == 0) {
+                        //     //         that.city_info = data.list;
+                        //     //     }else{
+                        //     //         return;
+                        //     //     }
+                        //     //     to_login(data);
+                        //     // }
+                        // });
+                    }
                 }
             }
         });

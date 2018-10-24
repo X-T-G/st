@@ -76,7 +76,7 @@
                 <p class="left_info">家庭人口：</p>
                 <div class="flex-1">
                     <div class="weui-cell__bd">
-                        <select class="weui-select family_num" name="select">
+                        <select class="weui-select members" name="select">
                             <option value="0">请选择</option>
                             <option value="2人以内">2人以内</option>
                             <option value="2-4人">2-4人</option>
@@ -90,7 +90,7 @@
                 <p class="left_info">婚姻状况：</p>
                 <div class="flex-1">
                     <div class="weui-cell__bd">
-                        <select class="weui-select marital" name="select1">
+                        <select class="weui-select maritalStatus" name="select1">
                             <option value="0">请选择</option>
                             <option value="已婚">已婚</option>
                             <option value="未婚">未婚</option>
@@ -99,7 +99,7 @@
                     </div>
                 </div>
             </div>
-            <div class="flex info_row weui-cells">
+            <div class="flex info_row weui-cells apartment">
                 <p class="left_info">现居住地：</p>
                 <div class="flex-1 city_messege flex">
                     <!-- <div class="weui-cell__bd">
@@ -108,32 +108,33 @@
                             <input id="value2" type="hidden" />
                         </div>
                     </div> -->
-                    <div class="city_province">
-                        <select class="weui-select" name="select" v-on:change="selectVal">
-                            <option value="-1">请选择</option>
-                            <option :value="index" v-for="(province,index) in city_info">{{province.dictName}}</option>
+                    <div class="city_province select_option">
+                        <select class="weui-select" name="select" v-on:change="selectVal" id="city_province">
+                            <option value="-1" id="p_select1">请选择</option>
+                            <option :value="index" :id="province.id"  v-for="(province,index) in city_info">{{province.dictName}}</option>
                         </select>
                     </div>
-                    <div class="city_name dis-no">
-                        <select class="weui-select " name="select"  v-on:change="selectVal2">
-                            <option value="-1">请选择</option>
-                            <option :value="index" v-for="(city,index) in city_name"  v-if="city_name.length>0">{{city.dictName}}</option>
-                            <option :value="index" v-else>{{city_name.dictName}}</option>
+                    <div class="city_name dis-no select_option">
+                        <select class="weui-select " name="select"  v-on:change="selectVal2" id="city_name">
+                            <option value="-1" id="p_select2">请选择</option>
+                            <option :value="index" :id="city.id"  v-for="(city,index) in city_name"  v-if="city_name.length>0">{{city.dictName}}</option>
+                            <option :value="index" :id="city_name.id"  v-else>{{city_name.dictName}}</option>
                         </select>
                     </div>
-                    <div class="area_name dis-no">
-                        <select class="weui-select " name="select">
-                            <option value="-1">请选择</option>
-                            <option :value="index" v-for="(area,index) in area_name">{{area.dictName}}</option>
+                    <div class="area_name dis-no select_option">
+                        <select class="weui-select " name="select" v-on:change="selectVal3" id="area_name">
+                            <option value="-1" id="p_select3">请选择</option>
+                            <option :value="index" :id="area.id"  v-for="(area,index) in area_name">{{area.dictName}}</option>
                         </select>
                     </div>
                 </div>
             </div>
+            <p class="error_info dis-no" style="color:#fd5749;height: 24px;line-height: 24px;padding-left: 40px;text-align: center;">请选择完整地址信息！</p>
             <div class="flex info_row weui-cells">
                 <p class="left_info">现工作情况：</p>
                 <div class="flex-1">
                     <div class="weui-cell__bd">
-                        <select class="weui-select work_status" name="select1">
+                        <select class="weui-select workDesc" name="select1">
                             <option value="0">请选择</option>
                             <option value="各级政府部门、企事业单位、党政机关和公众团体的领导者">各级政府部门、企事业单位、党政机关和公众团体的领导者</option>
                             <option value="专业技术人员（教师、医生、工程技术人员、作家等专业人员）">专业技术人员（教师、医生、工程技术人员、作家等专业人员）</option>
@@ -157,7 +158,7 @@
                 <p class="left_info">个人年收入：</p>
                 <div class="flex-1">
                     <div class="weui-cell__bd">
-                        <select class="weui-select year_bunus" name="select2">
+                        <select class="weui-select income" name="select2">
                             <option value="0">请选择</option>
                             <option value="2万以内">2万以内</option>
                             <option value="2-5万">2-5万</option>
