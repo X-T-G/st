@@ -118,13 +118,14 @@
                             <option :value="index" v-for="(province,index) in city_info">{{province.dictName}}</option>
                         </select>
                     </div>
-                    <div class="city_name">
+                    <div class="city_name dis-no">
                         <select class="weui-select " name="select"  v-on:change="selectVal2">
                             <option value="-1">请选择</option>
-                            <option :value="index" v-for="(city,index) in city_name">{{city.dictName}}</option>
+                            <option :value="index" v-for="(city,index) in city_name"  v-if="city_name.length>0">{{city.dictName}}</option>
+                            <option :value="index" v-else>{{city_name.dictName}}</option>
                         </select>
                     </div>
-                    <div class="area_name">
+                    <div class="area_name dis-no">
                         <select class="weui-select " name="select">
                             <option value="-1">请选择</option>
                             <option :value="index" v-for="(area,index) in area_name">{{area.dictName}}</option>

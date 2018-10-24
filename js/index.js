@@ -3224,14 +3224,39 @@ $(function(){
                 selectVal:function(e){
                     var that = this;
                     var _index = $('.city_province .weui-select').val();
-                    var city_info = that.city_info;
-                    that.city_name=city_info[_index].children; 
+                    if (_index == -1) {
+                        return;
+                    }else{
+                        var city_info = that.city_info;
+                        var city_length = city_info[_index].children.length;
+                        $('.city_name').removeClass('dis-no');
+                        $('.area_name').addClass('dis-no'); 
+                        if (city_length == 1) {//若为直辖市或者港澳台
+                            is_urisdiction = city_info[_index].children[0].children;
+                            if (is_urisdiction !== undefined){//直辖市
+                                that.city_name=city_info[_index].children[0].children;
+                            }else{//港澳台
+                                that.city_name=city_info[_index].children;
+                            }
+                        }else{//若非直辖市
+                            that.city_name=city_info[_index].children;
+                        }
+                    }
                 },
                 selectVal2:function(){
                     var that = this;
                     var _index = $('.city_name .weui-select').val();
-                    var city_name = that.city_name;
-                    that.area_name=city_name[_index].children; 
+                    if (_index == -1) {
+                        return;
+                    }else{
+                        var city_name = that.city_name;
+                        that.area_name=city_name[_index].children;
+                        if (city_name[_index].children !== undefined) {//普通省市
+                            $('.area_name').removeClass('dis-no');
+                        }else{//直辖市和港澳台等
+                            $('.area_name').addClass('dis-no');                        
+                        }
+                    }
                 },
                 next_step:function(){
                     var family_num = $('.family_num').val();//家庭人口
