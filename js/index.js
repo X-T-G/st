@@ -3139,6 +3139,9 @@ $(function(){
                 show_modal:true,
                 showpage:false,
                 user_info:[],//初始化用户数据
+                city_info:[],//城市信息,汇总
+                city_name:[],//市级
+                area_name:[],//地区级
             },
             created:function(){
                 var that = this;
@@ -3152,17 +3155,6 @@ $(function(){
                     success: function(data){
                         that.loading = false;
                         that.showpage = true;
-                        var area2 = new LArea();
-                        area2.init({
-                            'trigger': '#demo2',
-                            'valueTo': '#value2',
-                            'keys': {
-                                id: 'value',
-                                name: 'text'
-                            },
-                            'type': 2,
-                            'data': [provs_data, citys_data, dists_data]
-                        });
                         if (data.code == 0) {
                             that.show_modal = !data.confirm;
                         }else{
@@ -3187,6 +3179,23 @@ $(function(){
                         to_login(data);
                     }
                 });
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: 'GET',
+                    url:'https://wap.shentingkeji.com/stassistant/plugins/city/cityJson.json',
+                    contentType:"application/json",
+                    success: function(data){
+                        if (data.code == 0) {
+                            that.city_info = data.list;
+                        }else{
+                            return;
+                        }
+                        to_login(data);
+                    }
+                });
+
             },
             methods:{
                 agree_info:function(event){
@@ -3212,9 +3221,25 @@ $(function(){
                         return;       
                     }
                 },
+                selectVal:function(e){
+                    var that = this;
+                    var _index = $('.city_province .weui-select').val();
+                    var city_info = that.city_info;
+                    that.city_name=city_info[_index].children; 
+                },
+                selectVal2:function(){
+                    var that = this;
+                    var _index = $('.city_name .weui-select').val();
+                    var city_name = that.city_name;
+                    that.area_name=city_name[_index].children; 
+                },
                 next_step:function(){
-                    // var 
-                    
+                    var family_num = $('.family_num').val();//家庭人口
+                    var marital = $('.marital').val();//婚姻状况
+                    var work_status = $('.work_status').val();
+                    var year_bunus = $('.year_bunus').val();
+                    var value2 = $('#value2').val();
+                    console.log(value2);
                 }
             }
         });

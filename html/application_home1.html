@@ -12,9 +12,9 @@
     <script src="../js/zepto.min.js"></script>
     <script src="../js/vue.min.js"></script>
     <script src="../js/index.js"></script>
-    <script src="../js/LArea.js"></script>
+    <!-- <script src="../js/LArea.js"></script>
     <script src="../js/LAreaData1.js"></script>
-    <script src="../js/LAreaData2.js"></script>
+    <script src="../js/LAreaData2.js"></script> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 </head>
 
@@ -80,12 +80,12 @@
                 <p class="left_info">家庭人口：</p>
                 <div class="flex-1">
                     <div class="weui-cell__bd">
-                        <select class="weui-select" name="select">
+                        <select class="weui-select family_num" name="select">
                             <option value="0">请选择</option>
-                            <option value="1">2人以内</option>
-                            <option value="2">2-4人</option>
-                            <option value="3">4-5人</option>
-                            <option value="4">5人以上</option>
+                            <option value="2人以内">2人以内</option>
+                            <option value="2-4人">2-4人</option>
+                            <option value="4-5人">4-5人</option>
+                            <option value="5人以上">5人以上</option>
                         </select>
                     </div>
                 </div>
@@ -94,23 +94,41 @@
                 <p class="left_info">婚姻状况：</p>
                 <div class="flex-1">
                     <div class="weui-cell__bd">
-                        <select class="weui-select" name="select1">
+                        <select class="weui-select marital" name="select1">
                             <option value="0">请选择</option>
-                            <option value="1">已婚</option>
-                            <option value="2">未婚</option>
-                            <option value="3">离异</option>
+                            <option value="已婚">已婚</option>
+                            <option value="未婚">未婚</option>
+                            <option value="离异">离异</option>
                         </select>
                     </div>
                 </div>
             </div>
             <div class="flex info_row weui-cells">
                 <p class="left_info">现居住地：</p>
-                <div class="flex-1">
-                    <div class="weui-cell__bd">
+                <div class="flex-1 city_messege flex">
+                    <!-- <div class="weui-cell__bd">
                         <div class="content-block">
                             <input id="demo2" type="text" readonly placeholder="请选择" />
                             <input id="value2" type="hidden" />
                         </div>
+                    </div> -->
+                    <div class="city_province">
+                        <select class="weui-select" name="select" v-on:change="selectVal">
+                            <option value="-1">请选择</option>
+                            <option :value="index" v-for="(province,index) in city_info">{{province.dictName}}</option>
+                        </select>
+                    </div>
+                    <div class="city_name">
+                        <select class="weui-select " name="select"  v-on:change="selectVal2">
+                            <option value="-1">请选择</option>
+                            <option :value="index" v-for="(city,index) in city_name">{{city.dictName}}</option>
+                        </select>
+                    </div>
+                    <div class="area_name">
+                        <select class="weui-select " name="select">
+                            <option value="-1">请选择</option>
+                            <option :value="index" v-for="(area,index) in area_name">{{area.dictName}}</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -118,22 +136,22 @@
                 <p class="left_info">现工作情况：</p>
                 <div class="flex-1">
                     <div class="weui-cell__bd">
-                        <select class="weui-select" name="select1">
+                        <select class="weui-select work_status" name="select1">
                             <option value="0">请选择</option>
-                            <option value="1">各级政府部门、企事业单位、党政机关和公众团体的领导者</option>
-                            <option value="2">专业技术人员（教师、医生、工程技术人员、作家等专业人员）</option>
-                            <option value="3">职员（从事一般性事务工作的人员）</option>
-                            <option value="4">商务人员</option>
-                            <option value="5">第三产业服务人员</option>
-                            <option value="6">商务人员</option>
-                            <option value="7">产业工人</option>
-                            <option value="8">从事农林牧渔业的劳动者</option>
-                            <option value="9">家庭主妇</option>
-                            <option value="10">学生</option>
-                            <option value="11">私营企业主</option>
-                            <option value="12">失业</option>
-                            <option value="13">离退休人员</option>
-                            <option value="14">其他</option>
+                            <option value="各级政府部门、企事业单位、党政机关和公众团体的领导者">各级政府部门、企事业单位、党政机关和公众团体的领导者</option>
+                            <option value="专业技术人员（教师、医生、工程技术人员、作家等专业人员）">专业技术人员（教师、医生、工程技术人员、作家等专业人员）</option>
+                            <option value="职员（从事一般性事务工作的人员）">职员（从事一般性事务工作的人员）</option>
+                            <option value="商务人员">商务人员</option>
+                            <option value="第三产业服务人员">第三产业服务人员</option>
+                            <option value="商务人员">商务人员</option>
+                            <option value="产业工人">产业工人</option>
+                            <option value="从事农林牧渔业的劳动者">从事农林牧渔业的劳动者</option>
+                            <option value="家庭主妇">家庭主妇</option>
+                            <option value="学生">学生</option>
+                            <option value="私营企业主">私营企业主</option>
+                            <option value="失业">失业</option>
+                            <option value="离退休人员">离退休人员</option>
+                            <option value="其他">其他</option>
                         </select>
                     </div>
                 </div>
@@ -142,13 +160,13 @@
                 <p class="left_info">个人年收入：</p>
                 <div class="flex-1">
                     <div class="weui-cell__bd">
-                        <select class="weui-select" name="select2">
+                        <select class="weui-select year_bunus" name="select2">
                             <option value="0">请选择</option>
-                            <option value="1">2万以内</option>
-                            <option value="2">2-5万</option>
-                            <option value="3">5-10万</option>
-                            <option value="4">10-20万</option>
-                            <option value="5">20万以上</option>
+                            <option value="2万以内">2万以内</option>
+                            <option value="2-5万">2-5万</option>
+                            <option value="5-10万">5-10万</option>
+                            <option value="10-20万">10-20万</option>
+                            <option value="20万以上">20万以上</option>
                         </select>
                     </div>
                 </div>
