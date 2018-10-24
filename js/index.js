@@ -3137,7 +3137,7 @@ $(function(){
                 loading:true,
                 show_modal:true,
                 showpage:false,
-                ori_data:[],//传给后台的数据
+                aidApply:[],//传给后台的数据
                 user_info:[],//初始化用户数据
                 city_info:[],//城市信息,汇总
                 city_name:[],//市级
@@ -3175,7 +3175,7 @@ $(function(){
                     success: function(data){
                         if (data.code == 0) {
                             that.user_info = data.aidApply;
-                            that.ori_data = data.aidApply;
+                            that.aidApply = data.aidApply;
                         }else{
                             return;
                         }
@@ -3322,24 +3322,30 @@ $(function(){
                         }, 3000); 
                     }
                     if(members!==0 && maritalStatus!==0 && workDesc!== 0 && income!==0 && apartment!==undefined){
-                        var ori_data = that.ori_data;
-                        console.log(ori_data);
-                        // $.ajax({//发起请求
-                        //     headers: {
-                        //         'Authorization': 'bearer '+_token
-                        //     },
-                        //     type: 'POST',
-                        //     url:weixin_url+'/public-benefit/saveAidApply',
-                        //     contentType:"application/json",
-                        //     // success: function(data){
-                        //     //     if (data.code == 0) {
-                        //     //         that.city_info = data.list;
-                        //     //     }else{
-                        //     //         return;
-                        //     //     }
-                        //     //     to_login(data);
-                        //     // }
-                        // });
+                        var aidApply = {"members:":members,"maritalStatus":maritalStatus,"workDesc":workDesc,"income":income,"apartment":apartment};
+                        // aidApply.members=members;
+                        // aidApply.maritalStatus=maritalStatus;
+                        // aidApply.workDesc=workDesc;
+                        // aidApply.income=income;
+                        // aidApply.apartment=apartment;
+                        $.ajax({//发起请求
+                            headers: {
+                                'Authorization': 'bearer '+_token
+                            },
+                            type: 'POST',
+                            url:weixin_url+'/public-benefit/saveAidApply',
+                            contentType:"application/json",
+                            data: JSON.stringify({aidApply}),
+                            dataType: "json",
+                            success: function(data){
+                                if (data.code == 0) {
+                                    console.log(2);
+                                }else{
+                                    return;
+                                }
+                                to_login(data);
+                            }
+                        });
                     }
                 }
             }
