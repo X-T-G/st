@@ -3321,13 +3321,15 @@ $(function(){
                             $('.error_info').addClass('dis-no');
                         }, 3000); 
                     }
-                    if(members!==0 && maritalStatus!==0 && workDesc!== 0 && income!==0 && apartment!==undefined){
-                        var aidApply = {"members:":members,"maritalStatus":maritalStatus,"workDesc":workDesc,"income":income,"apartment":apartment};
-                        // aidApply.members=members;
-                        // aidApply.maritalStatus=maritalStatus;
-                        // aidApply.workDesc=workDesc;
-                        // aidApply.income=income;
-                        // aidApply.apartment=apartment;
+                    if(members!=='0' && maritalStatus!=='0' && workDesc!== '0' && income!=='0' && apartment!==undefined){
+                        var aidApply = that.aidApply;
+                        var apartment1 = {};
+                        apartment1.id = apartment;
+                        aidApply.members=members;
+                        aidApply.maritalStatus=maritalStatus;
+                        aidApply.workDesc=workDesc;
+                        aidApply.income=income;
+                        aidApply.apartment=apartment1;
                         $.ajax({//发起请求
                             headers: {
                                 'Authorization': 'bearer '+_token
@@ -3339,20 +3341,166 @@ $(function(){
                             dataType: "json",
                             success: function(data){
                                 if (data.code == 0) {
-                                    console.log(2);
+                                    window.location.href="../html/application_home2.html";
                                 }else{
                                     return;
                                 }
                                 to_login(data);
                             }
                         });
+                    }else{
+                        $('.error_info2').removeClass('dis-no');
+                        setTimeout(function(){
+                            $('.error_info2').addClass('dis-no');
+                        }, 3000);  
                     }
                 }
             }
         });
-        $('#welfare_home1 .agree_sure').live('click',function(){
-            $('.welcome_page').css('display','none');
-        })
+    }else if($('#welfare_home2').size()>0){//申请资助第二页
+        var _token = localStorage.getItem('access_token');
+        var app = new Vue({
+            el: '#welfare_home2',
+            data: {
+                loading:true,
+                showpage:false,
+                aidApply:[],//传给后台的数据
+                user_info:[],//初始化用户数据
+                pics:[],//图片信息
+            },
+            created:function(){
+                var that = this;
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: 'POST',
+                    url:weixin_url+'/public-benefit/addAidApply',
+                    contentType:"application/json",
+                    success: function(data){
+                        that.loading = false;
+                        that.showpage = true;
+                        if (data.code == 0) {
+                            that.user_info = data.aidApply;
+                            that.aidApply = data.aidApply;
+                            // 图片上传插件启动
+                            mui.init();
+                            $(function() {
+                                var tmpl = '<li class="weui-uploader__file" style="background-image:url(#url#)"></li>',
+                                    $gallery = $("#gallery"),
+                                    $galleryImg = $("#galleryImg"),
+                                    $uploaderInput = $("#uploaderInput"),
+                                    $uploaderFiles = $("#uploaderFiles");
+                        
+                                    $uploaderInput.on("change", function(e) {
+                                        var src, url = window.URL || window.webkitURL || window.mozURL,
+                                        files = e.target.files;
+                                        for(var i = 0, len = files.length; i < len; ++i) {
+                                            var file = files[i];
+                                            if(url) {
+                                                src = url.createObjectURL(file);
+                                            } else {
+                                                src = e.target.result;
+                                            }
+                                            // that.pics[].length = file;
+                                            $uploaderFiles.append($(tmpl.replace('#url#', src)));
+                                        }
+                                    });
+                                var index; //第几张图片
+                                $uploaderFiles.on("click", "li", function() {
+                                    index = $(this).index();
+                                    $galleryImg.attr("style", this.getAttribute("style"));
+                                    $gallery.fadeIn(100);
+                                });
+                                that.pics = $uploaderFiles;
+                                $gallery.on("click", function() {
+                                    $gallery.fadeOut(100);
+                                });
+                                //删除图片
+                                $(".weui-gallery__del").click(function() {
+                                    $uploaderFiles.find("li").eq(index).remove();
+                                });
+                            });
+                        }else{
+                            return;
+                        }
+                        to_login(data);
+                    }
+                });
+            },
+            methods:{
+                next_step:function(){
+                    
+                    //上传图片
+                    var that = this;
+                    console.log(that.pics);
+                    var file = file;
+                    var signData = {};
+                    signData.type = "coinAid";
+                    signData.source = "assistant_user";
+                    signData.fileName = file.name;
+                    
+                    $.ajax({//发起请求
+                        headers: {
+                            'Authorization': 'bearer '+_token
+                        },
+                        type: 'POST',
+                        url:assistant_url+'/assistant/file/uploadImg',
+                        contentType:"application/json",
+                        success: function(data){
+                            var id = data.id;
+                            // vm.resourceIds[vm.resourceIds.length] = id;
+                            var formData = new FormData();
+                            formData.append("key", data.objectKey);
+                            formData.append("success_action_status", 200);
+                            formData.append("OSSAccessKeyId", data.accessKey);
+                            formData.append("policy", data.policy);
+                            formData.append("Signature", data.signature);
+                            formData.append("file", file, file.name);
+                           
+                            $.ajax({//发起请求
+                                headers: {
+                                    'Authorization': 'bearer '+_token
+                                },
+                                type: 'POST',
+                                url:assistant_url+data.host,
+                                data:formData,
+                                success: function(data){
+                                    app.uploadedFiles.set(file, id);
+                                }
+                            });
+                        }
+                    });
+
+                    var requests = vm.files.map((file) => {
+                        var fileName = file.name;
+                        if (!vm.uploadedFiles.has(file)) {
+                            var signData = {};
+                            signData.type = "visitInfo";
+                            signData.source = "app_user";
+                            signData.fileName = fileName;
+                            return axios.post("/assistant/file/uploadImg", signData).then((res) => {
+                                var data = res.data.obj;
+                                var id = data.id;
+                                vm.resourceIds[vm.resourceIds.length] = id;
+                                var formData = new FormData();
+                                formData.append("key", data.objectKey);
+                                formData.append("success_action_status", 200);
+                                formData.append("OSSAccessKeyId", data.accessKey);
+                                formData.append("policy", data.policy);
+                                formData.append("Signature", data.signature);
+                                formData.append("file", file, file.name);
+                                axios.post(data.host, formData).then((res1) => {
+                                    vm.uploadedFiles.set(file, id);
+                                });
+                            });
+                        } else {
+                            vm.resourceIds[vm.resourceIds.length] = vm.uploadedFiles.get(file);
+                        }
+                    });
+                }
+            }
+        });
     }else if($('#welfare_home_all').size()>0){//捐赠最终确认页面
         $('#welfare_home_all').live('click',function(){
             $('#quit_account2').css('display','block');
