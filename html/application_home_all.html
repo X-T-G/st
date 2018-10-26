@@ -20,103 +20,101 @@
             </span>
         </div>
         <div class="welfare_home " id="welfare_home_all">
-            <h2>申请资料确认</h2>
-            <!-- <div class="info_container"> -->
+            <div :class=[{"dis-no":(showpage==false)}] style="padding-bottom:60px;">
+                <h2>申请资料确认</h2>
+                <!-- <div class="info_container"> -->
+                    <div class="flex info_row">
+                        <p class="left_info">姓名：</p>
+                        <!-- <input type="text" class="flex-1 input_row"> -->
+                        <p>{{user_info.name}}</p>
+                    </div>
+                <!-- </div> -->
+                <!-- <div class="info_container"> -->
+                    <div class="flex info_row">
+                        <p class="left_info">性别：</p>
+                        <!-- <input type="text" class="flex-1 input_row"> -->
+                        <p>{{user_info.gender}}</p>
+                    </div>
+                <!-- </div> -->
+                <!-- <div class="info_container"> -->
+                    <div class="flex info_row">
+                        <p class="left_info">身份证号码：</p>
+                        <!-- <input type="text" class="flex-1 input_row"> -->
+                        <p>{{user_info.idCard}}</p>
+                    </div>
+                <!-- </div>  -->
                 <div class="flex info_row">
-                    <p class="left_info">姓名：</p>
+                    <p class="left_info">家庭人口：</p>
                     <!-- <input type="text" class="flex-1 input_row"> -->
-                    <p>XXX</p>
+                    <p>{{user_info.members}}</p>
                 </div>
-            <!-- </div> -->
-            <!-- <div class="info_container"> -->
                 <div class="flex info_row">
-                    <p class="left_info">性别：</p>
+                    <p class="left_info">婚姻状况：</p>
                     <!-- <input type="text" class="flex-1 input_row"> -->
-                    <p>男</p>
+                    <p>{{user_info.maritalStatus}}</p>
                 </div>
-            <!-- </div> -->
-            <!-- <div class="info_container"> -->
                 <div class="flex info_row">
-                    <p class="left_info">身份证号码：</p>
+                    <p class="left_info">现居住地：</p>
                     <!-- <input type="text" class="flex-1 input_row"> -->
-                    <p>513030********</p>
+                    <p>{{seqCn}}</p>
                 </div>
-            <!-- </div>  -->
-            <div class="flex info_row">
-                <p class="left_info">家庭人口：</p>
-                <!-- <input type="text" class="flex-1 input_row"> -->
-                <p>2人</p>
-            </div>
-            <div class="flex info_row">
-                <p class="left_info">婚姻状况：</p>
-                <!-- <input type="text" class="flex-1 input_row"> -->
-                <p>离异</p>
-            </div>
-            <div class="flex info_row">
-                <p class="left_info">现居住地：</p>
-                <!-- <input type="text" class="flex-1 input_row"> -->
-                <p>四川省成都市青白江区</p>
-            </div>
-            <div class="flex info_row">
-                <p class="left_info">现工作情况：</p>
-                <!-- <input type="text" class="flex-1 input_row"> -->
-                <p>其他</p>
-            </div>
-            <div class="flex info_row">
-                <p class="left_info">个人年收入：</p>
-                <!-- <input type="text" class="flex-1 input_row"> -->
-                <p>2万以内</p>
-            </div>
-            <div class="flex info_row weui-cells" style="min-height:60px;">
-                <p class="left_info">病情诊断：</p>
-                <div class="flex-1">
-                    <div class="weui-cell__bd" style="max-width:218px;max-height:60px;overflow-x: scroll;" >
-                        <span>1.感冒</span>
-                        <span>2.椎间盘突出</span>
-                        <span>3.肾炎</span>
-                        <span>4.高血压</span>
-                        <span>5.糖尿病</span>
-                        <span>1.感冒</span>
-                        <span>2.椎间盘突出</span>
-                        <span>3.肾炎</span>
-                        <span>4.高血压</span>
-                        <span>5.糖尿病</span>
+                <div class="flex info_row">
+                    <p class="left_info">现工作情况：</p>
+                    <!-- <input type="text" class="flex-1 input_row"> -->
+                    <p>{{user_info.workDesc}}</p>
+                </div>
+                <div class="flex info_row">
+                    <p class="left_info">个人年收入：</p>
+                    <!-- <input type="text" class="flex-1 input_row"> -->
+                    <p>{{user_info.income}}</p>
+                </div>
+                <div class="flex info_row weui-cells" style="min-height:60px;">
+                    <p class="left_info">病情诊断：</p>
+                    <div class="flex-1">
+                        <div class="weui-cell__bd" style="max-width:218px;max-height:60px;overflow-x: scroll;" >
+                            <span>{{user_info.diagnosis}}</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="flex info_row weui-cells">
-                <p class="left_info">病情程度：</p>
-                <div class="flex-1">
-                    <div class="weui-cell__bd">
-                        <p>严重</p>
+                <div class="flex info_row weui-cells">
+                    <p class="left_info">病情程度：</p>
+                    <div class="flex-1">
+                        <div class="weui-cell__bd">
+                            <p>{{user_info.illnessDegree}}</p>
+                        </div>
                     </div>
                 </div>
+                <div class="flex info_row">
+                    <p class="left_info">预期资助金额：</p>
+                    <!-- <input type="text" class="flex-1 input_row"> -->
+                    <p>{{user_info.appliedAmount}}</p>
+                </div>
+                <div class="flex info_row">
+                    <p class="left_info">预期资助期限：</p>
+                    <!-- <input type="text" class="flex-1 input_row"> -->
+                    <p>{{user_info.timeRange}}月</p>
+                </div>
+                <div class="flex info_row" style="min-height:150px;">
+                    <p class="left_info">申请陈述：</p>
+                    <!-- <input type="text" class="flex-1 input_row"> -->
+                    <p style="max-width:218px;max-height:150px;overflow-y: scroll;" >{{user_info.applyDesc}}</p>
+                </div>
+                <div class="input_row flex info_row" style="min-height:100px;padding-right:0px;">
+                    <label for="weuiAgree" class="weui-agree" style="margin: 0px auto;">
+                        <input id="weuiAgree" type="checkbox" class="weui-agree__checkbox">
+                        <span class="weui-agree__text">
+                            诚信声明 本人保证以上陈述属实
+                        </span>
+                    </label>
+                </div>
+                <div class="apply_btn" v-on:click="sure_step">
+                    <a href="javascript:;">确认</a>
+                </div>
             </div>
-            <div class="flex info_row">
-                <p class="left_info">预期救助金额：</p>
-                <!-- <input type="text" class="flex-1 input_row"> -->
-                <p>2000</p>
-            </div>
-            <div class="flex info_row">
-                <p class="left_info">预期救助期限：</p>
-                <!-- <input type="text" class="flex-1 input_row"> -->
-                <p>1年</p>
-            </div>
-            <div class="flex info_row" style="min-height:150px;">
-                <p class="left_info">申请陈述：</p>
-                <!-- <input type="text" class="flex-1 input_row"> -->
-                <p style="max-width:218px;max-height:150px;overflow-y: scroll;" >神庭币由成都神庭科技公司为了回馈广大神庭君用户，由神庭君系统根据一定运算规则而赠与神庭君用户使用；神庭币由成都神庭科技公司为了回馈广大神庭君用户，由神庭君系统根据一定运算规则而赠与神庭君用户使用；神庭币由成都神庭科技公司为了回馈广大神庭君用户，由神庭君系统根据一定运算规则而赠与神庭君用户使用；</p>
-            </div>
-            <div class="input_row flex info_row" style="min-height:100px;padding-right:0px;">
-                <label for="weuiAgree" class="weui-agree" style="margin: 0px auto;">
-                    <input id="weuiAgree" type="checkbox" class="weui-agree__checkbox">
-                    <span class="weui-agree__text">
-                        本人保证以上陈述属实
-                    </span>
-                </label>
-            </div>
-            <div class="apply_btn">
-                <a href="javascript:;">确认</a>
+            <!-- 加载效果 -->
+            <div class="weui-loadmore" :class=[{"dis-no":(loading==false)}]>
+                <i class="weui-loading"></i>
+                <span class="weui-loadmore__tips">正在加载</span>
             </div>
         </div>
     </body>

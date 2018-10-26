@@ -22,29 +22,65 @@
         <div class="welfare_home " id="welfare_home3">
             <div :class=[{"dis-no":(showpage==false)}] style="padding-bottom:60px;">
                 <h2>资助申请陈述</h2>
-                <div class="flex info_row">
-                    <p class="left_info">预期救助金额：</p>
-                    <input type="text" class="flex-1 appliedAmount input_row">
+                <div class="flex info_row weui-cells">
+                    <p class="left_info">预期资助金额：</p>
+                    <!-- <input type="text" class="flex-1 appliedAmount input_row"> -->
+                    <div class="flex-1">
+                        <div class="weui-cell__bd">
+                            <select class="weui-select appliedAmount" name="select">
+                                <option value="0">请选择</option>
+                                <option value="1000">1千</option>
+                                <option value="2000">2千</option>
+                                <option value="3000">3千</option>
+                                <option value="4000">4千</option>
+                                <option value="5000">5千</option>
+                                <option value="6000">6千</option>
+                                <option value="7000">7千</option>
+                                <option value="8000">8千</option>
+                                <option value="9000">9千</option>
+                                <option value="10000">1万</option>
+                            </select>
+                        </div>
+                    </div> 
                 </div>
                 <p class="error_info appliedAmount dis-no" style="color:#fd5749;height: 24px;line-height: 24px;padding-left: 40px;text-align: center;">请填写完整信息！</p>
-                <div class="flex info_row">
-                    <p class="left_info">预期救助期限：</p>
-                    <input type="text" class="flex-1 timeRange input_row">
+                <div class="flex info_row weui-cells">
+                    <p class="left_info">预期资助期限：</p>
+                    <!-- <input type="text" class="flex-1 timeRange input_row"> -->
+                    <div class="flex-1">
+                        <div class="weui-cell__bd">
+                            <select class="weui-select timeRange" name="select">
+                                <option value="0">请选择</option>
+                                <option value="1">1月</option>
+                                <option value="2">2月</option>
+                                <option value="3">3月</option>
+                                <option value="4">4月</option>
+                                <option value="5">5月</option>
+                                <option value="6">6月</option>
+                                <option value="7">7月</option>
+                                <option value="8">8月</option>
+                                <option value="9">9月</option>
+                                <option value="10">10月</option>
+                                <option value="11">11月</option>
+                                <option value="12">12月</option>
+                            </select>
+                        </div>
+                    </div> 
                 </div>
                 <p class="error_info timeRange dis-no" style="color:#fd5749;height: 24px;line-height: 24px;padding-left: 40px;text-align: center;">请填写完整信息！</p>
-                <div class="flex info_row app_info">
+                <div class="flex info_row app_info weui-cells">
                     <p class="left_info">申请陈述：</p>
                     <textarea  class="flex-1 applyDesc input_row" name="" id="" cols="30" rows="10"></textarea>
                 </div>
                 <p class="error_info applyDesc dis-no" style="color:#fd5749;height: 24px;line-height: 24px;padding-left: 40px;text-align: center;">请填写完整信息！</p>
+                <div class="apply_btn" v-on:click="next_step">
+                    <a href="javascript:;">下一步</a>
+                </div>
             </div>
             <!-- 加载效果 -->
             <div class="weui-loadmore" :class=[{"dis-no":(loading==false)}]>
                 <i class="weui-loading"></i>
                 <span class="weui-loadmore__tips">正在加载</span>
-            </div>
-            <div class="apply_btn" v-on:click="next_step">
-                <a href="javascript:;">下一步</a>
             </div>
         </div>
     </body>

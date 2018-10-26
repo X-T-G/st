@@ -3556,13 +3556,13 @@ $(function(){
                     var appliedAmount = $('.appliedAmount').val();//救助金额
                     var timeRange = $('.timeRange').val();//救助期限
                     var applyDesc = $('.applyDesc').val();//申请陈述
-                    if(appliedAmount.length == 0){
+                    if(appliedAmount == '0'){
                         $('p.appliedAmount').removeClass('dis-no');
                         setTimeout(function(){
                             $('p.appliedAmount').addClass('dis-no');
                         }, 3000); 
                     }
-                    if(timeRange.length == 0){
+                    if(timeRange == '0'){
                         $('p.timeRange').removeClass('dis-no');
                         setTimeout(function(){
                             $('p.timeRange').addClass('dis-no');
@@ -3590,7 +3590,7 @@ $(function(){
                             dataType: "json",
                             success: function(data){
                                 if (data.code == 0) {
-                                    window.location.href='./application_home3.html';
+                                    window.location.href='./application_home_all.html';
                                 }else{
                                     return;
                                 }
@@ -3602,13 +3602,71 @@ $(function(){
             }
         });
     }else if($('#welfare_home_all').size()>0){//捐赠最终确认页面
-        $('#welfare_home_all').live('click',function(){
-            $('#quit_account2').css('display','block');
-            $('#quit_account2').css('opacity','1');
-        })
-        $('#welfare_home_all .weui-mask2').live('click',function(){
+        var _token = localStorage.getItem('access_token');
+        var app = new Vue({
+            el: '#welfare_home_all',
+            data: {
+                loading:true,
+                showpage:false,
+                aidApply:[],//传给后台的数据
+                user_info:[],//初始化用户数据
+                seqCn:[],
+            },
+            created:function(){
+                var that = this;
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: 'POST',
+                    url:weixin_url+'/public-benefit/addAidApply',
+                    contentType:"application/json",
+                    success: function(data){
+                        that.loading = false;
+                        that.showpage = true;
+                        if (data.code == 0) {
+                            that.user_info = data.aidApply;
+                            that.aidApply = data.aidApply;
+                            that.seqCn = data.aidApply.apartment.seqCn;
+                        }else{
+                            return;
+                        }
+                        to_login(data);
+                    }
+                });
+            },
+            methods:{
+                sure_step:function(){
+                    var that = this;
+                    var is_agree = $('#welfare_home_all').find('.weui-agree__checkbox').prop('checked');
+                    var aidApplyId = that.aidApply.id;
+                    if (is_agree) {
+                        $.ajax({//发起请求
+                            headers: {
+                                'Authorization': 'bearer '+_token
+                            },
+                            type: 'POST',
+                            url:weixin_url+'/public-benefit/submitAidApply',
+                            contentType:"application/json",
+                            data: {aidApplyId:aidApplyId},
+                            success: function(data){
+                                that.loading = false;
+                                that.showpage = true;
+                                if (data.code == 0) {
+                                    
+                                }else{
+                                    return;
+                                }
+                                to_login(data);
+                            }
+                        });
+                    }else{
+                        return;
+                    }
+                }
+            }
+        });
 
-        })
     }
 });
 
