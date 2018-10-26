@@ -3399,10 +3399,12 @@ $(function(){
                                             var file = files[i];
                                             if(url) {
                                                 src = url.createObjectURL(file);
+                                                console.log(1);
                                             } else {
                                                 src = e.target.result;
+                                                console.log(2);
                                             }
-                                            // that.pics[].length = file;
+                                            console.log(file);
                                             $uploaderFiles.append($(tmpl.replace('#url#', src)));
                                         }
                                     });
@@ -3412,7 +3414,6 @@ $(function(){
                                     $galleryImg.attr("style", this.getAttribute("style"));
                                     $gallery.fadeIn(100);
                                 });
-                                that.pics = $uploaderFiles;
                                 $gallery.on("click", function() {
                                     $gallery.fadeOut(100);
                                 });
