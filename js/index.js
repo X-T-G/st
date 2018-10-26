@@ -3552,53 +3552,52 @@ $(function(){
             },
             methods:{
                 next_step:function(){
-                    console.log(888);
-                //     var that = this;
-                //     var diagnosis = $('div.diagnosis textarea').val();
-                //     var illnessDegree = $('select.illnessDegree').val();
-                //     var resourceIds = $('div.resourceIds .weui-uploader__files li');
-                //     if (diagnosis.length==0) {
-                //         $('p.diagnosis').removeClass('dis-no');
-                //         setTimeout(function(){
-                //             $('p.diagnosis').addClass('dis-no');
-                //         }, 3000);
-                //     }
-                //     if(illnessDegree=='0'){
-                //         $('p.illnessDegree').removeClass('dis-no');
-                //         setTimeout(function(){
-                //             $('p.illnessDegree').addClass('dis-no');
-                //         }, 3000);
-                //     }
-                //     if(resourceIds.length==0){
-                //         $('p.resourceIds').removeClass('dis-no');
-                //         setTimeout(function(){
-                //             $('p.resourceIds').addClass('dis-no');
-                //         }, 3000);
-                //     }
-                //     if (diagnosis.length !==0 && illnessDegree !=='0' && resourceIds.length !==0) {
-                //         var aidApply = that.aidApply;
-                //         aidApply.diagnosis=$('.diagnosis textarea').val();
-                //         aidApply.illnessDegree=$('.illnessDegree').val();
-                //         aidApply.resourceIds=that.resourceIds;
-                //         $.ajax({//发起请求
-                //             headers: {
-                //                 'Authorization': 'bearer '+_token
-                //             },
-                //             type: 'POST',
-                //             url:weixin_url+'/public-benefit/saveAidApply',
-                //             contentType:"application/json",
-                //             data: JSON.stringify({aidApply}),
-                //             dataType: "json",
-                //             success: function(data){
-                //                 if (data.code == 0) {
-                //                     window.location.href='./application_home3.html';
-                //                 }else{
-                //                     return;
-                //                 }
-                //                 to_login(data);
-                //             }
-                //         });
-                //     }
+                    var that = this;
+                    var appliedAmount = $('.appliedAmount').val();//救助金额
+                    var timeRange = $('.timeRange').val();//救助期限
+                    var applyDesc = $('.applyDesc').val();//申请陈述
+                    if(appliedAmount.length == 0){
+                        $('p.appliedAmount').removeClass('dis-no');
+                        setTimeout(function(){
+                            $('p.appliedAmount').addClass('dis-no');
+                        }, 3000); 
+                    }
+                    if(timeRange.length == 0){
+                        $('p.timeRange').removeClass('dis-no');
+                        setTimeout(function(){
+                            $('p.timeRange').addClass('dis-no');
+                        }, 3000); 
+                    }
+                    if(applyDesc.length == 0){
+                        $('p.applyDesc').removeClass('dis-no');
+                        setTimeout(function(){
+                            $('p.applyDesc').addClass('dis-no');
+                        }, 3000); 
+                    }
+                    if (appliedAmount.length !==0 && timeRange !=='0' && applyDesc.length !==0) {
+                        var aidApply = that.aidApply;
+                        aidApply.appliedAmount=appliedAmount;
+                        aidApply.timeRange=timeRange;
+                        aidApply.applyDesc=applyDesc;
+                        $.ajax({//发起请求
+                            headers: {
+                                'Authorization': 'bearer '+_token
+                            },
+                            type: 'POST',
+                            url:weixin_url+'/public-benefit/saveAidApply',
+                            contentType:"application/json",
+                            data: JSON.stringify({aidApply}),
+                            dataType: "json",
+                            success: function(data){
+                                if (data.code == 0) {
+                                    window.location.href='./application_home3.html';
+                                }else{
+                                    return;
+                                }
+                                to_login(data);
+                            }
+                        });
+                    }
                 }
             }
         });

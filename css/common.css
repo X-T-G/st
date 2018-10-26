@@ -651,8 +651,8 @@ body input{background-color: #fff;}
 #welfare_home2 .info_row .left_info{text-align: left;width: 100px;padding-left: 20px;color: #686b6d;}
 #welfare_home2 .info_row.disease{height: 160px;margin-top: 30px;}
 #welfare_home3 .info_row.app_info{height: 160px;margin-top: 30px;}
-#welfare_home2 .info_row.disease textarea{max-height: 150px;overflow-y: auto;font-size: 13px;color: #8f8f94;border: 1px solid #e5e5e5;}
-#welfare_home3 .info_row.app_info textarea{max-height: 150px;overflow-y: auto;font-size: 13px;color: #8f8f94;border: 1px solid #e5e5e5;}
+#welfare_home2 .info_row.disease textarea{max-height: 150px;overflow-y: auto;font-size: 14px;color: black;border: 1px solid #e5e5e5;}
+#welfare_home3 .info_row.app_info textarea{max-height: 150px;overflow-y: auto;font-size: 14px;color: black;border: 1px solid #e5e5e5;}
 #welfare_home3 .info_row.app_info textarea {width: 100%;-webkit-appearance: none;padding: 10px 15px;margin-bottom: 15px;line-height: 21px;-webkit-user-select: text;background-color: #fff;border: 1px solid #e5e5e5;border-radius: 3px;outline: 0;}
 #welfare_home2 .weui-cell{padding: 10px 10px;}
 #welfare_home3  .info_row .left_info{width: 119px;}

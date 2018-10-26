@@ -24,16 +24,19 @@
                 <h2>资助申请陈述</h2>
                 <div class="flex info_row">
                     <p class="left_info">预期救助金额：</p>
-                    <input type="text" class="flex-1 input_row">
+                    <input type="text" class="flex-1 appliedAmount input_row">
                 </div>
+                <p class="error_info appliedAmount dis-no" style="color:#fd5749;height: 24px;line-height: 24px;padding-left: 40px;text-align: center;">请填写完整信息！</p>
                 <div class="flex info_row">
                     <p class="left_info">预期救助期限：</p>
-                    <input type="text" class="flex-1 input_row">
+                    <input type="text" class="flex-1 timeRange input_row">
                 </div>
+                <p class="error_info timeRange dis-no" style="color:#fd5749;height: 24px;line-height: 24px;padding-left: 40px;text-align: center;">请填写完整信息！</p>
                 <div class="flex info_row app_info">
                     <p class="left_info">申请陈述：</p>
-                    <textarea  class="flex-1 input_row" name="" id="" cols="30" rows="10"></textarea>
+                    <textarea  class="flex-1 applyDesc input_row" name="" id="" cols="30" rows="10"></textarea>
                 </div>
+                <p class="error_info applyDesc dis-no" style="color:#fd5749;height: 24px;line-height: 24px;padding-left: 40px;text-align: center;">请填写完整信息！</p>
             </div>
             <!-- 加载效果 -->
             <div class="weui-loadmore" :class=[{"dis-no":(loading==false)}]>
