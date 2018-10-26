@@ -713,6 +713,11 @@ body input{background-color: #fff;}
 #welfare_home1 .weui-cells .city_messege .city_province,#welfare_home1 .weui-cells .city_messege .city_name,#welfare_home1 .weui-cells .city_messege .area_name{width: 33%;}
 #welfare_home1 .city_messege .weui-select{padding-left: 3px;}
 #welfare_home1 .weui-cells .city_messege .city_name{margin: 0 2px;}
+#welfare_home2 .upload_pic.weui-loadmore{display:none;position: absolute;bottom: 0;z-index: 10000;width: 100%;line-height: 40px;height: 40px;margin-bottom: 0;background-color: #e5e5e5;}
+
+
+
+
 
 
 

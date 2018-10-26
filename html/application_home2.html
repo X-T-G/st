@@ -30,19 +30,21 @@
                         <textarea  class="flex-1 input_row" name="" id="" cols="30" rows="10"></textarea>
                     </div>
                 </div>
+                <p class="error_info diagnosis dis-no" style="color:#fd5749;height: 24px;line-height: 24px;padding-left: 40px;text-align: center;">请填写完整信息！</p>
                 <div class="flex info_row weui-cells">
                     <p class="left_info">病情程度：</p>
                     <div class="flex-1">
                         <div class="weui-cell__bd">
                             <select class="weui-select illnessDegree" name="select">
                                 <option value="0">请选择</option>
-                                <option value="1">普通</option>
-                                <option value="2">中等</option>
-                                <option value="3">严重</option>
+                                <option value="普通">普通</option>
+                                <option value="中等">中等</option>
+                                <option value="严重">严重</option>
                             </select>
                         </div>
                     </div>
                 </div>
+                <p class="error_info illnessDegree dis-no" style="color:#fd5749;height: 24px;line-height: 24px;padding-left: 40px;text-align: center;">请填写完整信息！</p>
                 <!--图片上传-->
                 <div class="weui-gallery" id="gallery">
                     <span class="weui-gallery__img" id="galleryImg"></span>
@@ -70,6 +72,12 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <p class="error_info resourceIds dis-no" style="color:#fd5749;height: 24px;line-height: 24px;padding-left: 40px;text-align: center;">请上传图片！</p>
+                 <!-- 上传加载效果 -->
+                <div class="weui-loadmore upload_pic">
+                    <i class="weui-loading"></i>
+                    <span class="weui-loadmore__tips">请稍等，正在上传图片！</span>
                 </div>
                 <div class="apply_btn" v-on:click="next_step">
                     <a href="javascript:;">下一步</a>

@@ -3433,41 +3433,172 @@ $(function(){
             },
             methods:{
                 next_step:function(){
-                    //上传图片
                     var that = this;
-                    var file = that.pics;
-                    for(var i=0;i<file.length;i++){
-                        var signData = {};
-                        signData.type = "coinAid";
-                        signData.source = "assistant_user";
-                        signData.fileName = file[i].name;
-                        var j = i;
+                    var diagnosis = $('div.diagnosis textarea').val();
+                    var illnessDegree = $('select.illnessDegree').val();
+                    var resourceIds = $('div.resourceIds .weui-uploader__files li');
+                    if (diagnosis.length==0) {
+                        $('p.diagnosis').removeClass('dis-no');
+                        setTimeout(function(){
+                            $('p.diagnosis').addClass('dis-no');
+                        }, 3000);
+                    }
+                    if(illnessDegree=='0'){
+                        $('p.illnessDegree').removeClass('dis-no');
+                        setTimeout(function(){
+                            $('p.illnessDegree').addClass('dis-no');
+                        }, 3000);
+                    }
+                    if(resourceIds.length==0){
+                        $('p.resourceIds').removeClass('dis-no');
+                        setTimeout(function(){
+                            $('p.resourceIds').addClass('dis-no');
+                        }, 3000);
+                    }
+                    if (diagnosis.length !==0 && illnessDegree !=='0' && resourceIds.length !==0) {
+                        //上传图片
+                        var file = that.pics;
+                        $('.upload_pic.weui-loadmore').css('display','block');
+                        for(var i=0;i<file.length;i++){
+                            var signData = {};
+                            signData.type = "coinAid";
+                            signData.source = "assistant_user";
+                            signData.fileName = file[i].name;
+                            var j = i;
+                            $.ajax({//发起请求
+                                headers: {
+                                    'Authorization': 'bearer '+_token
+                                },
+                                type: 'POST',
+                                url:assistant_url+'/assistant/file/uploadImg',
+                                contentType:"application/json",
+                                data: JSON.stringify(signData),
+                                async:false,
+                                dataType:'json',
+                                success: function(data){
+                                    var data = data.obj;
+                                    var _id = data.id;
+                                    that.resourceIds.push(_id);
+                                    var formData = new FormData();
+                                    formData.append("key", data.objectKey);
+                                    formData.append("success_action_status", 200);
+                                    formData.append("OSSAccessKeyId", data.accessKey);
+                                    formData.append("policy", data.policy);
+                                    formData.append("Signature", data.signature);
+                                    formData.append("file", file[j], file[j].name);
+                                    var req = new XMLHttpRequest();
+                                    req.open("POST", data.host, false);
+                                    req.send(formData);
+                                }
+                            });
+                        }
+                        var aidApply = that.aidApply;
+                        aidApply.diagnosis=$('.diagnosis textarea').val();
+                        aidApply.illnessDegree=$('.illnessDegree').val();
+                        aidApply.resourceIds=that.resourceIds;
                         $.ajax({//发起请求
                             headers: {
                                 'Authorization': 'bearer '+_token
                             },
                             type: 'POST',
-                            url:assistant_url+'/assistant/file/uploadImg',
+                            url:weixin_url+'/public-benefit/saveAidApply',
                             contentType:"application/json",
-                            data: JSON.stringify(signData),
-                            dataType:'json',
+                            data: JSON.stringify({aidApply}),
+                            dataType: "json",
                             success: function(data){
-                                var data = data.obj;
-                                var _id = data.id;
-                                that.resourceIds.push(_id);
-                                var formData = new FormData();
-                                formData.append("key", data.objectKey);
-                                formData.append("success_action_status", 200);
-                                formData.append("OSSAccessKeyId", data.accessKey);
-                                formData.append("policy", data.policy);
-                                formData.append("Signature", data.signature);
-                                formData.append("file", file[j], file[j].name);
-                                var req = new XMLHttpRequest();
-                                req.open("POST", data.host, false);
-                                req.send(formData);
+                                if (data.code == 0) {
+                                    window.location.href='./application_home3.html';
+                                }else{
+                                    return;
+                                }
+                                to_login(data);
                             }
                         });
                     }
+                }
+            }
+        });
+    }else if($('#welfare_home3').size()>0){//申请第三页
+        var _token = localStorage.getItem('access_token');
+        var app = new Vue({
+            el: '#welfare_home3',
+            data: {
+                loading:true,
+                showpage:false,
+                aidApply:[],//传给后台的数据
+                user_info:[],//初始化用户数据
+            },
+            created:function(){
+                var that = this;
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: 'POST',
+                    url:weixin_url+'/public-benefit/addAidApply',
+                    contentType:"application/json",
+                    success: function(data){
+                        that.loading = false;
+                        that.showpage = true;
+                        if (data.code == 0) {
+                            that.user_info = data.aidApply;
+                            that.aidApply = data.aidApply;
+                        }else{
+                            return;
+                        }
+                        to_login(data);
+                    }
+                });
+            },
+            methods:{
+                next_step:function(){
+                    console.log(888);
+                //     var that = this;
+                //     var diagnosis = $('div.diagnosis textarea').val();
+                //     var illnessDegree = $('select.illnessDegree').val();
+                //     var resourceIds = $('div.resourceIds .weui-uploader__files li');
+                //     if (diagnosis.length==0) {
+                //         $('p.diagnosis').removeClass('dis-no');
+                //         setTimeout(function(){
+                //             $('p.diagnosis').addClass('dis-no');
+                //         }, 3000);
+                //     }
+                //     if(illnessDegree=='0'){
+                //         $('p.illnessDegree').removeClass('dis-no');
+                //         setTimeout(function(){
+                //             $('p.illnessDegree').addClass('dis-no');
+                //         }, 3000);
+                //     }
+                //     if(resourceIds.length==0){
+                //         $('p.resourceIds').removeClass('dis-no');
+                //         setTimeout(function(){
+                //             $('p.resourceIds').addClass('dis-no');
+                //         }, 3000);
+                //     }
+                //     if (diagnosis.length !==0 && illnessDegree !=='0' && resourceIds.length !==0) {
+                //         var aidApply = that.aidApply;
+                //         aidApply.diagnosis=$('.diagnosis textarea').val();
+                //         aidApply.illnessDegree=$('.illnessDegree').val();
+                //         aidApply.resourceIds=that.resourceIds;
+                //         $.ajax({//发起请求
+                //             headers: {
+                //                 'Authorization': 'bearer '+_token
+                //             },
+                //             type: 'POST',
+                //             url:weixin_url+'/public-benefit/saveAidApply',
+                //             contentType:"application/json",
+                //             data: JSON.stringify({aidApply}),
+                //             dataType: "json",
+                //             success: function(data){
+                //                 if (data.code == 0) {
+                //                     window.location.href='./application_home3.html';
+                //                 }else{
+                //                     return;
+                //                 }
+                //                 to_login(data);
+                //             }
+                //         });
+                //     }
                 }
             }
         });
