@@ -3367,6 +3367,7 @@ $(function(){
                 aidApply:[],//传给后台的数据
                 user_info:[],//初始化用户数据
                 pics:[],//图片信息
+                resourceIds:[],//图片id
             },
             created:function(){
                 var that = this;
@@ -3399,12 +3400,10 @@ $(function(){
                                             var file = files[i];
                                             if(url) {
                                                 src = url.createObjectURL(file);
-                                                console.log(1);
                                             } else {
                                                 src = e.target.result;
-                                                console.log(2);
                                             }
-                                            console.log(file);
+                                            that.pics.push(file);
                                             $uploaderFiles.append($(tmpl.replace('#url#', src)));
                                         }
                                     });
@@ -3420,6 +3419,9 @@ $(function(){
                                 //删除图片
                                 $(".weui-gallery__del").click(function() {
                                     $uploaderFiles.find("li").eq(index).remove();
+                                    var _pic = that.pics;
+                                    _pic.splice(index,1);
+                                    that.pics = _pic;
                                 });
                             });
                         }else{
@@ -3431,74 +3433,41 @@ $(function(){
             },
             methods:{
                 next_step:function(){
-                    
                     //上传图片
                     var that = this;
-                    console.log(that.pics);
-                    var file = file;
-                    var signData = {};
-                    signData.type = "coinAid";
-                    signData.source = "assistant_user";
-                    signData.fileName = file.name;
-                    
-                    $.ajax({//发起请求
-                        headers: {
-                            'Authorization': 'bearer '+_token
-                        },
-                        type: 'POST',
-                        url:assistant_url+'/assistant/file/uploadImg',
-                        contentType:"application/json",
-                        success: function(data){
-                            var id = data.id;
-                            // vm.resourceIds[vm.resourceIds.length] = id;
-                            var formData = new FormData();
-                            formData.append("key", data.objectKey);
-                            formData.append("success_action_status", 200);
-                            formData.append("OSSAccessKeyId", data.accessKey);
-                            formData.append("policy", data.policy);
-                            formData.append("Signature", data.signature);
-                            formData.append("file", file, file.name);
-                           
-                            $.ajax({//发起请求
-                                headers: {
-                                    'Authorization': 'bearer '+_token
-                                },
-                                type: 'POST',
-                                url:assistant_url+data.host,
-                                data:formData,
-                                success: function(data){
-                                    app.uploadedFiles.set(file, id);
-                                }
-                            });
-                        }
-                    });
-
-                    var requests = vm.files.map((file) => {
-                        var fileName = file.name;
-                        if (!vm.uploadedFiles.has(file)) {
-                            var signData = {};
-                            signData.type = "visitInfo";
-                            signData.source = "app_user";
-                            signData.fileName = fileName;
-                            return axios.post("/assistant/file/uploadImg", signData).then((res) => {
-                                var data = res.data.obj;
-                                var id = data.id;
-                                vm.resourceIds[vm.resourceIds.length] = id;
+                    var file = that.pics;
+                    for(var i=0;i<file.length;i++){
+                        var signData = {};
+                        signData.type = "coinAid";
+                        signData.source = "assistant_user";
+                        signData.fileName = file[i].name;
+                        var j = i;
+                        $.ajax({//发起请求
+                            headers: {
+                                'Authorization': 'bearer '+_token
+                            },
+                            type: 'POST',
+                            url:assistant_url+'/assistant/file/uploadImg',
+                            contentType:"application/json",
+                            data: JSON.stringify(signData),
+                            dataType:'json',
+                            success: function(data){
+                                var data = data.obj;
+                                var _id = data.id;
+                                that.resourceIds.push(_id);
                                 var formData = new FormData();
                                 formData.append("key", data.objectKey);
                                 formData.append("success_action_status", 200);
                                 formData.append("OSSAccessKeyId", data.accessKey);
                                 formData.append("policy", data.policy);
                                 formData.append("Signature", data.signature);
-                                formData.append("file", file, file.name);
-                                axios.post(data.host, formData).then((res1) => {
-                                    vm.uploadedFiles.set(file, id);
-                                });
-                            });
-                        } else {
-                            vm.resourceIds[vm.resourceIds.length] = vm.uploadedFiles.get(file);
-                        }
-                    });
+                                formData.append("file", file[j], file[j].name);
+                                var req = new XMLHttpRequest();
+                                req.open("POST", data.host, false);
+                                req.send(formData);
+                            }
+                        });
+                    }
                 }
             }
         });
