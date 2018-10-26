@@ -3645,10 +3645,9 @@ $(function(){
                             headers: {
                                 'Authorization': 'bearer '+_token
                             },
-                            type: 'POST',
-                            url:weixin_url+'/public-benefit/submitAidApply',
+                            type: 'GET',
+                            url:weixin_url+'/public-benefit/submitAidApply/'+aidApplyId,
                             contentType:"application/json",
-                            data: {aidApplyId:aidApplyId},
                             success: function(data){
                                 that.loading = false;
                                 that.showpage = true;
