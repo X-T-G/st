@@ -3144,6 +3144,9 @@ $(function(){
                 area_name:[],//地区级
                 is_three:false,//标记是否三层
                 is_select_last:false,//标记是否选择最后一层
+                seqNo1:'',//省
+                seqNo2:'',//市
+                seqNo3:'',//区
             },
             created:function(){
                 var that = this;
@@ -3176,6 +3179,19 @@ $(function(){
                         if (data.code == 0) {
                             that.user_info = data.aidApply;
                             that.aidApply = data.aidApply;
+                            if (data.aidApply.apartment.seqNo!==undefined){
+                                var _city = data.aidApply.apartment.seqNo.split('.');
+                                that.seqNo1 = data.aidApply.apartment.seqNo.split('.')[0];
+                                that.seqNo2 = data.aidApply.apartment.seqNo.split('.')[1];
+                                if (_city.length==2){
+                                    that.seqNo3 ='';
+                                }else if(_city.length==3){
+                                    that.seqNo3 = data.aidApply.apartment.seqNo.split('.')[2];
+                                }
+                                console.log( that.seqNo1);
+                                console.log( that.seqNo2);
+                                console.log( that.seqNo3);
+                            }
                         }else{
                             return;
                         }
@@ -3226,6 +3242,8 @@ $(function(){
                 selectVal:function(e){
                     var that = this;
                     var _index = $('.city_province .weui-select').val();
+                    var test = $('.city_province .weui-select  option:selected').val();
+                    console.log(test);
                     if (_index == -1) {
                         return;
                     }else{

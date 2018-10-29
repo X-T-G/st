@@ -27,7 +27,7 @@
                     <p class="left_info">病情诊断：</p>
                     <div class="flex-1">
                         <!-- <input type="text"> -->
-                        <textarea  class="flex-1 input_row" name="" id="" cols="30" rows="10"></textarea>
+                        <textarea :value="user_info.diagnosis"  class="flex-1 input_row" name="" id="" cols="30" rows="10"></textarea>
                     </div>
                 </div>
                 <p class="error_info diagnosis dis-no" style="color:#fd5749;height: 24px;line-height: 24px;padding-left: 40px;text-align: center;">请填写完整信息！</p>
@@ -35,7 +35,7 @@
                     <p class="left_info">病情程度：</p>
                     <div class="flex-1">
                         <div class="weui-cell__bd">
-                            <select class="weui-select illnessDegree" name="select">
+                            <select :value="user_info.illnessDegree" class="weui-select illnessDegree" name="select">
                                 <option value="0">请选择</option>
                                 <option value="普通">普通</option>
                                 <option value="中等">中等</option>

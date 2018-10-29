@@ -27,7 +27,7 @@
                     <!-- <input type="text" class="flex-1 appliedAmount input_row"> -->
                     <div class="flex-1">
                         <div class="weui-cell__bd">
-                            <select class="weui-select appliedAmount" name="select">
+                            <select class="weui-select appliedAmount" :value="user_info.appliedAmount" name="select">
                                 <option value="0">请选择</option>
                                 <option value="1000">1千</option>
                                 <option value="2000">2千</option>
@@ -49,7 +49,7 @@
                     <!-- <input type="text" class="flex-1 timeRange input_row"> -->
                     <div class="flex-1">
                         <div class="weui-cell__bd">
-                            <select class="weui-select timeRange" name="select">
+                            <select class="weui-select timeRange" :value="user_info.timeRange" name="select">
                                 <option value="0">请选择</option>
                                 <option value="1">1月</option>
                                 <option value="2">2月</option>
@@ -70,7 +70,7 @@
                 <p class="error_info timeRange dis-no" style="color:#fd5749;height: 24px;line-height: 24px;padding-left: 40px;text-align: center;">请填写完整信息！</p>
                 <div class="flex info_row app_info weui-cells">
                     <p class="left_info">申请陈述：</p>
-                    <textarea  class="flex-1 applyDesc input_row" name="" id="" cols="30" rows="10"></textarea>
+                    <textarea  class="flex-1 applyDesc input_row" :value="user_info.applyDesc" name="" id="" cols="30" rows="10"></textarea>
                 </div>
                 <p class="error_info applyDesc dis-no" style="color:#fd5749;height: 24px;line-height: 24px;padding-left: 40px;text-align: center;">请填写完整信息！</p>
                 <div class="apply_btn" v-on:click="next_step">
