@@ -3666,6 +3666,86 @@ $(function(){
             }
         });
 
+    }else if ($('#welfare_way').size()>0){
+        var _token = localStorage.getItem('access_token');
+        var app = new Vue({
+            el: '#welfare_way',
+            data: {
+                loading:true,
+                showpage:false,
+                show_modal:true,
+                user_info:[],//初始化用户数据
+            },
+            created:function(){
+                var that = this;
+                $.ajax({
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: "GET",
+                    url: medicine_url + '/v1.0.0/personalCenter/getPersonalInfo',
+                    contentType:"json",
+                    dataType: "json",
+                    success: function(data){
+                        if (data.code==0){
+                            that.loading = false;
+                            that.showpage = true;
+                            that.user_info = data.object;
+                        }else{
+                            return;
+                        }
+                        to_login(data);
+                    }
+                });
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: 'GET',
+                    url:weixin_url+'/agreement/confirm/agreement_type_benefit_join',
+                    contentType:"application/json",
+                    success: function(data){
+                        that.loading = false;
+                        that.showpage = true;
+                        if (data.code == 0) {
+                            that.show_modal = !data.confirm;
+                        }else{
+                            return;
+                        }
+                        to_login(data);
+                    }
+                });
+            },
+            methods:{
+                sure_step:function(){
+                    
+                },
+                agree_info:function(event){
+                    var that = this;
+                    var is_agree = $('.welcome_page').find('.weui-agree__checkbox').prop('checked');
+                    if (is_agree) {//如果同意
+                        $.ajax({//发起请求
+                            headers: {
+                                'Authorization': 'bearer '+_token
+                            },
+                            type: "POST",
+                            url:weixin_url+'/agreement/confirm/agreement_type_benefit_join',
+                            contentType:"application/json",
+                            success: function(data){
+                                if (data.code == 0) {
+                                    that.show_modal = false;
+                                }
+                                to_login(data);
+                            }
+                        });
+                    }else{
+                        that.show_modal = true; 
+                        return;       
+                    }
+                },
+            }
+        });
+        
     }
 });
 

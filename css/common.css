@@ -714,9 +714,9 @@ body input{background-color: #fff;}
 #welfare_home1 .city_messege .weui-select{padding-left: 3px;}
 #welfare_home1 .weui-cells .city_messege .city_name{margin: 0 2px;}
 #welfare_home2 .upload_pic.weui-loadmore{display:none;position: absolute;bottom: 0;z-index: 10000;width: 100%;line-height: 40px;height: 40px;margin-bottom: 0;background-color: #e5e5e5;}
-
-
-
+#welfare_way .welcome_page .weui-actionsheet__menu{padding: 20px;}
+#welfare_way .weui-actionsheet__menu button {width: 60px;height: 28px;background-color: #fff;outline: none;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 4px;}
+#welfare_way .weui-skin_android.welcome_page .weui-actionsheet .weui-actionsheet__menu {max-height: 560px;}
 
 
 
