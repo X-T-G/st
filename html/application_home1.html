@@ -71,22 +71,22 @@
                 <p class="left_info">现居住地：</p>
                 <div class="flex-1 city_messege flex">
                     <div class="city_province select_option">
-                        <select class="weui-select" name="select" v-on:change="selectVal" id="city_province">
-                            <option value="-1" id="p_select1">请选择</option>
-                            <option :value="index"  :id="province.id"  v-for="(province,index) in city_info">{{province.dictName}}</option>
+                        <select class="weui-select" name="select9" v-on:change="selectVal" id="city_province">
+                            <!-- <option value="-1" id="p_select1">请选择</option>
+                            <option :value="province.dictName"   :id="province.id"  v-for="(province,index) in city_info">{{province.dictName}}</option> -->
                         </select>
                     </div>
                     <div class="city_name  select_option">
-                        <select class="weui-select " name="select"  v-on:change="selectVal2" id="city_name">
-                            <option value="-1" id="p_select2">请选择</option>
-                            <option :value="index" :id="city.id"  v-for="(city,index) in city_name"  v-if="city_name.length>0">{{city.dictName}}</option>
-                            <option :value="index" :id="city_name.id"  v-else>{{city_name.dictName}}</option>
+                        <select class="weui-select " name="select6"  v-on:change="selectVal2" id="city_name">
+                            <!-- <option value="-1" id="p_select2">请选择</option>
+                            <option :value="city.dictName" :name="index" :id="city.id"  v-for="(city,index) in city_name"  v-if="city_name.length>0">{{city.dictName}}</option>
+                            <option :value="city_name.dictName"  :id="city_name.id"  v-else>{{city_name.dictName}}</option> -->
                         </select>
                     </div>
                     <div class="area_name dis-no select_option">
-                        <select class="weui-select " name="select" v-on:change="selectVal3" id="area_name">
-                            <option value="-1" id="p_select3">请选择</option>
-                            <option :value="index" :id="area.id"  v-for="(area,index) in area_name">{{area.dictName}}</option>
+                        <select class="weui-select " name="select8" v-on:change="selectVal3" id="area_name">
+                            <!-- <option value="-1" id="p_select3">请选择</option>
+                            <option :value="area.dictName"  :id="area.id"  v-for="(area,index) in area_name">{{area.dictName}}</option> -->
                         </select>
                     </div>
                 </div>

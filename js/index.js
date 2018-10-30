@@ -3144,12 +3144,118 @@ $(function(){
                 area_name:[],//地区级
                 is_three:false,//标记是否三层
                 is_select_last:false,//标记是否选择最后一层
-                seqNo1:'',//省
-                seqNo2:'',//市
-                seqNo3:'',//区
+                province:{name:"",id:""},
+                city:{name:"",id:""},
+                area:{name:"",id:""},
             },
             created:function(){
                 var that = this;
+                $.ajax({//发起请求//请求地址信息
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: 'GET',
+                    url:'https://wap.shentingkeji.com/stassistant/plugins/city/cityJson.json',
+                    contentType:"application/json",
+                    success: function(data){
+                        if (data.code == 0) {
+                            that.city_info = data.list;
+                            $.ajax({//发起请求//获取已保存信息
+                                headers: {
+                                    'Authorization': 'bearer '+_token
+                                },
+                                type: 'POST',
+                                url:weixin_url+'/public-benefit/addAidApply',
+                                contentType:"application/json",
+                                success: function(data){
+                                    if (data.code == 0) {
+                                        that.user_info = data.aidApply;
+                                        that.aidApply = data.aidApply;
+                                        if (data.aidApply.apartment.seqCn!==undefined){
+                                            // 先渲染省级
+                                            var _province_arr = that.city_info;
+                                            var province_content = "<option value='-1' id='p_select1'>请选择</option>";
+                                            for(var i = 0;i<_province_arr.length;i++){
+                                                province_content+="<option value='"+_province_arr[i].dictName+"' id='"+_province_arr[i].id+"'>"+_province_arr[i].dictName+"</option>";
+                                            }
+                                            $('#city_province').html(province_content);
+
+                                            // 再修改页面内容
+                                            var _city = data.aidApply.apartment.seqCn.split('-');
+                                            var _city_id = data.aidApply.apartment.seqNo.split('.');
+                                            that.province.id = _city_id[0];
+                                            that.city.id = _city_id[1];
+                                            that.area.id = _city_id[2];
+                                            that.province.name = _city[0];
+                                            that.city.name = _city[1];
+                                            that.area.name = _city[2];
+                                            
+                                            if (_city.length==2){//不显示区级
+                                                var _city_info = that.city_info;
+                                                for (var i = 0;i <_city_info.length;i++){//查找省的相同id
+                                                    if (_city_info[i].id==that.province.id){
+                                                        that.city_name =_city_info[i].children;
+                                                        $('#city_province').val(that.province.name);
+                                                        var city_arry = that.city_name;
+                                                        var city_content = "<option value='-1' id='p_select2'>请选择</option>";
+                                                        for(var j=0;j<city_arry.length;j++){
+                                                            city_content+="<option value='"+city_arry[j].dictName+"' id='"+city_arry[j].id+"'>"+city_arry[j].dictName+"</option>";
+                                                            if (city_arry[j].id==that.city.id) {//查找市的相同id
+                                                                city_content+="<option selected value='"+city_arry[j].dictName+"' id='"+city_arry[j].id+"'>"+city_arry[j].dictName+"</option>";
+                                                            }
+                                                            $('#city_name').html(city_content);
+                                                        }
+                                                    }
+                                                }
+                                            }else if(_city.length==3){//显示区级,包括直辖市
+                                                var _city_info = that.city_info;
+                                                $('.area_name').removeClass('dis-no');
+                                                for (var i = 0;i <_city_info.length;i++){//查找省的相同id
+                                                    if (_city_info[i].id==that.province.id){
+                                                        that.city_name =_city_info[i].children;
+                                                        $('#city_province').val(that.province.name);
+                                                        var city_arry = that.city_name;
+                                                        var city_content = "<option value='-1' id='p_select2'>请选择</option>";
+                                                        for(var j=0;j<city_arry.length;j++){
+                                                            city_content+="<option value='"+city_arry[j].dictName+"' id='"+city_arry[j].id+"'>"+city_arry[j].dictName+"</option>";
+                                                            $('#city_name').html(city_content);
+                                                            if (city_arry[j].id==that.city.id) {//查找市的相同id
+                                                                city_content+="<option selected value='"+city_arry[j].dictName+"' id='"+city_arry[j].id+"'>"+city_arry[j].dictName+"</option>";
+                                                                that.area_name =city_arry[j].children;
+                                                                var area_arry = that.area_name;
+                                                                var area_content = "<option value='-1' id='p_select3'>请选择</option>";
+                                                                for(var k=0;k<area_arry.length;k++){
+                                                                    area_content+="<option value='"+area_arry[k].dictName+"' id='"+area_arry[k].id+"'>"+area_arry[k].dictName+"</option>";
+                                                                    $('#area_name').html(area_content);
+                                                                    if (area_arry[k].id==that.area.id) {
+                                                                        area_content+="<option selected value='"+area_arry[k].dictName+"' id='"+area_arry[k].id+"'>"+area_arry[k].dictName+"</option>";
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }else{
+                                            var _province_arr = that.city_info;
+                                            var province_content = "<option value='-1' id='p_select2'>请选择</option>";
+                                            for(var i = 0;i<_province_arr.length;i++){
+                                                province_content+="<option value='"+_province_arr[i].dictName+"' id='"+_province_arr[i].id+"'>"+_province_arr[i].dictName+"</option>";
+                                            }
+                                            $('#city_province').html(province_content);
+                                        }
+                                    }else{
+                                        return;
+                                    }
+                                    to_login(data);
+                                }
+                            });
+                        }else{
+                            return;
+                        }
+                        to_login(data);
+                    }
+                });
                 $.ajax({//发起请求
                     headers: {
                         'Authorization': 'bearer '+_token
@@ -3162,52 +3268,6 @@ $(function(){
                         that.showpage = true;
                         if (data.code == 0) {
                             that.show_modal = !data.confirm;
-                        }else{
-                            return;
-                        }
-                        to_login(data);
-                    }
-                });
-                $.ajax({//发起请求
-                    headers: {
-                        'Authorization': 'bearer '+_token
-                    },
-                    type: 'POST',
-                    url:weixin_url+'/public-benefit/addAidApply',
-                    contentType:"application/json",
-                    success: function(data){
-                        if (data.code == 0) {
-                            that.user_info = data.aidApply;
-                            that.aidApply = data.aidApply;
-                            if (data.aidApply.apartment.seqNo!==undefined){
-                                var _city = data.aidApply.apartment.seqNo.split('.');
-                                that.seqNo1 = data.aidApply.apartment.seqNo.split('.')[0];
-                                that.seqNo2 = data.aidApply.apartment.seqNo.split('.')[1];
-                                if (_city.length==2){
-                                    that.seqNo3 ='';
-                                }else if(_city.length==3){
-                                    that.seqNo3 = data.aidApply.apartment.seqNo.split('.')[2];
-                                }
-                                console.log( that.seqNo1);
-                                console.log( that.seqNo2);
-                                console.log( that.seqNo3);
-                            }
-                        }else{
-                            return;
-                        }
-                        to_login(data);
-                    }
-                });
-                $.ajax({//发起请求
-                    headers: {
-                        'Authorization': 'bearer '+_token
-                    },
-                    type: 'GET',
-                    url:'https://wap.shentingkeji.com/stassistant/plugins/city/cityJson.json',
-                    contentType:"application/json",
-                    success: function(data){
-                        if (data.code == 0) {
-                            that.city_info = data.list;
                         }else{
                             return;
                         }
@@ -3241,10 +3301,13 @@ $(function(){
                 },
                 selectVal:function(e){
                     var that = this;
-                    var _index = $('.city_province .weui-select').val();
-                    var test = $('.city_province .weui-select  option:selected').val();
-                    console.log(test);
+                    var myselect=document.getElementById("city_province");
+                    var _index=myselect.selectedIndex - 1;
                     if (_index == -1) {
+                        $('.city_name').addClass('dis-no');
+                        $('.city_name select').val('请选择');
+                        $('.area_name').addClass('dis-no');
+                        $('.area_name select').val('请选择');
                         return;
                     }else{
                         var city_info = that.city_info;
@@ -3256,25 +3319,44 @@ $(function(){
                         if (city_length == 1) {//若为直辖市或者港澳台
                             is_urisdiction = city_info[_index].children[0].children;
                             if (is_urisdiction !== undefined){//直辖市
-                                that.city_name=city_info[_index].children[0].children;
-                            }else{//港澳台
+                                that.city_name=city_info[_index].children;
+                            }else{//港澳台和其他
                                 that.city_name=city_info[_index].children;
                             }
                         }else{//若非直辖市
                             that.city_name=city_info[_index].children;
                         }
+                        var _city_arr = that.city_name;
+                        var city_content = "<option value='-1' id='p_select2'>请选择</option>";
+                        for(var i = 0;i<_city_arr.length;i++){
+                            city_content+="<option value='"+_city_arr[i].dictName+"' id='"+_city_arr[i].id+"'>"+_city_arr[i].dictName+"</option>";
+                        }
+                        $('#city_name').html(city_content);
                         that.is_three = false;
                         that.is_select_last = false;
                     }
                 },
                 selectVal2:function(){
                     var that = this;
-                    var _index = $('.city_name .weui-select').val();
+                    var myselect=document.getElementById("city_name");
+                    var _index=myselect.selectedIndex - 1;
                     if (_index == -1) {
+                        $('.area_name').addClass('dis-no');
+                        $('.area_name select').val('请选择');
                         return;
                     }else{
                         var city_name = that.city_name;
                         that.area_name=city_name[_index].children;
+                        var _area_arr = that.area_name;
+                        var area_content = "<option value='-1' id='p_select3'>请选择</option>";
+                        if (_area_arr!==undefined) {//有三个层级
+                            for(var i = 0;i<_area_arr.length;i++){
+                                area_content+="<option value='"+_area_arr[i].dictName+"' id='"+_area_arr[i].id+"'>"+_area_arr[i].dictName+"</option>";
+                            }
+                        }else{//有两个层级
+                            return;
+                        }
+                        $('#area_name').html(area_content);
                         if (city_name[_index].children !== undefined) {//普通省市
                             $('.area_name').removeClass('dis-no');
                             that.is_three = true;
@@ -3286,7 +3368,8 @@ $(function(){
                 },
                 selectVal3:function(){
                     var that = this;
-                    var _index = $('.area_name .weui-select').val();
+                    var myselect=document.getElementById("area_name");
+                    var _index=myselect.selectedIndex - 1;
                     if (_index == -1) {
                         return;
                     }else{
@@ -3410,7 +3493,7 @@ $(function(){
                                     $galleryImg = $("#galleryImg"),
                                     $uploaderInput = $("#uploaderInput"),
                                     $uploaderFiles = $("#uploaderFiles");
-                        
+
                                     $uploaderInput.on("change", function(e) {
                                         var src, url = window.URL || window.webkitURL || window.mozURL,
                                         files = e.target.files;
@@ -3422,7 +3505,9 @@ $(function(){
                                                 src = e.target.result;
                                             }
                                             that.pics.push(file);
+                                            //解决bug!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                                             $uploaderFiles.append($(tmpl.replace('#url#', src)));
+
                                         }
                                     });
                                 var index; //第几张图片
@@ -3441,6 +3526,15 @@ $(function(){
                                     _pic.splice(index,1);
                                     that.pics = _pic;
                                 });
+                                // 若有数据，页面初始化渲染
+                                var _pic = data.resourceRelations;
+                                if (_pic!==undefined) {
+                                    var _content = "";
+                                    for (var i=0;i<_pic.length;i++){
+                                        _content +="<li class='weui-uploader__file' style='background-image:url("+_pic[i].resource.path+"')></li>";
+                                    }
+                                    $('#uploaderFiles').html(_content);
+                                }
                             });
                         }else{
                             return;
