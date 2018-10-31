@@ -3493,7 +3493,10 @@ $(function(){
                                     $galleryImg = $("#galleryImg"),
                                     $uploaderInput = $("#uploaderInput"),
                                     $uploaderFiles = $("#uploaderFiles");
-
+                                var _ids = data.resourceRelations;
+                                for (var i=0;i<_ids.length;i++){
+                                    that.resourceIds.push(_ids[i].resource.id);
+                                }
                                     $uploaderInput.on("change", function(e) {
                                         var src, url = window.URL || window.webkitURL || window.mozURL,
                                         files = e.target.files;
@@ -3505,7 +3508,6 @@ $(function(){
                                                 src = e.target.result;
                                             }
                                             that.pics.push(file);
-                                            //解决bug!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                                             $uploaderFiles.append($(tmpl.replace('#url#', src)));
 
                                         }
@@ -3525,6 +3527,7 @@ $(function(){
                                     var _pic = that.pics;
                                     _pic.splice(index,1);
                                     that.pics = _pic;
+                                    that.resourceIds.splice(index,1);
                                 });
                                 // 若有数据，页面初始化渲染
                                 var _pic = data.resourceRelations;
