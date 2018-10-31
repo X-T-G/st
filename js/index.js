@@ -2275,7 +2275,7 @@ $(function(){
                                                             $androidMask.css('display','block');
                                                             $('#quit_account2 .text_info').html('支付取消!');
                                                             setTimeout(function(){
-                                                                // window.location.href='../html/person.html';
+                                                                window.location.href='../html/person.html';
                                                             },1000)
                                                     }else if(res.err_msg == "get_brand_wcpay_request:fail"){
                                                             $('.upload_pic.weui-loadmore').css('display','none');
@@ -2287,7 +2287,7 @@ $(function(){
                                                             $androidMask.css('display','block');
                                                             $('#quit_account2 .text_info').html('支付失败!');
                                                             setTimeout(function(){
-                                                                // window.location.href='../html/person.html';
+                                                                window.location.href='../html/person.html';
                                                             },1000)
                                                     }else{
                                                             return;
