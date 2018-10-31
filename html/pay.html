@@ -86,6 +86,11 @@
                     <div class="surepay_contain">
                         <button class="surepay" v-on:click="surepay">确认支付</button>
                     </div>
+                    <!-- 上传加载效果 -->
+                    <div class="weui-loadmore upload_pic dis-no" style="display: none;bottom: 0;z-index: 100;width: 100%;line-height: 40px;height: 40px;margin-bottom: 0;background-color: #e5e5e5;">
+                        <i class="weui-loading"></i>
+                        <span class="weui-loadmore__tips">支付中，请勿重复点击！</span>
+                    </div>
                 </div>
             </div>
              <!-- 输入交易密码-->

@@ -2219,9 +2219,10 @@ $(function(){
                                  });
                             }
                         }else{
-                            
                             var _url = window.location.href
                             var code = _url.match(/=(\S*)&/)[1];
+                            $('.upload_pic.weui-loadmore').css('display','block');
+                            $('.surepay_contain').css('display','none');
                             $.ajax({//发起请求
                                 headers: {
                                     'Authorization': 'bearer '+_token
@@ -2230,9 +2231,10 @@ $(function(){
                                 url:weixin_url + '/order/pay',
                                 contentType:"application/json",
                                 data: JSON.stringify({orderNum:orderNum,coinPay:coinPay,thirdPay:thirdPay,code:code}),
+                                async:false,
                                 success: function(data){
-                                    var _data = JSON.parse(data.str);
                                     if (data.code == 0) {
+                                        var _data = JSON.parse(data.str);
                                     //     // if (pay_way.hasClass('icon-weixinzhifu')) {//如果是微信支付
                                     //     //     var _url = data.str;
                                     //     //     window.location.href =_url;
@@ -2258,10 +2260,14 @@ $(function(){
                                                         }
                                                     });
                                                     if(res.err_msg == "get_brand_wcpay_request:ok" ){
+                                                        $('.upload_pic.weui-loadmore').css('display','none');
+                                                        $('.surepay_contain').css('display','block');
                                                     // 使用以上方式判断前端返回,微信团队郑重提示：
                                                             //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
                                                             window.location.href='../html/pay-success.html';
                                                     }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
+                                                            $('.upload_pic.weui-loadmore').css('display','none');
+                                                            $('.surepay_contain').css('display','block');
                                                             // 弹窗
                                                             var $androidActionSheet = $('#quit_account2');
                                                             var $androidMask = $androidActionSheet.find('.weui-mask2');
@@ -2269,9 +2275,11 @@ $(function(){
                                                             $androidMask.css('display','block');
                                                             $('#quit_account2 .text_info').html('支付取消!');
                                                             setTimeout(function(){
-                                                                window.location.href='../html/person.html';
+                                                                // window.location.href='../html/person.html';
                                                             },1000)
                                                     }else if(res.err_msg == "get_brand_wcpay_request:fail"){
+                                                            $('.upload_pic.weui-loadmore').css('display','none');
+                                                            $('.surepay_contain').css('display','block');
                                                             // 弹窗
                                                             var $androidActionSheet = $('#quit_account2');
                                                             var $androidMask = $androidActionSheet.find('.weui-mask2');
@@ -2279,7 +2287,7 @@ $(function(){
                                                             $androidMask.css('display','block');
                                                             $('#quit_account2 .text_info').html('支付失败!');
                                                             setTimeout(function(){
-                                                                window.location.href='../html/person.html';
+                                                                // window.location.href='../html/person.html';
                                                             },1000)
                                                     }else{
                                                             return;
@@ -2297,6 +2305,8 @@ $(function(){
                                                 onBridgeReady();
                                             }
                                         }else{
+                                            $('.upload_pic.weui-loadmore').css('display','none');
+                                            $('.surepay_contain').css('display','block');
                                             // 弹窗
                                             var $androidActionSheet = $('#quit_account');
                                             var $androidMask = $androidActionSheet.find('.weui-mask2');
@@ -3913,7 +3923,7 @@ $(function(){
                             data: JSON.stringify({coin:price,payPassword:payPassword}),
                             success: function(data){
                                 if (data.code == 0) {
-                                    window.location.href='./application_way_all.html';
+                                    window.location.href='./balance.html';
                                 }else{
                                     $('.error_info2').css('display','block');
                                     $('.error_info2').html(data.message);
@@ -4134,7 +4144,6 @@ $(function(){
                                 that.show_page = true;
                                 that.user_info = _contet;
                                 that.page = data.page.totalPages;
-                                console.log(that.page);
                             }
                         }else{
                             return;

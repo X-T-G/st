@@ -751,8 +751,8 @@ body input{background-color: #fff;}
 .welfare_home.welfare_way .weui-actionsheet__menu input {font-size: 14px;height: 30px;line-height: 30px;padding-left: 6px;margin-bottom: 10px;-webkit-appearance: none;border: none;text-align: left;border-bottom: 1px solid #e5e5e5;outline: none;box-shadow: none;}
 .welfare_home.welfare_way .look_for_pass .weui-actionsheet__menu .btn_contain {margin: 20px 0;}
 .welfare_home  #quit_account3 .weui-mask3{height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 1000;transition: none 0.5s ease;display: none;}
-
-
+/* /* 捐赠明细 */
+.surepay_contain .weui-loadmore{margin-left: 0;}
 
 
 
