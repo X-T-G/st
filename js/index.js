@@ -3171,7 +3171,7 @@ $(function(){
                                     if (data.code == 0) {
                                         that.user_info = data.aidApply;
                                         that.aidApply = data.aidApply;
-                                        if (data.aidApply.apartment.seqCn!==undefined){
+                                        if (data.aidApply.apartment!==null && data.aidApply.apartment.seqCn!==undefined){
                                             // 先渲染省级
                                             var _province_arr = that.city_info;
                                             var province_content = "<option value='-1' id='p_select1'>请选择</option>";
@@ -3767,7 +3767,7 @@ $(function(){
                                 that.loading = false;
                                 that.showpage = true;
                                 if (data.code == 0) {
-                                    
+                                    window.location.href='./home_list.html';
                                 }else{
                                     return;
                                 }
@@ -3781,7 +3781,7 @@ $(function(){
             }
         });
 
-    }else if ($('#welfare_way').size()>0){
+    }else if ($('#welfare_way').size()>0){//加入捐赠页面
         var _token = localStorage.getItem('access_token');
         var app = new Vue({
             el: '#welfare_way',
@@ -3832,8 +3832,48 @@ $(function(){
                 });
             },
             methods:{
-                sure_step:function(){
-                    
+                forget_pass:function(){
+                    $.ajax({//发起请求
+                        headers: {
+                            'Authorization': 'bearer '+_token
+                        },
+                        type: 'GET',
+                        url:weixin_url + '/user/user-info',
+                        contentType:"application/json",
+                        success: function(data){
+                            if (data.code == 0) {
+                                var $androidActionSheet = $('#quit_account3');
+                                var $androidMask = $androidActionSheet.find('.weui-mask3');
+                                $androidMask.css('display','block');
+                                $androidActionSheet.fadeIn(200);
+                                $androidMask.on('click',function () {
+                                    $androidMask.css('display','none');
+                                    $androidActionSheet.fadeOut(200);
+                                });
+                                var email = data.userInfo.email;
+                                var phone = data.userInfo.phone;
+                                if(email.length>0 && phone.length==0){//只有邮箱
+                                    $('.re_phone').addClass('dis-no');
+                                    $('.re_email').addClass('active');
+                                    $('.email_input').html(email);
+                                    $('.phone_input').addClass('dis-no');
+                                }else if(email.length==0 && phone.length>0){//只有电话
+                                    $('.re_email').addClass('dis-no');
+                                    $('.re_phone').addClass('active');
+                                    $('.phone_input').html(phone);
+                                    $('.email_input').addClass('dis-no');
+                                }else{
+                                    $('.email_input').html(email);
+                                    $('.phone_input').html(phone);
+                                    $('.email_input').addClass('dis-no');
+                                    $('.re_phone').addClass('active');
+                                }
+                            }else{
+
+                            }
+                            to_login(data);
+                        }
+                    });
                 },
                 agree_info:function(event){
                     var that = this;
@@ -3859,8 +3899,316 @@ $(function(){
                     }
                 },
             }
+            
         });
-        
+        $('.look_for_pass button.get_code_btn.hasinput').live('click',function(){//此处用live因为class为后面动态生成，所以on('click')无效
+            var _token = localStorage.getItem('access_token');
+            if($('.re_phone').hasClass('active')) {//手机找回
+                $.ajax({//手机注册请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: "GET",
+                    url: weixin_url +'/user/forget-pay-password/sms-code',
+                    dataType: "json",
+                    success: function(data){
+                        if(data.code==0){
+                            clearTimeout(set_time);
+                            $('.get_code .remain_time').html('60');//初始化
+                            $('.get_code_btn').addClass('dis-no'); 
+                            $('.get_code').removeClass('dis-no'); 
+                            var _Time = 60;
+                            function _time(){
+                                if (_Time>0){
+                                    set_time = setTimeout(function(){
+                                        _Time--;
+                                        var remain_time = _Time;
+                                        $('.get_code .remain_time').html(remain_time);
+                                        _time();
+                                    },1000);
+                                }else{
+                                    $('button.get_code_btn.hasinput').removeClass('dis-no');  
+                                    $('.get_code').addClass('dis-no');
+                                }
+                            }
+                            _time();
+                        }else{
+                            $('.error_info').html(data.message);
+                            setTimeout(function(){
+                                $('.error_info').html('');
+                            }, 5000);
+                            return;
+                        }
+                    }
+                });
+            }else if($('.re_email').hasClass('active')){//邮箱找回
+                $.ajax({//邮箱注册请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: "GET",
+                    url: weixin_url +'/user/forget-pay-password/email-code',
+                    dataType: "json",
+                    success: function(data){
+                        if(data.code !== 0){//事件处理
+                            $('.error_info').html(data.message);
+                            setTimeout(function(){
+                                $('.error_info').html('');
+                            }, 5000);
+                            return;
+                        }else{
+                            clearTimeout(set_time);
+                            $('.get_code .remain_time').html('60');//初始化
+                            $('.get_code_btn').addClass('dis-no'); 
+                            $('.get_code').removeClass('dis-no'); 
+                            var _Time = 60;
+                        
+                            function _time(){
+                                if (_Time>0){
+                                    set_time = setTimeout(function(){
+                                        _Time--;
+                                        var remain_time = _Time;
+                                        $('.get_code .remain_time').html(remain_time);
+                                        _time();
+                                    },1000);
+                                }else{
+                                    $('button.get_code_btn.hasinput').removeClass('dis-no');  
+                                    $('.get_code').addClass('dis-no');
+                                }
+                            }
+                            _time();
+                        }
+                    }
+                }); 
+            }
+        });
+        $('.look_for_pass .time_cancel').live('click',function(){//忘记密码取消
+            var $androidActionSheet = $('#quit_account3');
+            var $androidMask = $androidActionSheet.find('.weui-mask3');
+            $androidMask.css('display','none');
+            $androidActionSheet.fadeOut(200);
+        });
+        $('.look_for_pass .quit_sure').live('click',function(){//忘记密码确认
+            var _token = localStorage.getItem('access_token');
+            var code = $('.password').val();
+            var newPayPassword = $('.pass_name').val();
+            if (code.length>0 && newPayPassword.length>0) {
+                if($('.re_phone').hasClass('active')) {//手机找回
+                    $.ajax({//发起请求
+                        headers: {
+                            'Authorization': 'bearer '+_token
+                        },
+                        type: "POST",
+                        url:weixin_url + '/user/forget-pay-password/phone/reset',
+                        contentType:"application/json",
+                        data: JSON.stringify({code:code,newPayPassword:newPayPassword}),
+                        success: function(data){
+                            if (data.code == 0) {
+                                $('#look_info').css('display','block');
+                                setTimeout(function(){
+                                    $('#look_info').css('display','none');
+                                    var $androidActionSheet = $('#quit_account3');
+                                    var $androidMask = $androidActionSheet.find('.weui-mask3');
+                                    $androidMask.css('display','none');
+                                    $androidActionSheet.fadeOut(200);
+                                },2000);
+                            }else{
+                                $('.error_info').html(data.message);
+                                setTimeout(function(){
+                                    $('.error_info').html('');
+                                }, 5000); 
+                            }
+                            to_login(data);
+                        }
+                    });
+                }else if($('.re_email').hasClass('active')){//邮箱找回
+                    $.ajax({//发起请求
+                        headers: {
+                            'Authorization': 'bearer '+_token
+                        },
+                        type: "POST",
+                        url:weixin_url + '/user/forget-pay-password/email/reset',
+                        contentType:"application/json",
+                        data: JSON.stringify({code:code,newPayPassword:newPayPassword}),
+                        success: function(data){
+                            if (data.code == 0) {
+                                $('#look_info').css('display','block');
+                                setTimeout(function(){
+                                    $('#look_info').css('display','none');
+                                    var $androidActionSheet = $('#quit_account3');
+                                    var $androidActionSheet2 = $('#quit_account2');
+                                    var $androidMask = $androidActionSheet.find('.weui-mask3');
+                                    var $androidMask2 = $androidActionSheet2.find('.weui-mask2');
+                                    $androidMask2.css('display','block');
+                                    $androidMask.css('display','none');
+                                    $androidActionSheet.fadeOut(200);
+                                    $androidActionSheet2.fadeIn(200);
+                                    $androidMask2.on('click',function () {
+                                        $androidMask2.css('display','none');
+                                        $androidActionSheet2.fadeOut(200);
+                                    });
+                                },2000);
+                            }else{
+                                $('.error_info').html(data.message);
+                                setTimeout(function(){
+                                    $('.error_info').html('');
+                                }, 5000);
+                            }
+                            to_login(data);
+                        }
+                    });
+                }
+            }
+        });
+    }else if ($('#home_list').size()>0){//接受资助列表页面
+        var _token = localStorage.getItem('access_token');
+        var page = 0;//默认第一页
+        var app = new Vue({
+            el: '#home_list',
+            data: {
+                loading:true,
+                show_page:false,
+                user_info:[],//初始化用户数据
+                status:"checking",//默认为审核中的状态
+                page:[],
+                has_noinfo:false,
+                current:1,//当前页面
+            },
+            created:function(){
+                var that = this;
+                var status = that.status;
+                $.ajax({
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: "GET",
+                    url: weixin_url + '/public-benefit/aidApplyPage?status='+status+'&page='+page,
+                    contentType:"json",
+                    dataType: "json",
+                    success: function(data){
+                        if (data.code==0){
+                            var _contet = data.page.content;
+                            that.loading = false;
+                            if (_contet.length==0) {//无数据
+                                that.has_noinfo=true;
+                                that.show_page = false;
+                            }else{
+                                that.has_noinfo=false;
+                                that.show_page = true;
+                                that.user_info = _contet;
+                                that.page = data.page.totalPages;
+                                console.log(that.page);
+                            }
+                        }else{
+                            return;
+                        }
+                        to_login(data);
+                    }
+                });
+            },
+            methods:{
+                change_status: function (event) {
+                    var that =this;
+                    var class_name = event.target.className;
+                    var class_name2 = event.target.className.split(" ")[1]
+                    var is_active = class_name.indexOf('active');
+                    that.current = 1;
+                    if (is_active !==-1) {//被选中
+                        return;
+                    }else{
+                        if (class_name2 == 'checking') {  //审核中订单
+                            var status = 'checking';  
+                            that.status = 'checking';
+                        }else if(class_name2 == 'yes'){//审核通过
+                            var status = 'yes';
+                            that.status = 'yes';
+                        }else if(class_name2 == 'no'){//审核不通过
+                            var status = 'no';
+                            that.status = 'no';
+                        }else if(class_name2 == 'editing'){//待编辑
+                            var status = 'editing';
+                            that.status = 'editing';//改变页面内容
+                        }
+                        that.show_page = false;
+                        that.has_noinfo = false;
+                        that.loading = true;
+                        var page = 0;
+                        $.ajax({
+                            headers: {
+                                'Authorization': 'bearer '+_token
+                            },
+                            type: "GET",
+                            url:  weixin_url + '/public-benefit/aidApplyPage?status='+status+'&page='+page,
+                            contentType:"application/json",
+                            dataType: "json",
+                            success: function(data){
+                                if (data.code==0){
+                                    var _contet = data.page.content;
+                                    that.loading = false;
+                                    if (_contet.length==0) {//无数据
+                                        that.has_noinfo=true;
+                                        that.show_page = false;
+                                    }else{
+                                        that.has_noinfo=false;
+                                        that.show_page = true;
+                                        that.user_info = _contet;
+                                        that.page = data.page.totalPages;
+                                    }
+                                }else{
+                                    return;
+                                }
+                                to_login(data);
+                            }
+                        });
+                    }
+                },
+                change_page:function(event){
+                    var that =this;
+                    var class_name = event.target.className;
+                    var num = event.target.innerHTML-1;
+                    var is_active = class_name.indexOf('active');
+                    that.current = event.target.innerHTML;
+                    if (is_active !==-1) {//被选中
+                        return;
+                    }else{
+                        that.show_page = false;
+                        that.has_noinfo = false;
+                        that.loading = true;
+                        var status = that.status;
+                        $.ajax({
+                            headers: {
+                                'Authorization': 'bearer '+_token
+                            },
+                            type: "GET",
+                            url:  weixin_url + '/public-benefit/aidApplyPage?status='+status+'&page='+num,
+                            contentType:"application/json",
+                            dataType: "json",
+                            success: function(data){
+                                if (data.code==0){
+                                    var _contet = data.page.content;
+                                    that.loading = false;
+                                    if (_contet.length==0) {//无数据
+                                        that.has_noinfo=true;
+                                        that.show_page = false;
+                                    }else{
+                                        that.has_noinfo=false;
+                                        that.show_page = true;
+                                        that.user_info = _contet;
+                                        that.page = data.page.totalPages;
+                                    }
+                                }else{
+                                    return;
+                                }
+                                to_login(data);
+                            }
+                        });
+                    }
+                },
+                to_edit:function(order){//跳转
+                    window.location.href='./application_home1.html';
+                }
+            }
+        });
     }
 });
 

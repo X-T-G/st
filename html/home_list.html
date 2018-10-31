@@ -19,24 +19,49 @@
                 <img src="../images/back_gery.png" alt="">
             </span>
         </div>
-        <!-- 神庭币使用详情 -->
-        <div class="balance_detail clearfix">
-            <p class="tint cion_detail">神庭币明细</p>
-            <div v-for="balance in my_balance">
-                <div class="each_cou">
-                    <div class="flex">
-                        <div class="flex-1">
-                            <p>{{balance.consumeType.dictName}}</p>
-                            <p class="tint">{{balance.createtime.substring(0,19)}}</p>
+        <!-- 接受资助明细 -->
+        <div class="home_list clearfix" id="home_list">
+            <div class="bar_option flex">
+                <div class="flex-1 checking"  :class=[{"active":(status=='checking')}] v-on:click="change_status">审核中</div>
+                <div class="flex-1 yes" :class=[{"active":(status=='yes')}] v-on:click="change_status">已通过</div>
+                <div class="flex-1 no" :class=[{"active":(status=='no')}] v-on:click="change_status">未通过</div>
+                <div class="flex-1 editing" :class=[{"active":(status=='editing')}] v-on:click="change_status">编辑中</div>
+            </div>
+            <div class="my_order" :class=[{"dis-no":(show_page==false)}] style="margin-top:10px;">
+                <div style="max-height:500px;overflow-y:scroll;">
+                    <div class="weui-cells" v-for="user in user_info">
+                        <div class="weui-cell" >
+                            <div class="weui-cell__hd"><img src="../images/bg_zone.png"></div>
+                            <div class="weui-cell__bd">
+                                <p class="create"><span>{{user.createtime.split(" ")[0]}}</span>提交申请</p>
+                                <!-- <p class="payprice"><span></span></p> -->
+                                <button v-if="user.applyStatus.dictId == 'editing'" class="to_edit" v-on:click="to_edit">去编辑</button>
+                            </div>
                         </div>
-                        <p class="cou_price"  v-if="balance.coin > 0">+{{balance.coin}}</p>
-                        <p class="cou_price pay" v-if="balance.coin < 0">{{balance.coin}}</p>
+                        <div class="clearfix">
+                            <div class="fr">
+                                <span class="or_status" v-if="user.applyStatus.dictId == 'checking'">审核中</span>
+                                <span class="or_status" v-else-if="user.applyStatus.dictId == 'no'">未通过原因：{{user.option}}</span>
+                                <span class="or_status" v-else-if="user.applyStatus.dictId == 'yes'">审核通过</span>
+                                <span class="or_status" v-else-if="user.applyStatus.dictId == 'editing'">编辑中</span>
+                                <span class="updata_time">{{user.updatetime.split(" ")[0]}}最后提交</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <div class="clearfix fr cli_page">
+                    <div class="fl  order_page" v-on:click="change_page" :class=[{'active':(page==current)}]  v-for="page in page">{{page}}</div>
+                </div>
             </div>
-        </div>
-        <div class="clearfix fr cli_page">
-            <div class="fl  order_page" v-on:click="change_page" :class=[{'active':(page==current)}]  v-for="page in page.totalPages">{{page}}</div>
+            <!-- 没有数据 -->
+            <div class="has_noinfo" :class=[{"dis-no":(has_noinfo==false)}]>
+                <img src="../images/bg_nodata.png" alt="">
+            </div>
+            <!-- 加载效果 -->
+            <div class="weui-loadmor" :class=[{"dis-no":(loading==false)}]>
+                <i class="weui-loading"></i>
+                <span class="weui-loadmore__tips">正在加载</span>
+            </div>
         </div>
     </body>
 </html>

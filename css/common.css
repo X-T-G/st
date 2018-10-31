@@ -180,7 +180,7 @@ img.store_pic{width: 108px;height:108px;}
 .m_order .bar_option div.ordered{border-right: 1px solid #f57d64;}
 .m_order .weui-cells .create{margin-bottom:14px;color: #939399;}
 .m_order .weui-cells .payprice,.m_order .weui-cells .payprice span{color: #939399;font-size: 12px;}
-.m_order .weui-cells .clearfix{color: #939399;margin-right: 10px;border-top: 1px solid #e5e5e5;margin: 0 10px;padding: 6px;}
+.m_order .weui-cells .clearfix{color: #939399;margin-right: 10px;margin: 0 10px;padding: 6px;}
 .m_order .weui-cells .clearfix span.or_status{color: #f57d64;font-size: 14px;margin-right: 10px;}
 .m_order .weui-cells .clearfix .updata_time{font-size: 12px;}
 .m_order .weui-cells{margin-top: 10px;}
@@ -717,6 +717,43 @@ body input{background-color: #fff;}
 #welfare_way .welcome_page .weui-actionsheet__menu{padding: 20px;}
 #welfare_way .weui-actionsheet__menu button {width: 60px;height: 28px;background-color: #fff;outline: none;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 4px;}
 #welfare_way .weui-skin_android.welcome_page .weui-actionsheet .weui-actionsheet__menu {max-height: 560px;}
+
+/* 接受资助页面 */
+.home_list{padding-top: 60px;}
+.home_list .bar_option {margin: 0 auto;width: 240px;height: 30px;line-height: 30px;text-align: center;border-radius: 6px;border: 1px solid #f57d64;}
+.home_list .bar_option div.yes{border-left: 1px solid #f57d64;border-right: 1px solid #f57d64;}
+.home_list .bar_option div.flex-1{background-color: #fff;color: #f57d64;}
+.home_list .bar_option div.no{border-right: 1px solid #f57d64;}
+.home_list .bar_option div.checking{border-top-left-radius: 6px;border-bottom-left-radius: 6px;}
+.home_list .bar_option div.editing{border-top-right-radius: 6px;border-bottom-right-radius: 6px;}
+.home_list .bar_option div.active{color: #fff;background-color: #f57d64;height: 29px;}
+.home_list  .weui-cell img {width: 100px;margin-right: 10px;}
+.home_list  .weui-cells .create {margin-bottom: 14px;color: #939399;}
+.home_list .weui-cells .payprice span,.home_list .weui-cells .payprice{color: #939399;font-size: 12px;}
+.home_list  .weui-cells .clearfix {color: #939399;margin-right: 10px;margin: 0 10px;padding: 6px;}
+.home_list  .weui-cells .clearfix span.or_status {color: #f57d64;font-size: 14px;margin-right: 10px;}
+.home_list  .weui-cell {padding-bottom: 0;}
+.home_list .weui-cell__bd button.to_edit{float: right;width: 50px;height: 25px;border-radius: 4px;border: none;background-color: #F17355;color: #fff;}
+/* 加入捐赠页面 */
+.welfare_home.welfare_way .info_row input.input_row{width: 150px;}
+.welfare_home.welfare_way .look_for_pass .bar_option {margin: 0 auto;max-width: 200px;height: 40px;line-height: 40px;text-align: center;border: none;}
+.welfare_home.welfare_way .look_for_pass .bar_option div.active {border-bottom: 1px solid #f57d64;color: #f57d64;}
+.welfare_home.welfare_way .look_for_pass .input_row {margin-top: 10px;}
+.welfare_home.welfare_way .look_for_pass .input_row img {margin-top: 8px;margin-right: 0px;width: 24px;height: 25px;}
+.welfare_home.welfare_way .look_for_pass .input_row .flex-1 {line-height: 30px;}
+.welfare_home.welfare_way .weui-actionsheet__menu button {width: 60px;height: 28px;background-color: #fff;outline: none;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 4px;}
+.welfare_home.welfare_way .look_for_pass .input_row .flex-1 .get_code_btn {height: 26px;padding: 4px 6px;border-radius: 5px;font-size: 12px;background-color: #939399;color: #fff;border: none;}
+#welfare_way .look_for_pass .input_row .flex-1 button.get_code_btn.hasinput {background-color: #F17355;color: #fff;width: 93px;}
+.welfare_home.welfare_way .weui-actionsheet div.phone_input{border-bottom: 1px solid #e5e5e5;line-height: 30px;text-align: left;padding-left: 10px;}
+.welfare_home.welfare_way .look_for_pass.weui-skin_android .weui-actionsheet__menu {padding: 10px;text-align: center;background-color: #fcfcfd;}
+.welfare_home.welfare_way .look_for_pass .input_row .flex-1 input.pass_code {width: 100px;}
+.welfare_home.welfare_way  .weui-actionsheet__menu input {margin: 10px 0 0;}
+.welfare_home.welfare_way .weui-actionsheet__menu input {font-size: 14px;height: 30px;line-height: 30px;padding-left: 6px;margin-bottom: 10px;-webkit-appearance: none;border: none;text-align: left;border-bottom: 1px solid #e5e5e5;outline: none;box-shadow: none;}
+.welfare_home.welfare_way .look_for_pass .weui-actionsheet__menu .btn_contain {margin: 20px 0;}
+.welfare_home  #quit_account3 .weui-mask3{height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 1000;transition: none 0.5s ease;display: none;}
+
+
+
 
 
 

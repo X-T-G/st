@@ -32,12 +32,13 @@
                 </div>
                 <div class="flex info_row">
                     <p class="left_info">捐赠数量：</p>
-                    <input type="text" class="flex-1 input_row">
+                    <input type="text" class=" input_row">
                 </div>
-                <!-- <div class="flex info_row">
+                <div class="flex info_row">
                     <p class="left_info">支付密码：</p>
-                    <input type="password" class="flex-1 input_row"  placeholder="请输入密码（6位数字）" oninput="if(value.length>6)value=value.slice(0,6)">
-                </div> -->
+                    <input type="password" class=" input_row"  placeholder="请输入密码（6位数字）" oninput="if(value.length>6)value=value.slice(0,6)">
+                    <span v-on:click="forget_pass" style="color: rgb(241, 115, 85);font-size: 12px;margin-left: 8px;">忘记密码？</span>
+                </div>
                 <div class="apply_btn">
                     <a href="./application_way_all.html">下一步</a>
                 </div>
@@ -70,6 +71,51 @@
                         </div>
                     </div>
                 </div>
+                <!-- 设置新的支付密码/忘记密码-->
+                <div class="weui-skin_android look_for_pass" id="quit_account3" style="opacity: 0;display:none;">
+                    <div class="weui-mask3"></div>
+                    <div class="weui-actionsheet">
+                        <div class="weui-actionsheet__menu gift_menu">
+                            <div class="info_te" style="display:inline-block;height:30px;line-height:30px;margin-bottom: 10px;" >
+                                <div class="bar_option flex">
+                                    <div class="flex-1 can_use re_phone">手机号找回</div>
+                                    <div class="flex-1 history  re_email">邮箱找回</div>
+                                </div>
+                                <div class="input_row flex">
+                                    <img src="../images/login_phone.png" alt="">
+                                    <div class="flex-1">
+                                        <div class="phone_input re_input"></div>
+                                        <div class="email_input re_input"></div>
+                                    </div>
+                                </div>
+                                <div class="input_row flex">
+                                    <img src="../images/iv_code.png" alt="">
+                                    <div class="flex-1">
+                                        <input class="password pass_code" type="text" placeholder="验证码">
+                                        <button class="get_code_btn hasinput" type="button">获取验证码</button>
+                                        <span class="get_code dis-no"><span class="remain_time">60</span>s后重新获取</span>
+                                    </div>
+                                </div>
+                                <div class="input_row flex">
+                                    <img src="../images/enroll_key.png" alt="">
+                                    <div class="flex-1"  style="margin-left:4px;">
+                                        <input class="pass_name once_pass" type="password" placeholder="请输入密码（6位数字）" oninput="if(value.length>6)value=value.slice(0,6)">
+                                    </div>
+                                </div>
+                                <p class="error_info" style="height: 24px;line-height: 24px;text-align: left;padding-left: 30px;"></p>
+                            </div>
+                            <div class="flex btn_contain">
+                                <div class="flex-1">
+                                    <button type="button" class="quit_sure">确认</button>
+                                </div>
+                                <div class="flex-1">
+                                    <button type="button" class="time_cancel">取消</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="weui-toptips weui-toptips_warn js_tooltips" style="display: none;background-color:#1AAD19;height: 40px;line-height: 40px;font-size:18px;" id = "look_info">密码修改成功！</div>
             </div>
             <!-- 加载效果 -->
             <div class="weui-loadmore" :class=[{"dis-no":(loading==false)}]>
