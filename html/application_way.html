@@ -31,16 +31,21 @@
                     <p>{{user_info.gender}}</p>
                 </div>
                 <div class="flex info_row">
+                    <p class="left_info">捐赠账户：</p>
+                    <p>神庭公益</p>
+                </div>
+                <div class="flex info_row">
                     <p class="left_info">捐赠数量：</p>
-                    <input type="text" class=" input_row">
+                    <input type="text" class="gift_num input_row">
                 </div>
                 <div class="flex info_row">
                     <p class="left_info">支付密码：</p>
-                    <input type="password" class=" input_row"  placeholder="请输入密码（6位数字）" oninput="if(value.length>6)value=value.slice(0,6)">
+                    <input type="password" class="user_pass input_row"  placeholder="请输入密码（6位数字）" oninput="if(value.length>6)value=value.slice(0,6)">
                     <span v-on:click="forget_pass" style="color: rgb(241, 115, 85);font-size: 12px;margin-left: 8px;">忘记密码？</span>
                 </div>
-                <div class="apply_btn">
-                    <a href="./application_way_all.html">下一步</a>
+                <p class="error_info2" style="display:none;height: 24px;line-height: 24px;text-align: left;padding-left:136px;color:#fd5749;"></p>
+                <div class="apply_btn" v-on:click="next_step">
+                    <a href="javascript:;">确认</a>
                 </div>
                 <div id="quit_account" class="weui-skin_android welcome_page" :class=[{"dis-no":(show_modal==false)}]>
                     <div class="weui-mask" style="display:block;" :class=[{"dis-no":(show_modal==false)}]></div>
@@ -98,7 +103,7 @@
                                 </div>
                                 <div class="input_row flex">
                                     <img src="../images/enroll_key.png" alt="">
-                                    <div class="flex-1"  style="margin-left:4px;">
+                                    <div class="flex-1"  style="margin-left:-18px;">
                                         <input class="pass_name once_pass" type="password" placeholder="请输入密码（6位数字）" oninput="if(value.length>6)value=value.slice(0,6)">
                                     </div>
                                 </div>

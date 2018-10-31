@@ -3832,7 +3832,7 @@ $(function(){
                 });
             },
             methods:{
-                forget_pass:function(){
+                forget_pass:function(){//忘记密码弹窗
                     $.ajax({//发起请求
                         headers: {
                             'Authorization': 'bearer '+_token
@@ -3875,7 +3875,7 @@ $(function(){
                         }
                     });
                 },
-                agree_info:function(event){
+                agree_info:function(event){//同意协议
                     var that = this;
                     var is_agree = $('.welcome_page').find('.weui-agree__checkbox').prop('checked');
                     if (is_agree) {//如果同意
@@ -3898,8 +3898,45 @@ $(function(){
                         return;       
                     }
                 },
+                next_step:function(){
+                    var _token = localStorage.getItem('access_token');
+                    var price = $('.welfare_home').find('input.gift_num').val();
+                    var payPassword = $('.welfare_home').find('input.user_pass').val();
+                    if(payPassword.length>0){
+                        $.ajax({//发起请求
+                            headers: {
+                                'Authorization': 'bearer '+_token
+                            },
+                            type: "POST",
+                            url:weixin_url + '/public-benefit/donate',
+                            contentType:"application/json",
+                            data: JSON.stringify({coin:price,payPassword:payPassword}),
+                            success: function(data){
+                                if (data.code == 0) {
+                                    window.location.href='./application_way_all.html';
+                                }else{
+                                    $('.error_info2').css('display','block');
+                                    $('.error_info2').html(data.message);
+                                        setTimeout(function(){
+                                        $('.error_info2').css('display','none');
+                                        $('.error_info2').html('');
+                                    }, 5000);
+                                    return;
+                                }
+                                to_login(data);
+                            }
+                        });
+                    }else{
+                        $('.error_info2').css('display','block');
+                        $('.error_info2').html('请输入支付密码！');
+                            setTimeout(function(){
+                            $('.error_info2').css('display','none');
+                            $('.error_info2').html('');
+                        }, 5000);
+                        return;
+                    }
+                }
             }
-            
         });
         $('.look_for_pass button.get_code_btn.hasinput').live('click',function(){//此处用live因为class为后面动态生成，所以on('click')无效
             var _token = localStorage.getItem('access_token');
