@@ -753,6 +753,11 @@ body input{background-color: #fff;}
 .welfare_home  #quit_account3 .weui-mask3{height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 1000;transition: none 0.5s ease;display: none;}
 /* /* 捐赠明细 */
 .surepay_contain .weui-loadmore{margin-left: 0;}
+#way_list .cli_page .order_page {border: 1px solid #f57d64;color: #f57d64;background-color: #fff;margin-bottom: 5px;margin-left: 4px;padding: 4px 8px;width: 30px;height: 30px;text-align: center;line-height: 23px;}
+#way_list .cli_page{margin: 10px;margin-bottom: 60px;}
+#way_list .cli_page .order_page {margin-bottom: 5px;margin-left: 4px;padding: 4px 8px;width: 30px;height: 30px;text-align: center;line-height: 23px;}
+#way_list .cli_page div.active {border: 1px solid #F17355;background-color: #F17355;color: #fff;}
+
 
 
 

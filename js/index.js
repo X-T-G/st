@@ -1,17 +1,17 @@
 $(function(){
     // 测试 di
-    var medicine_url = "http://192.168.0.155:8006/stmedicine";// 测试个人信息
-    var assistant_url = "http://192.168.0.155:8036/stassistant";// 测试预约
-    var weixin_url = "http://192.168.0.155:8046/stweixin";// 测试微信
+    // var medicine_url = "http://192.168.0.155:8006/stmedicine";// 测试个人信息
+    // var assistant_url = "http://192.168.0.155:8036/stassistant";// 测试预约
+    // var weixin_url = "http://192.168.0.155:8046/stweixin";// 测试微信
     //线上  
     // var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
     // var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
     // var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
     
      // 测试 tao
-    // var medicine_url = "http://192.168.0.2:8006/stmedicine";// 测试个人信息
-    // var assistant_url = "http://192.168.0.2:8036/stassistant";// 测试预约
-    // var weixin_url = "http://192.168.0.2:8046/stweixin";// 测试微信
+    var medicine_url = "http://192.168.0.2:8006/stmedicine";// 测试个人信息
+    var assistant_url = "http://192.168.0.2:8036/stassistant";// 测试预约
+    var weixin_url = "http://192.168.0.2:8046/stweixin";// 测试微信
     // 公共方法401跳转
     function to_login(data){
         if (data !== undefined && data.code !== undefined){
@@ -3925,7 +3925,7 @@ $(function(){
                             data: JSON.stringify({coin:price,payPassword:payPassword}),
                             success: function(data){
                                 if (data.code == 0) {
-                                    window.location.href='./balance.html';
+                                    window.location.href='./way_list.html';
                                 }else{
                                     $('.error_info2').css('display','block');
                                     $('.error_info2').html(data.message);
@@ -4255,6 +4255,99 @@ $(function(){
                 to_edit:function(order){//跳转
                     window.location.href='./application_home1.html';
                 }
+            }
+        });
+    }else if($("#way_list").size()>0){//神庭币捐赠明细
+        var _token = localStorage.getItem('access_token');
+        var page = 0;//默认第一页
+        var app = new Vue({
+            el: '#way_list',
+            data: {
+                has_noinfo:false,//没有数据
+                loading:true,//加载
+                show_page:false,//是否显示页面
+                page:[],
+                current:1,//当前页面
+                my_balance:[],//数据
+                datas:[],//初始数据
+            },
+            created:function(){
+                var that = this;
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: "GET",
+                    url:weixin_url + '/public-benefit/donate-list?page='+page,
+                    contentType:"application/json",
+                    success: function(data){
+                        if (data.code == 0) {
+                            that.current = 1;
+                            var Data_length =  data.page.content.length;
+                            if (Data_length == 0) {
+                                that.show_page = false;
+                                that.loading = false;
+                                that.has_noinfo = true;
+                                return;
+                            }else{//请求到数据
+                                that.my_balance = data.page.content;
+                                that.show_page = true;
+                                that.page = data.page;
+                                that.has_noinfo = false;
+                                that.loading = false;
+                                that.datas = data;
+                            }
+                        }
+                        to_login(data);
+                    }
+                });
+            },
+            methods:{
+                change_page:function(event){//下一页
+                    var that =this;
+                    var class_name = event.target.className;
+                    var num = event.target.innerHTML;
+                    var is_active = class_name.indexOf('active');
+                    if (is_active !==-1) {//被选中
+                        return;
+                    }else{
+                        that.show_page = false;
+                        that.has_noinfo = false;
+                        that.loading = true;
+                        that.current = num;
+                        var page = num-1;
+                        $.ajax({//发起请求
+                            headers: {
+                                'Authorization': 'bearer '+_token
+                            },
+                            type: "GET",
+                            url:weixin_url + '/public-benefit/donate-list?page='+page,
+                            contentType:"application/json",
+                            success: function(data){
+                                if (data.code == 0) {
+                                    var Data_length =  data.page.content.length;
+                                    if (Data_length == 0) {
+                                        that.show_page = false;
+                                        that.has_noinfo = true;
+                                        that.loading = false;
+                                        return;
+                                    }else{//请求到数据
+                                        that.my_balance = data.page.content;
+                                        that.show_page = true;
+                                        that.page = data.page;
+                                        that.has_noinfo = false;
+                                        that.loading = false;
+                                    }
+                                }
+                                to_login(data);
+                            }
+                        });
+                    }
+                },
+                modal_page:function(){
+                    var that = this;
+                    that.show_modal = true;
+                },
             }
         });
     }

@@ -19,23 +19,62 @@
                 <img src="../images/back_gery.png" alt="">
             </span>
         </div>
-        <div class="way_list clearfix" id="way_list">
+        <!-- <div class="way_list clearfix" id="way_list">
             <p class="tint cion_detail">捐赠明细</p>
             <div v-for="balance in my_balance">
                 <div class="each_cou">
                     <div class="flex">
                         <div class="flex-1">
-                            <!-- <p>{{balance.consumeType.dictName}}</p> -->
-                            <!-- <p class="tint">{{balance.createtime.substring(0,19)}}</p> -->
                         </div>
-                        <!-- <p class="cou_price"  v-if="balance.coin > 0">+{{balance.coin}}</p> -->
-                        <!-- <p class="cou_price pay" v-if="balance.coin < 0">{{balance.coin}}</p> -->
                     </div>
                 </div>
             </div>
         </div>
         <div class="clearfix fr cli_page">
             <div class="fl  order_page" v-on:click="change_page" :class=[{'active':(page==current)}]  v-for="page in page.totalPages">{{page}}</div>
+        </div> -->
+        <div style="padding-top:40px;">
+            <div class="m_balance"  id="way_list">
+                <div :class=[{"dis-no":(show_page==false)}]>
+                    <div class="balance_top">
+                        <img src="../images/st_coin2.png" alt="">
+                        <div class="text_center">
+                            <p>{{datas.totalCoin}}个</p>
+                        </div>
+                        <!-- <div class="clearfix"  v-if="is_agree==false">
+                            <p v-on:click="modal_page" class="fr" style="color:#f57d64;margin-right:6px;">神庭币使用须知</p>
+                        </div> -->
+                    </div>
+                    <!-- 神庭币使用详情 -->
+                    <div class="balance_detail clearfix"  :class=[{"dis-no":(show_page==false)}] >
+                        <p class="tint cion_detail">神庭币捐赠明细</p>
+                        <div v-for="balance in my_balance">
+                            <div class="each_cou">
+                                <div class="flex">
+                                    <div class="flex-1">
+                                        <p>{{balance.consumeType.dictName}}</p>
+                                        <p class="tint">{{balance.createtime.substring(0,19)}}</p>
+                                    </div>
+                                    <p class="cou_price"  v-if="balance.coin > 0">+{{balance.coin}}</p>
+                                    <p class="cou_price pay" v-if="balance.coin < 0">{{balance.coin}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix fr cli_page">
+                        <div class="fl  order_page" v-on:click="change_page" :class=[{'active':(page==current)}]  v-for="page in page.totalPages">{{page}}</div>
+                    </div>
+                </div>
+                <!-- 没有数据 -->
+                <div class="has_noinfo" :class=[{"dis-no":(has_noinfo==false)}]>
+                    <img style="width: 100%;height: auto;border-radius: 0;" src="../images/bg_nodata.png" alt="">
+                </div>
+                <!-- 加载效果 -->
+                <div class="weui-loadmore" :class=[{"dis-no":(loading==false)}]>
+                    <i class="weui-loading"></i>
+                    <span class="weui-loadmore__tips">正在加载</span>
+                </div>
+            </div>
         </div>
     </body>
 </html>
