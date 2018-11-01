@@ -3248,11 +3248,13 @@ $(function(){
                                             }
                                         }else{
                                             var _province_arr = that.city_info;
-                                            var province_content = "<option value='-1' id='p_select2'>请选择</option>";
+                                            var province_content = "<option value='-1' id='p_select1'>请选择</option>";
                                             for(var i = 0;i<_province_arr.length;i++){
                                                 province_content+="<option value='"+_province_arr[i].dictName+"' id='"+_province_arr[i].id+"'>"+_province_arr[i].dictName+"</option>";
                                             }
+                                            var city_content = "<option value='-1' id='p_select2'>请选择</option>";
                                             $('#city_province').html(province_content);
+                                            $('#city_name').html(city_content);
                                         }
                                     }else{
                                         return;
