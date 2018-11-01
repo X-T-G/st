@@ -59,6 +59,7 @@ $(function(){
                     type: "POST",
                     url: weixin_url + '/oauth-login-processor',
                     data: {username:name,password:password},//只有此处传这样的数据结构
+                    dataType: "json",
                     success: function(data){
                         if(data.code==0){
                             localStorage.setItem("access_token", data.token.access_token);
