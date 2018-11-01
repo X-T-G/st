@@ -3227,8 +3227,7 @@ $(function(){
                                                         var city_arry = that.city_name;
                                                         var city_content = "<option value='-1' id='p_select2'>请选择</option>";
                                                         for(var j=0;j<city_arry.length;j++){
-                                                            city_content+="<option value='"+city_arry[j].dictName+"' id='"+city_arry[j].id+"'>"+city_arry[j].dictName+"</option>";
-                                                            $('#city_name').html(city_content);
+                                                            
                                                             if (city_arry[j].id==that.city.id) {//查找市的相同id
                                                                 city_content+="<option selected value='"+city_arry[j].dictName+"' id='"+city_arry[j].id+"'>"+city_arry[j].dictName+"</option>";
                                                                 that.area_name =city_arry[j].children;
@@ -3241,7 +3240,11 @@ $(function(){
                                                                         area_content+="<option selected value='"+area_arry[k].dictName+"' id='"+area_arry[k].id+"'>"+area_arry[k].dictName+"</option>";
                                                                     }
                                                                 }
+                                                            }else {
+                                                                city_content+="<option value='"+city_arry[j].dictName+"' id='"+city_arry[j].id+"'>"+city_arry[j].dictName+"</option>";
+                                                                
                                                             }
+                                                            $('#city_name').html(city_content);
                                                         }
                                                     }
                                                 }
