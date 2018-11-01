@@ -8,7 +8,7 @@ $(function(){
     var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
     var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
     
-     // 测试 tao
+    // 测试 tao
     // var medicine_url = "http://192.168.0.2:8006/stmedicine";// 测试个人信息
     // var assistant_url = "http://192.168.0.2:8036/stassistant";// 测试预约
     // var weixin_url = "http://192.168.0.2:8046/stweixin";// 测试微信
