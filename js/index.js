@@ -3263,6 +3263,8 @@ $(function(){
                                             $('#city_province').html(province_content);
                                             $('#city_name').html(city_content);
                                         }
+                                    }else if(data.code == 1){
+                                        window.location.href='./person.html';
                                     }else{
                                         return;
                                     }
@@ -3562,6 +3564,8 @@ $(function(){
                                     $('#uploaderFiles').html(_content);
                                 }
                             });
+                        }else if(data.code == 1){
+                            window.location.href='./person.html';
                         }else{
                             return;
                         }
@@ -3681,6 +3685,8 @@ $(function(){
                         if (data.code == 0) {
                             that.user_info = data.aidApply;
                             that.aidApply = data.aidApply;
+                        }else if(data.code == 1){
+                            window.location.href='./person.html';
                         }else{
                             return;
                         }
@@ -3766,6 +3772,8 @@ $(function(){
                             that.user_info = data.aidApply;
                             that.aidApply = data.aidApply;
                             that.seqCn = data.aidApply.apartment.seqCn;
+                        }else if(data.code == 1){
+                            window.location.href='./person.html';
                         }else{
                             return;
                         }
@@ -3790,7 +3798,11 @@ $(function(){
                                 that.loading = false;
                                 that.showpage = true;
                                 if (data.code == 0) {
-                                    window.location.href='./home_list.html';
+                                    $('.js_tooltips').css('display','block');
+                                    setTimeout(function(){
+                                        $('.js_tooltips').css('display','none');
+                                        window.location.href='./person.html';
+                                    }, 3000);  
                                 }else{
                                     return;
                                 }
