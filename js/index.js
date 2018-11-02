@@ -68,7 +68,7 @@ $(function(){
                             var str  = _url.substring(_index + 1, _url.length);
                             if (str == 'doctor-list.html'){//医生列表跳转而来
                                 window.location.href='./doctor-list.html';
-                            }else if (str == 'application.html'){//医生列表跳转而来
+                            }else if (str == 'application.html'){//神庭公益跳转而来
                                 window.location.href='application.html';
                             }else{
                                 window.location.href='./person.html';
