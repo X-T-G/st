@@ -3395,6 +3395,10 @@ $(function(){
                         that.is_select_last = true;//选完最后一级
                     }
                 },
+                jion_modal:function(){
+                    var that = this;
+                    that.show_modal = true;
+                },
                 next_step:function(){
                     var that = this;
                     var _token = localStorage.getItem('access_token');
@@ -3916,6 +3920,10 @@ $(function(){
                         that.show_modal = true; 
                         return;       
                     }
+                },
+                jion_modal:function(){
+                    var that = this;
+                    that.show_modal = true;
                 },
                 next_step:function(){
                     var _token = localStorage.getItem('access_token');

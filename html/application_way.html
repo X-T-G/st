@@ -51,6 +51,7 @@
                     <input type="password" class="user_pass input_row"  placeholder="6位数字" oninput="if(value.length>6)value=value.slice(0,6)">
                     <span v-on:click="forget_pass" style="color: rgb(241, 115, 85);font-size: 12px;margin-left: 8px;">忘记密码？</span>
                 </div>
+                <div style="color:#fd5749;text-align: center;padding-top: 66px;" v-on:click="jion_modal">《自愿加入神庭公益资助声明》</div>
                 <p class="error_info2" style="display:none;height: 24px;line-height: 24px;text-align: left;padding-left:136px;color:#fd5749;"></p>
                 <div class="apply_btn" v-on:click="next_step">
                     <a href="javascript:;">确认</a>
