@@ -387,36 +387,38 @@ $(function(){
             // 弹窗
             var $androidActionSheet = $('#androidActionsheet');
             var $androidMask = $androidActionSheet.find('.weui-mask');
-            $androidActionSheet.fadeIn(200);
+            $androidActionSheet.css('display','block');
+            $androidActionSheet.css('opacity','1');
             $androidMask.on('click',function () {
-                $androidActionSheet.fadeOut(200);
+                $androidActionSheet.css('display','none');
             });
         });
         $('.person .time_sure').live('click',function(){//神庭问道弹窗
             var $androidActionSheet = $('#androidActionsheet');
             var $androidMask = $androidActionSheet.find('.weui-mask');
-            $androidActionSheet.fadeOut(200);
+            $androidActionSheet.css('display','none');
             $androidMask.on('click',function () {
-                $androidActionSheet.fadeIn(200);
+                $androidActionSheet.css('display','none');
             });
         });
         $('.quit_account').live('click',function(e){//退出弹窗
             // 弹窗
             var $androidActionSheet = $('#quit_account');
             var $androidMask = $androidActionSheet.find('.weui-mask2');
-            $androidActionSheet.fadeIn(200);
+            $androidActionSheet.css('display','block');
+            $androidActionSheet.css('opacity','1');
             $androidMask.css('display','block');
             $androidMask.on('click',function () {
-                $androidMask.css('display','none');
-                $androidActionSheet.fadeOut(200);
+                $androidActionSheet.css('display','none');
             });
         });
         $('.person .quit_sure,.person .time_cancel').live('click',function(){//退出弹窗
             var $androidActionSheet = $('#quit_account');
             var $androidMask = $androidActionSheet.find('.weui-mask2');
-            $androidActionSheet.fadeOut(200);
+            $androidActionSheet.css('display','none');
             $androidMask.on('click',function () {
                 $androidActionSheet.fadeIn(200);
+                $androidActionSheet.css('display','none');
             });
             if ($(this).hasClass('quit_sure')) {//退出确认
                 localStorage.removeItem("access_token");

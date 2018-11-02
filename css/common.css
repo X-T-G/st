@@ -735,7 +735,7 @@ body input{background-color: #fff;}
 .home_list  .weui-cell {padding-bottom: 0;}
 .home_list .weui-cell__bd button.to_edit{float: right;width: 50px;height: 25px;border-radius: 4px;border: none;background-color: #F17355;color: #fff;}
 /* 加入捐赠页面 */
-.welfare_home.welfare_way .info_row input.input_row{width: 150px;}
+.welfare_home.welfare_way .info_row input.input_row{width: 90px;}
 .welfare_home.welfare_way .look_for_pass .bar_option {margin: 0 auto;max-width: 200px;height: 40px;line-height: 40px;text-align: center;border: none;}
 .welfare_home.welfare_way .look_for_pass .bar_option div.active {border-bottom: 1px solid #f57d64;color: #f57d64;}
 .welfare_home.welfare_way .look_for_pass .input_row {margin-top: 10px;}
