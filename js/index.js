@@ -1388,7 +1388,51 @@ $(function(){
             }
         });
     }else if($('.store_index').size()>0){//商品首页
-      
+        var _token = localStorage.getItem('access_token');
+        var app = new Vue({
+            el: '#good_index',
+            data: {
+                loading:true,
+                showpage:false,
+                aidApply:[],//传给后台的数据
+                user_info:[],//初始化用户数据
+            },
+            // created:function(){
+            //     var that = this;
+            //     // $.ajax({//发起请求
+            //     //     headers: {
+            //     //         'Authorization': 'bearer '+_token
+            //     //     },
+            //     //     type: 'POST',
+            //     //     url:weixin_url+'/public-benefit/addAidApply',
+            //     //     contentType:"application/json",
+            //     //     success: function(data){
+            //     //         that.loading = false;
+            //     //         that.showpage = true;
+            //     //         if (data.code == 0) {
+            //     //             that.user_info = data.aidApply;
+            //     //             that.aidApply = data.aidApply;
+            //     //         }else if(data.code == 1){
+            //     //             window.location.href='./person.html';
+            //     //         }else{
+            //     //             return;
+            //     //         }
+            //     //         to_login(data);
+            //     //     }
+            //     // });
+            // },
+            methods:{
+               
+            }
+        });
+        $('.search_input').live('focus',function(){
+            $('.store_index').addClass('dis-no');
+            $('.serach_content').removeClass('dis-no');
+        })
+        $('.return_ori').live('click',function(){
+            $('.store_index').removeClass('dis-no');
+            $('.serach_content').addClass('dis-no');
+        })
     }else if($('.goood_detail').size()>0){//商品详情页
         $('.buy_btn').live('click',function(){
             if($('.sku_mask').hasClass('fade_in')){//如果有蒙版
