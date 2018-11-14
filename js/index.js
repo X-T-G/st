@@ -1389,40 +1389,91 @@ $(function(){
         });
     }else if($('.store_index').size()>0){//商品首页
         var _token = localStorage.getItem('access_token');
+        if (search_arr==null){
+            var search_arr = [];
+        }else{
+            var search_arr = (localStorage.getItem('search_arr')).split(',');
+            var search_arr = search_arr;
+        } 
         var app = new Vue({
             el: '#good_index',
             data: {
                 loading:true,
                 showpage:false,
-                aidApply:[],//传给后台的数据
                 user_info:[],//初始化用户数据
+                search_arr:search_arr,//
+
             },
-            // created:function(){
-            //     var that = this;
-            //     // $.ajax({//发起请求
-            //     //     headers: {
-            //     //         'Authorization': 'bearer '+_token
-            //     //     },
-            //     //     type: 'POST',
-            //     //     url:weixin_url+'/public-benefit/addAidApply',
-            //     //     contentType:"application/json",
-            //     //     success: function(data){
-            //     //         that.loading = false;
-            //     //         that.showpage = true;
-            //     //         if (data.code == 0) {
-            //     //             that.user_info = data.aidApply;
-            //     //             that.aidApply = data.aidApply;
-            //     //         }else if(data.code == 1){
-            //     //             window.location.href='./person.html';
-            //     //         }else{
-            //     //             return;
-            //     //         }
-            //     //         to_login(data);
-            //     //     }
-            //     // });
-            // },
+            created:function(){
+                var that = this;
+                that.loading = false;
+                that.showpage = true;
+                // $.ajax({//发起请求
+                //     headers: {
+                //         'Authorization': 'bearer '+_token
+                //     },
+                //     type: 'POST',
+                //     url:weixin_url+'/public-benefit/addAidApply',
+                //     contentType:"application/json",
+                //     success: function(data){
+                        // that.loading = false;
+                        // that.showpage = true;
+                //         if (data.code == 0) {
+                //             that.user_info = data.aidApply;
+                //             that.aidApply = data.aidApply;
+                //         }else if(data.code == 1){
+                //             window.location.href='./person.html';
+                //         }else{
+                //             return;
+                //         }
+                //         to_login(data);
+                //     }
+                // });
+            },
+            mounted: function () {//页面挂载，调用轮播
+                this.$nextTick(function () {
+                    var mySwiper = new Swiper('.swiper-container',{
+                        loop: false,
+                        autoplay: 3000,
+                        pagination : '.pagination',
+                        paginationClickable :true,
+                        freeMode : false,
+                        touchRatio : 0.5,
+                    });
+                })
+            },
             methods:{
-               
+                search_btn:function(){//点击‘搜索按钮’
+                    var that = this;
+                    var _key = $('#input_key').val();
+                    var key_arr = that.search_arr;
+                    if (_key.length>0) {
+                        if (key_arr.length == 0) {
+                            key_arr.push(_key);
+                        }else{
+                            var flag = false;
+                            for (var i = 0;i<key_arr.length;i++){
+                                if (key_arr[i]==_key){
+                                    flag=true;
+                                    break;
+                                }else{
+    
+                                }
+                            }
+                            if(!flag){
+                                key_arr.push(_key);
+                            } 
+                        }
+                        that.search_arr = key_arr;
+                        localStorage.setItem("search_arr",key_arr);
+                        window.location.href="./search-page.html";
+                    }
+                },
+                delete_record:function(){//清空记录
+                    var that = this;
+                    that.search_arr = [];
+                    localStorage.removeItem("search_arr");
+                }
             }
         });
         $('.search_input').live('focus',function(){
@@ -1432,6 +1483,14 @@ $(function(){
         $('.return_ori').live('click',function(){
             $('.store_index').removeClass('dis-no');
             $('.serach_content').addClass('dis-no');
+            var mySwiper = new Swiper('.swiper-container',{
+                loop: false,
+                autoplay: 3000,
+                pagination : '.pagination',
+                paginationClickable :true,
+                freeMode : false,
+                touchRatio : 0.5,
+             });
         })
     }else if($('.goood_detail').size()>0){//商品详情页
         $('.buy_btn').live('click',function(){
@@ -2269,6 +2328,7 @@ $(function(){
                                 success: function(data){
                                     if (data.code == 0) {
                                         var _data = JSON.parse(data.str);
+                                        var newOrderNum = data.orderNum;
                                         function onBridgeReady(){
                                             WeixinJSBridge.invoke(
                                                'getBrandWCPayRequest', _data,
@@ -2278,7 +2338,7 @@ $(function(){
                                                             'Authorization': 'bearer '+_token
                                                         },
                                                         type: "GET",
-                                                        url:weixin_url + '/order/status/'+orderNum,
+                                                        url:weixin_url + '/order/status/'+newOrderNum,
                                                         contentType:"application/json",
                                                         success: function(data){
                                                         
@@ -2367,6 +2427,7 @@ $(function(){
                         success: function(data){
                             if (data.code == 0) {
                                 var _data = JSON.parse(data.str);
+                                var newOrderNum = data.orderNum;
                                 function onBridgeReady(){
                                     WeixinJSBridge.invoke(
                                         'getBrandWCPayRequest', _data,
@@ -2376,7 +2437,7 @@ $(function(){
                                                     'Authorization': 'bearer '+_token
                                                 },
                                                 type: "GET",
-                                                url:weixin_url + '/order/status/'+orderNum,
+                                                url:weixin_url + '/order/status/'+newOrderNum,
                                                 contentType:"application/json",
                                                 success: function(data){
                                                    
@@ -4348,6 +4409,98 @@ $(function(){
                     that.show_modal = true;
                 },
             }
+        });
+    }else if($("#search-page").size()>0){//搜索出的商品页面
+        var _token = localStorage.getItem('access_token');
+        var page = 0;//默认第一页
+        var app = new Vue({
+            el: '#search-page',
+            data: {
+                has_noinfo:false,//没有数据
+                loading:false,//加载
+                showpage:true,//是否显示页面
+                page:[],
+                current:1,//当前页面
+                datas:[],//初始数据
+            },
+            // created:function(){
+            //     var that = this;
+            //     $.ajax({//发起请求
+            //         headers: {
+            //             'Authorization': 'bearer '+_token
+            //         },
+            //         type: "GET",
+            //         url:weixin_url + '/public-benefit/donate-list?page='+page,
+            //         contentType:"application/json",
+            //         success: function(data){
+            //             if (data.code == 0) {
+            //                 that.current = 1;
+            //                 var Data_length =  data.page.content.length;
+            //                 if (Data_length == 0) {
+            //                     that.show_page = false;
+            //                     that.loading = false;
+            //                     that.has_noinfo = true;
+            //                     return;
+            //                 }else{//请求到数据
+            //                     that.my_balance = data.page.content;
+            //                     that.show_page = true;
+            //                     that.page = data.page;
+            //                     that.has_noinfo = false;
+            //                     that.loading = false;
+            //                     that.datas = data;
+            //                 }
+            //             }
+            //             to_login(data);
+            //         }
+            //     });
+            // },
+            // methods:{
+            //     change_page:function(event){//下一页
+            //         var that =this;
+            //         var class_name = event.target.className;
+            //         var num = event.target.innerHTML;
+            //         var is_active = class_name.indexOf('active');
+            //         if (is_active !==-1) {//被选中
+            //             return;
+            //         }else{
+            //             that.show_page = false;
+            //             that.has_noinfo = false;
+            //             that.loading = true;
+            //             that.current = num;
+            //             var page = num-1;
+            //             $.ajax({//发起请求
+            //                 headers: {
+            //                     'Authorization': 'bearer '+_token
+            //                 },
+            //                 type: "GET",
+            //                 url:weixin_url + '/public-benefit/donate-list?page='+page,
+            //                 contentType:"application/json",
+            //                 success: function(data){
+            //                     if (data.code == 0) {
+            //                         var Data_length =  data.page.content.length;
+            //                         if (Data_length == 0) {
+            //                             that.show_page = false;
+            //                             that.has_noinfo = true;
+            //                             that.loading = false;
+            //                             return;
+            //                         }else{//请求到数据
+            //                             that.my_balance = data.page.content;
+            //                             that.show_page = true;
+            //                             that.page = data.page;
+            //                             that.has_noinfo = false;
+            //                             that.loading = false;
+            //                         }
+            //                     }
+            //                     to_login(data);
+            //                 }
+            //             });
+            //         }
+            //     },
+            //     modal_page:function(){
+            //         var that = this;
+            //         that.show_modal = true;
+            //     },
+            // }
         });
     }
 });

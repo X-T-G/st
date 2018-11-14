@@ -20,216 +20,194 @@
             <span class="weui-loadmore__tips">正在加载</span>
         </div> -->
         <div class="good_index" id="good_index">
-            <div class="store_index" id="store_index">
-                <!-- 轮播模块 -->
-                <div class="swiper-container">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <a href="./good-detail.html">
-                                <img src="../images/a (1).jpg" alt="">
-                            </a>
+            <div :class=[{"dis-no":(showpage==false)}]>
+                <div class="store_index" id="store_index">
+                    <!-- 轮播模块 -->
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <a href="./good-detail.html">
+                                    <img src="../images/a (1).jpg" alt="">
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="./good-detail.html">
+                                    <img src="../images/a (2).jpg" alt="">
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="./good-detail.html">
+                                    <img src="../images/a (3).jpg" alt="">
+                                </a>
+                            </div>   
+                            <div class="swiper-slide">
+                                <a href="./good-detail.html">
+                                    <img src="../images/a (4).jpg" alt="">
+                                </a>
+                            </div>
                         </div>
-                        <div class="swiper-slide">
-                            <a href="./good-detail.html">
-                                <img src="../images/a (2).jpg" alt="">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="./good-detail.html">
-                                <img src="../images/a (3).jpg" alt="">
-                            </a>
-                        </div>   
-                        <div class="swiper-slide">
-                            <a href="./good-detail.html">
-                                <img src="../images/a (4).jpg" alt="">
-                            </a>
-                        </div>
+                        <div class="pagination"></div>
                     </div>
-                    <div class="pagination"></div>
+                    <div class="index_content">
+                        <!-- 搜索模块 -->
+                        <div class="search_contain flex">
+                            <input type="text" placeholder="请搜索商品" class="search_input">
+                            <span class="iconfont">&#xe62b;</span>
+                        </div>
+                        <!-- 商品展示模块-->
+                        <div class="goods_container" style="padding:10px;">
+                            <!-- 热卖 -->
+                            <div class="hot_good">
+                                <div>
+                                    <h1>热卖商品</h1>
+                                </div>
+                                <div class="clearfix">
+                                    <a href="./good-detail.html">
+                                        <div class="fl each_good l_good">
+                                            <img src="../images/b-(1).jpg" alt="">
+                                            <p class="good_name">神庭湿气散</p>
+                                            <p class="good_price">
+                                                <span>¥</span>
+                                                <span>49.00</span>
+                                            </p>
+                                        </div>  
+                                    </a>
+                                    <a href="./good-detail.html">
+                                        <div class="fl each_good r_good">
+                                            <img src="../images/b-(2).jpg" alt="">
+                                            <p class="good_name">神庭足浴散</p>
+                                            <p class="good_price">
+                                                <span>¥</span>
+                                                <span>49.00</span>
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- 全部 -->
+                            <div class="all_good">
+                                <div>
+                                    <h1>全部商品</h1>
+                                </div>
+                                <div class="clearfix">
+                                    <a href="./good-detail.html">
+                                        <div class="fl each_good l_good">
+                                            <img src="../images/b-(3).jpg" alt="">
+                                            <p class="good_name">神庭妇浴散</p>
+                                            <p class="good_price">
+                                                <span>¥</span>
+                                                <span>49.00</span>
+                                            </p>
+                                        </div>
+                                    </a>
+                                    <a href="./good-detail.html">
+                                        <div class="fl each_good r_good">
+                                            <img src="../images/b-(2).jpg" alt="">
+                                            <p class="good_name">神庭足浴散</p>
+                                            <p class="good_price">
+                                                <span>¥</span>
+                                                <span>49.00</span>
+                                            </p>
+                                        </div>
+                                    </a>
+                                    <a href="./good-detail.html">
+                                        <div class="fl each_good l_good">
+                                            <img src="../images/b-(3).jpg" alt="">
+                                            <p class="good_name">神庭妇浴散</p>
+                                            <p class="good_price">
+                                                <span>¥</span>
+                                                <span>49.00</span>
+                                            </p>
+                                        </div>
+                                    </a>
+                                    <a href="./good-detail.html">
+                                        <div class="fl each_good r_good">
+                                            <img src="../images/b-(2).jpg" alt="">
+                                            <p class="good_name">神庭足浴散</p>
+                                            <p class="good_price">
+                                                <span>¥</span>
+                                                <span>49.00</span>
+                                            </p>
+                                        </div>
+                                    </a>
+                                    <a href="./good-detail.html">
+                                        <div class="fl each_good l_good">
+                                            <img src="../images/b-(3).jpg" alt="">
+                                            <p class="good_name">神庭妇浴散</p>
+                                            <p class="good_price">
+                                                <span>¥</span>
+                                                <span>49.00</span>
+                                            </p>
+                                        </div>
+                                    </a>
+                                    <a href="./good-detail.html">
+                                        <div class="fl each_good r_good">
+                                            <img src="../images/b-(1).jpg" alt="">
+                                            <p class="good_name">神庭湿气散</p>
+                                            <p class="good_price">
+                                                <span>¥</span>
+                                                <span>49.00</span>
+                                            </p>
+                                        </div>
+                                    </a>
+                                    <a href="./good-detail.html">
+                                        <div class="fl each_good l_good">
+                                            <img src="../images/b-(3).jpg" alt="">
+                                            <p class="good_name">神庭妇浴散</p>
+                                            <p class="good_price">
+                                                <span>¥</span>
+                                                <span>49.00</span>
+                                            </p>
+                                        </div> 
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- 无商品 -->
+                            <p class="tint no_good">没有更多商品啦~</p>
+                            <!-- 底部 -->
+                            <div class="bottom flex">
+                                <div class="flex-1">
+                                    <img src="../images/index_2.png" alt="">
+                                    <p>首页</p>
+                                </div>
+                                <div class="flex-1">
+                                    <a href="./cart.html">
+                                        <img src="../images/car_1.png" alt="">
+                                        <p>购物车</p>  
+                                    </a>
+                                </div>
+                                <div class="flex-1">
+                                    <img src="../images/person_1.png" alt="">
+                                    <p>个人中心</p>                            
+                                </div>
+                            </div>
+                        </div>
+                    </div>            
                 </div>
-                <div class="index_content">
-                    <!-- 搜索模块 -->
-                    <div class="search_contain flex">
-                        <input type="text" placeholder="请搜索商品" class="search_input">
-                        <span class="iconfont">&#xe62b;</span>
+                <div class="serach_content dis-no">
+                    <div class="flex" style="padding:0 10px;">
+                        <!-- 搜索模块 -->
+                        <div class="search_contain flex flex-1">
+                            <input type="text" placeholder="请搜索商品" class="search_input" id="input_key">
+                            <span v-on:click="search_btn" class="iconfont">&#xe62b;</span>
+                        </div>
+                        <div class="return_ori" style="margin-top: 20px;line-height: 40px;margin-left: 15px;color: #1AAD19;">取消</div>
                     </div>
-                    <!-- 商品展示模块-->
-                    <div class="goods_container">
-                        <!-- 热卖 -->
-                        <div class="hot_good">
-                            <div>
-                                <h1>热卖商品</h1>
-                            </div>
-                            <div class="clearfix">
-                                <a href="./good-detail.html">
-                                    <div class="fl each_good l_good">
-                                        <img src="../images/b-(1).jpg" alt="">
-                                        <p class="good_name">神庭湿气散</p>
-                                        <p class="good_price">
-                                            <span>¥</span>
-                                            <span>49.00</span>
-                                        </p>
-                                    </div>  
-                                </a>
-                                <a href="./good-detail.html">
-                                    <div class="fl each_good r_good">
-                                        <img src="../images/b-(2).jpg" alt="">
-                                        <p class="good_name">神庭足浴散</p>
-                                        <p class="good_price">
-                                            <span>¥</span>
-                                            <span>49.00</span>
-                                        </p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- 全部 -->
-                        <div class="all_good">
-                            <div>
-                                <h1>全部商品</h1>
-                            </div>
-                            <div class="clearfix">
-                                <a href="./good-detail.html">
-                                    <div class="fl each_good l_good">
-                                        <img src="../images/b-(3).jpg" alt="">
-                                        <p class="good_name">神庭妇浴散</p>
-                                        <p class="good_price">
-                                            <span>¥</span>
-                                            <span>49.00</span>
-                                        </p>
-                                    </div>
-                                </a>
-                                <a href="./good-detail.html">
-                                    <div class="fl each_good r_good">
-                                        <img src="../images/b-(2).jpg" alt="">
-                                        <p class="good_name">神庭足浴散</p>
-                                        <p class="good_price">
-                                            <span>¥</span>
-                                            <span>49.00</span>
-                                        </p>
-                                    </div>
-                                </a>
-                                <a href="./good-detail.html">
-                                    <div class="fl each_good l_good">
-                                        <img src="../images/b-(3).jpg" alt="">
-                                        <p class="good_name">神庭妇浴散</p>
-                                        <p class="good_price">
-                                            <span>¥</span>
-                                            <span>49.00</span>
-                                        </p>
-                                    </div>
-                                </a>
-                                <a href="./good-detail.html">
-                                    <div class="fl each_good r_good">
-                                        <img src="../images/b-(2).jpg" alt="">
-                                        <p class="good_name">神庭足浴散</p>
-                                        <p class="good_price">
-                                            <span>¥</span>
-                                            <span>49.00</span>
-                                        </p>
-                                    </div>
-                                </a>
-                                <a href="./good-detail.html">
-                                    <div class="fl each_good l_good">
-                                        <img src="../images/b-(3).jpg" alt="">
-                                        <p class="good_name">神庭妇浴散</p>
-                                        <p class="good_price">
-                                            <span>¥</span>
-                                            <span>49.00</span>
-                                        </p>
-                                    </div>
-                                </a>
-                                <a href="./good-detail.html">
-                                    <div class="fl each_good r_good">
-                                        <img src="../images/b-(1).jpg" alt="">
-                                        <p class="good_name">神庭湿气散</p>
-                                        <p class="good_price">
-                                            <span>¥</span>
-                                            <span>49.00</span>
-                                        </p>
-                                    </div>
-                                </a>
-                                <a href="./good-detail.html">
-                                    <div class="fl each_good l_good">
-                                        <img src="../images/b-(3).jpg" alt="">
-                                        <p class="good_name">神庭妇浴散</p>
-                                        <p class="good_price">
-                                            <span>¥</span>
-                                            <span>49.00</span>
-                                        </p>
-                                    </div> 
-                                </a>
-                            </div>
-                        </div>
-                        <!-- 无商品 -->
-                        <p class="tint no_good">没有更多商品啦~</p>
-                        <!-- 底部 -->
-                        <div class="bottom flex">
-                            <div class="flex-1">
-                                <img src="../images/index_2.png" alt="">
-                                <p>首页</p>
-                            </div>
-                            <div class="flex-1">
-                                <a href="./cart.html">
-                                    <img src="../images/car_1.png" alt="">
-                                    <p>购物车</p>  
-                                </a>
-                            </div>
-                            <div class="flex-1">
-                                <img src="../images/person_1.png" alt="">
-                                <p>个人中心</p>                            
-                            </div>
-                        </div>
+                    <p class="last_search">最近搜索</p>
+                    <div class="search_record" style="padding: 10px 15px;">
+                        <span v-for="search in search_arr">{{search}}</span>
                     </div>
-                </div>            
+                    <div v-on:click="delete_record" style="text-align:center;" class="delete_record">
+                        <p><span class="iconfont">&#xe632;</span></p>
+                        <p>清空搜索记录</p>
+                    </div>
+                </div>
             </div>
-            <div class="serach_content dis-no">
-                <div class="flex" style="padding:0 20px;">
-                    <!-- 搜索模块 -->
-                    <div class="search_contain flex flex-1">
-                        <input type="text" placeholder="请搜索商品" class="search_input">
-                        <span class="iconfont">&#xe62b;</span>
-                    </div>
-                    <div class="return_ori" style="margin-top: 20px;line-height: 40px;margin-left: 15px;color: #1AAD19;">取消</div>
-                </div>
-                <p class="last_search">最近搜索</p>
-                <div class="search_record" style="padding: 10px 20px;">
-                    <span>艾叶</span>
-                    <span>艾叶</span>
-                    <span>艾叶</span>
-                    <span>艾叶</span>
-                    <span>艾叶</span>
-                    <span>艾叶</span>
-                    <span>艾叶</span>
-                    <span>艾叶</span>
-                    <span>艾叶</span>
-                    <span>艾叶</span>
-                    <span>艾叶</span>
-                    <span>九节菖蒲</span>
-                    <span>艾叶</span>
-                    <span>九节菖蒲</span>
-                    <span>九节菖蒲</span>
-                    <span>艾叶</span>
-                    <span>艾叶</span>
-                    <span>艾叶</span>
-                    <span>艾叶</span>
-                    <span>九节菖蒲</span>
-                </div>
-                <div style="text-align:center;" class="delete_record">
-                    <p><span class="iconfont">&#xe632;</span></p>
-                    <p>清空搜索记录</p>
-                </div>
+            <!-- 加载效果 -->
+            <div class="weui-loadmore" :class=[{"dis-no":(loading==false)}]>
+                <i class="weui-loading"></i>
+                <span class="weui-loadmore__tips">正在加载</span>
             </div>
         </div>
-        <script type="text/javascript">
-            var mySwiper = new Swiper('.swiper-container',{
-               loop: false,
-               autoplay: 3000,
-               pagination : '.pagination',
-               paginationClickable :true,
-               freeMode : false,
-               touchRatio : 0.5,
-            });  
-        </script>
     </body>
 </html>

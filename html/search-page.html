@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>医馆</title>
+        <link type="image/x-icon" rel="shortcut icon" href="../images/logo.png">
+        <link rel="stylesheet" href="../css/common.css">
+        <link rel="stylesheet" href="../css/weui.min.css">
+        <script src="../js/zepto.min.js"></script>
+        <script src="../js/vue.min.js"></script>
+        <script src="../js/index.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    </head>
+    <body>
+        <div class="search-page" id="search-page">
+            <div :class=[{"dis-no":(showpage==false)}]>
+                <div class="index_content">
+                    <!-- 搜索模块 -->
+                    <div class="search_contain flex">
+                        <input type="text" placeholder="请搜索商品" class="search_input">
+                        <span class="iconfont">&#xe62b;</span>
+                    </div>
+                    <!-- 商品展示模块-->
+                    <div class="goods_container">
+                        <div class="flex good_contain">
+                            <img class="" src="../images/b-(3).jpg" alt="" style="width:100px;height:100px;">
+                            <div class="flex-1" style="background-color: #fff;padding-left:10px;">
+                                <p class="good_info">神庭妇浴散神庭妇浴散神庭妇浴散神庭妇浴散神庭妇浴散神庭妇浴散神庭妇浴散</p>
+                                <div class="flex next_info">
+                                    <p class="good_price ">
+                                        <span>¥</span>
+                                        <span>49.00</span>
+                                    </p>
+                                    <span class="iconfont icon-gouwuche"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex good_contain">
+                            <img class="" src="../images/b-(3).jpg" alt="" style="width:100px;height:100px;">
+                            <div class="flex-1" style="background-color: #fff;padding-left:10px;">
+                                <p class="good_info">神庭妇浴散神庭妇浴散神庭妇浴散神庭妇浴散神庭妇浴散神庭妇浴散神庭妇浴散</p>
+                                <div class="flex next_info">
+                                    <p class="good_price ">
+                                        <span>¥</span>
+                                        <span>49.00</span>
+                                    </p>
+                                    <span class="iconfont icon-gouwuche"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 无商品 -->
+                        <p class="tint no_good">没有更多商品啦~</p>
+                    </div>
+                </div>            
+            </div>
+            <!-- 加载效果 -->
+            <div class="weui-loadmore" :class=[{"dis-no":(loading==false)}]>
+                <i class="weui-loading"></i>
+                <span class="weui-loadmore__tips">正在加载</span>
+            </div>
+            <!-- 没有数据 -->
+            <div class="has_noinfo" :class=[{"dis-no":(has_noinfo==false)}]>
+                <img src="../images/bg_nodata.png" alt="">
+            </div>
+        </div>
+    </body>
+</html>

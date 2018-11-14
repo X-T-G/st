@@ -356,7 +356,7 @@ img.store_pic{width: 108px;height:108px;}
 .goood_detail .swiper-wrapper img{height: 300px;}
 .store_index .swiper-wrapper img,.goood_detail .swiper-wrapper img{width: auto;}
 .store_index .good_img img{width: 100%;height: auto;}
-.store_index .swiper-container{min-height: 210px;}
+/* .store_index .swiper-container{min-height: 210px;} */
 .goood_detail .swiper-container{min-height: 300px;}
 
 /* 商品详情页 */
@@ -765,8 +765,16 @@ body input{background-color: #fff;}
 .search_contain .search_input{width: 80%;border: none;border-top-left-radius: 20px;border-bottom-left-radius: 20px;padding: 0 20px;border-right: 1px solid #e5e5e5;}
 .search_contain span{display: inline-block;width: 20%;text-align: center;font-size: 24px;color: #939399;}
 .serach_content p.last_search{padding:0 20px;margin: 10px 0;}
-.serach_content .search_record span{background-color: #939399;display: inline-block;color: #fff;padding: 4px;border-radius: 8px;margin-bottom: 6px;}
+.serach_content .search_record span{background-color:#f7f4ef;margin-left: 6px;display: inline-block;padding: 4px;border-radius: 8px;color: #939399;margin-bottom: 6px;}
 .serach_content .delete_record span{font-size:22px;}
 .serach_content .search_contain{width: 70%;}
+
+/* 搜索页面 */
+.good_contain{margin-bottom: 10px;background-color:#F6F6F6;}
+.search-page .goods_container .good_info{text-overflow: -o-ellipsis-lastline;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;}
+.search-page .goods_container .next_info{padding-top: 30px;position: relative;}
+.search-page .goods_container .next_info .icon-gouwuche{font-size: 18px;position:absolute;right:10px;color:#F17355;}
+
+
 
 
