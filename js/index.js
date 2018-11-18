@@ -4504,7 +4504,16 @@ $(function(){
         });
     }
 });
-
+$(function(){
+    var $toast = $('#toast');
+    $('#showToast').on('click', function(){
+        if ($toast.css('display') != 'none') return;
+        $toast.fadeIn(100);
+        setTimeout(function () {
+            $toast.fadeOut(100);
+        }, 2000);
+    });
+});
 
 
 

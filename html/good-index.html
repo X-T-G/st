@@ -191,10 +191,10 @@
                             <input type="text" placeholder="请搜索商品" class="search_input" id="input_key">
                             <span v-on:click="search_btn" class="iconfont">&#xe62b;</span>
                         </div>
-                        <div class="return_ori" style="margin-top: 20px;line-height: 40px;margin-left: 15px;color: #1AAD19;">取消</div>
+                        <div class="return_ori" style="margin-top:50px;line-height: 40px;margin-left: 15px;color: #1AAD19;">取消</div>
                     </div>
                     <p class="last_search">最近搜索</p>
-                    <div class="search_record" style="padding: 10px 15px;">
+                    <div class="search_record" style="padding: 10px 15px;" v-if="search_arr.length>0">
                         <span v-for="search in search_arr">{{search}}</span>
                     </div>
                     <div v-on:click="delete_record" style="text-align:center;" class="delete_record">
