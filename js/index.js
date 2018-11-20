@@ -1389,12 +1389,17 @@ $(function(){
         });
     }else if($('.store_index').size()>0){//商品首页
         var _token = localStorage.getItem('access_token');
+        var search_arr=localStorage.getItem('search_arr');
         if (search_arr==null){
             var search_arr = [];
         }else{
             var search_arr = (localStorage.getItem('search_arr')).split(',');
-            var search_arr = search_arr;
+            var search_arr = search_arr.reverse();
         } 
+        // var _url = document.referrer;
+        // var _index = _url.lastIndexOf("\/");  
+        // var str  = _url.substring(_index + 1, _url.length);
+        console.log(search_arr);
         var app = new Vue({
             el: '#good_index',
             data: {
@@ -4502,18 +4507,19 @@ $(function(){
             //     },
             // }
         });
+        $(function(){
+            var $toast = $('#toast');
+            $('.showToast').on('click', function(){
+                if ($toast.css('display') != 'none') return;
+                $toast.fadeIn(100);
+                setTimeout(function () {
+                    $toast.fadeOut(100);
+                }, 2000);
+            });
+        });
     }
 });
-$(function(){
-    var $toast = $('#toast');
-    $('#showToast').on('click', function(){
-        if ($toast.css('display') != 'none') return;
-        $toast.fadeIn(100);
-        setTimeout(function () {
-            $toast.fadeOut(100);
-        }, 2000);
-    });
-});
+
 
 
 
