@@ -4,14 +4,14 @@ $(function(){
     // var assistant_url = "http://192.168.0.155:8036/stassistant";// 测试预约
     // var weixin_url = "http://192.168.0.155:8046/stweixin";// 测试微信
     //线上  
-    var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
-    var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
-    var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
+    // var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
+    // var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
+    // var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
     
     // 测试 tao
-    // var medicine_url = "http://192.168.0.2:8006/stmedicine";// 测试个人信息
-    // var assistant_url = "http://192.168.0.2:8036/stassistant";// 测试预约
-    // var weixin_url = "http://192.168.0.2:8046/stweixin";// 测试微信
+    var medicine_url = "http://192.168.0.2:8006/stmedicine";// 测试个人信息
+    var assistant_url = "http://192.168.0.2:8036/stassistant";// 测试预约
+    var weixin_url = "http://192.168.0.2:8046/stweixin";// 测试微信
     // 公共方法401跳转
     function to_login(data){
         if (data !== undefined && data.code !== undefined){
@@ -1394,12 +1394,11 @@ $(function(){
             var search_arr = [];
         }else{
             var search_arr = (localStorage.getItem('search_arr')).split(',');
-            var search_arr = search_arr.reverse();
+            var search_arr = search_arr;
         } 
         // var _url = document.referrer;
         // var _index = _url.lastIndexOf("\/");  
         // var str  = _url.substring(_index + 1, _url.length);
-        console.log(search_arr);
         var app = new Vue({
             el: '#good_index',
             data: {
@@ -1454,7 +1453,7 @@ $(function(){
                     var key_arr = that.search_arr;
                     if (_key.length>0) {
                         if (key_arr.length == 0) {
-                            key_arr.push(_key);
+                            key_arr.unshift(_key);
                         }else{
                             var flag = false;
                             for (var i = 0;i<key_arr.length;i++){
@@ -1466,9 +1465,10 @@ $(function(){
                                 }
                             }
                             if(!flag){
-                                key_arr.push(_key);
+                                key_arr.unshift(_key);
                             } 
                         }
+                        
                         that.search_arr = key_arr;
                         localStorage.setItem("search_arr",key_arr);
                         window.location.href="./search-page.html";
