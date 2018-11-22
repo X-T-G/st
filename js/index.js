@@ -3563,8 +3563,13 @@ $(function(){
                                     $uploaderInput.on("change", function(e) {
                                         var src, url = window.URL || window.webkitURL || window.mozURL,
                                         files = e.target.files;
+                                        var fileLimitSize = 1024 * 1024 * 5;
                                         for(var i = 0, len = files.length; i < len; ++i) {
                                             var file = files[i];
+                                            if(file.size > fileLimitSize){
+					                    		alert("图片过大，请重新上传");
+					                    		return;
+					                        }
                                             if(url) {
                                                 src = url.createObjectURL(file);
                                             } else {
