@@ -12,29 +12,86 @@
         <script src="../js/index.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     </head>
-    <body>
+    <body style="background-color: #f7f4ef;">
         <div class="header">
             地址管理
             <span>
                 <img src="../images/back_gery.png" alt="">
             </span>
         </div>
-        <!-- <div class="weui-loadmore">
-            <i class="weui-loading"></i>
-            <span class="weui-loadmore__tips">正在加载</span>
-        </div> -->
         <div class="all_address" id="all_address">
-            <div class="van-cell__value van-cell__value--alone">
-                <div class="van-radio">
-                    <span class="van-radio__input">
-                        <input type="radio" class="van-radio__control" value="1">
-                        <i class="van-icon van-icon-checked"></i>
-                    </span>
-                    <span class="van-radio__label">
-                        <div class="van-address-list__name">张三，13000000000</div>
-                        <div class="van-address-list__address">收货地址：浙江省杭州市西湖区文三路 138 号东方通信大厦 7 楼 501 室</div>
-                    </span>
+            <div class="each_addr">
+                <div class="add_info">
+                    <div class="flex top_info">
+                        <p class="flex-1">
+                            <span class="iconfont icon-zhanghao"></span>
+                            <span>XXXXX</span>
+                        </p>
+                        <p>
+                            <span class="iconfont icon-lianxidianhua"></span>
+                            <span>18581506530</span>
+                        </p>
+                    </div>
+                    <div class="flex">
+                        <span class="iconfont icon-dingwei  addr_icon"></span>
+                        <span class="addr_icon">江苏省-苏州市-相城区-元和科技园如元路</span>
+                    </div>
                 </div>
+                <div class="weui-cells_checkbox">
+                    <label class="weui-cell weui-check__label" for="s1">
+                        <div class="weui-cell__hd">
+                            <input type="checkbox" class="weui-check" name="checkbox1" id="s1">
+                            <i class="weui-icon-checked"></i>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <p>默认地址</p>
+                        </div>
+                        <div class="weui-cell__bd" style="text-align:right;">
+                            <p>编辑</p>
+                        </div>
+                        <div class="weui-cell__bd" style="text-align:right;">
+                            <p>删除</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <div class="each_addr">
+                <div class="add_info">
+                    <div class="flex top_info">
+                        <p class="flex-1">
+                            <span class="iconfont icon-zhanghao"></span>
+                            <span>XXXXX</span>
+                        </p>
+                        <p>
+                            <span class="iconfont icon-lianxidianhua"></span>
+                            <span>18581506530</span>
+                        </p>
+                    </div>
+                    <div class="flex">
+                        <span class="iconfont icon-dingwei addr_icon"></span>
+                        <span class="addr_icon">江苏省-苏州市-相城区-元和科技园如元路江苏省-苏州市-相城区-元和科技园如元路</span>
+                    </div>
+                </div>
+                <div class="weui-cells_checkbox">
+                    <label class="weui-cell weui-check__label" for="s11">
+                        <div class="weui-cell__hd">
+                            <input type="checkbox" class="weui-check" name="checkbox1" id="s11">
+                            <i class="weui-icon-checked"></i>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <p>默认地址</p>
+                        </div>
+                        <div class="weui-cell__bd" style="text-align:right;">
+                            <p>编辑</p>
+                        </div>
+                        <div class="weui-cell__bd" style="text-align:right;">
+                            <p>删除</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <div class="add_contain">
+                <button class="add_addr">添加地址</button>
             </div>
         </div>
     </body>

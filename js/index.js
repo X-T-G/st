@@ -4522,6 +4522,11 @@ $(function(){
                 }, 2000);
             });
         });
+    }else if ($('.all_address').size()>0){
+        console.log(888);
+        $('.add_addr').live('click',function(){
+            window.location.href="../html/add-address.html";
+        })
     }
 });
 
