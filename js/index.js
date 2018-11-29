@@ -1409,22 +1409,34 @@ $(function(){
                 showpage:false,
                 good_info:[],//初始化商品数据
                 search_arr:search_arr,
+                banner:[],
+
+            },
+            updated:function() {
+                var mySwiper = new Swiper('.swiper-container',{
+                    loop: false,
+                    autoplay: 3000,
+                    pagination : '.pagination',
+                    paginationClickable :true,
+                    freeMode : false,
+                    touchRatio : 0.5,
+                });
             },
             created:function(){
                 var that = this;
                 // 页面加载发起请求
-                // $.ajax({
-                //     headers: {
-                //         'Authorization': 'bearer '+_token
-                //     },
-                //     type: "GET",
-                //     url: medicine_url + '/v1.0.0/personalCenter/getPersonalInfo',
-                //     contentType:"json",
-                //     dataType: "json",
-                //     success: function(data){
-                //         if(data.code==0){
-                //             if(data.object.realName==2){//已经实名认证
-                                $.ajax({//发起请求
+                $.ajax({//获取个人数据
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: "GET",
+                    url: medicine_url + '/v1.0.0/personalCenter/getPersonalInfo',
+                    contentType:"json",
+                    dataType: "json",
+                    success: function(data){
+                        if(data.code==0){
+                            if(data.object.realName==2){//已经实名认证
+                                $.ajax({//获取导航分类
                                     headers: {
                                         'Authorization': 'bearer '+_token
                                     },
@@ -1442,32 +1454,40 @@ $(function(){
                                         to_login(data);
                                     }
                                 });
-                            // }else if(data.object.realName==0){
-                            //     alert('未实名认证，请先认证！');
-                            //     window.location.href = './person.html';
-                            // }else if(data.object.realName==1){
-                            //     alert('实名认证审核中！');
-                            //     window.location.href = './person.html';
-                            // }else if(data.object.realName==3){
-                            //     alert('实名认证未通过！');
-                            //     window.location.href = './person.html';
-                            // }
-                //         }
-                //         to_login(data);
-                //     }
-                // });
-            },
-            mounted: function () {//页面挂载，调用轮播
-                this.$nextTick(function () {
-                    var mySwiper = new Swiper('.swiper-container',{
-                        loop: false,
-                        autoplay: 3000,
-                        pagination : '.pagination',
-                        paginationClickable :true,
-                        freeMode : false,
-                        touchRatio : 0.5,
-                    });
-                })
+                                $.ajax({//获取banner图
+                                    headers: {
+                                        'Authorization': 'bearer '+_token
+                                    },
+                                    type: "GET",
+                                    url: weixin_url + '/sale/banner',
+                                    contentType:"json",
+                                    dataType: "json",
+                                    success: function(data){
+                                        if(data.code==0){
+                                            that.banner = data.list;
+                                        }else{
+                                            alert(data.message);
+                                        }
+                                        to_login(data);
+                                    }
+                                });
+                            }else if(data.object.realName==0){
+                                alert('未实名认证，请先认证！');
+                                window.location.href = './person.html';
+                            }else if(data.object.realName==1){
+                                alert('实名认证审核中！');
+                                window.location.href = './person.html';
+                            }else if(data.object.realName==3){
+                                alert('实名认证未通过！');
+                                window.location.href = './person.html';
+                            }
+                        }else{
+                            alert(data.message);
+                        }
+                        to_login(data);
+                    }
+                });
+                
             },
             methods:{
                 search_btn:function(){//点击‘搜索按钮’
@@ -1554,8 +1574,8 @@ $(function(){
             }
         })
     }else if($('.cart').size()>0){//购物车页面
-          // 数量增减
-          $('.cart .thumb .iconfont').live('click',function(){
+        // 数量增减
+        $('.cart .thumb .iconfont').live('click',function(){
             var _num = $(this).siblings('.ope_num').html();
             if($(this).hasClass('icon-jian') && _num >1){//减
                 _num--;
@@ -1566,6 +1586,9 @@ $(function(){
                 _num++;
                 $(this).siblings('.ope_num').html(_num);
             }
+        });
+        $('#cart .compute_btn .btn').live('click',function(){
+            window.location.href="../html/good-sure.html";
         })
     }else if($('#my_coin').size()>0){//我的神庭币页面
         var _token = localStorage.getItem('access_token');
@@ -2212,7 +2235,7 @@ $(function(){
                 $androidActionSheet2.fadeOut(200);
             });
         });
-    }else if($('.order_info').size()>0){
+    }else if($('#order_info').size()>0){
         var datas = JSON.parse(localStorage.getItem('order_info'));
         var app = new Vue({
             el: '#order_info',
@@ -2231,7 +2254,7 @@ $(function(){
                 },
             }
         });
-    }else if($('.payfor_order').size()>0){//支付订单页面
+    }else if($('#payfor_order').size()>0){//支付订单页面
         var _token = localStorage.getItem('access_token');
         var datas = JSON.parse(localStorage.getItem('order_info'));
         var app = new Vue({
@@ -4554,6 +4577,35 @@ $(function(){
     }else if ($('#directory').size()>0){//商品分类列表
         // 请求数据方法可公用
         var _token = localStorage.getItem('access_token');
+        var that = this;
+        function get_info(that,page,current_page){
+            $.ajax({//发起请求
+                headers: {
+                    'Authorization': 'bearer '+_token
+                },
+                type: 'get',
+                url:weixin_url+'/sale/directory-template/'+str,
+                contentType:"application/json",
+                success: function(data){
+                    
+                    if (data.code == 0) {
+                        var _data = data.page.content;
+                        if(_data.length==0){
+                            that.loading = false;
+                            that.showpage = false;
+                            that.has_noinfo = true;
+                        }else{
+                            that.loading = false;
+                            that.showpage = true;
+                            that.good_info = data.page.content;
+                        }
+                    }else{
+                        alert(data.message);
+                    }
+                    to_login(data);
+                }
+            });
+        }
         var _url = window.location.href;
         var _index = _url.lastIndexOf("\=");  
         var str  = _url.substring(_index + 1, _url.length);
@@ -4567,52 +4619,24 @@ $(function(){
             },
             created:function(){
                 var that = this;
-                // $.ajax({//发起请求
-                //     headers: {
-                //         'Authorization': 'bearer '+_token
-                //     },
-                //     type: 'get',
-                //     url:weixin_url+'/sale/directory-template/'+str,
-                //     contentType:"application/json",
-                //     success: function(data){
-                        
-                //         if (data.code == 0) {
-                //             var _data = data.page.content;
-                //             if(_data.length==0){
-                //                 that.loading = false;
-                //                 that.showpage = false;
-                //                 that.has_noinfo = true;
-                //             }else{
-                //                 that.loading = false;
-                //                 that.showpage = true;
-                //                 that.good_info = data.page.content;
-                //             }
-                //         }else{
-                //             alert(data.message);
-                //         }
-                //         to_login(data);
-                //     }
-                // });
+                get_info(that,page);
             },
-            mounted () {
+            mounted () {//触底事件
                 window.addEventListener('scroll', this.handleScroll,true)
               },
-            methods:{
+            methods:{//触底事件
                 handleScroll:function(event){
-                    // var scrollTop = $(this).scrollTop();
-                    // var scrollHeight = $(document).height();
-                    // var windowHeight = $(this).height();
-                    // if (scrollTop + windowHeight == scrollHeight) {
-                    //     // 此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
-                    //     $('.more_info').removeClass('dis-no');
-                    //     // var _content =  
-                    // }
                     // 距离顶部距离
                     var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-                    var offsetTop = document.querySelector('#good_content').offsetTop
-                    console.log(offsetTop)                    
-                    // console.log(event);
-                    // console.log(event.srcElement.scrollingElement.clientHeight);
+                    // div高度
+                    var offsetHeight = document.querySelector('.goods_container').offsetHeight
+                    // 页面高度
+                    var clientHeight =  window.screen.height ; 
+                    if (clientHeight+scrollTop==offsetHeight){
+                        console.log('已经到底部。') 
+                        var that = this;
+                        get_info(that,page);
+                    }                   
                 },
                 showToast:function(){
                     var $toast = $('#toast');
@@ -4624,7 +4648,8 @@ $(function(){
                 }
             }
         });
-        
+    }else if($('#good_sure').size()>0){//商品确认页面
+        console.log(444);
     }
 });
 

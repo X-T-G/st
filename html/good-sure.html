@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>神庭医馆</title>
+        <link type="image/x-icon" rel="shortcut icon" href="../images/logo.png">
+        <link rel="stylesheet" href="../css/common.css">
+        <link rel="stylesheet" href="../css/weui.min.css">
+        <script src="../js/zepto.min.js"></script>
+        <script src="../js/vue.min.js"></script>
+        <script src="../js/index.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    </head>
+    <body>
+        <div class="header">
+            确认订单
+            <span>
+                <img src="../images/back_gery.png" alt="">
+            </span>
+        </div>
+        <div class="order_info" id="good_sure">
+            <div class="my_order_info">
+                <div v-if="datas.transWay == 1">
+                    <div class="info_addr" v-if="datas.logisticsAddress !==null">
+                        <p class="im_info">收货地址</p>
+                        <div style="padding: 10px 15px;">
+                            <div class="flex tint" style="margin-bottom: 6px;">
+                                <p class="flex-1">XXXXXX</p>
+                                <p>13135119486</p>
+                            </div>
+                            <div class="flex">
+                                <p class="iconfont icon-dingwei"></p>
+                                <p class="tint addr_detail">四川省成都市高新区世纪城路198号</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="medecine_detail">
+                    <p class="im_info">订单</p>
+                    <div style="padding: 10px 15px;">
+                        <span  v-for="medecine in datas.prescription.prescriptionMedicine" v-if="medecine.deletedState==0"></span>
+                    </div>
+                </div>
+                <div class="other_info">
+                    <div class="weui-cell weui-cell_access">
+                        <div class="weui-cell__bd">
+                            <p>商品单价</p>
+                        </div>
+                        <div class="weui-cell__ft">¥79.00</div>
+                    </div>
+                    <div class="weui-cell weui-cell_access">
+                        <div class="weui-cell__bd">
+                            <p>购买数量</p>
+                        </div>
+                        <div class="weui-cell__ft">2</div>
+                    </div>
+                </div>
+                <div class="remark flex" style="margin-bottom:50px;">
+                    <span>备注</span>
+                    <input class="flex-1" type="text" placeholder="单行输入" :value="datas.remark">
+                </div>
+                <div class="clearfix pay_btn">
+                    <div class="total_price fl">共计<span>¥344</span></div>
+                    <button class="pay_sure fl" v-on:click="pay_sure">确认支付</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
