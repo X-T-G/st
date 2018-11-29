@@ -19,29 +19,28 @@
                 <img src="../images/back_gery.png" alt="">
             </span> -->
         </div>
-        <div id="doctor_list">
+        <div id="doctor_list" class="doctor_list">
             <div class="doctor_list" :class=[{"dis-no":(show_page==false)}]  v-for="doctor in doctors">
-                <!-- 每个医生为一个块 -->
                 <div class="doctor_pic">
                     <div class="flex">
-                        <a v-on:click="setname(doctor)">
+                        <a v-on:click="setname(doctor)" class="flex flex-1">
                             <img  v-if="doctor.icon ==null"  src="../images/avator_default.png"  alt="" >
                             <img  v-else-if="doctor.icon ==''" src="../images/avator_default.png"  alt=""  >
                             <img  v-else-if="doctor.icon !==null && doctor.icon !=='' " v-bind:src="doctor.icon"   alt="" >
                             <div class="flex-1 doctor_detail">
-                                <a v-on:click="setname(doctor)">
-                                    <p class="doname"  >{{doctor.name}}</p>
-                                    <p >{{doctor.major}}</p>
-                                    <p>诊费：{{doctor.fee}}元/次</p>
-                                    <p>坐诊时间：
-                                        <span v-if="doctor.id='10'" style="font-size: 12px;color: #F17355;margin-left: 3px;">预约制</span>
-                                        <span v-else-if="doctor.id !='10'" style="font-size: 12px;color: #F17355;margin-left: 3px;"  v-for="day in week[doctor.id]">{{day.week}}</span>
-                                    </p> 
-                                </a>
+                                <p class="doname"  >{{doctor.name}}</p>
+                                <p >{{doctor.major}}</p>
+                                <p v-if="doctor.fee>0">诊费：{{doctor.fee}}元/次</p>
+                                <p v-if="doctor.id==14" >预约电话:<span style="font-size: 15px;color: #F17355;margin-left: 3px;font-style:normal;">028-84179918</span></p>
+                                <p>
+                                    <span v-if="doctor.id=='10'">坐诊时间：<i  style="font-size: 12px;color: #F17355;margin-left: 3px;font-style:normal;">预约制</i></span>
+                                    <span v-else>预约时间：<i style="font-size: 12px;color: #F17355;margin-left: 3px;font-style:normal;"  v-for="day in week[doctor.id]">{{day.week}}</i></span> 
+                                </p> 
                             </div>
                         </a>
                         <p style="line-height: 125px;">
-                            <button class="reserve_doctor" v-on:click="reserve(doctor,week[doctor.id],doctorAppointmentDisableTimeMap)">预约</button>
+                            <button class="reserve_doctor" v-on:click="reserve(doctor,week[doctor.id],doctorAppointmentDisableTimeMap)" v-if="doctor.id!==14">预约</button>
+                            <button class="reserve_doctor" v-on:click="reserve_phys" v-else>预约</button>
                         </p>
                     </div>
                 </div>

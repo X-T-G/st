@@ -277,7 +277,7 @@ img.store_pic{width: 108px;height:108px;}
 .order_detail{border-bottom:1px solid #e5e5e5;}
 .order_detail .weui-cell:before{border: none;}
 .order_detail button.re_cancel{width: 56px;height: 26px;float: right;background-color: #F17355;color: #fff;margin:0 15px 10px 0;border: none;border-radius: 3px;line-height: 26px;font-size: 13px;}
-.order_detail .each_reserve{margin-bottom: 10px;background-color: #fff;}
+.order_detail .each_reserve{margin-bottom: 10px;background-color: #fff;border-bottom: 1px solid #e5e5e5;}
 
 /* 登录界面 */
 .login .logo_contain,.regist .logo_contain{text-align: center;}
@@ -330,7 +330,7 @@ img.store_pic{width: 108px;height:108px;}
 #my_serve .weui-cell_select .weui-select{padding-left: 0;}
 #my_serve .reserve_detail .weui-cell__bd input.re_tel{text-align: left;}
 #doctor_list button.reserve_doctor{width: 50px;height: 25px;border-radius: 4px;border: none;background-color: #F17355;color: #fff;}
-#doctor_list .doctor_pic{margin-bottom: 10px;background-color: #fff;padding: 10px 20px;}
+#doctor_list .doctor_pic{border-bottom:1px solid #e5e5e5;margin-bottom: 10px;background-color: #fff;padding: 10px 20px;}
 /* 预约列表 */
 #order_detail .weui-toptips{height: 40px;line-height: 40px;background-color:#1AAD19;}
 #order_detail .order_detail {border-bottom:none;}
