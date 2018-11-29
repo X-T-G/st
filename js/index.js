@@ -1387,7 +1387,7 @@ $(function(){
                 map:map,
             }
         });
-    }else if($('.store_index').size()>0){//商品首页
+    }else if($('#store_index').size()>0){//商品首页
         var _token = localStorage.getItem('access_token');
         var search_arr=localStorage.getItem('search_arr');
         if (search_arr==null){
@@ -1404,31 +1404,51 @@ $(function(){
             data: {
                 loading:true,
                 showpage:false,
-                user_info:[],//初始化用户数据
-                search_arr:search_arr,//
-
+                good_info:[],//初始化商品数据
+                search_arr:search_arr,
             },
             created:function(){
                 var that = this;
-                that.loading = false;
-                that.showpage = true;
-                // $.ajax({//发起请求
+                // 页面加载发起请求
+                // $.ajax({
                 //     headers: {
                 //         'Authorization': 'bearer '+_token
                 //     },
-                //     type: 'POST',
-                //     url:weixin_url+'/public-benefit/addAidApply',
-                //     contentType:"application/json",
+                //     type: "GET",
+                //     url: medicine_url + '/v1.0.0/personalCenter/getPersonalInfo',
+                //     contentType:"json",
+                //     dataType: "json",
                 //     success: function(data){
-                        // that.loading = false;
-                        // that.showpage = true;
-                //         if (data.code == 0) {
-                //             that.user_info = data.aidApply;
-                //             that.aidApply = data.aidApply;
-                //         }else if(data.code == 1){
-                //             window.location.href='./person.html';
-                //         }else{
-                //             return;
+                //         if(data.code==0){
+                //             if(data.object.realName==2){//已经实名认证
+                                $.ajax({//发起请求
+                                    headers: {
+                                        'Authorization': 'bearer '+_token
+                                    },
+                                    type: 'get',
+                                    url:weixin_url+'/sale/directory-list',
+                                    contentType:"application/json",
+                                    success: function(data){
+                                        that.loading = false;
+                                        that.showpage = true;
+                                        if (data.code == 0) {
+                                            that.good_info = data.list;
+                                        }else{
+                                            alert(data.message);
+                                        }
+                                        to_login(data);
+                                    }
+                                });
+                            // }else if(data.object.realName==0){
+                            //     alert('未实名认证，请先认证！');
+                            //     window.location.href = './person.html';
+                            // }else if(data.object.realName==1){
+                            //     alert('实名认证审核中！');
+                            //     window.location.href = './person.html';
+                            // }else if(data.object.realName==3){
+                            //     alert('实名认证未通过！');
+                            //     window.location.href = './person.html';
+                            // }
                 //         }
                 //         to_login(data);
                 //     }
@@ -1478,6 +1498,10 @@ $(function(){
                     var that = this;
                     that.search_arr = [];
                     localStorage.removeItem("search_arr");
+                },
+                cla_detail:function(e){//跳转到商品分类列表
+                    var dictId = e;
+                    window.location.href="./directory.html?dictId="+dictId;
                 }
             }
         });
@@ -4512,21 +4536,92 @@ $(function(){
             //     },
             // }
         });
-        $(function(){
-            var $toast = $('#toast');
-            $('.showToast').on('click', function(){
-                if ($toast.css('display') != 'none') return;
-                $toast.fadeIn(100);
-                setTimeout(function () {
-                    $toast.fadeOut(100);
-                }, 2000);
-            });
+        var $toast = $('#toast');
+        $('.showToast').on('click', function(){
+            if ($toast.css('display') != 'none') return;
+            $toast.fadeIn(100);
+            setTimeout(function () {
+                $toast.fadeOut(100);
+            }, 2000);
         });
-    }else if ($('.all_address').size()>0){
-        console.log(888);
+    }else if ($('#all_address').size()>0){//所有地址页面
         $('.add_addr').live('click',function(){
             window.location.href="../html/add-address.html";
         })
+    }else if ($('#directory').size()>0){//商品分类列表
+        // 请求数据方法可公用
+        var _token = localStorage.getItem('access_token');
+        var _url = window.location.href;
+        var _index = _url.lastIndexOf("\=");  
+        var str  = _url.substring(_index + 1, _url.length);
+        var app = new Vue({
+            el: '#directory',
+            data: {
+                loading:false,
+                showpage:true,
+                has_noinfo:false,
+                good_info:[],//初始化商品数据
+            },
+            created:function(){
+                var that = this;
+                // $.ajax({//发起请求
+                //     headers: {
+                //         'Authorization': 'bearer '+_token
+                //     },
+                //     type: 'get',
+                //     url:weixin_url+'/sale/directory-template/'+str,
+                //     contentType:"application/json",
+                //     success: function(data){
+                        
+                //         if (data.code == 0) {
+                //             var _data = data.page.content;
+                //             if(_data.length==0){
+                //                 that.loading = false;
+                //                 that.showpage = false;
+                //                 that.has_noinfo = true;
+                //             }else{
+                //                 that.loading = false;
+                //                 that.showpage = true;
+                //                 that.good_info = data.page.content;
+                //             }
+                //         }else{
+                //             alert(data.message);
+                //         }
+                //         to_login(data);
+                //     }
+                // });
+            },
+            mounted () {
+                window.addEventListener('scroll', this.handleScroll,true)
+              },
+            methods:{
+                handleScroll:function(event){
+                    // var scrollTop = $(this).scrollTop();
+                    // var scrollHeight = $(document).height();
+                    // var windowHeight = $(this).height();
+                    // if (scrollTop + windowHeight == scrollHeight) {
+                    //     // 此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+                    //     $('.more_info').removeClass('dis-no');
+                    //     // var _content =  
+                    // }
+                    // 距离顶部距离
+                    var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+                    var offsetTop = document.querySelector('#good_content').offsetTop
+                    console.log(offsetTop)                    
+                    // console.log(event);
+                    // console.log(event.srcElement.scrollingElement.clientHeight);
+                },
+                showToast:function(){
+                    var $toast = $('#toast');
+                    if ($toast.css('display') != 'none') return;
+                    $toast.fadeIn(100);
+                    setTimeout(function () {
+                        $toast.fadeOut(100);
+                    }, 2000);
+                }
+            }
+        });
+        
     }
 });
 

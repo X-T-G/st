@@ -82,7 +82,10 @@
                             </div> -->
                             <!-- 商品分类导航 -->
                             <div class="classify_good clearfix">
-                                <div></div>
+                                <div class="fl classify_detail" @click="cla_detail(good_info.dictId)" v-for="good_info in good_info">
+                                    <p class="cla_name">{{good_info.dictName}}</p>
+                                    <span>点击进入</span>
+                                </div>
                             </div>
                             <!-- 全部 -->
                             <div class="all_good">

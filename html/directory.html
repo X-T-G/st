@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>神庭医馆</title>
+        <link type="image/x-icon" rel="shortcut icon" href="../images/logo.png">
+        <link rel="stylesheet" href="../css/common.css">
+        <link rel="stylesheet" href="../css/weui.min.css">
+        <script src="../js/zepto.min.js"></script>
+        <script src="../js/vue.min.js"></script>
+        <script src="../js/index.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    </head>
+    <body>
+        <div class="search-page" id="directory">
+            <div :class=[{"dis-no":(showpage==false)}]>
+                <div class="index_content">
+                    <!-- 商品展示模块-->
+                    <div class="goods_container">
+                        <!-- <div class="flex good_contain" v-for="good_info in good_info">
+                            <img class="" :src="good_info.coverImg.shotPath" alt="" style="width:100px;height:100px;">
+                            <div class="flex-1" style="background-color: #fff;padding-left:10px;">
+                                <p class="good_info">{{good_info.name}}</p>
+                                <div class="flex next_info">
+                                    <p class="good_price">
+                                        <span>¥</span>
+                                        <span>{{good_info.price.toFixed(2)}}</span>
+                                    </p>
+                                    <span class="iconfont icon-gouwuche" @click="showToast"></span>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div id="good_content">
+                            <div class="flex good_contain">
+                                <img class="" src="../images/b-(1).jpg" alt="" style="width:100px;height:100px;">
+                                <div class="flex-1" style="background-color: #fff;padding-left:10px;">
+                                    <p class="good_info">神庭足浴散</p>
+                                    <div class="flex next_info">
+                                        <p class="good_price">
+                                            <span>¥</span>
+                                            <span>49.00</span>
+                                        </p>
+                                        <span class="iconfont icon-gouwuche" @click="showToast"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex good_contain">
+                                <img class="" src="../images/b-(1).jpg" alt="" style="width:100px;height:100px;">
+                                <div class="flex-1" style="background-color: #fff;padding-left:10px;">
+                                    <p class="good_info">神庭足浴散</p>
+                                    <div class="flex next_info">
+                                        <p class="good_price">
+                                            <span>¥</span>
+                                            <span>49.00</span>
+                                        </p>
+                                        <span class="iconfont icon-gouwuche" @click="showToast"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex good_contain">
+                                <img class="" src="../images/b-(1).jpg" alt="" style="width:100px;height:100px;">
+                                <div class="flex-1" style="background-color: #fff;padding-left:10px;">
+                                    <p class="good_info">神庭足浴散</p>
+                                    <div class="flex next_info">
+                                        <p class="good_price">
+                                            <span>¥</span>
+                                            <span>49.00</span>
+                                        </p>
+                                        <span class="iconfont icon-gouwuche" @click="showToast"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex good_contain">
+                                <img class="" src="../images/b-(1).jpg" alt="" style="width:100px;height:100px;">
+                                <div class="flex-1" style="background-color: #fff;padding-left:10px;">
+                                    <p class="good_info">神庭足浴散</p>
+                                    <div class="flex next_info">
+                                        <p class="good_price">
+                                            <span>¥</span>
+                                            <span>49.00</span>
+                                        </p>
+                                        <span class="iconfont icon-gouwuche" @click="showToast"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex good_contain">
+                                <img class="" src="../images/b-(1).jpg" alt="" style="width:100px;height:100px;">
+                                <div class="flex-1" style="background-color: #fff;padding-left:10px;">
+                                    <p class="good_info">神庭足浴散</p>
+                                    <div class="flex next_info">
+                                        <p class="good_price">
+                                            <span>¥</span>
+                                            <span>49.00</span>
+                                        </p>
+                                        <span class="iconfont icon-gouwuche" @click="showToast"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="toast" style="opacity: 0; display: none;">
+                            <div class="weui-mask_transparent"></div>
+                            <div class="weui-toast">
+                                <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+                                <p class="weui-toast__content">已加入购物车</p>
+                            </div>
+                        </div>
+                         <!-- 加载下一页效果 -->
+                        <div class="weui-loadmore dis-no more_info">
+                            <i class="weui-loading"></i>
+                            <span class="weui-loadmore__tips">正在加载</span>
+                        </div>
+                        <!-- 无商品 -->
+                        <p class="tint no_good dis-no">没有更多商品啦~</p>
+                    </div>
+                </div>            
+            </div>
+            <!-- 加载效果 -->
+            <div class="weui-loadmore" :class=[{"dis-no":(loading==false)}]>
+                <i class="weui-loading"></i>
+                <span class="weui-loadmore__tips">正在加载</span>
+            </div>
+            <!-- 没有数据 -->
+            <div class="has_noinfo" :class=[{"dis-no":(has_noinfo==false)}]>
+                <img src="../images/bg_nodata.png" alt="">
+            </div>
+        </div>
+    </body>
+</html>
