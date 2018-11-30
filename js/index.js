@@ -1583,7 +1583,7 @@ $(function(){
                     var offsetHeight = document.querySelector('.good_index').offsetHeight
                     // 页面高度
                     var clientHeight =  window.screen.height ; 
-                    if (clientHeight+scrollTop==offsetHeight){
+                    if (clientHeight+scrollTop+10>offsetHeight){
                         var that = this;
                         var page = that.page+1;
                         that.page = page;
@@ -4712,7 +4712,7 @@ $(function(){
                     var offsetHeight = document.querySelector('.goods_container').offsetHeight
                     // 页面高度
                     var clientHeight =  window.screen.height ; 
-                    if (clientHeight+scrollTop==offsetHeight){
+                    if (clientHeight+scrollTop+10>offsetHeight){
                         var that = this;
                         var page = that.page+1;
                         that.page = page;
