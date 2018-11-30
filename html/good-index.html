@@ -50,7 +50,7 @@
                                     <h1>全部商品</h1>
                                 </div>
                                 <div class="clearfix all_good_contain">
-                                    <a href="./good-detail.html" v-for="all_good in all_good">
+                                    <a href="javascript:;" @click="good_detail(all_good.id)" v-for="all_good in all_good">
                                         <div class="fl each_good l_good">
                                             <img :src="all_good.coverImg.shotPath" alt="">
                                             <p class="good_name">{{all_good.name}}</p>

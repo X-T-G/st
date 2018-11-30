@@ -1591,6 +1591,10 @@ $(function(){
                         get_info(that,page);
                     }                   
                 },
+                good_detail:function(e){
+                    window.location.href="../html/good-detail.html?goodId="+e;
+
+                },
             }
         });
         $('.search_input').live('focus',function(){
@@ -1609,18 +1613,101 @@ $(function(){
                 touchRatio : 0.5,
              });
         })
-    }else if($('.goood_detail').size()>0){//商品详情页
-        $('.buy_btn').live('click',function(){
-            if($('.sku_mask').hasClass('fade_in')){//如果有蒙版
-                $('.sku_mask').removeClass('fade_in');
-                $('.sku_mask').addClass('fade_out');
-                $(".sku_room").animate({bottom:'-284px'});
-            }else{
-                $('.sku_mask').addClass('fade_in');
-                $('.sku_mask').removeClass('fade_out');
-                $(".sku_room").animate({bottom:'0'});
+    }else if($('#good_detail').size()>0){//商品详情页
+        var _url = window.location.href;
+        var _index = _url.lastIndexOf("\=");  
+        var str  = _url.substring(_index + 1, _url.length);
+        var _token = localStorage.getItem('access_token');
+
+        // 公共方法 获取所有规格
+        function get_specification(){
+            var that = this;
+            $.ajax({//发起请求
+                headers: {
+                    'Authorization': 'bearer '+_token
+                },
+                type: 'get',
+                url:weixin_url+'/sale/template-product/'+str,
+                contentType:"application/json",
+                success: function(data){
+                    that.loading = false;
+                    that.showpage = true;
+                    if (data.code == 0) {
+                        console.log(data);
+                        // that.specification = data.product;
+                    }else{
+                        alert(data.message);
+                    }
+                    to_login(data);
+                }
+            });
+        }
+        var app = new Vue({
+            el: '#good_detail',
+            data: {
+                loading:true,
+                showpage:false,
+                user_info:[],//初始化用户数据
+                specification:[],//初始化商品规格
+            },
+            created:function(){
+                var that = this;
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: 'get',
+                    url:weixin_url+'/sale/product/'+str,
+                    contentType:"application/json",
+                    success: function(data){
+                        that.loading = false;
+                        that.showpage = true;
+                        if (data.code == 0) {
+                            that.user_info = data.product;
+                        }else{
+                            alert(data.message);
+                        }
+                        to_login(data);
+                    }
+                });
+            },
+            updated:function(){
+                var mySwiper = new Swiper('.swiper-container',{
+                    loop: false,
+                    autoplay: 3000,
+                    pagination : '.pagination',
+                    paginationClickable :true,
+                    freeMode : false,
+                    touchRatio : 0.5,
+                });
+            },
+            methods:{
+                add_cart:function(){//加入购物车
+                    get_specification();
+                    if($('.sku_mask').hasClass('fade_in')){//如果有蒙版
+                        $('.sku_mask').removeClass('fade_in');
+                        $('.sku_mask').addClass('fade_out');
+                        $(".sku_room").animate({bottom:'-284px'});
+                    }else{
+                        $('.sku_mask').addClass('fade_in');
+                        $('.sku_mask').removeClass('fade_out');
+                        $(".sku_room").animate({bottom:'0'});
+                    }
+                },
+                to_buy:function(){//直接购买
+                    get_specification();
+                    if($('.sku_mask').hasClass('fade_in')){//如果有蒙版
+                        $('.sku_mask').removeClass('fade_in');
+                        $('.sku_mask').addClass('fade_out');
+                        $(".sku_room").animate({bottom:'-284px'});
+                    }else{
+                        $('.sku_mask').addClass('fade_in');
+                        $('.sku_mask').removeClass('fade_out');
+                        $(".sku_room").animate({bottom:'0'});
+                    }
+                },
             }
-        })
+        });
         $('.sku_mask.fade_in,.sku_room .btn_sure,.sku_room .icon-shanchu3').live('click',function(){
             $('.sku_mask').removeClass('fade_in').addClass('fade_out');
             $(".sku_room").animate({bottom:'-284px'});
