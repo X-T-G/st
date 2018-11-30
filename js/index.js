@@ -4578,33 +4578,46 @@ $(function(){
         // 请求数据方法可公用
         var _token = localStorage.getItem('access_token');
         var that = this;
-        function get_info(that,page,current_page){
-            $.ajax({//发起请求
-                headers: {
-                    'Authorization': 'bearer '+_token
-                },
-                type: 'get',
-                url:weixin_url+'/sale/directory-template/'+str,
-                contentType:"application/json",
-                success: function(data){
-                    
-                    if (data.code == 0) {
-                        var _data = data.page.content;
-                        if(_data.length==0){
-                            that.loading = false;
-                            that.showpage = false;
-                            that.has_noinfo = true;
+        function get_info(that,page){
+            var total_page = that.total_page;
+            console.log(total_page);
+            if (page < total_page) {//未加载到最后一页
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: 'get',
+                    url:weixin_url+'/sale/directory-template/'+str+'?page='+page,
+                    contentType:"application/json",
+                    success: function(data){
+                        if (data.code == 0) {
+                            var _data = data.page.content;
+                            if(_data.length==0){
+                                that.loading = false;
+                                that.showpage = false;
+                                that.has_noinfo = true;
+                            }else{
+                                that.loading = false;
+                                that.showpage = true;
+                                that.total_page = data.page.totalPages;
+                                var origin_data = that.good_info;
+                                var _content =data.page.content;
+                                for(var i=0;i<_content.length;i++){
+                                    origin_data.push(_content[i]);
+                                }
+                                that.good_info = origin_data;
+                                $('.more_info').addClass('dis-no');
+                            }
                         }else{
-                            that.loading = false;
-                            that.showpage = true;
-                            that.good_info = data.page.content;
+                            alert(data.message);
                         }
-                    }else{
-                        alert(data.message);
+                        to_login(data);
                     }
-                    to_login(data);
-                }
-            });
+                });
+            }else{
+                $('.more_info').addClass('dis-no');
+                $('.no_good').removeClass('dis-no');
+            }
         }
         var _url = window.location.href;
         var _index = _url.lastIndexOf("\=");  
@@ -4616,9 +4629,12 @@ $(function(){
                 showpage:true,
                 has_noinfo:false,
                 good_info:[],//初始化商品数据
+                page:0,//初始化页面
+                total_page:1,//记录页面总数
             },
             created:function(){
                 var that = this;
+                var page = that.page;
                 get_info(that,page);
             },
             mounted () {//触底事件
@@ -4633,8 +4649,10 @@ $(function(){
                     // 页面高度
                     var clientHeight =  window.screen.height ; 
                     if (clientHeight+scrollTop==offsetHeight){
-                        console.log('已经到底部。') 
                         var that = this;
+                        var page = that.page+1;
+                        that.page = page;
+                        $('.more_info').removeClass('dis-no');
                         get_info(that,page);
                     }                   
                 },
