@@ -1402,6 +1402,49 @@ $(function(){
         // var _url = document.referrer;
         // var _index = _url.lastIndexOf("\/");  
         // var str  = _url.substring(_index + 1, _url.length);
+        // 共用方法获取数据
+        // 请求数据方法可公用
+        var _token = localStorage.getItem('access_token');
+        var that = this;
+        function get_info(that,page){
+            var total_page = that.total_page;
+            if (page < total_page) {//未加载到最后一页
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: 'get',
+                    url:weixin_url+'/sale/all-product'+'?page='+page,
+                    contentType:"application/json",
+                    success: function(data){
+                        if (data.code == 0) {
+                            var _data = data.page.content;
+                            if(_data.length==0){
+                                $('.no_all_good').addClass('dis-no');
+                                $('.no_good').removeClass('dis-no');
+                            }else{
+                                $('.no_all_good').addClass('dis-no');
+                                $('.no_good').addClass('dis-no');
+                                that.total_page = data.page.totalPages;
+                                var origin_data = that.all_good;
+                                var _content =data.page.content;
+                                for(var i=0;i<_content.length;i++){
+                                    origin_data.push(_content[i]);
+                                }
+                                that.all_good = origin_data;
+                                $('.more_info').addClass('dis-no');
+                            }
+                        }else{
+                            alert(data.message);
+                        }
+                        to_login(data);
+                    }
+                });
+            }else{
+                $('.no_all_good').addClass('dis-no');
+                $('.no_good').removeClass('dis-no');
+            }
+        }
         var app = new Vue({
             el: '#good_index',
             data: {
@@ -1410,7 +1453,12 @@ $(function(){
                 good_info:[],//初始化商品数据
                 search_arr:search_arr,
                 banner:[],
-
+                all_good:[],//所有数据初始化
+                page:0,//初始化页面
+                total_page:1,//记录页面总数
+            },
+            mounted () {//触底事件
+                window.addEventListener('scroll', this.handleScroll,true)
             },
             updated:function() {
                 var mySwiper = new Swiper('.swiper-container',{
@@ -1471,6 +1519,8 @@ $(function(){
                                         to_login(data);
                                     }
                                 });
+                                var page = that.page;
+                                get_info(that,page);
                             }else if(data.object.realName==0){
                                 alert('未实名认证，请先认证！');
                                 window.location.href = './person.html';
@@ -1525,7 +1575,22 @@ $(function(){
                 cla_detail:function(e){//跳转到商品分类列表
                     var dictId = e;
                     window.location.href="./directory.html?dictId="+dictId;
-                }
+                },
+                handleScroll:function(event){
+                    // 距离顶部距离
+                    var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+                    // div高度
+                    var offsetHeight = document.querySelector('.good_index').offsetHeight
+                    // 页面高度
+                    var clientHeight =  window.screen.height ; 
+                    if (clientHeight+scrollTop==offsetHeight){
+                        var that = this;
+                        var page = that.page+1;
+                        that.page = page;
+                        $('.no_all_good').removeClass('dis-no');
+                        get_info(that,page);
+                    }                   
+                },
             }
         });
         $('.search_input').live('focus',function(){
@@ -4580,7 +4645,6 @@ $(function(){
         var that = this;
         function get_info(that,page){
             var total_page = that.total_page;
-            console.log(total_page);
             if (page < total_page) {//未加载到最后一页
                 $.ajax({//发起请求
                     headers: {
@@ -4639,7 +4703,7 @@ $(function(){
             },
             mounted () {//触底事件
                 window.addEventListener('scroll', this.handleScroll,true)
-              },
+            },
             methods:{//触底事件
                 handleScroll:function(event){
                     // 距离顶部距离

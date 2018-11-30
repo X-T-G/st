@@ -341,7 +341,7 @@ img.store_pic{width: 108px;height:108px;}
 #order_detail .cli_page{margin: 10px;}
 
 /* 商品列表页 */
-.goods_container{padding: 10px 0;}
+.goods_container{padding: 10px 0;padding-bottom:50px; }
 .goods_container .each_good{width: 50%;padding-bottom: 10px;background-color: #fff;}
 .goods_container .good_price{color: #ff473c;text-align: center;}
 .goods_container .good_name{font-size: 14px;text-align: center;margin: 4px 0;color: #939399;}
