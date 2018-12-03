@@ -4670,6 +4670,7 @@ $(function(){
                     }
                 });
             }else{
+                that.has_noinfo = false;
                 $('.no_all_good').addClass('dis-no');
                 $('.no_good').removeClass('dis-no');
             }
