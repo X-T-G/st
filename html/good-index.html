@@ -102,7 +102,7 @@
                     </div>
                     <p class="last_search">最近搜索</p>
                     <div class="search_record" style="padding: 10px 15px;" v-if="search_arr.length>0">
-                        <span v-for="search in search_arr">{{search}}</span>
+                        <span v-for="search in search_arr" @click="quick_search(search)">{{search}}</span>
                     </div>
                     <div v-on:click="delete_record" style="text-align:center;" class="delete_record">
                         <p><span class="iconfont">&#xe632;</span></p>

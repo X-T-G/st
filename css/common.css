@@ -777,6 +777,8 @@ body input{background-color: #fff;}
 .search-page .goods_container .good_info{margin-top: 10px;text-overflow: -o-ellipsis-lastline;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;}
 .search-page .goods_container .next_info{padding-top: 20px;position: relative;}
 .search-page .goods_container .next_info .icon-gouwuche{font-size: 18px;position:absolute;right:10px;color:#F17355;}
+.search-page .goods_container{padding-bottom:0;}
+.search-page .good_contain{margin-bottom: 0;}
 
 /* 商品分类导航 */
 .classify_good .classify_detail{width: 33.3333%;text-align: center;padding: 5px 8px;border-right: 1px solid #e5e5e5;border-bottom: 1px solid #e5e5e5;}

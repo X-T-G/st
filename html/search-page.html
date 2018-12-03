@@ -14,36 +14,23 @@
     </head>
     <body>
         <div class="search-page" id="search-page">
-            <div :class=[{"dis-no":(showpage==false)}]>
+            <div>
                 <div class="index_content">
                     <!-- 搜索模块 -->
                     <div class="search_contain flex">
-                        <input type="text" placeholder="请搜索商品" class="search_input">
-                        <span class="iconfont">&#xe62b;</span>
+                        <input type="text" placeholder="请搜索商品" class="search_input" :value="key_word">
+                        <span class="iconfont" @click="search_btn">&#xe62b;</span>
                     </div>
                     <!-- 商品展示模块-->
-                    <div class="goods_container">
-                        <div class="flex good_contain">
-                            <img class="" src="../images/b-(3).jpg" alt="" style="width:100px;height:100px;">
+                    <div class="goods_container" :class=[{"dis-no":(showpage==false)}]>
+                        <div class="flex good_contain" v-for="good_info in good_info">
+                            <img class="" :src="good_info.templateProduct.coverImg.shotPath" alt="" style="width:100px;height:100px;">
                             <div class="flex-1" style="background-color: #fff;padding-left:10px;">
-                                <p class="good_info">神庭妇浴散神庭妇浴散神庭妇浴散神庭妇浴散神庭妇浴散神庭妇浴散神庭妇浴散</p>
+                                <p class="good_info">{{good_info.templateProduct.name}}</p>
                                 <div class="flex next_info">
                                     <p class="good_price ">
                                         <span>¥</span>
-                                        <span>49.00</span>
-                                    </p>
-                                    <span class="iconfont icon-gouwuche showToast"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex good_contain">
-                            <img class="" src="../images/b-(3).jpg" alt="" style="width:100px;height:100px;">
-                            <div class="flex-1" style="background-color: #fff;padding-left:10px;">
-                                <p class="good_info">神庭妇浴散神庭妇浴散神庭妇浴散神庭妇浴散神庭妇浴散神庭妇浴散神庭妇浴散</p>
-                                <div class="flex next_info">
-                                    <p class="good_price ">
-                                        <span>¥</span>
-                                        <span>49.00</span>
+                                        <span>{{good_info.templateProduct.price}}</span>
                                     </p>
                                     <span class="iconfont icon-gouwuche showToast"></span>
                                 </div>
@@ -56,8 +43,17 @@
                                 <p class="weui-toast__content">已加入购物车</p>
                             </div>
                         </div>
+                        <!-- 加载效果 -->
+                        <div class="weui-loadmore dis-no no_all_good">
+                            <i class="weui-loading"></i>
+                            <span class="weui-loadmore__tips">正在加载</span>
+                        </div>
                         <!-- 无商品 -->
-                        <p class="tint no_good">没有更多商品啦~</p>
+                        <p class="tint no_good dis-no">没有更多商品啦~</p>
+                    </div>
+                    <!-- 没有数据 -->
+                    <div class="has_noinfo" :class=[{"dis-no":(has_noinfo==false)}]>
+                        <img src="../images/bg_nodata.png" alt="">
                     </div>
                 </div>            
             </div>
@@ -65,10 +61,6 @@
             <div class="weui-loadmore" :class=[{"dis-no":(loading==false)}]>
                 <i class="weui-loading"></i>
                 <span class="weui-loadmore__tips">正在加载</span>
-            </div>
-            <!-- 没有数据 -->
-            <div class="has_noinfo" :class=[{"dis-no":(has_noinfo==false)}]>
-                <img src="../images/bg_nodata.png" alt="">
             </div>
         </div>
     </body>

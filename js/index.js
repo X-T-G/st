@@ -1399,10 +1399,10 @@ $(function(){
             var search_arr = (localStorage.getItem('search_arr')).split(',');
             var search_arr = search_arr;
         } 
-        // var _url = document.referrer;
-        // var _index = _url.lastIndexOf("\/");  
-        // var str  = _url.substring(_index + 1, _url.length);
-        // 共用方法获取数据
+        var _url = document.referrer;
+        var _index = _url.lastIndexOf("\/");  
+        var str  = _url.substring(_index + 1, _url.length);
+        console.log(str);
         // 请求数据方法可公用
         var _token = localStorage.getItem('access_token');
         var that = this;
@@ -1564,7 +1564,7 @@ $(function(){
                         
                         that.search_arr = key_arr;
                         localStorage.setItem("search_arr",key_arr);
-                        window.location.href="./search-page.html";
+                        window.location.href=encodeURI("./search-page.html?name="+_key);//中文转码
                     }
                 },
                 delete_record:function(){//清空记录
@@ -1576,7 +1576,7 @@ $(function(){
                     var dictId = e;
                     window.location.href="./directory.html?dictId="+dictId;
                 },
-                handleScroll:function(event){
+                handleScroll:function(event){//处理滚动事件
                     // 距离顶部距离
                     var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
                     // div高度
@@ -1593,8 +1593,10 @@ $(function(){
                 },
                 good_detail:function(e){
                     window.location.href="../html/good-detail.html?goodId="+e;
-
                 },
+                quick_search:function(e){
+                    window.location.href=encodeURI("./search-page.html?name="+e);//中文转码
+                }
             }
         });
         $('.search_input').live('focus',function(){
@@ -4623,96 +4625,133 @@ $(function(){
             }
         });
     }else if($("#search-page").size()>0){//搜索出的商品页面
+        // 请求数据方法可公用
         var _token = localStorage.getItem('access_token');
+        var that = this;
+        function get_search(that,page,name){
+            var total_page = that.total_page;
+            if (page < total_page) {//未加载到最后一页
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: 'post',
+                    url:weixin_url+'/sale/product/search?page='+page,
+                    data: JSON.stringify({name:name}),
+                    contentType:"application/json",
+                    success: function(data){
+                        if (data.code == 0) {
+                            var _data = data.page.content;
+                            if(_data.length==0){
+                                $('.no_all_good').addClass('dis-no');
+                                $('.no_good').removeClass('dis-no');
+                                that.loading = false;
+                                that.showpage = false;
+                                that.has_noinfo = true;
+                            }else{
+                                $('.no_all_good').addClass('dis-no');
+                                $('.no_good').addClass('dis-no');
+                                that.loading = false;
+                                that.showpage = true;
+                                that.total_page = data.page.totalPages;
+                                var origin_data = that.good_info;
+                                var _content =data.page.content;
+                                for(var i=0;i<_content.length;i++){
+                                    origin_data.push(_content[i]);
+                                }
+                                that.good_info = origin_data;
+
+                                $('.more_info').addClass('dis-no');
+                            }
+                        }else{
+                            alert(data.message);
+                        }
+                        to_login(data);
+                    }
+                });
+            }else{
+                $('.no_all_good').addClass('dis-no');
+                $('.no_good').removeClass('dis-no');
+            }
+        }
+        var _url = window.location.href;
+        var _index = _url.lastIndexOf("\=");  
+        var str  = decodeURI(_url.substring(_index + 1, _url.length));
         var page = 0;//默认第一页
         var app = new Vue({
             el: '#search-page',
             data: {
-                has_noinfo:false,//没有数据
-                loading:false,//加载
-                showpage:true,//是否显示页面
-                page:[],
-                current:1,//当前页面
-                datas:[],//初始数据
+                loading:true,
+                showpage:false,
+                has_noinfo:false,
+                good_info:[],//初始化商品数据
+                page:0,//初始化页面
+                total_page:1,//记录页面总数
+                key_word:[]
             },
-            // created:function(){
-            //     var that = this;
-            //     $.ajax({//发起请求
-            //         headers: {
-            //             'Authorization': 'bearer '+_token
-            //         },
-            //         type: "GET",
-            //         url:weixin_url + '/public-benefit/donate-list?page='+page,
-            //         contentType:"application/json",
-            //         success: function(data){
-            //             if (data.code == 0) {
-            //                 that.current = 1;
-            //                 var Data_length =  data.page.content.length;
-            //                 if (Data_length == 0) {
-            //                     that.show_page = false;
-            //                     that.loading = false;
-            //                     that.has_noinfo = true;
-            //                     return;
-            //                 }else{//请求到数据
-            //                     that.my_balance = data.page.content;
-            //                     that.show_page = true;
-            //                     that.page = data.page;
-            //                     that.has_noinfo = false;
-            //                     that.loading = false;
-            //                     that.datas = data;
-            //                 }
-            //             }
-            //             to_login(data);
-            //         }
-            //     });
-            // },
-            // methods:{
-            //     change_page:function(event){//下一页
-            //         var that =this;
-            //         var class_name = event.target.className;
-            //         var num = event.target.innerHTML;
-            //         var is_active = class_name.indexOf('active');
-            //         if (is_active !==-1) {//被选中
-            //             return;
-            //         }else{
-            //             that.show_page = false;
-            //             that.has_noinfo = false;
-            //             that.loading = true;
-            //             that.current = num;
-            //             var page = num-1;
-            //             $.ajax({//发起请求
-            //                 headers: {
-            //                     'Authorization': 'bearer '+_token
-            //                 },
-            //                 type: "GET",
-            //                 url:weixin_url + '/public-benefit/donate-list?page='+page,
-            //                 contentType:"application/json",
-            //                 success: function(data){
-            //                     if (data.code == 0) {
-            //                         var Data_length =  data.page.content.length;
-            //                         if (Data_length == 0) {
-            //                             that.show_page = false;
-            //                             that.has_noinfo = true;
-            //                             that.loading = false;
-            //                             return;
-            //                         }else{//请求到数据
-            //                             that.my_balance = data.page.content;
-            //                             that.show_page = true;
-            //                             that.page = data.page;
-            //                             that.has_noinfo = false;
-            //                             that.loading = false;
-            //                         }
-            //                     }
-            //                     to_login(data);
-            //                 }
-            //             });
-            //         }
-            //     },
-            //     modal_page:function(){
-            //         var that = this;
-            //         that.show_modal = true;
-            //     },
-            // }
+            mounted () {//触底事件
+                window.addEventListener('scroll', this.handleScroll,true)
+            },
+            created:function(){
+                var that = this;
+                var page = 0;
+                var name = str;
+                that.key_word = str;
+                get_search(that,page,name);
+            },
+            methods:{
+                search_btn:function(){//点击‘搜索按钮’
+                    var that = this;
+                    var _key = $('.search_input').val();
+                    var search_arr=localStorage.getItem('search_arr');
+                    var search_arr = (localStorage.getItem('search_arr')).split(',');
+                    var search_arr = search_arr;
+                    var key_arr =search_arr;
+                    that.total_page = 1;
+                    if (_key.length>0) {
+                        if (key_arr.length == 0) {
+                            key_arr.unshift(_key);
+                        }else{
+                            var flag = false;
+                            for (var i = 0;i<key_arr.length;i++){
+                                if (key_arr[i]==_key){
+                                    flag=true;
+                                    break;
+                                }else{
+    
+                                }
+                            }
+                            if(!flag){
+                                key_arr.unshift(_key);
+                            } 
+                        }
+                        that.search_arr = key_arr;
+                        that.key_word = _key;
+                        localStorage.setItem("search_arr",key_arr);
+                        var page = 0;
+                        var name = _key;
+                        get_search(that,page,name);
+                    }else{
+                        return;
+                    }
+                },
+                handleScroll:function(event){//处理滚动事件
+                    // 距离顶部距离
+                    var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+                    // div高度
+                    var offsetHeight = document.querySelector('#search-page').offsetHeight
+                    // 页面高度
+                    var clientHeight =  window.screen.height ; 
+                    if (clientHeight+scrollTop+10>offsetHeight){
+                        var that = this;
+                        var page = that.page+1;
+                        that.page = page;
+                        $('.no_all_good').removeClass('dis-no');
+                        var name = $('.search_input').val();
+                        get_search(that,page,name);
+                    }                   
+                },
+            }
         });
         var $toast = $('#toast');
         $('.showToast').on('click', function(){
