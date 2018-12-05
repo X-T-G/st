@@ -24,13 +24,13 @@
                     <!-- 商品展示模块-->
                     <div class="goods_container" :class=[{"dis-no":(showpage==false)}]>
                         <div class="flex good_contain" v-for="good_info in good_info">
-                            <img class="" :src="good_info.templateProduct.coverImg.shotPath" alt="" style="width:100px;height:100px;">
+                            <img class="" :src="good_info.coverImg.shotPath" alt="" style="width:100px;height:100px;">
                             <div class="flex-1" style="background-color: #fff;padding-left:10px;">
-                                <p class="good_info">{{good_info.templateProduct.name}}</p>
+                                <p class="good_info">{{good_info.name}}</p>
                                 <div class="flex next_info">
                                     <p class="good_price ">
                                         <span>¥</span>
-                                        <span>{{good_info.templateProduct.price}}</span>
+                                        <span>{{good_info.price}}</span>
                                     </p>
                                     <span class="iconfont icon-gouwuche showToast"></span>
                                 </div>

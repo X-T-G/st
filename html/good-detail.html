@@ -102,28 +102,40 @@
                 </div>
                 <!-- sku弹窗 -->
                 <div class="sku_room">
-                    <div class="sku-layout-title flex">
+                    <div class="sku-layout-title flex" v-for="(specification,index) in specification" :class=[{"dis-no":(index!==selected)}]>
                         <div class="thumb">
-                            <img src="../images/b-(3).jpg" alt="">
+                            <img :src="specification.coverImg.shotPath" alt="">
                         </div>
                         <div class="good_sku flex-1 ">
-                            <p class="good_name">神庭妇浴散</p>
-                            <p class="good_price">¥<span>49.00</span></p>
+                            <p class="good_price">¥<span>{{specification.price}}</span></p>
                         </div>
                         <div class="iconfont icon-shanchu3"></div>
                     </div>
-                    <div class="sku_operate flex">
-                        <div class="flex-1">
-                            <p>购买数量：</p>
-                            <p>剩余<span>23</span>件</p>
-                        </div>
+                    <div class="good_specific">
+                        <div style="margin-bottom: 4px;">商品规格：</div>
                         <div class="clearfix">
-                            <div class="ope_1 iconfont fl icon-jian"></div>
-                            <div class="ope_num fl">1</div>
-                            <div class="ope_2 iconfont fl icon-jia"></div>
+                            <div class="specific_size" :class=[{"selected":(index==selected)}] v-for="(specification,index) in specification" @click="select_sku(index)">{{specification.option.dictName}}</div>
                         </div>
                     </div>
-                    <div class="btn_sure">确定</div>
+                    <div class="sku_operate flex dis-no" v-for="(specification,index) in specification" :class=[{"show_good":(index==selected)}] >
+                        <div class="flex-1">
+                            <p>购买数量：</p>
+                            <p>剩余<span class="stock">{{specification.stock}}</span>件</p>
+                        </div>
+                        <div class="clearfix">
+                            <div class="ope_1 iconfont fl icon-jian" @click="reduce_good"></div>
+                            <div class="ope_num fl">1</div>
+                            <div class="ope_2 iconfont fl icon-jia" @click="add_good"></div>
+                        </div>
+                    </div>
+                    <div class="btn_sure" @click="ope_sure">确定</div>
+                </div>
+                <div id="toast" style="opacity: 0; display: none;">
+                    <div class="weui-mask_transparent"></div>
+                    <div class="weui-toast">
+                        <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+                        <p class="weui-toast__content">已加入购物车</p>
+                    </div>
                 </div>
             </div>
         </div>

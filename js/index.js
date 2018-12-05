@@ -1402,7 +1402,6 @@ $(function(){
         var _url = document.referrer;
         var _index = _url.lastIndexOf("\/");  
         var str  = _url.substring(_index + 1, _url.length);
-        console.log(str);
         // 请求数据方法可公用
         var _token = localStorage.getItem('access_token');
         var that = this;
@@ -1606,44 +1605,20 @@ $(function(){
         $('.return_ori').live('click',function(){
             $('.store_index').removeClass('dis-no');
             $('.serach_content').addClass('dis-no');
-            var mySwiper = new Swiper('.swiper-container',{
-                loop: false,
-                autoplay: 3000,
-                pagination : '.pagination',
-                paginationClickable :true,
-                freeMode : false,
-                touchRatio : 0.5,
-             });
+            // var mySwiper = new Swiper('.swiper-container',{
+            //     loop: false,
+            //     autoplay: 3000,
+            //     pagination : '.pagination',
+            //     paginationClickable :true,
+            //     freeMode : false,
+            //     touchRatio : 0.5,
+            //  });
         })
     }else if($('#good_detail').size()>0){//商品详情页
         var _url = window.location.href;
         var _index = _url.lastIndexOf("\=");  
         var str  = _url.substring(_index + 1, _url.length);
         var _token = localStorage.getItem('access_token');
-
-        // 公共方法 获取所有规格
-        function get_specification(){
-            var that = this;
-            $.ajax({//发起请求
-                headers: {
-                    'Authorization': 'bearer '+_token
-                },
-                type: 'get',
-                url:weixin_url+'/sale/template-product/'+str,
-                contentType:"application/json",
-                success: function(data){
-                    that.loading = false;
-                    that.showpage = true;
-                    if (data.code == 0) {
-                        console.log(data);
-                        // that.specification = data.product;
-                    }else{
-                        alert(data.message);
-                    }
-                    to_login(data);
-                }
-            });
-        }
         var app = new Vue({
             el: '#good_detail',
             data: {
@@ -1651,6 +1626,8 @@ $(function(){
                 showpage:false,
                 user_info:[],//初始化用户数据
                 specification:[],//初始化商品规格
+                selected:0,//默认第一选中
+                ope_type:[],//操作类型
             },
             created:function(){
                 var that = this;
@@ -1659,13 +1636,31 @@ $(function(){
                         'Authorization': 'bearer '+_token
                     },
                     type: 'get',
-                    url:weixin_url+'/sale/product/'+str,
+                    url:weixin_url+'/sale/template/'+str,
                     contentType:"application/json",
                     success: function(data){
                         that.loading = false;
                         that.showpage = true;
                         if (data.code == 0) {
-                            that.user_info = data.product;
+                            that.user_info = data.template;
+                        }else{
+                            alert(data.message);
+                        }
+                        to_login(data);
+                    }
+                });
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: 'get',
+                    url:weixin_url+'/sale/template-product/'+str,
+                    contentType:"application/json",
+                    success: function(data){
+                        that.loading = false;
+                        that.showpage = true;
+                        if (data.code == 0) {
+                            that.specification = data.list;
                         }else{
                             alert(data.message);
                         }
@@ -1685,7 +1680,6 @@ $(function(){
             },
             methods:{
                 add_cart:function(){//加入购物车
-                    get_specification();
                     if($('.sku_mask').hasClass('fade_in')){//如果有蒙版
                         $('.sku_mask').removeClass('fade_in');
                         $('.sku_mask').addClass('fade_out');
@@ -1695,9 +1689,9 @@ $(function(){
                         $('.sku_mask').removeClass('fade_out');
                         $(".sku_room").animate({bottom:'0'});
                     }
+                    this.ope_type = "add_cart";
                 },
                 to_buy:function(){//直接购买
-                    get_specification();
                     if($('.sku_mask').hasClass('fade_in')){//如果有蒙版
                         $('.sku_mask').removeClass('fade_in');
                         $('.sku_mask').addClass('fade_out');
@@ -1706,26 +1700,76 @@ $(function(){
                         $('.sku_mask').addClass('fade_in');
                         $('.sku_mask').removeClass('fade_out');
                         $(".sku_room").animate({bottom:'0'});
+                    }
+                    this.ope_type = "to_buy";
+                },
+                ope_sure:function(){//操作最后确认
+                    var that = this;
+                    if (that.ope_type == "add_cart") {//如果是加入购物车
+                        var _index = that.selected;
+                        var _id = that.specification[_index].id;
+                        var _num = $('.show_good .ope_num').html();
+                        var stock = $('.show_good .stock').html();
+                        if (stock == 0){
+                            alert("库存不足！");
+                        }else{
+                            $.ajax({//发起请求
+                                headers: {
+                                    'Authorization': 'bearer '+_token
+                                },
+                                type: 'put',
+                                url:weixin_url+'/sale/shopping-cart',
+                                data: JSON.stringify({productId:_id,num:_num}),
+                                contentType:"application/json",
+                                success: function(data){
+                                    if (data.code == 0) {
+                                        var $toast = $('#toast');
+                                        if ($toast.css('display') != 'none') return;
+                                        $toast.fadeIn(100);
+                                        setTimeout(function () {
+                                            $toast.fadeOut(100);
+                                        }, 2000);
+                                    }else{
+                                        alert(data.message);
+                                    }
+                                    to_login(data);
+                                }
+                            });
+                        }
+                        
+                    }else{//如果是直接购买
+
+                    }
+                },
+                select_sku:function(e){//选择sku
+                    var that = this;
+                    that.selected = e;
+                },
+                reduce_good:function(){//减少
+                    var _num = $('.show_good .ope_num').html();
+                    _num--;
+                    if(_num <= 0){
+                        return;
+                    }else{
+                        $('.show_good .ope_num').html(_num);
+                    }
+                },
+                add_good:function(){//增加
+                    var _num =Number($('.show_good .ope_num').html());
+                    var total =Number($('.show_good .stock').html());
+                    _num++;
+                    if (total<_num) {
+                        alert("库存不足！");
+                    }else{
+                        $('.show_good .ope_num').html(_num);
                     }
                 },
             }
         });
         $('.sku_mask.fade_in,.sku_room .btn_sure,.sku_room .icon-shanchu3').live('click',function(){
             $('.sku_mask').removeClass('fade_in').addClass('fade_out');
-            $(".sku_room").animate({bottom:'-284px'});
-        })
-        // 数量增减
-        $('.sku_operate .iconfont').live('click',function(){
-            var _num = $('.ope_num').html();
-            if($(this).hasClass('icon-jian') && _num >1){//减
-                _num--;
-                $('.ope_num').html(_num);
-            }else if($(this).hasClass('icon-jian') && _num <= 1){//加
-                return;
-            }else{
-                _num++;
-                $('.ope_num').html(_num);
-            }
+            $(".sku_room").animate({bottom:'-348px'});
+            $('.show_good .ope_num').html(1);
         })
     }else if($('.cart').size()>0){//购物车页面
         // 数量增减
