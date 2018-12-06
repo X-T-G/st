@@ -19,150 +19,92 @@
                 <img src="../images/back_gery.png" alt="">
             </span>
         </div>
-        <!-- <div class="weui-loadmore">
-            <i class="weui-loading"></i>
-            <span class="weui-loadmore__tips">正在加载</span>
-        </div> -->
         <div class="cart" id="cart" style="padding-top:40px;">
-            <!-- 医馆信息及跳转 -->
-            <div class="good_describe">
-                <div class="weui-cell weui-cell_access my_store clearfix">
-                    <div class="weui-cell__bd clearfix">
-                        <div class="store_small_pic fl">
-                            <img src="../images/getheadimg.png" alt="">
-                        </div>
-                        <p class="fl">神庭医馆</p>
-                    </div>
-                    <div class="fr edit">编辑</div>
-                </div>
-            </div>
-            <!-- 商品展示 -->
-            <div class="cart_container">
-                <div class="each_row flex">
-                    <div class="left_radio">
-                        <label class="" for="s11">
-                            <input type="checkbox" class="good_check"  id="s11">
-                            <i class="icon-checked iconfont"></i>
-                        </label>
-                    </div>
-                    <div class="weui-cell__bd flex-1">
-                        <div class="thumb flex">
-                            <img src="../images/b-(3).jpg" alt="">
-                            <div class="flex-1">
-                                <p class="good_name">神庭妇浴散</p>
-                                <div class="clearfix">
-                                    <p class="good_price fl">¥<span>49.01</span></p>
-                                    <div class="fr">
-                                        <div class="clearfix num_change">
-                                            <div class="ope_1 iconfont fl icon-jian"></div>
-                                            <div class="ope_num fl">1</div>
-                                            <div class="ope_2 iconfont fl icon-jia"></div>
-                                        </div>
-                                        <div class="delete_btn dis-no">删除</div>
-                                    </div>
-                                </div>
+            <div :class=[{"dis-no":(showpage==false)}]>
+                <!-- 医馆信息及跳转 -->
+                <div class="good_describe">
+                    <div class="weui-cell weui-cell_access my_store clearfix">
+                        <div class="weui-cell__bd clearfix">
+                            <div class="store_small_pic fl">
+                                <img src="../images/getheadimg.png" alt="">
                             </div>
+                            <p class="fl">神庭医馆</p>
                         </div>
+                        <div class="fr edit">编辑</div>
                     </div>
                 </div>
-                <div class="each_row flex">
-                    <div class="left_radio">
-                        <label class="" for="s12">
-                            <input type="checkbox" class="good_check"  id="s12">
-                            <i class="icon-checked iconfont"></i>
-                        </label>
-                    </div>
-                    <div class="weui-cell__bd flex-1">
-                        <div class="thumb flex">
-                            <img src="../images/b-(3).jpg" alt="">
-                            <div class="flex-1">
-                                <p class="good_name">神庭妇浴散</p>
-                                <div class="clearfix">
-                                    <p class="good_price fl">¥<span>49.01</span></p>
-                                    <div class="fr">
-                                        <div class="clearfix num_change">
-                                            <div class="ope_1 iconfont fl icon-jian"></div>
-                                            <div class="ope_num fl">1</div>
-                                            <div class="ope_2 iconfont fl icon-jia"></div>
-                                        </div>
-                                        <div class="delete_btn dis-no">删除</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 底部操作 -->
-            <div class="compute_btn flex">
-                <div class="flex-1 clearfix">
-                    <div class="fl">
-                        <div class="weui-cells weui-cells_checkbox">
-                            <label class="weui-cell weui-check__label" for="sa">
-                                <div class="weui-cell__hd">
-                                    <input type="checkbox" class="weui-check"  id="sa">
-                                    <i class="weui-icon-checked"></i>
-                                </div>
-                                <div class="weui-cell__bd">
-                                    <p>全选</p>
-                                </div>
+                <!-- 商品展示 -->
+                <div class="cart_container" style="padding-bottom:50px;">
+                    <div class="each_row flex" v-for="(user_info,index) in user_info">
+                        <div class="left_radio">
+                            <label class="" :for="user_info.id">
+                                <input type="checkbox" class="good_check"  :id="user_info.id">
+                                <i class="icon-checked iconfont"></i>
                             </label>
                         </div>
+                        <div class="weui-cell__bd flex-1">
+                            <div class="thumb flex">
+                                <img :src="user_info.product.templateProduct.coverImg.shotPath" alt="">
+                                <div class="flex-1">
+                                    <p class="good_name">{{user_info.product.templateProduct.name}}</p>
+                                    <div class="clearfix">
+                                        <p class="good_price fl">¥<span>{{user_info.product.price}}{{user_info.product.id}}</span></p>
+                                        <div class="fr">
+                                            <div class="clearfix num_change">
+                                                <div class="ope_1 iconfont fl icon-jian" :id="user_info.product.id"></div>
+                                                <div class="ope_num fl">{{user_info.number}}</div>
+                                                <div class="ope_2 iconfont fl icon-jia" :id="user_info.product.id"></div>
+                                            </div>
+                                            <div class="delete_btn dis-no" :id="user_info.product.id">删除</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="fr tint">
-                        <p>
-                            合计：<span>¥45.00</span>
-                        </p>
-                        <p>不含运费</p>
+                    <!-- 加载效果 -->
+                    <div class="weui-loadmore no_all_good">
+                        <i class="weui-loading"></i>
+                        <span class="weui-loadmore__tips">正在加载</span>
                     </div>
+                    <!-- 无商品 -->
+                    <p class="tint no_good dis-no" style="color: #939399;height: 40px;line-height: 40px;text-align: center;">没有更多商品啦~</p>
                 </div>
-                <div class="btn">结算</div>
+                <!-- 底部操作 -->
+                <div class="compute_btn flex">
+                    <div class="flex-1 clearfix">
+                        <div class="fl">
+                            <div class="weui-cells weui-cells_checkbox">
+                                <label class="weui-cell weui-check__label" for="sa">
+                                    <div class="weui-cell__hd">
+                                        <input type="checkbox" class="weui-check"  id="sa">
+                                        <i class="weui-icon-checked"></i>
+                                    </div>
+                                    <div class="weui-cell__bd">
+                                        <p>全选</p>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="fr tint">
+                            <p>
+                                合计：<span>¥45.00</span>
+                            </p>
+                            <p>不含运费</p>
+                        </div>
+                    </div>
+                    <div class="btn">结算</div>
+                </div>
+            </div>
+            <!-- 加载效果 -->
+            <div class="weui-loadmore" :class=[{"dis-no":(loading==false)}]>
+                <i class="weui-loading"></i>
+                <span class="weui-loadmore__tips">正在加载</span>
+            </div>
+            <!-- 没有数据 -->
+            <div class="has_noinfo" :class=[{"dis-no":(has_noinfo==false)}]>
+                <img src="../images/bg_nodata.png" alt="">
             </div>
         </div>
-        <script>
-            $(function(){
-                // 编辑按钮
-                $('.edit').live('click',function(){
-                    var _content = $(this).html();
-                    $('.weui-check').prop("checked",false);
-                    if (_content == '编辑'){
-                        $(this).html('完成');
-                        $('.delete_btn').removeClass('dis-no');
-                        $('.num_change').addClass('dis-no');
-                    }else{
-                        $(this).html('编辑');
-                        $('.delete_btn').addClass('dis-no');
-                        $('.num_change').removeClass('dis-no');
-                    }
-                })
-                // 删除按钮
-                $('.delete_btn').live('click',function(){
-                    $(this).parents('.weui-cell.weui-check__label').remove();
-                })
-
-                // 全选
-                $('.compute_btn .weui-cell.weui-check__label').live('click',function(){
-                    var flag = $(this).find('.weui-check').is(':checked');
-                    if(flag){
-                        $(".cart_container input[type='checkbox']").prop("checked",true);
-                    }else{
-                        $(".cart_container input[type='checkbox']").prop("checked",false);
-                    }
-                })
-                // 单选按钮
-                $('.left_radio').live('click',function(){
-                    var flag = $(this).find("input[type='checkbox']").is(':checked');
-                    $(this).find("input[type='checkbox']").prop("checked",!flag);
-                    var all_num = $(".cart_container input[type='checkbox']").length;
-                    var ck_num = $(".cart_container input[type='checkbox']:checked").length;
-                    if (all_num == ck_num) {
-                        $('.compute_btn .weui-check').prop("checked",true);
-                    }else{
-                        $('.compute_btn .weui-check').prop("checked",false);
-                    }
-                })
-            })
-        
-        </script>
     </body>
 </html>

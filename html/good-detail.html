@@ -15,10 +15,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     </head>
     <body>
-        <!-- <div class="weui-loadmore">
-            <i class="weui-loading"></i>
-            <span class="weui-loadmore__tips">正在加载</span>
-        </div> -->
         <div class="good_detail" id="good_detail">
             <div :class=[{"dis-no":(showpage==false)}]>
                 <!-- 轮播模块 -->
@@ -108,6 +104,7 @@
                         </div>
                         <div class="good_sku flex-1 ">
                             <p class="good_price">¥<span>{{specification.price}}</span></p>
+                            <p>库存<span class="stock">{{specification.stock}}</span>件</p>
                         </div>
                         <div class="iconfont icon-shanchu3"></div>
                     </div>
@@ -120,7 +117,6 @@
                     <div class="sku_operate flex dis-no" v-for="(specification,index) in specification" :class=[{"show_good":(index==selected)}] >
                         <div class="flex-1">
                             <p>购买数量：</p>
-                            <p>剩余<span class="stock">{{specification.stock}}</span>件</p>
                         </div>
                         <div class="clearfix">
                             <div class="ope_1 iconfont fl icon-jian" @click="reduce_good"></div>

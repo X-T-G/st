@@ -1771,22 +1771,177 @@ $(function(){
             $(".sku_room").animate({bottom:'-348px'});
             $('.show_good .ope_num').html(1);
         })
-    }else if($('.cart').size()>0){//购物车页面
+    }else if($('#cart').size()>0){//购物车页面
+        var _token = localStorage.getItem('access_token');
+        // 公共方法，请求购物车信息
+        function get_cart(that,page){
+            var total_page = that.total_page;
+            if (page < total_page) {//未加载到最后一页
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: 'get',
+                    url:weixin_url+'/sale/shopping-cart'+'?page='+page,
+                    contentType:"application/json",
+                    success: function(data){
+                        if (data.code == 0) {
+                            var _data = data.page.content;
+                            if(_data.length==0){
+                                that.loading = false;
+                                that.showpage = false;
+                                that.has_noinfo = true;
+                                $('.no_all_good').addClass('dis-no');
+                                $('.no_good').removeClass('dis-no');
+                            }else{
+                                that.loading = false;
+                                that.showpage = true;
+                                that.has_noinfo = false;
+                                $('.no_all_good').addClass('dis-no');
+                                $('.no_good').addClass('dis-no');
+                                that.total_page = data.page.totalPages;
+                                var origin_data = that.user_info;
+                                var _content =data.page.content;
+                                for(var i=0;i<_content.length;i++){
+                                    origin_data.push(_content[i]);
+                                }
+                                that.user_info = origin_data;
+                                $('.more_info').addClass('dis-no');
+                            }
+                        }else{
+                            alert(data.message);
+                        }
+                        to_login(data);
+                    }
+                });
+            }else{
+                $('.no_all_good').addClass('dis-no');
+                $('.no_good').removeClass('dis-no');
+            }
+        }
+        var app = new Vue({
+            el: '#cart',
+            data: {
+                loading:true,
+                showpage:false,
+                has_noinfo:false,
+                user_info:[],//初始化用户数据
+                page:0,//初始化页面
+                total_page:1,//记录页面总数
+            },
+            created:function(){
+                var that = this;
+                var page = that.page;
+                get_cart(that,page);
+            },
+            mounted () {//触底事件
+                window.addEventListener('scroll', this.handleScroll,true)
+            },
+            methods:{
+                handleScroll:function(event){//处理滚动事件
+                    // 距离顶部距离
+                    var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+                    // div高度
+                    var offsetHeight = document.querySelector('.cart').offsetHeight
+                    // 页面高度
+                    var clientHeight =  window.screen.height ; 
+                    if (clientHeight+scrollTop+10>offsetHeight){
+                        var that = this;
+                        var page = that.page+1;
+                        that.page = page;
+                        $('.no_all_good').removeClass('dis-no');
+                        get_cart(that,page);
+                    }                   
+                }, 
+            }
+        });
         // 数量增减
         $('.cart .thumb .iconfont').live('click',function(){
             var _num = $(this).siblings('.ope_num').html();
+            var productId = $(this).attr("id");
             if($(this).hasClass('icon-jian') && _num >1){//减
                 _num--;
-                $(this).siblings('.ope_num').html(_num);
             }else if($(this).hasClass('icon-jian') && _num <= 1){//加
                 return;
             }else{
                 _num++;
-                $(this).siblings('.ope_num').html(_num);
             }
+            var _this = $(this);
+            $.ajax({//发起请求,修改购物车
+                headers: {
+                    'Authorization': 'bearer '+_token
+                },
+                type: "POST",
+                url:weixin_url + '/sale/shopping-cart',
+                contentType:"application/json",
+                data: JSON.stringify({productId:productId,num:_num}),
+                success: function(data){
+                    if (data.code == 0) {
+                        _this.siblings('.ope_num').html(_num);
+                    }else{
+                        alert(data.message);
+                    }
+                    to_login(data);
+                }
+            });
         });
         $('#cart .compute_btn .btn').live('click',function(){
             window.location.href="../html/good-sure.html";
+        })
+        // 编辑按钮
+        $('#cart .edit').live('click',function(){
+            var _content = $(this).html();
+            $('.weui-check').prop("checked",false);
+            if (_content == '编辑'){
+                $(this).html('完成');
+                $('.delete_btn').removeClass('dis-no');
+                $('.num_change').addClass('dis-no');
+            }else{
+                $(this).html('编辑');
+                $('.delete_btn').addClass('dis-no');
+                $('.num_change').removeClass('dis-no');
+            }
+        })
+        // 删除按钮
+        $('#cart .delete_btn').live('click',function(){
+            var productId = $(this).attr('id');
+            $.ajax({//发起请求，删除购物车商品
+                headers: {
+                    'Authorization': 'bearer '+_token
+                },
+                type: "delete",
+                url:weixin_url + '/sale/shopping-cart/'+productId,
+                contentType:"application/json",
+                success: function(data){
+                    if (data.code == 0) {
+                        $('.each_row.flex').find("input[type='checkbox']:checked").parents('.each_row.flex').remove();
+                    }else{
+                        alert(data.message);
+                    }
+                    to_login(data);
+                }
+            });
+        })
+        // 全选
+        $('.compute_btn .weui-cell.weui-check__label').live('click',function(){
+            var flag = $(this).find('.weui-check').is(':checked');
+            if(flag){
+                $(".cart_container input[type='checkbox']").prop("checked",true);
+            }else{
+                $(".cart_container input[type='checkbox']").prop("checked",false);
+            }
+        })
+        // 单选按钮
+        $('.left_radio').live('click',function(){
+            var flag = $(this).find("input[type='checkbox']").is(':checked');
+            $(this).find("input[type='checkbox']").prop("checked",!flag);
+            var all_num = $(".cart_container input[type='checkbox']").length;
+            var ck_num = $(".cart_container input[type='checkbox']:checked").length;
+            if (all_num == ck_num) {
+                $('.compute_btn .weui-check').prop("checked",true);
+            }else{
+                $('.compute_btn .weui-check').prop("checked",false);
+            }
         })
     }else if($('#my_coin').size()>0){//我的神庭币页面
         var _token = localStorage.getItem('access_token');
