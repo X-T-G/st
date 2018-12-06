@@ -18,26 +18,26 @@
                 <div class="index_content">
                     <!-- 商品展示模块-->
                     <div class="goods_container">
-                        <div class="flex good_contain" v-for="good_info in good_info">
+                        <div class="flex good_contain" v-for="good_info in good_info" @click="good_detail(good_info.id)">
                             <img class="" :src="good_info.coverImg.shotPath" alt="" style="width:100px;height:100px;">
                             <div class="flex-1" style="background-color: #fff;padding-left:10px;">
                                 <p class="good_info">{{good_info.name}}</p>
                                 <div class="flex next_info">
                                     <p class="good_price">
                                         <span>¥</span>
-                                        <span>{{good_info.price.toFixed(2)}}</span>
+                                        <span>{{good_info.price}}</span>
                                     </p>
-                                    <span class="iconfont icon-gouwuche" @click="showToast"></span>
+                                    <!-- <span class="iconfont icon-gouwuche" @click="showToast"></span> -->
                                 </div>
                             </div>
                         </div>
-                        <div id="toast" style="opacity: 0; display: none;">
+                        <!-- <div id="toast" style="opacity: 0; display: none;">
                             <div class="weui-mask_transparent"></div>
                             <div class="weui-toast">
                                 <i class="weui-icon-success-no-circle weui-icon_toast"></i>
                                 <p class="weui-toast__content">已加入购物车</p>
                             </div>
-                        </div>
+                        </div> -->
                          <!-- 加载下一页效果 -->
                         <div class="weui-loadmore dis-no more_info">
                             <i class="weui-loading"></i>

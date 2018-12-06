@@ -817,3 +817,7 @@ div.weui-cells_checkbox .weui-icon-checked:before {font-size: 18px;}
 .add_address .operate_contain .input_contain:last-child{border: none;}
 .dis-no {display: none;}
 div.sku_operate.show_good{display:flex;}
+.good_detail .swiper-wrapper img{width:100%;}
+
+
+

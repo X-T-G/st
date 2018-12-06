@@ -20,23 +20,8 @@
                 <!-- 轮播模块 -->
                 <div class="swiper-container" >
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <img src="//img.alicdn.com/imgextra/i2/3475643436/TB2G1bGoKGSBuNjSspbXXciipXa_!!3475643436.jpg_640x640q85s150_.webp" alt="">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="//img.alicdn.com/imgextra/i3/3475643436/TB26inYoNSYBuNjSspjXXX73VXa_!!3475643436.jpg_640x640q85s150_.webp" alt="">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="//img.alicdn.com/imgextra/i2/3475643436/TB283MjoNGYBuNjy0FnXXX5lpXa_!!3475643436.jpg_640x640q85s150_.webp" alt="">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="//img.alicdn.com/imgextra/i4/3475643436/TB2I07ApcyYBuNkSnfoXXcWgVXa_!!3475643436.jpg_640x640q85s150_.webp" alt="">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="//img.alicdn.com/imgextra/i2/3475643436/TB23lZrpiCYBuNkSnaVXXcMsVXa_!!3475643436.jpg_640x640q85s150_.webp" alt="">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="//img.alicdn.com/imgextra/i2/3475643436/TB2G1bGoKGSBuNjSspbXXciipXa_!!3475643436.jpg_640x640q85s150_.webp" alt="">
+                        <div class="swiper-slide" v-for="banner in banner">
+                            <img :src="banner" alt="">
                         </div>
                     </div>
                     <div class="pagination"></div>
@@ -56,13 +41,9 @@
                         </div>
                     </a>
                 </div>
-                <!-- 医馆文字描述 -->
-                <div>
-    
-                </div>
                 <!-- 商品图片详情 -->
                 <div class="good_img">
-                    <img src="https://img.alicdn.com/imgextra/i4/3475643436/TB2DFzOoH1YBuNjSszhXXcUsFXa_!!3475643436.jpg_640x0q85s150_.webp" alt="">
+                    <!-- <img src="https://img.alicdn.com/imgextra/i4/3475643436/TB2DFzOoH1YBuNjSszhXXcUsFXa_!!3475643436.jpg_640x0q85s150_.webp" alt="">
                     <img src="https://img.alicdn.com/imgextra/i3/3475643436/TB2KCrJoKOSBuNjy0FdXXbDnVXa_!!3475643436.jpg_640x0q85s150_.webp" alt="">
                     <img src="https://img.alicdn.com/imgextra/i1/3475643436/TB21zYYoNSYBuNjSspjXXX73VXa_!!3475643436.jpg_640x0q85s150_.webp" alt="">
                     <img src="https://img.alicdn.com/imgextra/i1/3475643436/TB2HvvPoKuSBuNjSsziXXbq8pXa_!!3475643436.jpg_640x0q85s150_.webp" alt="">
@@ -70,7 +51,7 @@
                     <img src="https://img.alicdn.com/imgextra/i3/3475643436/TB2P1LsoQ9WBuNjSspeXXaz5VXa_!!3475643436.jpg_640x0q85s150_.webp" alt="">
                     <img src="https://img.alicdn.com/imgextra/i2/3475643436/TB2Xff6oH9YBuNjy0FgXXcxcXXa_!!3475643436.jpg_640x0q85s150_.webp" alt="">
                     <img src="https://img.alicdn.com/imgextra/i2/3475643436/TB2CQiLgDXYBeNkHFrdXXciuVXa_!!3475643436.jpg_640x0q85s150_.webp" alt="">
-                    <img src="https://img.alicdn.com/imgextra/i1/3475643436/TB2hAO2oQKWBuNjy1zjXXcOypXa_!!3475643436.jpg_640x0q85s150_.webp" alt="">
+                    <img src="https://img.alicdn.com/imgextra/i1/3475643436/TB2hAO2oQKWBuNjy1zjXXcOypXa_!!3475643436.jpg_640x0q85s150_.webp" alt=""> -->
                 </div>
                 <!-- 底部商品操作 -->
                 <div class="bottom_operate">
@@ -134,11 +115,11 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- 加载效果 -->
-        <div class="weui-loadmore" :class=[{"dis-no":(loading==false)}]>
-            <i class="weui-loading"></i>
-            <span class="weui-loadmore__tips">正在加载</span>
+            <!-- 加载效果 -->
+            <div class="weui-loadmore" :class=[{"dis-no":(loading==false)}]>
+                <i class="weui-loading"></i>
+                <span class="weui-loadmore__tips">正在加载</span>
+            </div>
         </div>
     </body>
 </html>

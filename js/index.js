@@ -1628,6 +1628,17 @@ $(function(){
                 specification:[],//初始化商品规格
                 selected:0,//默认第一选中
                 ope_type:[],//操作类型
+                banner:[]
+            },
+            updated:function() {
+                var mySwiper = new Swiper('.swiper-container',{
+                    loop: false,
+                    autoplay: 3000,
+                    pagination : '.pagination',
+                    paginationClickable :true,
+                    freeMode : false,
+                    touchRatio : 0.5,
+                });
             },
             created:function(){
                 var that = this;
@@ -1642,7 +1653,11 @@ $(function(){
                         that.loading = false;
                         that.showpage = true;
                         if (data.code == 0) {
+                            that.loading = false;
+                            that.showpage = true;
                             that.user_info = data.template;
+                            that.banner = data.template.images;
+                            $('#good_detail .good_img').html(data.template.productDetail);
                         }else{
                             alert(data.message);
                         }
@@ -1905,22 +1920,27 @@ $(function(){
         // 删除按钮
         $('#cart .delete_btn').live('click',function(){
             var productId = $(this).attr('id');
-            $.ajax({//发起请求，删除购物车商品
-                headers: {
-                    'Authorization': 'bearer '+_token
-                },
-                type: "delete",
-                url:weixin_url + '/sale/shopping-cart/'+productId,
-                contentType:"application/json",
-                success: function(data){
-                    if (data.code == 0) {
-                        $('.each_row.flex').find("input[type='checkbox']:checked").parents('.each_row.flex').remove();
-                    }else{
-                        alert(data.message);
+            var flag = $('.each_row.flex').find("input[type='checkbox']").is(':checked');
+            if(flag){
+                $.ajax({//发起请求，删除购物车商品
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: "delete",
+                    url:weixin_url + '/sale/shopping-cart/'+productId,
+                    contentType:"application/json",
+                    success: function(data){
+                        if (data.code == 0) {
+                            $('.each_row.flex').find("input[type='checkbox']:checked").parents('.each_row.flex').remove();
+                        }else{
+                            alert(data.message);
+                        }
+                        to_login(data);
                     }
-                    to_login(data);
-                }
-            });
+                });
+            }else{
+                alert('请选择商品！');
+            }
         })
         // 全选
         $('.compute_btn .weui-cell.weui-check__label').live('click',function(){
@@ -5046,14 +5066,17 @@ $(function(){
                         get_info(that,page);
                     }                   
                 },
-                showToast:function(){
-                    var $toast = $('#toast');
-                    if ($toast.css('display') != 'none') return;
-                    $toast.fadeIn(100);
-                    setTimeout(function () {
-                        $toast.fadeOut(100);
-                    }, 2000);
-                }
+                good_detail:function(e){
+                    window.location.href="../html/good-detail.html?goodId="+e;
+                },
+                // showToast:function(){
+                //     var $toast = $('#toast');
+                //     if ($toast.css('display') != 'none') return;
+                //     $toast.fadeIn(100);
+                //     setTimeout(function () {
+                //         $toast.fadeOut(100);
+                //     }, 2000);
+                // }
             }
         });
     }else if($('#good_sure').size()>0){//商品确认页面
