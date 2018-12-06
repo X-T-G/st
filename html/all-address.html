@@ -20,78 +20,54 @@
             </span>
         </div>
         <div class="all_address" id="all_address">
-            <div class="each_addr">
-                <div class="add_info">
-                    <div class="flex top_info">
-                        <p class="flex-1">
-                            <span class="iconfont icon-zhanghao"></span>
-                            <span>XXXXX</span>
-                        </p>
-                        <p>
-                            <span class="iconfont icon-lianxidianhua"></span>
-                            <span>18581506530</span>
-                        </p>
+            <div :class=[{"dis-no":(showpage==false)}]>
+                <div class="each_addr" v-for='user_info in user_info'>
+                    <div class="add_info">
+                        <div class="flex top_info">
+                            <p class="flex-1">
+                                <span class="iconfont icon-zhanghao"></span>
+                                <span>{{user_info.name}}</span>
+                            </p>
+                            <p>
+                                <span class="iconfont icon-lianxidianhua"></span>
+                                <span>{{user_info.phone}}</span>
+                            </p>
+                        </div>
+                        <div class="flex">
+                            <span class="iconfont icon-dingwei  addr_icon"></span>
+                            <span class="addr_icon">{{user_info.locationSeqcn}}-{{user_info.address}}</span>
+                        </div>
                     </div>
-                    <div class="flex">
-                        <span class="iconfont icon-dingwei  addr_icon"></span>
-                        <span class="addr_icon">江苏省-苏州市-相城区-元和科技园如元路</span>
-                    </div>
-                </div>
-                <div class="weui-cells_checkbox">
-                    <label class="weui-cell weui-check__label" for="s1">
-                        <div class="weui-cell__hd">
-                            <input type="checkbox" class="weui-check" name="checkbox1" id="s1">
-                            <i class="weui-icon-checked"></i>
-                        </div>
-                        <div class="weui-cell__bd">
-                            <p>默认地址</p>
-                        </div>
-                        <div class="weui-cell__bd" style="text-align:right;">
-                            <p>编辑</p>
-                        </div>
-                        <div class="weui-cell__bd" style="text-align:right;">
-                            <p>删除</p>
-                        </div>
-                    </label>
-                </div>
-            </div>
-            <div class="each_addr">
-                <div class="add_info">
-                    <div class="flex top_info">
-                        <p class="flex-1">
-                            <span class="iconfont icon-zhanghao"></span>
-                            <span>XXXXX</span>
-                        </p>
-                        <p>
-                            <span class="iconfont icon-lianxidianhua"></span>
-                            <span>18581506530</span>
-                        </p>
-                    </div>
-                    <div class="flex">
-                        <span class="iconfont icon-dingwei addr_icon"></span>
-                        <span class="addr_icon">江苏省-苏州市-相城区-元和科技园如元路江苏省-苏州市-相城区-元和科技园如元路</span>
+                    <div class="weui-cells_checkbox">
+                        <label class="weui-cell weui-check__label" :for="user_info.id">
+                            <div class="weui-cell__hd">
+                                <input type="checkbox" class="weui-check" @change="set_default(user_info.id)" :checked="user_info.beDefault=='0'"  name="checkbox1" :id="user_info.id">
+                                <i class="weui-icon-checked"></i>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <p>默认地址</p>
+                            </div>
+                            <div class="weui-cell__bd" style="text-align:right;">
+                                <p>编辑</p>
+                            </div>
+                            <div class="weui-cell__bd" style="text-align:right;">
+                                <p>删除</p>
+                            </div>
+                        </label>
                     </div>
                 </div>
-                <div class="weui-cells_checkbox">
-                    <label class="weui-cell weui-check__label" for="s11">
-                        <div class="weui-cell__hd">
-                            <input type="checkbox" class="weui-check" name="checkbox1" id="s11">
-                            <i class="weui-icon-checked"></i>
-                        </div>
-                        <div class="weui-cell__bd">
-                            <p>默认地址</p>
-                        </div>
-                        <div class="weui-cell__bd" style="text-align:right;">
-                            <p>编辑</p>
-                        </div>
-                        <div class="weui-cell__bd" style="text-align:right;">
-                            <p>删除</p>
-                        </div>
-                    </label>
+                <div class="add_contain">
+                    <button class="add_addr">添加地址</button>
                 </div>
             </div>
-            <div class="add_contain">
-                <button class="add_addr">添加地址</button>
+            <!-- 没有数据 -->
+            <div class="has_noinfo" :class=[{"dis-no":(has_noinfo==false)}]>
+                <img src="../images/bg_nodata.png" alt="">
+            </div>
+            <!-- 加载效果 -->
+            <div class="weui-loadmore" :class=[{"dis-no":(loading==false)}]>
+                <i class="weui-loading"></i>
+                <span class="weui-loadmore__tips">正在加载</span>
             </div>
         </div>
     </body>

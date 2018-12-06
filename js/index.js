@@ -4,14 +4,14 @@ $(function(){
     // var assistant_url = "http://192.168.0.155:8036/stassistant";// 测试预约
     // var weixin_url = "http://192.168.0.155:8046/stweixin";// 测试微信
     //线上  
-    // var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
-    // var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
-    // var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
+    var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
+    var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
+    var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
     
     // 测试 tao
-    var medicine_url = "http://192.168.0.2:8006/stmedicine";// 测试个人信息
-    var assistant_url = "http://192.168.0.2:8036/stassistant";// 测试预约
-    var weixin_url = "http://192.168.0.2:8046/stweixin";// 测试微信
+    // var medicine_url = "http://192.168.0.2:8006/stmedicine";// 测试个人信息
+    // var assistant_url = "http://192.168.0.2:8036/stassistant";// 测试预约
+    // var weixin_url = "http://192.168.0.2:8046/stweixin";// 测试微信
     // 公共方法401跳转
     function to_login(data){
         if (data !== undefined && data.code !== undefined){
@@ -4981,10 +4981,6 @@ $(function(){
                 $toast.fadeOut(100);
             }, 2000);
         });
-    }else if ($('#all_address').size()>0){//所有地址页面
-        $('.add_addr').live('click',function(){
-            window.location.href="../html/add-address.html";
-        })
     }else if ($('#directory').size()>0){//商品分类列表
         // 请求数据方法可公用
         var _token = localStorage.getItem('access_token');
@@ -5035,8 +5031,8 @@ $(function(){
         var app = new Vue({
             el: '#directory',
             data: {
-                loading:false,
-                showpage:true,
+                loading:true,
+                showpage:false,
                 has_noinfo:false,
                 good_info:[],//初始化商品数据
                 page:0,//初始化页面
@@ -5081,6 +5077,79 @@ $(function(){
         });
     }else if($('#good_sure').size()>0){//商品确认页面
         console.log(444);
+    }else if ($('#all_address').size()>0){//所有地址页面
+        var _token = localStorage.getItem('access_token');
+        var app = new Vue({
+            el: '#all_address',
+            data: {
+                loading:true,
+                showpage:false,
+                has_noinfo:false,
+                user_info:[],//初始化商品数据
+            },
+            created:function(){
+                var that = this;
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: 'post',
+                    url:medicine_url+'/v1.0.0/personalCenter/getLogisticsAddresses',
+                    contentType:"application/json",
+                    success: function(data){
+                        if (data.code == 0) {
+                            var _data = data.object;
+                            if(_data.length==0){
+                                that.loading = false;
+                                that.showpage = false;
+                                that.has_noinfo = true;
+                            }else{
+                                that.loading = false;
+                                that.showpage = true;
+                                that.user_info = _data;
+                            }
+                        }else{
+                            alert(data.message);
+                        }
+                        to_login(data);
+                    }
+                });
+            },
+            methods:{
+                // var flag = $(this).find("input[type='checkbox']").is(':checked');
+                // $(this).find("input[type='checkbox']").prop("checked",!flag);
+                // var all_num = $(".cart_container input[type='checkbox']").length;
+                // var ck_num = $(".cart_container input[type='checkbox']:checked").length;
+                // if (all_num == ck_num) {
+                //     $('.compute_btn .weui-check').prop("checked",true);
+                // }else{
+                //     $('.compute_btn .weui-check').prop("checked",false);
+                // }
+                set_default:function(e){
+                    var _id = e;
+                    $.ajax({//发起请求
+                        headers: {
+                            'Authorization': 'bearer '+_token
+                        },
+                        type: 'post',
+                        url:medicine_url+'/v1.0.0/personalCenter/setDefaultLogisticsAddress',
+                        contentType:"application/json",
+                        data: JSON.stringify({id:_id}),
+                        success: function(data){
+                            if (data.code == 0) {
+                               console.log(data);
+                            }else{
+                                alert(data.message);
+                            }
+                            to_login(data);
+                        }
+                    });
+                }
+            }
+        });
+        $('.add_addr').live('click',function(){
+            window.location.href="../html/add-address.html";
+        })
     }
 });
 
