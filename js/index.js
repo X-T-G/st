@@ -5126,7 +5126,7 @@ $(function(){
                 //     $('.compute_btn .weui-check').prop("checked",false);
                 // }
                 set_default:function(e){
-                    var _id = e;
+                    var _id = ""+e;
                     $.ajax({//发起请求
                         headers: {
                             'Authorization': 'bearer '+_token
@@ -5134,7 +5134,7 @@ $(function(){
                         type: 'post',
                         url:medicine_url+'/v1.0.0/personalCenter/setDefaultLogisticsAddress',
                         contentType:"application/json",
-                        data: JSON.stringify({id:_id}),
+                        data: JSON.stringify({"id":_id}),
                         success: function(data){
                             if (data.code == 0) {
                                console.log(data);
