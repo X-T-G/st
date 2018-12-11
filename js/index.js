@@ -4,14 +4,14 @@ $(function(){
     // var assistant_url = "http://192.168.0.155:8036/stassistant";// 测试预约
     // var weixin_url = "http://192.168.0.155:8046/stweixin";// 测试微信
     //线上  
-    var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
-    var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
-    var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
+    // var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
+    // var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
+    // var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
     
     // 测试 tao
-    // var medicine_url = "http://192.168.0.2:8006/stmedicine";// 测试个人信息
-    // var assistant_url = "http://192.168.0.2:8036/stassistant";// 测试预约
-    // var weixin_url = "http://192.168.0.2:8046/stweixin";// 测试微信
+    var medicine_url = "http://192.168.0.2:8006/stmedicine";// 测试个人信息
+    var assistant_url = "http://192.168.0.2:8036/stassistant";// 测试预约
+    var weixin_url = "http://192.168.0.2:8046/stweixin";// 测试微信
     // 公共方法401跳转
     function to_login(data){
         if (data !== undefined && data.code !== undefined){
@@ -1867,7 +1867,18 @@ $(function(){
                         $('.no_all_good').removeClass('dis-no');
                         get_cart(that,page);
                     }                   
-                }, 
+                },
+                Settlement:function(){
+                    var _id = $("input[type='checkbox']:checked").parents('.each_row').find(".num_change .ope_num");
+                    localStorage.setItem("good_info",JSON.stringify(this.user_info));
+                    var _idList = [];
+                    if (_id.length>0) {
+                        for(var i = 0;i<_id.length;i++){
+                            _idList.push(_id[i].attributes[0].value);
+                        }
+                        window.location.href='./good-sure.html?good_info='+_idList;
+                    }
+                }
             }
         });
         // 数量增减
@@ -1892,7 +1903,22 @@ $(function(){
                 data: JSON.stringify({productId:productId,num:_num}),
                 success: function(data){
                     if (data.code == 0) {
+                        var _price = _this.parents('.thumb').find('.good_price span').html();
                         _this.siblings('.ope_num').html(_num);
+                        var _content = Number(_num)*Number(_price);
+                        _this.siblings("input[type='hidden']").val(_content);
+                        var flag = _this.parents('.each_row.flex').find("input[type='checkbox']").is(':checked');
+                        if(flag){
+                            var total_input = $("input[type='checkbox']:checked").parents('.each_row').find(".num_change input[type='hidden']");
+                            var total_price = 0;
+                            for(var i = 0;i<total_input.length;i++){
+                                var _price = Number(total_input[i].defaultValue);
+                                total_price+=_price;
+                            }
+                            $('.price_total').html(total_price.toFixed(2));
+                        }else{
+                            return;
+                        }
                     }else{
                         alert(data.message);
                     }
@@ -1900,35 +1926,41 @@ $(function(){
                 }
             });
         });
-        $('#cart .compute_btn .btn').live('click',function(){
-            window.location.href="../html/good-sure.html";
-        })
         // 编辑按钮
         $('#cart .edit').live('click',function(){
             var _content = $(this).html();
-            $('.weui-check').prop("checked",false);
             if (_content == '编辑'){
                 $(this).html('完成');
                 $('.delete_btn').removeClass('dis-no');
-                $('.num_change').addClass('dis-no');
+                $('.compute_btn .btn').css('display','none');
+                $('.compute_btn .tint').css('display','none');
+                $('.compute_btn .delete_btn').css('display','flex');
             }else{
                 $(this).html('编辑');
                 $('.delete_btn').addClass('dis-no');
-                $('.num_change').removeClass('dis-no');
+                $('.compute_btn .btn').css('display','flex');
+                $('.compute_btn .tint').css('display','block');
+                $('.compute_btn .delete_btn').css('display','none');
             }
         })
         // 删除按钮
         $('#cart .delete_btn').live('click',function(){
-            var productId = $(this).attr('id');
+            // var productId = $(this).attr('id');
             var flag = $('.each_row.flex').find("input[type='checkbox']").is(':checked');
             if(flag){
+                var idList = $("input[type='checkbox']:checked").parents('.each_row').find(".ope_num");
+                var _idList = [];
+                for(var i = 0;i<idList.length;i++){
+                    _idList.push(idList[i].attributes[0].value);
+                }
                 $.ajax({//发起请求，删除购物车商品
                     headers: {
                         'Authorization': 'bearer '+_token
                     },
-                    type: "delete",
-                    url:weixin_url + '/sale/shopping-cart/'+productId,
+                    type: "post",
+                    url:weixin_url + '/sale/shopping-cart/batch-delete',
                     contentType:"application/json",
+                    data: JSON.stringify({idList:_idList}),
                     success: function(data){
                         if (data.code == 0) {
                             $('.each_row.flex').find("input[type='checkbox']:checked").parents('.each_row.flex').remove();
@@ -1947,8 +1979,16 @@ $(function(){
             var flag = $(this).find('.weui-check').is(':checked');
             if(flag){
                 $(".cart_container input[type='checkbox']").prop("checked",true);
+                var total_input = $(".num_change input[type='hidden']");
+                var total_price = 0;
+                for(var i = 0;i<total_input.length;i++){
+                    var _price = Number(total_input[i].defaultValue);
+                    total_price+=_price;
+                }
+                $('.price_total').html(total_price.toFixed(2));
             }else{
                 $(".cart_container input[type='checkbox']").prop("checked",false);
+                $('.price_total').html("0.00");
             }
         })
         // 单选按钮
@@ -1962,6 +2002,13 @@ $(function(){
             }else{
                 $('.compute_btn .weui-check').prop("checked",false);
             }
+            var total_input = $("input[type='checkbox']:checked").parents(".each_row").find(".num_change input[type='hidden']");
+            var total_price = 0;
+            for(var i = 0;i<total_input.length;i++){
+                var _price = Number(total_input[i].defaultValue);
+                total_price+=_price;
+            }
+            $('.price_total').html(total_price.toFixed(2));
         })
     }else if($('#my_coin').size()>0){//我的神庭币页面
         var _token = localStorage.getItem('access_token');
@@ -5076,20 +5123,19 @@ $(function(){
             }
         });
     }else if($('#good_sure').size()>0){//商品确认页面
-        console.log(444);
-    }else if ($('#all_address').size()>0){//所有地址页面
         var _token = localStorage.getItem('access_token');
+        var that = this;
         var app = new Vue({
-            el: '#all_address',
+            el: '#good_sure',
             data: {
                 loading:true,
                 showpage:false,
                 has_noinfo:false,
                 user_info:[],//初始化商品数据
+                show_address:false,
             },
             created:function(){
-                var that = this;
-                $.ajax({//发起请求
+                $.ajax({//发起请求,地址接口
                     headers: {
                         'Authorization': 'bearer '+_token
                     },
@@ -5100,20 +5146,64 @@ $(function(){
                         if (data.code == 0) {
                             var _data = data.object;
                             if(_data.length==0){
-                                that.loading = false;
-                                that.showpage = false;
-                                that.has_noinfo = true;
+                                that.show_address = false;
                             }else{
-                                that.loading = false;
-                                that.showpage = true;
-                                that.user_info = _data;
+                                that.show_address = true;
                             }
                         }else{
                             alert(data.message);
                         }
                         to_login(data);
                     }
-                });
+                }); 
+            },
+            methods:{
+                pay_sure:function(){
+
+                }
+            }
+        })
+          
+    }else if ($('#all_address').size()>0){//所有地址页面
+        var _token = localStorage.getItem('access_token');
+        function get_address(that){
+            $.ajax({//发起请求
+                headers: {
+                    'Authorization': 'bearer '+_token
+                },
+                type: 'post',
+                url:medicine_url+'/v1.0.0/personalCenter/getLogisticsAddresses',
+                contentType:"application/json",
+                success: function(data){
+                    if (data.code == 0) {
+                        var _data = data.object;
+                        if(_data.length==0){
+                            that.loading = false;
+                            that.showpage = false;
+                            that.has_noinfo = true;
+                        }else{
+                            that.loading = false;
+                            that.showpage = true;
+                            that.user_info = _data;
+                        }
+                    }else{
+                        alert(data.message);
+                    }
+                    to_login(data);
+                }
+            });
+        }
+        var app = new Vue({
+            el: '#all_address',
+            data: {
+                loading:true,
+                showpage:false,
+                has_noinfo:false,
+                user_info:[],//初始化商品数据
+            },
+            created:function(){
+                var that = this;
+                get_address(that);
             },
             methods:{
                 // var flag = $(this).find("input[type='checkbox']").is(':checked');
@@ -5125,8 +5215,9 @@ $(function(){
                 // }else{
                 //     $('.compute_btn .weui-check').prop("checked",false);
                 // }
-                set_default:function(e){
+                set_default:function(e,event){
                     var _id = ""+e;
+                    var that = this;
                     $.ajax({//发起请求
                         headers: {
                             'Authorization': 'bearer '+_token
@@ -5137,7 +5228,13 @@ $(function(){
                         data: JSON.stringify({"id":_id}),
                         success: function(data){
                             if (data.code == 0) {
-                               console.log(data);
+                                var $toast = $('#toast');
+                                if ($toast.css('display') != 'none') return;
+                                $toast.fadeIn(100);
+                                setTimeout(function () {
+                                    $toast.fadeOut(100);
+                                }, 2000);
+                                get_address(that);
                             }else{
                                 alert(data.message);
                             }

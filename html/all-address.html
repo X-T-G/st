@@ -38,8 +38,8 @@
                             <span class="addr_icon">{{user_info.locationSeqcn}}-{{user_info.address}}</span>
                         </div>
                     </div>
-                    <div class="weui-cells_checkbox">
-                        <label class="weui-cell weui-check__label" :for="user_info.id">
+                    <div class="weui-cells_checkbox clearfix" :for="user_info.id">
+                        <label class="weui-cell weui-check__label fl">
                             <div class="weui-cell__hd">
                                 <input type="checkbox" class="weui-check" @change="set_default(user_info.id)" :checked="user_info.beDefault=='0'"  name="checkbox1" :id="user_info.id">
                                 <i class="weui-icon-checked"></i>
@@ -47,13 +47,22 @@
                             <div class="weui-cell__bd">
                                 <p>默认地址</p>
                             </div>
-                            <div class="weui-cell__bd" style="text-align:right;">
+                        </label>
+                        <div class="fr clearfix">
+                            <div class="weui-cell__bd fl" style="text-align:right;padding: 10px 15px;">
                                 <p>编辑</p>
                             </div>
-                            <div class="weui-cell__bd" style="text-align:right;">
+                            <div class="weui-cell__bd fl" style="text-align:right;padding: 10px 15px;">
                                 <p>删除</p>
                             </div>
-                        </label>
+                        </div>
+                    </div>
+                </div>
+                <div id="toast" style="opacity: 0; display: none;">
+                    <div class="weui-mask_transparent"></div>
+                    <div class="weui-toast">
+                        <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+                        <p class="weui-toast__content">设置成功！</p>
                     </div>
                 </div>
                 <div class="add_contain">

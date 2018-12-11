@@ -73,7 +73,7 @@
                 <div class="sku_room">
                     <div class="sku-layout-title flex" v-for="(specification,index) in specification" :class=[{"dis-no":(index!==selected)}]>
                         <div class="thumb">
-                            <img :src="specification.coverImg.shotPath" alt="">
+                            <img :src="specification.coverImg.shotPath" alt="" v-if="specification.coverImg!==null">
                         </div>
                         <div class="good_sku flex-1 ">
                             <p class="good_price">¥<span>{{specification.price}}</span></p>
