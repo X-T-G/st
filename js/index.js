@@ -5128,8 +5128,9 @@ $(function(){
         });
     }else if($('#good_sure').size()>0){//商品确认页面
         var _token = localStorage.getItem('access_token');
+        var selected = localStorage.getItem('selected');
         var total_price = localStorage.getItem('total_price');
-        var good_info = localStorage.getItem('good_info');
+        var good_info =JSON.parse(localStorage.getItem('good_info'));
         var app = new Vue({
             el: '#good_sure',
             data: {
@@ -5138,8 +5139,8 @@ $(function(){
                 has_noinfo:false,
                 user_info:[],//初始化商品数据
                 total_price:total_price,
-                has_deefault:false,
                 good_info:good_info,//被选中商品的信息
+                selected:selected,//默认选中的地址下标
             },
             created:function(){
                 var that = this;
@@ -5161,11 +5162,21 @@ $(function(){
                                 that.loading = false;
                                 that.showpage = true;
                                 that.user_info = _data;
-
                                 for(var i=0;i<_data.length;i++){
                                     if(_data[i].beDefault=='0'){//说明有默认地址
-                                        that.has_deefault=true;
+                                        that.selected=i;
+                                        if (selected == null) {
+                                            return;
+                                        }else{
+                                            that.selected = selected;
+                                        }
                                         break;
+                                    }else{
+                                        if (selected == null) {
+                                            that.selected = 0;
+                                        }else{
+                                            that.selected = selected;
+                                        } 
                                     }
                                 }
                             }
@@ -5177,6 +5188,15 @@ $(function(){
                 });
             },
             methods:{
+                choose_addr:function(){//选择新地址
+                    window.location.href='../html/all-address.html';
+                },
+                add_addr:function(){
+                    window.location.href='../html/add-address.html';
+                },
+                good_detail:function(e){
+                    window.location.href="../html/good-detail.html?goodId="+e;
+                },
                 pay_sure:function(){
 
                 }
@@ -5295,6 +5315,17 @@ $(function(){
                 edit_addr:function(e){//编辑地址
                     localStorage.setItem("addr_info",JSON.stringify(e));
                     window.location.href='./add-address.html?status=edit';
+                },
+                choose_addr:function(e){//从结算页面的地址选择跳转而来
+                    var _url = document.referrer;
+                    var _index = _url.lastIndexOf("\/");  
+                    var str  = _url.substring(_index + 1, _url.length);
+                    if (str=='good-sure.html') {//判断页面
+                        localStorage.setItem("selected",e);
+                        window.location.href='../html/good-sure.html';
+                    }else{
+                        return;
+                    }
                 }
             }
         });
@@ -5578,7 +5609,15 @@ $(function(){
                                     $toast.fadeIn(100);
                                     setTimeout(function () {
                                         $toast.fadeOut(100);
-                                        window.location.href='../html/all-address.html';
+                                        var _url = document.referrer;
+                                        var _index = _url.lastIndexOf("\/");  
+                                        var str  = _url.substring(_index + 1, _url.length);
+                                        if(str=='good-sure.html'){
+                                            localStorage.setItem("selected",0);
+                                            window.location.href='../html/good-sure.html';
+                                        }else{
+                                            window.location.href='../html/all-address.html';
+                                        }
                                     }, 2000);
                                 }else{
                                     alert(data.message);

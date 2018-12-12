@@ -838,7 +838,7 @@ div.sku_operate.show_good{display:flex;}
 /* 馆藏商品确认页面 */
 #good_sure .hasno_addr{border-bottom: 1px solid #e5e5e5;height: 60px;line-height: 60px;text-align: center;padding-bottom: 10px;}
 #good_sure .hasno_addr .icon-jia{display: inline-block;}
-
+#good_sure .addr_contain:after{content: " ";display: inline-block;height: 9px;width: 9px;border-width: 2px 2px 0 0;border-color: #c8c8cd;border-style: solid;-webkit-transform: matrix(.71,.71,-.71,.71,0,0);transform: matrix(.71,.71,-.71,.71,0,0);position: relative;top: -2px;position: absolute;top: 55%;margin-top: -4px;right: 14px;}
 
 
 
