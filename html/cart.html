@@ -52,11 +52,10 @@
                                         <div class="fr">
                                             <div class="clearfix num_change">
                                                 <div class="ope_1 iconfont fl icon-jian" :id="user_info.product.id"></div>
-                                                <div class="ope_num fl" :id="user_info.product.id">{{user_info.number}}</div>
+                                                <div class="ope_num fl" :id="user_info.id">{{user_info.number}}</div>
                                                 <div class="ope_2 iconfont fl icon-jia" :id="user_info.product.id"></div>
                                                 <input type="hidden" :value="user_info.number*user_info.product.price">
                                             </div>
-                                            <!-- <div class="" :id="user_info.product.id">删除</div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -95,7 +94,7 @@
                         </div>
                     </div>
                     <div class="btn" @click="Settlement">结算</div>
-                    <div class="delete_btn dis-no">删除</div>
+                    <div class="delete_btn dis-no" @click="delete_order">删除</div>
                 </div>
             </div>
             <!-- 加载效果 -->

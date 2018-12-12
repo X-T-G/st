@@ -1868,15 +1868,54 @@ $(function(){
                         get_cart(that,page);
                     }                   
                 },
-                Settlement:function(){
-                    var _id = $("input[type='checkbox']:checked").parents('.each_row').find(".num_change .ope_num");
-                    localStorage.setItem("good_info",JSON.stringify(this.user_info));
+                Settlement:function(){//结算
+                    var _id = $("input[type='checkbox']:checked").parents('.each_row').find(".num_change .ope_num");//id集合
+                    var good_info = this.user_info;
                     var _idList = [];
+                    var total_price = $('.price_total').html();
                     if (_id.length>0) {
                         for(var i = 0;i<_id.length;i++){
-                            _idList.push(_id[i].attributes[0].value);
+                            for(var j = 0;j<good_info.length;j++){
+                                if(good_info[j].id==_id[i].attributes[0].value){
+                                    _idList.push(good_info[j]);
+                                }
+                            }
                         }
-                        window.location.href='./good-sure.html?good_info='+_idList;
+                        localStorage.setItem("good_info",JSON.stringify(_idList));
+                        localStorage.setItem("total_price",total_price);
+                        window.location.href='./good-sure.html';
+                    }else{
+                        alert("请选择商品！");
+                    }
+                },
+                delete_order:function(){//删除按钮
+                    var flag = $('.each_row.flex').find("input[type='checkbox']").is(':checked');
+                    if(flag){
+                        var idList = $("input[type='checkbox']:checked").parents('.each_row').find(".ope_num");
+                        var _idList = [];
+                        for(var i = 0;i<idList.length;i++){
+                            _idList.push(idList[i].attributes[0].value);
+                        }
+                        $.ajax({//发起请求，删除购物车商品
+                            headers: {
+                                'Authorization': 'bearer '+_token
+                            },
+                            type: "post",
+                            url:weixin_url + '/sale/shopping-cart/batch-delete',
+                            contentType:"application/json",
+                            data: JSON.stringify({idList:_idList}),
+                            success: function(data){
+                                if (data.code == 0) {
+                                    $('.each_row.flex').find("input[type='checkbox']:checked").parents('.each_row.flex').remove();
+                                    $('.price_total').html("0.00");
+                                }else{
+                                    alert(data.message);
+                                }
+                                to_login(data);
+                            }
+                        });
+                    }else{
+                        alert('请选择商品！');
                     }
                 }
             }
@@ -1943,37 +1982,10 @@ $(function(){
                 $('.compute_btn .delete_btn').css('display','none');
             }
         })
-        // 删除按钮
-        $('#cart .delete_btn').live('click',function(){
-            // var productId = $(this).attr('id');
-            var flag = $('.each_row.flex').find("input[type='checkbox']").is(':checked');
-            if(flag){
-                var idList = $("input[type='checkbox']:checked").parents('.each_row').find(".ope_num");
-                var _idList = [];
-                for(var i = 0;i<idList.length;i++){
-                    _idList.push(idList[i].attributes[0].value);
-                }
-                $.ajax({//发起请求，删除购物车商品
-                    headers: {
-                        'Authorization': 'bearer '+_token
-                    },
-                    type: "post",
-                    url:weixin_url + '/sale/shopping-cart/batch-delete',
-                    contentType:"application/json",
-                    data: JSON.stringify({idList:_idList}),
-                    success: function(data){
-                        if (data.code == 0) {
-                            $('.each_row.flex').find("input[type='checkbox']:checked").parents('.each_row.flex').remove();
-                        }else{
-                            alert(data.message);
-                        }
-                        to_login(data);
-                    }
-                });
-            }else{
-                alert('请选择商品！');
-            }
-        })
+        // // 删除按钮
+        // $('#cart .delete_btn').live('click',function(){
+          
+        // })
         // 全选
         $('.compute_btn .weui-cell.weui-check__label').live('click',function(){
             var flag = $(this).find('.weui-check').is(':checked');
@@ -5112,19 +5124,12 @@ $(function(){
                 good_detail:function(e){
                     window.location.href="../html/good-detail.html?goodId="+e;
                 },
-                // showToast:function(){
-                //     var $toast = $('#toast');
-                //     if ($toast.css('display') != 'none') return;
-                //     $toast.fadeIn(100);
-                //     setTimeout(function () {
-                //         $toast.fadeOut(100);
-                //     }, 2000);
-                // }
             }
         });
     }else if($('#good_sure').size()>0){//商品确认页面
         var _token = localStorage.getItem('access_token');
-        var that = this;
+        var total_price = localStorage.getItem('total_price');
+        var good_info = localStorage.getItem('good_info');
         var app = new Vue({
             el: '#good_sure',
             data: {
@@ -5132,10 +5137,13 @@ $(function(){
                 showpage:false,
                 has_noinfo:false,
                 user_info:[],//初始化商品数据
-                show_address:false,
+                total_price:total_price,
+                has_deefault:false,
+                good_info:good_info,//被选中商品的信息
             },
             created:function(){
-                $.ajax({//发起请求,地址接口
+                var that = this;
+                $.ajax({//发起请求
                     headers: {
                         'Authorization': 'bearer '+_token
                     },
@@ -5146,24 +5154,34 @@ $(function(){
                         if (data.code == 0) {
                             var _data = data.object;
                             if(_data.length==0){
-                                that.show_address = false;
+                                that.loading = false;
+                                that.showpage = false;
+                                that.has_noinfo = true;
                             }else{
-                                that.show_address = true;
+                                that.loading = false;
+                                that.showpage = true;
+                                that.user_info = _data;
+
+                                for(var i=0;i<_data.length;i++){
+                                    if(_data[i].beDefault=='0'){//说明有默认地址
+                                        that.has_deefault=true;
+                                        break;
+                                    }
+                                }
                             }
                         }else{
                             alert(data.message);
                         }
                         to_login(data);
                     }
-                }); 
+                });
             },
             methods:{
                 pay_sure:function(){
 
                 }
             }
-        })
-          
+        });
     }else if ($('#all_address').size()>0){//所有地址页面
         var _token = localStorage.getItem('access_token');
         function get_address(that){
@@ -5200,22 +5218,14 @@ $(function(){
                 showpage:false,
                 has_noinfo:false,
                 user_info:[],//初始化商品数据
+                delete_id:[]
             },
             created:function(){
                 var that = this;
                 get_address(that);
             },
             methods:{
-                // var flag = $(this).find("input[type='checkbox']").is(':checked');
-                // $(this).find("input[type='checkbox']").prop("checked",!flag);
-                // var all_num = $(".cart_container input[type='checkbox']").length;
-                // var ck_num = $(".cart_container input[type='checkbox']:checked").length;
-                // if (all_num == ck_num) {
-                //     $('.compute_btn .weui-check').prop("checked",true);
-                // }else{
-                //     $('.compute_btn .weui-check').prop("checked",false);
-                // }
-                set_default:function(e,event){
+                set_default:function(e){//设置默认地址
                     var _id = ""+e;
                     var that = this;
                     $.ajax({//发起请求
@@ -5241,12 +5251,366 @@ $(function(){
                             to_login(data);
                         }
                     });
+                },
+                delete_addr:function(e){
+                    // 弹窗
+                    var that = this;
+                    var $androidActionSheet = $('#quit_account');
+                    var $androidMask = $androidActionSheet.find('.weui-mask2');
+                    $androidActionSheet.css('display','block');
+                    $androidActionSheet.css('opacity','1');
+                    $androidMask.css('display','block');
+                    $androidMask.on('click',function () {
+                        $androidActionSheet.css('display','none');
+                    });
+                    that.delete_id=e;
+                },
+                cancel_delete:function(){//取消删除
+                    var $androidActionSheet = $('#quit_account');
+                    $androidActionSheet.css('display','none');
+                },
+                sure_delete:function(e){//确认删除
+                    var that = this;
+                    var delete_id ="" + that.delete_id;
+                    $.ajax({//发起请求
+                        headers: {
+                            'Authorization': 'bearer '+_token
+                        },
+                        type: 'post',
+                        url:medicine_url+'/v1.0.0/personalCenter/deleteLogisticsAddress',
+                        contentType:"application/json",
+                        data: JSON.stringify({"id":delete_id}),
+                        success: function(data){
+                            if (data.code == 0) {
+                                var $androidActionSheet = $('#quit_account');
+                                $androidActionSheet.css('display','none');
+                                get_address(that);
+                            }else{
+                                alert(data.message);
+                            }
+                            to_login(data);
+                        }
+                    });
+                },
+                edit_addr:function(e){//编辑地址
+                    localStorage.setItem("addr_info",JSON.stringify(e));
+                    window.location.href='./add-address.html?status=edit';
                 }
             }
         });
         $('.add_addr').live('click',function(){
-            window.location.href="../html/add-address.html";
-        })
+            window.location.href="../html/add-address.html?status=add";
+        });
+    }else if($('#add_address').size()>0){//编辑地址页面
+        var _token = localStorage.getItem('access_token');
+        var _url = window.location.href;
+        var _index = _url.lastIndexOf("\=");  
+        var str  = decodeURI(_url.substring(_index + 1, _url.length));
+        var addr_info =JSON.parse(localStorage.getItem('addr_info'));
+        var app = new Vue({
+            el: '#add_address',
+            data: {
+                loading:true,
+                showpage:false,
+                user_info:[],//初始化商品数据
+                aidApply:[],//传给后台的数据
+                city_info:[],//城市信息,汇总
+                city_name:[],//市级
+                area_name:[],//地区级
+                is_three:false,//标记是否三层
+                is_select_last:false,//标记是否选择最后一层
+                province:{name:"",id:""},
+                city:{name:"",id:""},
+                area:{name:"",id:""},
+                right_phone:false,//手机号码正则
+            },
+            created:function(){
+                var that = this;
+                that.loading = false;
+                that.showpage = true;
+                $.ajax({//发起请求//请求地址信息
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: 'GET',
+                    url:'https://wap.shentingkeji.com/stassistant/plugins/city/cityJson.json',
+                    contentType:"application/json",
+                    success: function(data){
+                        if (data.code == 0) {
+                            that.city_info = data.list;
+                            that.user_info = addr_info;
+                            if (addr_info.id!==null && str=='edit'){//编辑
+                                that.right_phone = true;
+                                // 先渲染省级
+                                var _province_arr = that.city_info;
+                                var province_content = "<option value='-1' id='p_select1'>请选择</option>";
+                                for(var i = 0;i<_province_arr.length;i++){
+                                    province_content+="<option value='"+_province_arr[i].dictName+"' id='"+_province_arr[i].id+"'>"+_province_arr[i].dictName+"</option>";
+                                }
+                                $('#city_province').html(province_content);
+                                
+                                // // 再修改页面内容
+                                var _city = addr_info.locationSeqcn.split('-');
+                                var _city_id = addr_info.locationSeqno.split('.');
+                                that.province.id = _city_id[0];
+                                that.city.id = _city_id[1];
+                                that.area.id = _city_id[2];
+                                that.province.name = _city[0];
+                                that.city.name = _city[1];
+                                that.area.name = _city[2];
+                                
+                                if (_city.length==2){//不显示区级
+                                    var _city_info = that.city_info;
+                                    for (var i = 0;i <_city_info.length;i++){//查找省的相同id
+                                        if (_city_info[i].id==that.province.id){
+                                            that.city_name =_city_info[i].children;
+                                            $('#city_province').val(that.province.name);
+                                            var city_arry = that.city_name;
+                                            var city_content = "<option value='-1' id='p_select2'>请选择</option>";
+                                            for(var j=0;j<city_arry.length;j++){
+                                                city_content+="<option value='"+city_arry[j].dictName+"' id='"+city_arry[j].id+"'>"+city_arry[j].dictName+"</option>";
+                                                if (city_arry[j].id==that.city.id) {//查找市的相同id
+                                                    city_content+="<option selected value='"+city_arry[j].dictName+"' id='"+city_arry[j].id+"'>"+city_arry[j].dictName+"</option>";
+                                                }
+                                                $('#city_name').html(city_content);
+                                            }
+                                        }
+                                    }
+                                }else if(_city.length==3){//显示区级,包括直辖市
+                                    var _city_info = that.city_info;
+                                    $('.area_name').removeClass('dis-no');
+                                    for (var i = 0;i <_city_info.length;i++){//查找省的相同id
+                                        if (_city_info[i].id==that.province.id){
+                                            that.city_name =_city_info[i].children;
+                                            $('#city_province').val(that.province.name);
+                                            var city_arry = that.city_name;
+                                            var city_content = "<option value='-1' id='p_select2'>请选择</option>";
+                                            for(var j=0;j<city_arry.length;j++){
+                                                
+                                                if (city_arry[j].id==that.city.id) {//查找市的相同id
+                                                    city_content+="<option selected value='"+city_arry[j].dictName+"' id='"+city_arry[j].id+"'>"+city_arry[j].dictName+"</option>";
+                                                    that.area_name =city_arry[j].children;
+                                                    var area_arry = that.area_name;
+                                                    var area_content = "<option value='-1' id='p_select3'>请选择</option>";
+                                                    for(var k=0;k<area_arry.length;k++){
+                                                        area_content+="<option value='"+area_arry[k].dictName+"' id='"+area_arry[k].id+"'>"+area_arry[k].dictName+"</option>";
+                                                        $('#area_name').html(area_content);
+                                                        if (area_arry[k].id==that.area.id) {
+                                                            area_content+="<option selected value='"+area_arry[k].dictName+"' id='"+area_arry[k].id+"'>"+area_arry[k].dictName+"</option>";
+                                                        }
+                                                    }
+                                                }else {
+                                                    city_content+="<option value='"+city_arry[j].dictName+"' id='"+city_arry[j].id+"'>"+city_arry[j].dictName+"</option>";
+                                                    
+                                                }
+                                                $('#city_name').html(city_content);
+                                            }
+                                        }
+                                    }
+                                }
+                            }else{//添加
+                                that.user_info = [];
+                                var _province_arr = that.city_info;
+                                var province_content = "<option value='-1' id='p_select1'>请选择</option>";
+                                for(var i = 0;i<_province_arr.length;i++){
+                                    province_content+="<option value='"+_province_arr[i].dictName+"' id='"+_province_arr[i].id+"'>"+_province_arr[i].dictName+"</option>";
+                                }
+                                var city_content = "<option value='-1' id='p_select2'>请选择</option>";
+                                $('#city_province').html(province_content);
+                                $('#city_name').html(city_content);
+                            }
+                        }else{
+                            alert(data.message);
+                        }
+                        to_login(data);
+                    }
+                });
+            },
+            methods:{
+                selectVal:function(e){
+                    var that = this;
+                    var myselect=document.getElementById("city_province");
+                    var _index=myselect.selectedIndex - 1;
+                    if (_index == -1) {
+                        $('.city_name').addClass('dis-no');
+                        $('.city_name select').val('请选择');
+                        $('.area_name').addClass('dis-no');
+                        $('.area_name select').val('请选择');
+                        return;
+                    }else{
+                        var city_info = that.city_info;
+                        var city_length = city_info[_index].children.length;
+                        $('.city_name').removeClass('dis-no');
+                        $('.city_name select').val('请选择');
+                        $('.area_name').addClass('dis-no');
+                        $('.area_name select').val('请选择');
+                        if (city_length == 1) {//若为直辖市或者港澳台
+                            is_urisdiction = city_info[_index].children[0].children;
+                            if (is_urisdiction !== undefined){//直辖市
+                                that.city_name=city_info[_index].children;
+                            }else{//港澳台和其他
+                                that.city_name=city_info[_index].children;
+                            }
+                        }else{//若非直辖市
+                            that.city_name=city_info[_index].children;
+                        }
+                        var _city_arr = that.city_name;
+                        var city_content = "<option value='-1' id='p_select2'>请选择</option>";
+                        for(var i = 0;i<_city_arr.length;i++){
+                            city_content+="<option value='"+_city_arr[i].dictName+"' id='"+_city_arr[i].id+"'>"+_city_arr[i].dictName+"</option>";
+                        }
+                        $('#city_name').html(city_content);
+                        that.is_three = false;
+                        that.is_select_last = false;
+                    }
+                },
+                selectVal2:function(){
+                    var that = this;
+                    var myselect=document.getElementById("city_name");
+                    var _index=myselect.selectedIndex - 1;
+                    if (_index == -1) {
+                        $('.area_name').addClass('dis-no');
+                        $('.area_name select').val('请选择');
+                        return;
+                    }else{
+                        var city_name = that.city_name;
+                        that.area_name=city_name[_index].children;
+                        var _area_arr = that.area_name;
+                        var area_content = "<option value='-1' id='p_select3'>请选择</option>";
+                        if (_area_arr!==undefined) {//有三个层级
+                            for(var i = 0;i<_area_arr.length;i++){
+                                area_content+="<option value='"+_area_arr[i].dictName+"' id='"+_area_arr[i].id+"'>"+_area_arr[i].dictName+"</option>";
+                            }
+                        }else{//有两个层级
+                            return;
+                        }
+                        $('#area_name').html(area_content);
+                        if (city_name[_index].children !== undefined) {//普通省市
+                            $('.area_name').removeClass('dis-no');
+                            that.is_three = true;
+                        }else{//直辖市和港澳台等
+                            $('.area_name').addClass('dis-no'); 
+                            that.is_three = false;                       
+                        }
+                    }
+                },
+                selectVal3:function(){
+                    var that = this;
+                    var myselect=document.getElementById("area_name");
+                    var _index=myselect.selectedIndex - 1;
+                    if (_index == -1) {
+                        return;
+                    }else{
+                        that.is_select_last = true;//选完最后一级
+                    }
+                },
+                save_addr:function(){
+                    var that = this;
+                    var _token = localStorage.getItem('access_token');
+                    var name = $('#addr_name').val();//收货人姓名
+                    var phone = $('#addr_phone').val();//联系方式
+                    var address = $('#addr_detail').val();//联系方式
+                    var city_province=document.getElementById('city_province');
+                    var index=city_province.selectedIndex ; // selectedIndex代表的是你所选中项的index
+                    var p_select = city_province.options[index].id;//省份id
+                    var city_name=document.getElementById('city_name');
+                    var index=city_name.selectedIndex ;
+                    var c_select = city_name.options[index].id;//城市id
+                    var area_name=document.getElementById('area_name');
+                    var index=area_name.selectedIndex ;
+                    if (addr_info.id!==null && str=='edit') {//编辑
+                        var area_id = that.user_info.id;
+                    }else{
+                        var area_id = null;
+                    }
+                    if(area_name.options[index]==undefined){
+                        var a_select = 'p_select3';
+                    }else{
+                        var a_select = area_name.options[index].id;//地区id
+                    }
+                    if (p_select !== 'p_select1' && c_select == 'p_select2' && a_select == 'p_select3') {//只选了一个级别
+                        $('.error_info').removeClass('dis-no');
+                        setTimeout(function(){
+                            $('.error_info').addClass('dis-no');
+                        }, 3000); 
+                    }else if(p_select !== 'p_select1' && c_select !== 'p_select2' && a_select == 'p_select3'){//只选了两个级别
+                        var is_three = that.is_three;
+                        var is_select_last = that.is_select_last;
+                        if (is_three == false) {//只有两级
+                            var _id = c_select;
+                            var apartment = _id;
+                        }else if(is_three && is_select_last == false){
+                            $('.error_info').removeClass('dis-no');
+                            setTimeout(function(){
+                                $('.error_info').addClass('dis-no');
+                            }, 3000); 
+                        } 
+                    }else if(p_select !== 'p_select1' && c_select !== 'p_select2' && a_select !== 'p_select3'){//三个级别
+                        var _id = a_select;
+                        var apartment = _id;
+                    }else{//一个未选
+                        $('.error_info').removeClass('dis-no');
+                        setTimeout(function(){
+                            $('.error_info').addClass('dis-no');
+                        }, 3000); 
+                    }
+                    if(name.length>0 && phone.length>0 && address.length>0 && apartment!==undefined && that.right_phone ==true){
+                        var apartment1 = {};
+                        apartment1.id = apartment;
+                        $.ajax({//发起请求
+                            headers: {
+                                'Authorization': 'bearer '+_token
+                            },
+                            type: 'POST',
+                            url:medicine_url+'/v1.0.0/personalCenter/saveLogisticsAddress',
+                            contentType:"application/json",
+                            data: JSON.stringify({id:area_id,name:name,phone:phone,location:apartment1,address:address,isdefault:"1"}),
+                            dataType: "json",
+                            success: function(data){
+                                if (data.code == 0) {
+                                    var $toast = $('#toast');
+                                    if (addr_info.id!==null && str=='edit') {//编辑
+                                        $('#toast .weui-toast__content').html("修改成功！");
+                                    }else{
+                                        $('#toast .weui-toast__content').html("添加成功！");
+                                    }
+                                    if ($toast.css('display') != 'none') return;
+                                    $toast.fadeIn(100);
+                                    setTimeout(function () {
+                                        $toast.fadeOut(100);
+                                        window.location.href='../html/all-address.html';
+                                    }, 2000);
+                                }else{
+                                    alert(data.message);
+                                }
+                                to_login(data);
+                            }
+                        });
+                    }else if(that.right_phone ==false){
+                        $('.error_info2').removeClass('dis-no');
+                        setTimeout(function(){
+                            $('.error_info2').addClass('dis-no');
+                        }, 3000); 
+                    }else{
+                        $('.error_info').removeClass('dis-no');
+                        setTimeout(function(){
+                            $('.error_info').addClass('dis-no');
+                        }, 3000); 
+                    }
+                },
+                test:function(){
+                    var that = this;
+                    var reg2 = /^[1][3,4,5,7,8][0-9]{9}$/;//手机号码正则
+                    var _val2 = $('#addr_phone').val();
+                    var obj2 = reg2.test(_val2);
+                    if(obj2){
+                        that.right_phone = true;
+                    }else{
+                        that.right_phone = false;
+                    }
+                }
+            }
+        });
     }
 });
 

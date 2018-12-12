@@ -75,7 +75,7 @@
                         <div class="thumb">
                             <img :src="specification.coverImg.shotPath" alt="" v-if="specification.coverImg!==null">
                         </div>
-                        <div class="good_sku flex-1 ">
+                        <div class="good_sku flex-1 " :class=[{"show_good":(index==selected)}]>
                             <p class="good_price">¥<span>{{specification.price}}</span></p>
                             <p>库存<span class="stock">{{specification.stock}}</span>件</p>
                         </div>
@@ -87,7 +87,7 @@
                             <div class="specific_size" :class=[{"selected":(index==selected)}] v-for="(specification,index) in specification" @click="select_sku(index)">{{specification.option.dictName}}</div>
                         </div>
                     </div>
-                    <div class="sku_operate flex dis-no" v-for="(specification,index) in specification" :class=[{"show_good":(index==selected)}] >
+                    <div class="sku_operate flex dis-no" v-for="(specification,index) in specification" :class=[{"show_good":(index==selected)}]>
                         <div class="flex-1">
                             <p>购买数量：</p>
                         </div>

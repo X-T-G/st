@@ -19,31 +19,44 @@
                 <img src="../images/back_gery.png" alt="">
             </span>
         </div>
-        <div class="order_info" id="good_sure" style="padding-top:60px;">
-            <div :class=[{"dis-no":(showpage==false)}]>
+        <div class="order_info" id="good_sure" style="padding-top:40px;">
+            <div>
                 <div class="my_order_info">
                     <div>
-                        <div class="info_addr" :class=[{"dis-no":(show_address==false)}]>
+                        <div class="info_addr">
                             <p class="im_info">收货地址</p>
-                            <div style="padding: 10px 15px;">
-                                <div class="flex tint" style="margin-bottom: 6px;">
-                                    <p class="flex-1">XXXXXX</p>
-                                    <p>13135119486</p>
+                            <!-- 有默认地址 -->
+                            <div style="padding: 10px 15px;" v-for="(user_info,index) in user_info"  v-if="has_deefault==true"  :class=[{"dis-no":(showpage==false)}]>
+                                <div class="flex tint" style="margin-bottom: 6px;" v-if="user_info.beDefault=='0'">
+                                    <p class="flex-1">{{user_info.name}}</p>
+                                    <p>{{user_info.phone}}</p>
                                 </div>
-                                <div class="flex">
+                                <div class="flex" v-if="user_info.beDefault=='0'">
                                     <p class="iconfont icon-dingwei"></p>
-                                    <p class="tint addr_detail">四川省成都市高新区世纪城路198号</p>
+                                    <p class="tint addr_detail">{{user_info.locationSeqcn}}-{{user_info.address}}</p>
+                                </div>
+                            </div>
+                            <!-- 没默认地址 -->
+                            <div style="padding: 10px 15px;" v-for="(user_info,index) in user_info"  v-if="has_deefault==false"  :class=[{"dis-no":(showpage==false)}]>
+                                <div class="flex tint" style="margin-bottom: 6px;" v-if="index==0">
+                                    <p class="flex-1">{{user_info.name}}</p>
+                                    <p>{{user_info.phone}}</p>
+                                </div>
+                                <div class="flex" v-if="index==0">
+                                    <p class="iconfont icon-dingwei"></p>
+                                    <p class="tint addr_detail">{{user_info.locationSeqcn}}-{{user_info.address}}</p>
                                 </div>
                             </div>
                         </div>
+                        <!-- 没有地址 添加 -->
+                        <div class="hasno_addr" :class=[{"dis-no":(has_noinfo==false)}]>
+                            <span class="iconfont icon-jia"></span>
+                            <span>添加地址</span> 
+                        </div>
                         <!-- 加载效果 -->
-                        <div class="weui-loadmore show_address" :class=[{"dis-no":(show_address==true)}]>
+                        <div class="weui-loadmore show_address" :class=[{"dis-no":(loading==false)}]>
                             <i class="weui-loading"></i>
                             <span class="weui-loadmore__tips">正在加载</span>
-                        </div>
-                        <!-- 没有地址 添加 -->
-                        <div class="hasno_addr">
-
                         </div>
                     </div>
                     <div class="medecine_detail">
@@ -71,19 +84,10 @@
                         <input class="flex-1" type="text" placeholder="单行输入">
                     </div>
                     <div class="clearfix pay_btn">
-                        <div class="total_price fl">共计<span>¥344</span></div>
+                        <div class="total_price fl">共计<span>¥{{total_price}}</span></div>
                         <button class="pay_sure fl" v-on:click="pay_sure">确认支付</button>
                     </div>
                 </div>
-            </div>
-            <!-- 加载效果 -->
-            <div class="weui-loadmore" :class=[{"dis-no":(loading==false)}]>
-                <i class="weui-loading"></i>
-                <span class="weui-loadmore__tips">正在加载</span>
-            </div>
-            <!-- 没有数据 -->
-            <div class="has_noinfo" :class=[{"dis-no":(has_noinfo==false)}]>
-                <img src="../images/bg_nodata.png" alt="">
             </div>
         </div>
     </body>

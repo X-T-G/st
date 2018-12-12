@@ -20,22 +20,51 @@
             </span>
         </div>
         <div class="add_address" id="add_address">
-            <div class="operate_contain">
-                <div class="input_contain">
-                    <input type="text" placeholder="收货人姓名">
+            <div :class=[{"dis-no":(showpage==false)}]>
+                <div class="operate_contain add">
+                    <div class="input_contain">
+                        <input type="text" id="addr_name" placeholder="收货人姓名" :value="user_info.name">
+                    </div>
+                    <div class="input_contain">
+                        <input type="text" id="addr_phone" @keyup="test" placeholder="联系电话" :value="user_info.phone">
+                    </div>
+                    <div class="input_contain area">
+                        <div class="info_row weui-cells apartment">
+                            <p class="left_info">所在地区</p>
+                            <div class="city_messege flex">
+                                <div class="city_province select_option">
+                                    <select class="weui-select" name="select9" v-on:change="selectVal" id="city_province"></select>
+                                </div>
+                                <div class="city_name  select_option">
+                                    <select class="weui-select " name="select6"  v-on:change="selectVal2" id="city_name"></select>
+                                </div>
+                                <div class="area_name dis-no select_option">
+                                    <select class="weui-select " name="select8" v-on:change="selectVal3" id="area_name"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input_contain">
+                        <input type="text" id="addr_detail" placeholder="详细地址" :value="user_info.address">
+                    </div>
                 </div>
-                <div class="input_contain">
-                    <input type="text" placeholder="联系电话">
-                </div>
-                <div class="input_contain">
-                    <input type="text" placeholder="所在地区">
-                </div>
-                <div class="input_contain">
-                    <input type="text" placeholder="详细地址">
+                <p class="error_info dis-no" style="color:#fd5749;height: 24px;line-height: 24px;text-align: center;">信息未填写完整！</p>
+                <p class="error_info2 dis-no" style="color:#fd5749;height: 24px;line-height: 24px;text-align: center;">手机号码格式错误！</p>
+                <div class="save_contain">
+                    <button class="save_addr" @click="save_addr">保存地址</button>
                 </div>
             </div>
-            <div class="save_contain">
-                <button class="save_addr">保存地址</button>
+            <div id="toast" style="opacity: 0; display: none;">
+                <div class="weui-mask_transparent"></div>
+                <div class="weui-toast">
+                    <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+                    <p class="weui-toast__content"></p>
+                </div>
+            </div>
+            <!-- 加载效果 -->
+            <div class="weui-loadmore" :class=[{"dis-no":(loading==false)}]>
+                <i class="weui-loading"></i>
+                <span class="weui-loadmore__tips">正在加载</span>
             </div>
         </div>
     </body>

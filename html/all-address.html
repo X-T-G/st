@@ -20,7 +20,7 @@
             </span>
         </div>
         <div class="all_address" id="all_address">
-            <div :class=[{"dis-no":(showpage==false)}]>
+            <div style="padding-bottom: 30px;" :class=[{"dis-no":(showpage==false)}]>
                 <div class="each_addr" v-for='user_info in user_info'>
                     <div class="add_info">
                         <div class="flex top_info">
@@ -49,10 +49,10 @@
                             </div>
                         </label>
                         <div class="fr clearfix">
-                            <div class="weui-cell__bd fl" style="text-align:right;padding: 10px 15px;">
+                            <div class="weui-cell__bd fl" style="text-align:right;padding: 10px 15px;" @click="edit_addr(user_info)">
                                 <p>编辑</p>
                             </div>
-                            <div class="weui-cell__bd fl" style="text-align:right;padding: 10px 15px;">
+                            <div class="weui-cell__bd fl" style="text-align:right;padding: 10px 15px;" @click="delete_addr(user_info.id)">
                                 <p>删除</p>
                             </div>
                         </div>
@@ -65,9 +65,25 @@
                         <p class="weui-toast__content">设置成功！</p>
                     </div>
                 </div>
-                <div class="add_contain">
-                    <button class="add_addr">添加地址</button>
+                <div class="weui-skin_android" id="quit_account" style="opacity: 0; display: none;">
+                    <div class="weui-mask2"></div>
+                    <div class="weui-actionsheet">
+                        <div class="weui-actionsheet__menu">
+                            <div class="text_info">确定删除此收货地址？</div>
+                            <div class="flex">
+                                <div class="flex-1">
+                                    <button type="button" class="quit_sure" @click="sure_delete">确认</button>
+                                </div>
+                                <div class="flex-1">
+                                    <button type="button" class="time_cancel" @click="cancel_delete">取消</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </div>
+            <div class="add_contain">
+                <button class="add_addr">添加地址</button>
             </div>
             <!-- 没有数据 -->
             <div class="has_noinfo" :class=[{"dis-no":(has_noinfo==false)}]>
