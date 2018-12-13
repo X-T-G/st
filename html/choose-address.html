@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>神庭医馆</title>
+        <link type="image/x-icon" rel="shortcut icon" href="../images/logo.png">
+        <link rel="stylesheet" href="../css/common.css">
+        <link rel="stylesheet" href="../css/weui.min.css">
+        <script src="../js/zepto.min.js"></script>
+        <script src="../js/vue.min.js"></script>
+        <script src="../js/index.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    </head>
+    <body style="background-color: #f7f4ef;">
+        <div class="header">
+            选择地址
+            <span>
+                <img src="../images/back_gery.png" alt="">
+            </span>
+        </div>
+        <div class="all_address" id="choose_address">
+            <div style="padding-bottom: 30px;" :class=[{"dis-no":(showpage==false)}]>
+                <div class="each_addr" v-for='(user_info,index) in user_info'>
+                    <div class="add_info" @click="choose_addr(index)">
+                        <div class="flex top_info">
+                            <p class="flex-1">
+                                <span class="iconfont icon-zhanghao"></span>
+                                <span>{{user_info.name}}</span>
+                            </p>
+                            <p>
+                                <span class="iconfont icon-lianxidianhua"></span>
+                                <span>{{user_info.phone}}</span>
+                            </p>
+                        </div>
+                        <div class="flex">
+                            <span class="iconfont icon-dingwei  addr_icon"></span>
+                            <span class="addr_icon">{{user_info.locationSeqcn}}-{{user_info.address}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 没有数据 -->
+            <div class="has_noinfo" :class=[{"dis-no":(has_noinfo==false)}]>
+                <img src="../images/bg_nodata.png" alt="">
+            </div>
+            <!-- 加载效果 -->
+            <div class="weui-loadmore" :class=[{"dis-no":(loading==false)}]>
+                <i class="weui-loading"></i>
+                <span class="weui-loadmore__tips">正在加载</span>
+            </div>
+        </div>
+    </body>
+</html>

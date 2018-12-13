@@ -1743,7 +1743,7 @@ $(function(){
                                         $toast.fadeIn(100);
                                         setTimeout(function () {
                                             $toast.fadeOut(100);
-                                        }, 2000);
+                                        },300);
                                     }else{
                                         alert(data.message);
                                     }
@@ -1982,10 +1982,6 @@ $(function(){
                 $('.compute_btn .delete_btn').css('display','none');
             }
         })
-        // // 删除按钮
-        // $('#cart .delete_btn').live('click',function(){
-          
-        // })
         // 全选
         $('.compute_btn .weui-cell.weui-check__label').live('click',function(){
             var flag = $(this).find('.weui-check').is(':checked');
@@ -5130,6 +5126,12 @@ $(function(){
         var _token = localStorage.getItem('access_token');
         var selected = localStorage.getItem('selected');
         var total_price = localStorage.getItem('total_price');
+        var transWay = localStorage.getItem('transWay');
+        if (transWay==null) {//从未选择过
+            var transWay = 'trans_way_express';
+        }else{
+            var transWay = transWay;
+        }
         var good_info =JSON.parse(localStorage.getItem('good_info'));
         var app = new Vue({
             el: '#good_sure',
@@ -5141,10 +5143,15 @@ $(function(){
                 total_price:total_price,
                 good_info:good_info,//被选中商品的信息
                 selected:selected,//默认选中的地址下标
+                transWay:transWay,
+                total_coin:0,//默认神庭币金额
+                need_pay:total_price,
+                need_use:[],
+                coinPay:'1',//默认不使用神庭币
             },
             created:function(){
                 var that = this;
-                $.ajax({//发起请求
+                $.ajax({//发起请求获取地址信息
                     headers: {
                         'Authorization': 'bearer '+_token
                     },
@@ -5186,19 +5193,102 @@ $(function(){
                         to_login(data);
                     }
                 });
+                $.ajax({//发起请求获取神庭币信息
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: 'GET',
+                    url:medicine_url+'/v1.0.0/personalCenter/getPersonalInfo',
+                    contentType:"application/json",
+                    success: function(data){
+                        if (data.code == 0) {
+                            that.total_coin = data.object.coin;
+                            that.need_use = data.object.coin;
+                        }else{
+                            alert(data.message);
+                        }
+                        to_login(data);
+                    }
+                });
             },
             methods:{
                 choose_addr:function(){//选择新地址
-                    window.location.href='../html/all-address.html';
+                    window.location.href='../html/choose-address.html';
                 },
-                add_addr:function(){
+                add_addr:function(){//添加地址
                     window.location.href='../html/add-address.html';
                 },
-                good_detail:function(e){
+                good_detail:function(e){//跳转商品详情
                     window.location.href="../html/good-detail.html?goodId="+e;
                 },
+                choose_send:function(e){//快递
+                    var that = this;
+                    that.transWay = 'trans_way_express';
+                    localStorage.setItem("transWay",'trans_way_express');
+                },
+                choose_self:function(){//自取
+                    var that = this;
+                    that.transWay = 'trans_way_self';
+                    localStorage.setItem("transWay",'trans_way_self');
+                },
+                use_coin:function(){//使用神庭币
+                    var total_coin = Number(this.total_coin);//总的神庭币
+                    var total_price =Number(this.total_price);//商品总价
+                    var flag = $('.weui-cell_switch').find("input[type='checkbox']").is(':checked');
+                    if (flag) {//选择使用神庭币
+                        this.coinPay = '0';
+                        this.total_coin = this.need_use;
+                        if(total_price<=total_coin){// 神庭币大于等于商品价格
+                            this.total_price = '0.00';
+                        }else{//神庭币小于商品价格
+                            this.total_price = (total_price - total_coin).toFixed(2);
+                        }
+                    }else{
+                        this.coinPay = '1';
+                        this.total_price = this.need_pay;
+                        this.total_coin = this.need_use;
+                    }
+                },
                 pay_sure:function(){
-
+                    var that = this;
+                    var _goods = that.good_info;
+                    var _index =Number(that.selected); 
+                    var productId = [];
+                    for(var i = 0;i<_goods.length;i++){
+                        productId.push(_goods[i].id);
+                    }
+                    var list = productId;//商品id
+                    var remark = $('#remark').val();//备注
+                    var transWay = that.transWay;//送货方式
+                    var logisticsAddressId = that.user_info[_index].id;//地址id
+                    var coinPay = that.coinPay;//是否使用神庭币
+                    if (transWay == 'trans_way_self') {//如果为自取，删除快递地址
+                        var logisticsAddressId = "";
+                    }
+                    var payPassword = "";
+                    $.ajax({//发起请求
+                        headers: {
+                            'Authorization': 'bearer '+_token
+                        },
+                        type: 'post',
+                        url:weixin_url+'/sale/shopping-cart/commit',
+                        contentType:"application/json",
+                        data: JSON.stringify({list:list,remark:remark,transWay:transWay,logisticsAddressId:logisticsAddressId,coinPay:coinPay}),
+                        success: function(data){
+                            var orderNum = data.order.orderNum;
+                            if (data.code == 0) {
+                                var redirect_url1=encodeURI("http://wx.shentingkeji.com/html/sale-pay.html?orderNum="+orderNum+"&payPrice="+data.order.payPrice);
+                                // 神庭医馆
+                                // var _url ='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe5516c95d26581bf&redirect_uri='+redirect_url1+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+                                // 神庭君
+                                var _url ='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6e228291e030c062&redirect_uri='+redirect_url1+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+                                window.location.href=_url;
+                            }else{
+                                alert(data.message);
+                            }
+                            to_login(data);
+                        }
+                    });
                 }
             }
         });
@@ -5650,6 +5740,146 @@ $(function(){
                 }
             }
         });
+    }else if($('#choose_address').size()>0){
+        var _token = localStorage.getItem('access_token');
+        function get_address(that){
+            $.ajax({//发起请求
+                headers: {
+                    'Authorization': 'bearer '+_token
+                },
+                type: 'post',
+                url:medicine_url+'/v1.0.0/personalCenter/getLogisticsAddresses',
+                contentType:"application/json",
+                success: function(data){
+                    if (data.code == 0) {
+                        var _data = data.object;
+                        if(_data.length==0){
+                            that.loading = false;
+                            that.showpage = false;
+                            that.has_noinfo = true;
+                        }else{
+                            that.loading = false;
+                            that.showpage = true;
+                            that.user_info = _data;
+                        }
+                    }else{
+                        alert(data.message);
+                    }
+                    to_login(data);
+                }
+            });
+        }
+        var app = new Vue({
+            el: '#choose_address',
+            data: {
+                loading:true,
+                showpage:false,
+                has_noinfo:false,
+                user_info:[],//初始化商品数据
+                delete_id:[]
+            },
+            created:function(){
+                var that = this;
+                get_address(that);
+            },
+            methods:{
+                choose_addr:function(e){//从结算页面的地址选择跳转而来
+                    var _url = document.referrer;
+                    var _index = _url.lastIndexOf("\/");  
+                    var str  = _url.substring(_index + 1, _url.length);
+                    if (str=='good-sure.html') {//判断页面
+                        localStorage.setItem("selected",e);
+                        window.location.href='../html/good-sure.html';
+                    }else{
+                        return;
+                    }
+                }
+            }
+        })
+    }else if($('#sale_pay').size()>0){
+        var _url = window.location.href
+        var code = _url.match(/=(\S*)&/)[1];
+        alert(_url);
+        alert(code);
+        // var app = new Vue({
+        //     el: '#sale_pay',
+        //     data: {
+        //         loading:true,
+        //         showpage:false,
+        //         has_noinfo:false,
+        //         user_info:[],//初始化商品数据
+        //         delete_id:[]
+        //     },
+        //     created:function(){
+        //         var that = this;
+        //     },
+        //     methods:{
+               
+        //     }
+        // })
+        // $.ajax({//发起请求
+        //     headers: {
+        //         'Authorization': 'bearer '+_token
+        //     },
+        //     type: "POST",
+        //     url:weixin_url + '/sale/pay',
+        //     contentType:"application/json",
+        //     data: JSON.stringify({"orderNum":orderNum,thirdPay:"WEIXIN_PAY",payPassword:payPassword}),
+        //     async:false,
+        //     success: function(data){
+        //         if (data.code == 0) {
+        //             var _data = JSON.parse(data.str);
+        //             var newOrderNum = orderNum;
+        //             function onBridgeReady(){
+        //                 WeixinJSBridge.invoke(
+        //                     'getBrandWCPayRequest', _data,
+        //                     function(res){
+        //                         $.ajax({//发起请求
+        //                             headers: {
+        //                                 'Authorization': 'bearer '+_token
+        //                             },
+        //                             type: "GET",
+        //                             url:weixin_url + '/sale/status/'+newOrderNum,
+        //                             contentType:"application/json",
+        //                             success: function(data){
+        //                                 to_login(data);
+        //                             }
+        //                         });
+        //                         if(res.err_msg == "get_brand_wcpay_request:ok" ){
+        //                             var $toast = $('#toast');
+        //                             if ($toast.css('display') != 'none') return;
+        //                             $toast.fadeIn(100);
+        //                             setTimeout(function () {
+        //                                 $toast.fadeOut(100);
+        //                                 window.location.href='../html/pay-success.html';
+        //                             }, 2000);
+        //                         }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
+        //                                 alert('支付取消!');
+        //                                 window.location.href='../html/waite-pay.html';
+        //                         }else if(res.err_msg == "get_brand_wcpay_request:fail"){
+        //                                 alert('支付失败!');
+        //                                 window.location.href='../html/waite-pay.html';
+        //                         }else{
+        //                                 return;
+        //                         } 
+        //                     }); 
+        //                 }
+        //                 if (typeof WeixinJSBridge == "undefined"){
+        //                     if( document.addEventListener ){
+        //                         document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+        //                     }else if (document.attachEvent){
+        //                         document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+        //                         document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+        //                     }
+        //                 }else{
+        //                     onBridgeReady();
+        //                 }
+        //             }else{
+        //                 alert(data.message);
+        //             }
+        //             to_login(data);
+        //     }
+        // });
     }
 });
 

@@ -24,15 +24,38 @@
                 <div class="my_order_info">
                     <div>
                         <div class="info_addr" style="position: relative;">
-                            <p class="im_info">收货地址</p>
-                            <div class="addr_contain" style="padding: 10px 34px 10px 15px;" v-if="index==selected" v-for="(user_info,index) in user_info"  :class=[{"dis-no":(showpage==false)}] @click="choose_addr">
-                                <div class="flex tint" style="margin-bottom: 6px;">
-                                    <p class="flex-1">{{user_info.name}}</p>
-                                    <p>{{user_info.phone}}</p>
+                            <p class="im_info">收货方式</p>
+                            <div class="flex" style="border-top:1px solid #e5e5e5;">
+                                <div class="addr_contain flex-1" style="padding: 10px 15px;" v-if="index==selected" v-for="(user_info,index) in user_info"  :class=[{"dis-no":(showpage==false)}] >
+                                    <p @click="choose_send"><span class="iconfont icon-truck"></span> 快递配送(快递到付)</p>
+                                    <div class="addr_info" :class=[{"dis-no":(transWay=='trans_way_self')}]>
+                                        <div class="flex tint" style="margin-bottom: 6px;padding: 0 15px;color:#09bb07;" @click="choose_addr">
+                                            <p class="flex-1">{{user_info.name}}</p>
+                                            <p>{{user_info.phone}}</p>
+                                        </div>
+                                        <div class="flex" style="padding:0 15px;color:#09bb07;" @click="choose_addr">
+                                            <p class="iconfont icon-dingwei"></p>
+                                            <p class="tint addr_detail" style="color:#09bb07;">{{user_info.locationSeqcn}}-{{user_info.address}}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="flex">
-                                    <p class="iconfont icon-dingwei"></p>
-                                    <p class="tint addr_detail">{{user_info.locationSeqcn}}-{{user_info.address}}</p>
+                                <div class="left_radio" @click="choose_send">
+                                    <label class="" :for="user_info.id">
+                                        <input :checked="transWay=='trans_way_express'" type="checkbox" class="good_check"  :id="user_info.id">
+                                        <i class="icon-checked iconfont"></i>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="flex" style="border-top:1px solid #e5e5e5;">
+                                <div class="addr_contain flex-1" style="padding:10px 15px;">
+                                    <p @click="choose_self"><span class="iconfont icon-dianpu"></span> 到店自提</p>
+                                    <p class="store_info" :class=[{"dis-no":(transWay=='trans_way_express')}] style="color:#09bb07;padding: 10px 15px;">医馆地址：成都市高新区世纪城路198号时尚天堂街206-1-15</p>
+                                </div>
+                                <div class="left_radio" @click="choose_self">
+                                    <label class="" :for="user_info.id">
+                                        <input :checked="transWay=='trans_way_self'" type="checkbox" class="good_check"  :id="user_info.id">
+                                        <i class="icon-checked iconfont"></i>
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -65,9 +88,26 @@
                             </div>
                         </div>
                     </div>
-                    <div class="remark flex" style="margin-bottom:50px;">
+                    <div class="weui-cell weui-cell_switch">
+                        <div class="weui-cell__bd">可用神庭币：<span style="color: rgb(255, 71, 60);">{{total_coin}}个</span></div>
+                        <div class="weui-cell__ft">
+                            <label for="switchCP" class="weui-switch-cp">
+                                <!-- 神庭币小于等于0不可点击 -->
+                                <input id="switchCP" class="weui-switch-cp__input" :disabled="total_coin<0" type="checkbox" @change="use_coin()">
+                                <div class="weui-switch-cp__box"></div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="remark flex" style="margin-bottom:50px;border-bottom: 1px solid #e5e5e5;">
                         <span>备注</span>
-                        <input class="flex-1" type="text" placeholder="单行输入">
+                        <input class="flex-1" id="remark" type="text" style="color:#939399;" placeholder="单行输入">
+                    </div>
+                    <div id="toast" style="opacity: 0; display: none;">
+                        <div class="weui-mask_transparent"></div>
+                        <div class="weui-toast">
+                            <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+                            <p class="weui-toast__content">支付成功！</p>
+                        </div>
                     </div>
                     <div class="clearfix pay_btn">
                         <div class="total_price fl">共计<span>¥{{total_price}}</span></div>
