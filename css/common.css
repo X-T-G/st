@@ -853,5 +853,38 @@ div.sku_operate.show_good{display:flex;}
 #good_sure .weui-cell_switch{border-bottom: 1px solid #e5e5e5;}
 #good_sure .good_contain{margin-bottom: 0;}
 #good_sure .pay_btn .total_price span{color: rgb(255, 71, 60);}
+#sale_pay .weui-icon-waiting{font-size: 76px;color: #F17355;text-align:center;}
+#sale_pay .pay_button{text-align:center;font-size:18px;margin-top: 10px;}
+.m_order .weui-cells:before{border-top:none;}
+
+/* 馆藏商品订单 */
+#pay_list .ordered{border-top-left-radius: 6px;border-bottom-left-radius: 6px;}
+#pay_list .bar_option div.success{border-top-left-radius: 6px;border-bottom-left-radius: 6px;}
+#pay_list .bar_option div.wait-for-pay{border-top-right-radius: 6px;border-bottom-right-radius: 6px;}
+#pay_list{padding-bottom:0;}
+#pay_list .mask_div{height: 80px;width: 100%;background-color: #fff;position: fixed;top: 40px;z-index: 999;}
+@media screen and (max-width: 768px){
+    #pay_list .top_fix{left:284px;}
+}
+@media screen and (max-width: 414px){
+    #pay_list .top_fix{left:107px;}
+}
+@media screen and (max-width: 375px){
+    #pay_list .top_fix{left:87px;}
+}
+@media screen and (max-width: 360px){
+    #pay_list .top_fix{left:80px;}
+}
+@media screen and (max-width: 320px){
+    #pay_list .top_fix{left:60px;}
+}
+
+
+
+
+
+
+
+
 
 

@@ -19,82 +19,13 @@
                 <img src="../images/back_gery.png" alt="">
             </span>
         </div>
-        <div class="payfor_order" id="sale_pay">
-            <div class="pay_order">
-                <div class="info_me">
-                    <div class="weui-cell weui-cell_access">
-                        <div class="">
-                            <p>购买处方</p>
-                        </div>
-                        <div class="weui-cell__ft" style="color:#f14731;margin-left: 4px;">¥</div>
-                    </div>
-                    <div class="weui-cell weui-cell_access">
-                        <div class="weui-cell__bd">
-                            <p>注意：付款后，概不退还</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="pay_contain" >
-                    <div class="all_choose" style="background-color:#FFF;">
-                        <p class="info">您需支付<span style="color:#f14731;margin-left: 4px;">¥</span></p>
-                        <div class="each_row flex">
-                            <div class="weui-cell__bd flex-1">
-                                <div class="thumb flex">
-                                    <span class="iconfont icon-weixinzhifu" style="color: #2CA43A;"></span>
-                                    <span class="tint">微信支付</span>
-                                </div>
-                            </div>
-                            <div class="left_radio">
-                                <label class="" for="s1">
-                                    <input type="checkbox" class="good_check"  id="s1">
-                                    <i class="icon-checked iconfont"></i>
-                                </label>
-                            </div>
-                        </div>
-                        <!-- <div class="each_row flex">
-                            <div class="weui-cell__bd flex-1">
-                                <div class="thumb flex">
-                                    <span class="iconfont icon-zhifubaozhifu" style="color:#44aed8;"></span>
-                                    <span class="tint">支付宝支付</span>
-                                </div>
-                            </div>
-                            <div class="left_radio">
-                                <label class="" for="s3">
-                                    <input type="checkbox" class="good_check"  id="s3">
-                                    <i class="icon-checked iconfont"></i>
-                                </label>
-                            </div>
-                        </div> -->
-                        <div class="each_row flex">
-                            <div class="weui-cell__bd flex-1">
-                                <div class="thumb flex">
-                                    <span class="iconfont icon-yue" style="color:#ffb236;"></span>
-                                    <span class="tint" >神庭币支付（可用神庭币<i style="font-style: normal;"></i>个）</span>
-                                    <span class="tint">神庭币余额还需微信支付<i style="font-style: normal;color:#f14731;"></i>元</span>
-                                    <span class="tint" >神庭币为0不可选择！</span>
-                                </div>
-                            </div>
-                            <div class="left_radio">
-                                <label class="" for="s4">
-                                    <input type="checkbox" class="good_check"  id="s4">
-                                    <i class="icon-checked iconfont"></i>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 支付按钮 -->
-                    <div class="surepay_contain">
-                        <button class="surepay" v-on:click="surepay">确认支付</button>
-                    </div>
-                    <!-- 上传加载效果 -->
-                    <div class="weui-loadmore upload_pic dis-no" style="display: none;bottom: 0;z-index: 100;width: 100%;line-height: 40px;height: 40px;margin-bottom: 0;background-color: #e5e5e5;">
-                        <i class="weui-loading"></i>
-                        <span class="weui-loadmore__tips">支付中，请勿重复点击！</span>
-                    </div>
-                </div>
+        <div class="payfor_order" id="sale_pay" style="padding-top:110px;">
+            <div style="text-align:center;">
+                <div class="weui-icon-waiting weui-icon_msg"></div>
+                <div class="pay_button">正在支付订单...</div>
             </div>
-             <!-- 输入交易密码-->
-             <div class="weui-skin_android pay_for_modal" id="quit_account4" style="opacity: 0; display: none;">
+            <!-- 设置交易密码-->
+            <div class="weui-skin_android pay_for_modal" id="quit_account" style="opacity: 0; display: none;">
                 <div class="weui-mask4" style="height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 1000;transition: none 0.5s ease;display: none;"></div>
                 <div class="weui-actionsheet">
                     <div class="weui-actionsheet__menu gift_menu" style="padding: 20px;text-align: center;">
@@ -113,9 +44,8 @@
                     </div>
                 </div>
             </div>
-            <div class="weui-toptips weui-toptips_warn js_tooltips" style="display: none;" id = "regist_info">密码设置成功！</div>
             <!-- 输入交易密码-->
-            <div class="weui-skin_android pay_for_modal" id="quit_account3" style="opacity: 0; display: none;">
+            <div class="weui-skin_android pay_for_modal" id="quit_account1" style="opacity: 0; display: none;">
                 <div class="weui-mask3"></div>
                 <div class="weui-actionsheet">
                     <div class="weui-actionsheet__menu gift_menu" style="padding: 20px;text-align: center;">
@@ -133,35 +63,17 @@
                     </div>
                 </div>
             </div>
+            <div class="weui-toptips weui-toptips_warn js_tooltips" style="font-size: 18px;display: none;background-color:#1AAD19;height: 40px;line-height: 40px;" id = "regist_info">密码设置成功！</div>
+            <div id="toast" style="opacity: 0; display: none;">
+                <div class="weui-mask_transparent"></div>
+                <div class="weui-toast">
+                    <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+                    <p class="weui-toast__content">支付成功！</p>
+                </div>
+            </div>
         </div>
         <div class="form_contain">
 
         </div>
-        <!-- 错误提示弹窗 -->
-        <div class="weui-skin_android" id="quit_account" style="opacity: 0; display: none;">
-            <div class="weui-mask2" style="height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 1000;transition: none 0.5s ease;display: none;"></div>
-            <div class="weui-actionsheet">
-                <div class="weui-actionsheet__menu" style="text-align: center;padding: 20px;">
-                    <div class="text_info"></div>
-                    <div class="flex" style="margin-top:10px;">
-                        <div class="flex-1">
-                            <button type="button" style="border: none;color: #f17355;margin: 10px auto 0;background-color: #fff;" class="quit_sure">确认</button>
-                        </div>
-                        <div class="flex-1">
-                            <button type="button" style="border: none;color: #f17355;margin: 10px auto 0;background-color: #fff;" class="time_cancel">取消</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- 错误提示弹窗2 -->
-        <div class="weui-skin_android" id="quit_account2" style="opacity: 0; display: none;">
-        <div class="weui-mask2" style="height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 1000;transition: none 0.5s ease;display: none;"></div>
-        <div class="weui-actionsheet">
-            <div class="weui-actionsheet__menu" style="text-align: center;padding: 20px;">
-                <div class="text_info"></div>
-            </div>
-        </div>
-    </div>
     </body>
 </html>

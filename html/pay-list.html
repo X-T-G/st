@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>神庭医馆</title>
+        <link type="image/x-icon" rel="shortcut icon" href="../images/logo.png">
+        <link rel="stylesheet" href="../css/common.css">
+        <link rel="stylesheet" href="../css/weui.min.css">
+        <script src="../js/zepto.min.js"></script>
+        <script src="../js/vue.min.js"></script>
+        <script src="../js/index.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    </head>
+    <body>
+        <div class="header">
+            商品订单
+            <span>
+                <img src="../images/back_gery.png" alt="">
+            </span>
+        </div>
+        <div class="m_order" id="pay_list" style="padding-top:60px;">
+            <div style="position:fixed;z-index:1000;" class="top_fix">
+                <div class="bar_option flex">
+                    <div class="flex-1 success" :class=[{"active":(order_status=='success')}] v-on:click="change_status">完成</div>
+                    <div class="flex-1 wait-for-pay" :class=[{"active":(order_status=='wait-for-pay')}] v-on:click="change_status">待支付</div>
+                </div>
+            </div>
+            <div class="mask_div"></div>
+            <div class="my_order" :class=[{"dis-no":(show_page==false)}] style="margin-top:10px;">
+                <div style="margin-top: 50px;">
+                    <div class="weui-cells" v-for="order in orders">
+                        <div class="weui-cell" >
+                            <div class="weui-cell__hd"><img src="../images/bg_medicinal.png"></div>
+                            <div class="weui-cell__bd">
+                                <p class="create"><span>{{order.createtime.split(" ")[0]}}</span>处方药材订单</p>
+                                <p class="payprice">总价：¥<span>{{order.payPrice.toFixed(2)}}</span></p>
+                                <button v-if="order_status=='wait-for-pay'" class="to_pay" v-on:click="to_pay(order)">去支付</button>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <div class="fr">
+                                <span class="or_status" v-if="order_status=='wait-for-pay'">待支付</span>
+                                <span class="or_status" v-if="order_status=='success'">完成</span>
+                                <span class="updata_time">{{order.updatetime.split(" ")[0]}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 加载效果 -->
+                    <div class="weui-loadmore no_all_good">
+                        <i class="weui-loading"></i>
+                        <span class="weui-loadmore__tips">正在加载</span>
+                    </div>
+                    <!-- 无商品 -->
+                    <p class="tint no_good dis-no" style="height:40px;line-height:40px;text-align:center;color:#939399;">没有更多商品啦~</p>
+                </div>
+            </div>
+            <!-- 没有数据 -->
+            <div class="has_noinfo" :class=[{"dis-no":(has_noinfo==false)}]>
+                <img src="../images/bg_nodata.png" alt="">
+            </div>
+            <!-- 加载效果 -->
+            <div class="weui-loadmor" :class=[{"dis-no":(loading==false)}]>
+                <i class="weui-loading"></i>
+                <span class="weui-loadmore__tips">正在加载</span>
+            </div>
+        </div>
+    </body>
+</html>

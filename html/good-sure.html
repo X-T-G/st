@@ -76,7 +76,7 @@
                     <!-- 商品展示模块-->
                     <div class="goods_container other_info">
                     <div class="flex good_contain" v-for="good_info in good_info" @click="good_detail(good_info.product.templateProduct.id)">
-                        <img class="" :src="good_info.product.templateProduct.coverImg.shotPath" alt="" style="width:100px;height:100px;">
+                        <img class="" :src="good_info.product.coverImg" alt="" style="width:100px;height:100px;">
                         <div class="flex-1" style="background-color: #fff;padding-left:10px;padding-top: 50px;">
                             <p class="good_info">{{good_info.product.templateProduct.name}}</p>
                             <div class="flex next_info">
