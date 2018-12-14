@@ -5407,17 +5407,6 @@ $(function(){
                     localStorage.setItem("addr_info",JSON.stringify(e));
                     window.location.href='./add-address.html?status=edit';
                 },
-                choose_addr:function(e){//从结算页面的地址选择跳转而来
-                    var _url = document.referrer;
-                    var _index = _url.lastIndexOf("\/");  
-                    var str  = _url.substring(_index + 1, _url.length);
-                    if (str=='good-sure.html') {//判断页面
-                        localStorage.setItem("selected",e);
-                        window.location.href='../html/good-sure.html';
-                    }else{
-                        return;
-                    }
-                }
             }
         });
         $('.add_addr').live('click',function(){
@@ -5700,15 +5689,7 @@ $(function(){
                                     $toast.fadeIn(100);
                                     setTimeout(function () {
                                         $toast.fadeOut(100);
-                                        var _url = document.referrer;
-                                        var _index = _url.lastIndexOf("\/");  
-                                        var str  = _url.substring(_index + 1, _url.length);
-                                        if(str=='good-sure.html'){
-                                            localStorage.setItem("selected",0);
-                                            window.location.href='../html/good-sure.html';
-                                        }else{
-                                            window.location.href='../html/all-address.html';
-                                        }
+                                        window.location.href='../html/all-address.html';
                                     }, 2000);
                                 }else{
                                     alert(data.message);
