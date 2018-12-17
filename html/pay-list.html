@@ -5,8 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>神庭医馆</title>
         <link type="image/x-icon" rel="shortcut icon" href="../images/logo.png">
-        <link rel="stylesheet" href="../css/common.css">
         <link rel="stylesheet" href="../css/weui.min.css">
+        <link rel="stylesheet" href="../css/common.css">
         <script src="../js/zepto.min.js"></script>
         <script src="../js/vue.min.js"></script>
         <script src="../js/index.js"></script>
@@ -29,22 +29,18 @@
             <div class="mask_div"></div>
             <div class="my_order" :class=[{"dis-no":(show_page==false)}] style="margin-top:10px;">
                 <div style="margin-top: 50px;">
-                    <div class="weui-cells" v-for="order in orders">
-                        <div class="weui-cell" >
-                            <div class="weui-cell__hd"><img src="../images/bg_medicinal.png"></div>
-                            <div class="weui-cell__bd">
-                                <p class="create"><span>{{order.createtime.split(" ")[0]}}</span>处方药材订单</p>
-                                <p class="payprice">总价：¥<span>{{order.payPrice.toFixed(2)}}</span></p>
-                                <button v-if="order_status=='wait-for-pay'" class="to_pay" v-on:click="to_pay(order)">去支付</button>
+                    <div class="weui-cells clearfix" v-for="order in orders">
+                        <div class="weui-cell" v-for="each_good in order.saleOrderProductList">
+                            <div class="weui-cell__hd" @click="to_sale(order_status,order.saleOrderProductList,order.totalPayPrice)">
+                                <img :src="each_good.productSnapshot.coverImg">
+                            </div>
+                            <div class="weui-cell__bd" @click="to_sale(order_status,order.saleOrderProductList,order.totalPayPrice)">
+                                <p class="create">{{each_good.templateProductSnapshot.name}}</p>
+                                <p class="payprice">单价：¥<span>{{each_good.productSnapshot.price.toFixed(2)}} x {{each_good.number}}</span></p>
                             </div>
                         </div>
-                        <div class="clearfix">
-                            <div class="fr">
-                                <span class="or_status" v-if="order_status=='wait-for-pay'">待支付</span>
-                                <span class="or_status" v-if="order_status=='success'">完成</span>
-                                <span class="updata_time">{{order.updatetime.split(" ")[0]}}</span>
-                            </div>
-                        </div>
+                        <p class="payprice total_price" @click="to_sale(order_status,order.saleOrderProductList,order.totalPayPrice)">共{{order.saleOrderProductList.length}}件商品，合计：¥<span style="display:inline-block;font-size:16px;">{{order.payPrice.toFixed(2)}}</span></p>
+                        <button v-if="order_status=='wait-for-pay'" class="to_pay" v-on:click="to_pay(order)">去支付</button>
                     </div>
                     <!-- 加载效果 -->
                     <div class="weui-loadmore no_all_good">

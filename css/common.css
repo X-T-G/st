@@ -856,6 +856,25 @@ div.sku_operate.show_good{display:flex;}
 #sale_pay .weui-icon-waiting{font-size: 76px;color: #F17355;text-align:center;}
 #sale_pay .pay_button{text-align:center;font-size:18px;margin-top: 10px;}
 .m_order .weui-cells:before{border-top:none;}
+#good_sure .weui-mask{z-index: 20001;}
+#good_sure .weui-actionsheet{z-index:20002;}
+#good_sure .weui-skin_android .weui-actionsheet__menu{padding: 20px;text-align: center;background-color: #fcfcfd;border-radius: 2px;box-shadow: 0 6px 30px 0 rgba(0,0,0,.1);}
+#good_sure .weui-actionsheet__menu .text_info{font-size: 16px;margin: 10px 0 0;}
+#good_sure .weui-actionsheet__menu button {width: 60px;height: 28px;background-color: #fff;outline: none;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 4px;}
+#good_sure .weui-actionsheet__menu input {font-size: 14px;height: 30px;line-height: 30px;padding-left: 6px;margin-bottom: 10px;-webkit-appearance: none;border: 1px solid #e5e5e5;outline: none;box-shadow: none;font-size: 16px;margin: 10px 0 0;}
+#good_sure #quit_account2 .weui-mask2,#good_sure #quit_account3 .weui-mask3{height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index:20001;transition: none 0.5s ease;display: none;}
+#good_sure #quit_account2 .weui-skin_android .weui-actionsheet,#good_sure #quit_account3 .weui-skin_android .weui-actionsheet{z-index:20002;}
+#good_sure .look_for_pass .input_row img {margin-top: 8px;margin-right: 0px;width: 24px;height: 25px;}
+#good_sure .look_for_pass .input_row .flex-1 input.pass_code {width: 100px;}
+#good_sure .look_for_pass .input_row .flex-1 .get_code_btn.hasinput {background-color: #F17355;color: #fff;width: 93px;}
+#good_sure #quit_account3 .weui-actionsheet__menu input {font-size: 14px;height: 30px;line-height: 30px;padding-left: 6px;margin-bottom: 10px;-webkit-appearance: none;border: none;text-align: center;border-bottom: 1px solid #e5e5e5;outline: none;box-shadow: none;}
+#good_sure .look_for_pass .weui-actionsheet__menu .btn_contain {margin: 20px 0;}
+#good_sure  .weui-actionsheet__menu.gift_menu input.user_pass {width: 70px;margin-top: 0;}
+#good_sure .weui-actionsheet__menu input {font-size: 14px;height: 30px;line-height: 30px;padding-left: 6px;margin-bottom: 10px;-webkit-appearance: none;border: none;text-align: center;border-bottom: 1px solid #e5e5e5;outline: none;box-shadow: none;}
+
+
+
+
 
 /* 馆藏商品订单 */
 #pay_list .ordered{border-top-left-radius: 6px;border-bottom-left-radius: 6px;}
@@ -878,13 +897,9 @@ div.sku_operate.show_good{display:flex;}
 @media screen and (max-width: 320px){
     #pay_list .top_fix{left:60px;}
 }
-
-
-
-
-
-
-
+.swiper-pagination-bullet-active{background:#f17355;}
+#pay_list  button.to_pay {float: right;width: 50px;height: 25px;border-radius: 4px;clear:right;margin-bottom: 15px;border: none;background-color: #F17355;color: #fff;margin-right: 20px;}
+#pay_list .weui-cells .total_price{float: right;margin-bottom: 10px;margin-right: 20px;color: #686b6d;}
 
 
 
