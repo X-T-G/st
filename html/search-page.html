@@ -23,7 +23,7 @@
                     </div>
                     <!-- 商品展示模块-->
                     <div class="goods_container" :class=[{"dis-no":(showpage==false)}]>
-                        <div class="flex good_contain" v-for="good_info in good_info">
+                        <div class="flex good_contain" v-for="good_info in good_info" @click="good_detail(good_info.id)">
                             <img class="" :src="good_info.coverImg.shotPath" alt="" style="width:100px;height:100px;">
                             <div class="flex-1" style="background-color: #fff;padding-left:10px;">
                                 <p class="good_info">{{good_info.name}}</p>
@@ -32,15 +32,7 @@
                                         <span>¥</span>
                                         <span>{{good_info.price}}</span>
                                     </p>
-                                    <span class="iconfont icon-gouwuche showToast"></span>
                                 </div>
-                            </div>
-                        </div>
-                        <div id="toast" style="opacity: 0; display: none;">
-                            <div class="weui-mask_transparent"></div>
-                            <div class="weui-toast">
-                                <i class="weui-icon-success-no-circle weui-icon_toast"></i>
-                                <p class="weui-toast__content">已加入购物车</p>
                             </div>
                         </div>
                         <!-- 加载效果 -->

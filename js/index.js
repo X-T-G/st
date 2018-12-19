@@ -1610,14 +1610,6 @@ $(function(){
         $('.return_ori').live('click',function(){
             $('.store_index').removeClass('dis-no');
             $('.serach_content').addClass('dis-no');
-            // var mySwiper = new Swiper('.swiper-container',{
-            //     loop: false,
-            //     autoplay: 3000,
-            //     pagination : '.pagination',
-            //     paginationClickable :true,
-            //     freeMode : false,
-            //     touchRatio : 0.5,
-            //  });
         })
     }else if($('#good_detail').size()>0){//商品详情页
         var _url = window.location.href;
@@ -1692,14 +1684,6 @@ $(function(){
                         that.showpage = true;
                         if (data.code == 0) {
                             that.specification = data.list;
-                            // new Swiper('.swiper-container',{
-                            //     loop: false,
-                            //     autoplay: 3000,
-                            //     pagination : '.pagination',
-                            //     paginationClickable :true,
-                            //     freeMode : false,
-                            //     touchRatio : 0.5,
-                            // });
                         }else{
                             alert(data.message);
                         }
@@ -1732,7 +1716,7 @@ $(function(){
                     }
                     this.ope_type = "to_buy";
                 },
-                ope_sure:function(){//操作最后确认
+                ope_sure:function(e,user_info){//操作最后确认
                     var that = this;
                     if (that.ope_type == "add_cart") {//如果是加入购物车
                         var _index = that.selected;
@@ -1767,7 +1751,12 @@ $(function(){
                         }
                         
                     }else{//如果是直接购买
-
+                        var _index = that.selected;
+                        var total_price =Number($('.show_good .good_price span').html())*Number($('.show_good .ope_num').html());
+                        localStorage.setItem("good_info",JSON.stringify(e[_index]));
+                        localStorage.setItem("total_price",total_price);
+                        localStorage.setItem("good_name",user_info.name);
+                        window.location.href='./good-sure.html?num='+Number($('.show_good .ope_num').html()); 
                     }
                 },
                 select_sku:function(e){//选择sku
@@ -4948,6 +4937,7 @@ $(function(){
                                 $('.no_good').addClass('dis-no');
                                 that.loading = false;
                                 that.showpage = true;
+                                that.has_noinfo = false;
                                 that.total_page = data.page.totalPages;
                                 var origin_data = that.good_info;
                                 var _content =data.page.content;
@@ -4998,6 +4988,7 @@ $(function(){
             methods:{
                 search_btn:function(){//点击‘搜索按钮’
                     var that = this;
+                    that.good_info = [];
                     var _key = $('.search_input').val();
                     var search_arr=localStorage.getItem('search_arr');
                     var search_arr = (localStorage.getItem('search_arr')).split(',');
@@ -5028,6 +5019,7 @@ $(function(){
                         var name = _key;
                         get_search(that,page,name);
                     }else{
+                        that.key_word = "";
                         return;
                     }
                 },
@@ -5047,15 +5039,10 @@ $(function(){
                         get_search(that,page,name);
                     }                   
                 },
+                good_detail:function(e){
+                    window.location.href="../html/good-detail.html?goodId="+e;
+                },
             }
-        });
-        var $toast = $('#toast');
-        $('.showToast').on('click', function(){
-            if ($toast.css('display') != 'none') return;
-            $toast.fadeIn(100);
-            setTimeout(function () {
-                $toast.fadeOut(100);
-            }, 2000);
         });
     }else if ($('#directory').size()>0){//商品分类列表
         // 请求数据方法可公用
@@ -5146,8 +5133,13 @@ $(function(){
     }else if($('#good_sure').size()>0){//商品确认页面
         var _token = localStorage.getItem('access_token');
         var selected = localStorage.getItem('selected');
-        var total_price = localStorage.getItem('total_price');
+        var total_price = (Number(localStorage.getItem('total_price'))).toFixed(2);
+        var good_name = localStorage.getItem('good_name');
         var transWay = localStorage.getItem('transWay');
+        var _url = window.location.href;
+        var _index = _url.lastIndexOf("\=");  
+        var str  = _url.substring(_index + 1, _url.length);
+        var good_num = str;
         if (transWay==null) {//从未选择过
             var transWay = 'trans_way_express';
         }else{
@@ -5172,6 +5164,8 @@ $(function(){
                 use_coin:false,//默认下个页面不起调神庭币密码支付
                 new_info:good_info,
                 coinpay_num:[],//余额支付的订单号
+                good_name:good_name,
+                good_num:good_num
             },
             created:function(){
                 var that = this;
@@ -5285,10 +5279,6 @@ $(function(){
                         var _goods = that.good_info;
                         var _index =Number(that.selected); 
                         var productId = [];
-                        for(var i = 0;i<_goods.length;i++){
-                            productId.push(_goods[i].id);
-                        }
-                        var list = productId;//商品id
                         var remark = $('#remark').val();//备注
                         var transWay = that.transWay;//送货方式
                         var logisticsAddressId = that.user_info[_index].id;//地址id
@@ -5296,32 +5286,64 @@ $(function(){
                         if (transWay == 'trans_way_self') {//如果为自取，删除快递地址
                             var logisticsAddressId = "";
                         }
-                        var payPassword = "";
-                        $.ajax({//发起请求
-                            headers: {
-                                'Authorization': 'bearer '+_token
-                            },
-                            type: 'post',
-                            url:weixin_url+'/sale/shopping-cart/commit',
-                            contentType:"application/json",
-                            data: JSON.stringify({list:list,remark:remark,transWay:transWay,logisticsAddressId:logisticsAddressId,coinPay:coinPay}),
-                            success: function(data){
-                                if (data.code == 0) {
-                                    var orderNum = data.order.orderNum;
-                                    var payPrice = data.order.payPrice;
-                                    localStorage.setItem("orderNum",orderNum);
-                                    var redirect_url1=encodeURI("http://wx.shentingkeji.com/html/sale-pay.html");
-                                    // 神庭医馆
-                                    // var _url ='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe5516c95d26581bf&redirect_uri='+redirect_url1+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
-                                    // 神庭君
-                                    var _url ='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6e228291e030c062&redirect_uri='+redirect_url1+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
-                                    window.location.href=_url;
-                                }else{
-                                    alert(data.message);
+                        if(_goods.option!==undefined){//从详情页直接支付
+                            var productId = _goods.id;
+                            var num = that.good_num;
+                            $.ajax({//发起请求
+                                headers: {
+                                    'Authorization': 'bearer '+_token
+                                },
+                                type: 'post',
+                                url:weixin_url+'/sale/product/commit',
+                                contentType:"application/json",
+                                data: JSON.stringify({productId:productId,remark:remark,transWay:transWay,logisticsAddressId:logisticsAddressId,coinPay:coinPay,num:num}),
+                                success: function(data){
+                                    if (data.code == 0) {
+                                        var orderNum = data.order.orderNum;
+                                        localStorage.setItem("orderNum",orderNum);
+                                        var redirect_url1=encodeURI("http://wx.shentingkeji.com/html/sale-pay.html");
+                                        // 神庭医馆
+                                        // var _url ='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe5516c95d26581bf&redirect_uri='+redirect_url1+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+                                        // 神庭君
+                                        var _url ='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6e228291e030c062&redirect_uri='+redirect_url1+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+                                        window.location.href=_url;
+                                    }else{
+                                        alert(data.message);
+                                    }
+                                    to_login(data);
                                 }
-                                to_login(data);
+                            });
+                        }else{
+                            for(var i = 0;i<_goods.length;i++){
+                                productId.push(_goods[i].id);
                             }
-                        });
+                            var list = productId;//商品id
+                            $.ajax({//发起请求
+                                headers: {
+                                    'Authorization': 'bearer '+_token
+                                },
+                                type: 'post',
+                                url:weixin_url+'/sale/shopping-cart/commit',
+                                contentType:"application/json",
+                                data: JSON.stringify({list:list,remark:remark,transWay:transWay,logisticsAddressId:logisticsAddressId,coinPay:coinPay}),
+                                success: function(data){
+                                    if (data.code == 0) {
+                                        var orderNum = data.order.orderNum;
+                                        localStorage.setItem("orderNum",orderNum);
+                                        var redirect_url1=encodeURI("http://wx.shentingkeji.com/html/sale-pay.html");
+                                        // 神庭医馆
+                                        // var _url ='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe5516c95d26581bf&redirect_uri='+redirect_url1+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+                                        // 神庭君
+                                        var _url ='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6e228291e030c062&redirect_uri='+redirect_url1+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+                                        window.location.href=_url;
+                                    }else{
+                                        alert(data.message);
+                                    }
+                                    to_login(data);
+                                }
+                            });
+                        }
+                     
                     }else{//只用神庭币支付
                         var _token = localStorage.getItem('access_token');
                         var that = this;
@@ -5338,10 +5360,6 @@ $(function(){
                                         var _goods = that.good_info;
                                         var _index =Number(that.selected); 
                                         var productId = [];
-                                        for(var i = 0;i<_goods.length;i++){
-                                            productId.push(_goods[i].id);
-                                        }
-                                        var list = productId;//商品id
                                         var remark = $('#remark').val();//备注
                                         var transWay = that.transWay;//送货方式
                                         var logisticsAddressId = that.user_info[_index].id;//地址id
@@ -5349,28 +5367,59 @@ $(function(){
                                         if (transWay == 'trans_way_self') {//如果为自取，删除快递地址
                                             var logisticsAddressId = "";
                                         }
-                                        $.ajax({//发起请求
-                                            headers: {
-                                                'Authorization': 'bearer '+_token
-                                            },
-                                            type: 'post',
-                                            url:weixin_url+'/sale/shopping-cart/commit',
-                                            contentType:"application/json",
-                                            data: JSON.stringify({list:list,remark:remark,transWay:transWay,logisticsAddressId:logisticsAddressId,coinPay:coinPay}),
-                                            success: function(data){
-                                                if (data.code == 0) {
-                                                    that.coinpay_num = data.order.orderNum;
-                                                    var $androidActionSheet = $('#quit_account2');
-                                                    var $androidMask = $androidActionSheet.find('.weui-mask2');
-                                                    $androidActionSheet.fadeIn(200);
-                                                    $androidMask.css('display','block');
-                                                    $androidMask.fadeIn(200);
-                                                }else{
-                                                    alert(data.message);
+                                        if(_goods.option!==undefined){//从详情页直接支付
+                                            var productId = _goods.id;
+                                            var num = that.good_num;
+                                            $.ajax({//发起请求
+                                                headers: {
+                                                    'Authorization': 'bearer '+_token
+                                                },
+                                                type: 'post',
+                                                url:weixin_url+'/sale/product/commit',
+                                                contentType:"application/json",
+                                                data: JSON.stringify({productId:productId,remark:remark,transWay:transWay,logisticsAddressId:logisticsAddressId,coinPay:coinPay,num:num}),
+                                                success: function(data){
+                                                    if (data.code == 0) {
+                                                        that.coinpay_num = data.order.orderNum;
+                                                        var $androidActionSheet = $('#quit_account2');
+                                                        var $androidMask = $androidActionSheet.find('.weui-mask2');
+                                                        $androidActionSheet.fadeIn(200);
+                                                        $androidMask.css('display','block');
+                                                        $androidMask.fadeIn(200);
+                                                    }else{
+                                                        alert(data.message);
+                                                    }
+                                                    to_login(data);
                                                 }
-                                                to_login(data);
+                                            });
+                                        }else{
+                                            for(var i = 0;i<_goods.length;i++){
+                                                productId.push(_goods[i].id);
                                             }
-                                        });
+                                            var list = productId;//商品id
+                                            $.ajax({//发起请求
+                                                headers: {
+                                                    'Authorization': 'bearer '+_token
+                                                },
+                                                type: 'post',
+                                                url:weixin_url+'/sale/shopping-cart/commit',
+                                                contentType:"application/json",
+                                                data: JSON.stringify({list:list,remark:remark,transWay:transWay,logisticsAddressId:logisticsAddressId,coinPay:coinPay}),
+                                                success: function(data){
+                                                    if (data.code == 0) {
+                                                        that.coinpay_num = data.order.orderNum;
+                                                        var $androidActionSheet = $('#quit_account2');
+                                                        var $androidMask = $androidActionSheet.find('.weui-mask2');
+                                                        $androidActionSheet.fadeIn(200);
+                                                        $androidMask.css('display','block');
+                                                        $androidMask.fadeIn(200);
+                                                    }else{
+                                                        alert(data.message);
+                                                    }
+                                                    to_login(data);
+                                                }
+                                            });
+                                        }
                                     }else{//若未设置支付密码
                                         // 弹窗
                                         var $androidActionSheet = $('#quit_account2');

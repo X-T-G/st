@@ -75,7 +75,7 @@
                     </div>
                     <!-- 商品展示模块-->
                     <div class="goods_container other_info">
-                        <div class="flex good_contain" v-for="good_info in good_info" @click="good_detail(good_info.product.templateProduct.id)">
+                        <div class="flex good_contain" v-for="good_info in good_info" @click="good_detail(good_info.product.templateProduct.id)" v-if="good_info.product!==undefined">
                             <img class="" :src="good_info.product.coverImg" alt="" style="width:100px;height:100px;">
                             <div class="flex-1" style="background-color: #fff;padding-left:10px;padding-top: 50px;">
                                 <p class="good_info">{{good_info.product.templateProduct.name}}</p>
@@ -85,6 +85,19 @@
                                         <span>{{good_info.joinPrice}}</span>
                                     </p>
                                     <p>x {{good_info.number}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex good_contain" @click="good_detail(good_info.product.templateProduct.id)" v-if="good_info.option!==undefined">
+                            <img class="" :src="good_info.coverImg" alt="" style="width:100px;height:100px;">
+                            <div class="flex-1" style="background-color: #fff;padding-left:10px;padding-top: 50px;">
+                                <p class="good_info">{{good_name}}</p>
+                                <div class="flex next_info">
+                                    <p class="good_price flex-1" style="text-align:left;">
+                                        <span>¥</span>
+                                        <span>{{good_info.price}}</span>
+                                    </p>
+                                    <p>x {{good_num}}</p>
                                 </div>
                             </div>
                         </div>
