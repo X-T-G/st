@@ -4,14 +4,14 @@ $(function(){
     // var assistant_url = "http://192.168.0.155:8036/stassistant";// 测试预约
     // var weixin_url = "http://192.168.0.155:8046/stweixin";// 测试微信
     //线上  
-    // var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
-    // var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
-    // var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
+    var medicine_url = "http://www.shentingkeji.com/stmedicine";//个人信息
+    var assistant_url = "http://www.shentingkeji.com/stassistant";//预约
+    var weixin_url = "http://www.shentingkeji.com/stweixin";//微信
     
     // 测试 tao
-    var medicine_url = "http://192.168.0.2:8006/stmedicine";// 测试个人信息
-    var assistant_url = "http://192.168.0.2:8036/stassistant";// 测试预约
-    var weixin_url = "http://192.168.0.2:8046/stweixin";// 测试微信
+    // var medicine_url = "http://192.168.0.2:8006/stmedicine";// 测试个人信息
+    // var assistant_url = "http://192.168.0.2:8036/stassistant";// 测试预约
+    // var weixin_url = "http://192.168.0.2:8046/stweixin";// 测试微信
     // 公共方法401跳转
     function to_login(data){
         if (data !== undefined && data.code !== undefined){
@@ -27,6 +27,7 @@ $(function(){
     // 公共方法：分页
 
     if($('.lead').size()>0){//导航页面
+        alert(888);
         $('.lead_button').on('click',function(){
             wx.openLocation({
                 latitude: 30.5547, // 纬度，浮点数，范围为90 ~ -90
@@ -37,7 +38,7 @@ $(function(){
                 // infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
             });
         });
-    }else if($('.login').size()>0){  //如果是登录页面
+    }else if($('#login').size()>0){  //如果是登录页面
         function comm(){//相同代码，公用
             var name = $('.name').val();
             var password = $('.password').val();
@@ -85,7 +86,7 @@ $(function(){
                 $androidDialog2.fadeOut(200);
             });
        });
-    }else if($('.m_regist').size()>0){  //如果是注册页面
+    }else if($('#m_regist').size()>0){  //如果是注册页面
         var set_time;
         // 头部菜单切换
         $('.bar_option').on('click','.flex-1',function(){
@@ -313,7 +314,7 @@ $(function(){
                 }
             // }
         });
-    }else if($('.person').size()>0){//个人中心
+    }else if($('#app').size()>0){//个人中心
         var _token = localStorage.getItem('access_token');
         
         if(_token == undefined){//若没有token,则需要先登录
@@ -429,22 +430,10 @@ $(function(){
         });
     }else if($('#my_order').size()>0){//订单页面
         var _token = localStorage.getItem('access_token');
-        var page = 0;//默认第一页
-        var order_status = 'all';
-        var app = new Vue({
-            el: '#my_order',
-            data: {
-                orders:[],
-                page:[],
-                status:'all_order',
-                current:1,//当前页面
-                has_noinfo:false,//没有数据
-                loading:true,//加载
-                show_page:false,//是否显示页面
-                not_pay:false,//默认已支付
-            },
-            created:function(){
-                var that = this;
+        function get_order(that,page){
+            var total_page = that.total_page;
+            var order_status = that.status;
+            if (page < total_page) {//未加载到最后一页
                 $.ajax({
                     headers: {
                         'Authorization': 'bearer '+_token
@@ -457,14 +446,20 @@ $(function(){
                     success: function(data){
                         if(data.code == 0){//请求数据正常
                             var Data_length =  data.page.content.length;
+                            that.total_page = data.page.totalPage;
                             if (Data_length == 0) {
                                 that.show_page = false;
                                 that.has_noinfo = true;
                                 that.loading = false;
                                 return;
                             }else{//请求到数据
-                                that.orders = data.page.content;//改变页面内容
-                                that.page = data.page;
+                                var origin_data = that.all_good;
+                                var _content =data.page.content;
+                                for(var i=0;i<_content.length;i++){
+                                    origin_data.push(_content[i]);
+                                }
+                                that.orders = origin_data;//改变页面内容
+                                that.page = page;
                                 that.show_page = true;
                                 that.has_noinfo = false;
                                 that.loading = false;
@@ -472,11 +467,98 @@ $(function(){
                         }   
                         to_login(data);
                     }
-                }); 
+                });
+            }else{
+                $('.no_all_good').addClass('dis-no');
+                $('.no_good').removeClass('dis-no');
+            }
+        }
+        function get_notpay(that,page){
+            var total_page = that.total_page;
+            if (page < total_page) {//未加载到最后一页
+                $.ajax({
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: "GET",
+                    url: weixin_url + '/order/prescription/wait-for-pay?page='+page,
+                    contentType:"application/json",
+                    dataType: "json",
+                    success: function(data){
+                        if(data.code == 0){//请求数据正常
+                            var Data_length =  data.page.content.length;
+                            if (Data_length == 0) {
+                                that.show_page = false;
+                                that.has_noinfo = true;
+                                that.loading = false;
+                                return;
+                            }else{//请求到数据
+                                var origin_data = that.not_pay_info;
+                                var _content =data.page.content;
+                                for(var i=0;i<_content.length;i++){
+                                    origin_data.push(_content[i]);
+                                }
+                                that.orders = origin_data;//改变页面内容
+                                that.page = page;
+                                that.show_page = true;
+                                that.has_noinfo = false;
+                                that.loading = false;
+                            }
+                        }   
+                        to_login(data);
+                    }
+                });
+            }else{
+                $('.no_all_good').addClass('dis-no');
+                $('.no_good').removeClass('dis-no');
+            }
+        }
+        var app = new Vue({
+            el: '#my_order',
+            data: {
+                orders:[],
+                page:[],
+                status:'all',
+                has_noinfo:false,//没有数据
+                loading:true,//加载
+                show_page:false,//是否显示页面
+                not_pay:false,//默认已支付
+                all_good:[],
+                not_pay_info:[],
+                page:0,//初始化页面
+                total_page:1,//记录页面总数
+            },
+            created:function(){
+                var that = this;
+                var page = 0;
+                get_order(that,page);
+            },
+            mounted () {//触底事件
+                window.addEventListener('scroll', this.handleScroll,true)
             },
             methods:{
+                handleScroll:function(event){//处理滚动事件
+                    // 距离顶部距离
+                    var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+                    // div高度
+                    var offsetHeight = document.querySelector('#my_order').offsetHeight
+                    // 页面高度
+                    var clientHeight =  window.screen.height ; 
+                    if (clientHeight+scrollTop+10>offsetHeight){
+                        var that = this;
+                        var page = that.page+1;
+                        that.page = page;
+                        $('.no_all_good').removeClass('dis-no');
+                        if (that.status=='notpay') {//未支付
+                            get_notpay(that,page);
+                        }else{
+                            get_order(that,page);
+                        }
+                    }                   
+                },
                 change_status: function (event) {
                     var that =this;
+                    that.all_good = [];
                     var class_name = event.target.className;
                     var class_name2 = event.target.className.split(" ")[1]
                     var is_active = class_name.indexOf('active');
@@ -484,16 +566,12 @@ $(function(){
                         return;
                     }else{
                         if (class_name2 == 'all_order') {  //全部订单
-                            var order_status = 'all';  
-                            that.status = 'all_order';//改变页面内容
+                            that.status = 'all';//改变页面内容
                         }else if(class_name2 == 'ordering'){
-                            var order_status = 'underway';
-                            that.status = 'ordering';//改变页面内容
+                            that.status = 'underway';//改变页面内容
                         }else if(class_name2 == 'ordered'){
-                            var order_status = 'complete';
-                            that.status = 'ordered';//改变页面内容
+                            that.status = 'complete';//改变页面内容
                         }else if(class_name2 == 'notpay'){
-                            var order_status = 'notpay';
                             that.status = 'notpay';//改变页面内容
                         }
                         if(class_name2 == 'notpay'){//请求未支付订单
@@ -502,158 +580,14 @@ $(function(){
                             that.loading = true;
                             that.not_pay = true;
                             var page = 0;
-                            $.ajax({
-                                headers: {
-                                    'Authorization': 'bearer '+_token
-                                },
-                                type: "GET",
-                                url: weixin_url + '/order/prescription/wait-for-pay?page='+page,
-                                contentType:"application/json",
-                                dataType: "json",
-                                success: function(data){
-                                    if(data.code == 0){//请求数据正常
-                                        that.current = 1;
-                                        var Data_length =  data.page.content.length;
-                                        if (Data_length == 0) {
-                                            that.show_page = false;
-                                            that.has_noinfo = true;
-                                            that.loading = false;
-                                            return;
-                                        }else{//请求到数据
-                                            that.orders = data.page.content;//改变页面内容
-                                            that.page = data.page;
-                                            that.show_page = true;
-                                            that.has_noinfo = false;
-                                            that.loading = false;
-                                        }
-                                    }   
-                                    to_login(data);
-                                }
-                            });
-
+                            get_notpay(that,page);
                         }else{
                             that.show_page = false;
                             that.has_noinfo = false;
                             that.loading = true;
                             that.not_pay = false;
                             var page = 0;
-                            $.ajax({
-                                headers: {
-                                    'Authorization': 'bearer '+_token
-                                },
-                                type: "POST",
-                                url: weixin_url + '/order/prescription-order/list?page='+page,
-                                contentType:"application/json",
-                                data: JSON.stringify({status:order_status}),
-                                dataType: "json",
-                                success: function(data){
-                                    if(data.code == 0){//请求数据正常
-                                        that.current = 1;
-                                        var Data_length =  data.page.content.length;
-                                        if (Data_length == 0) {
-                                            that.show_page = false;
-                                            that.has_noinfo = true;
-                                            that.loading = false;
-                                            return;
-                                        }else{//请求到数据
-                                            that.orders = data.page.content;//改变页面内容
-                                            that.page = data.page;
-                                            that.show_page = true;
-                                            that.has_noinfo = false;
-                                            that.loading = false;
-                                        }
-                                    }   
-                                    to_login(data);
-                                }
-                            });
-                        }
-                    }
-                },
-                change_page:function(event){
-                    var that =this;
-                    var class_name = event.target.className;
-                    var num = event.target.innerHTML;
-                    var is_active = class_name.indexOf('active');
-                    if (is_active !==-1) {//被选中
-                        return;
-                    }else{
-                        that.show_page = false;
-                        that.has_noinfo = false;
-                        that.loading = true;
-                        that.current = num;
-                        var page = num-1;
-                        var order_status = that.status;
-                        if (order_status == 'all_order') {  //全部订单
-                            var order_status = 'all';  
-                        }else if(order_status == 'ordering'){
-                            var order_status = 'underway';
-                        }else if(order_status == 'ordered'){
-                            var order_status = 'complete';
-                        }else if(order_status == 'notpay'){
-                            var order_status = 'notpay';
-                        }
-                        if(order_status == 'notpay'){//请求未支付订单
-                            that.show_page = false;
-                            that.has_noinfo = false;
-                            that.loading = true;
-                            that.not_pay = true;
-                            var page = page;
-                            $.ajax({
-                                headers: {
-                                    'Authorization': 'bearer '+_token
-                                },
-                                type: "GET",
-                                url: weixin_url + '/order/prescription/wait-for-pay?page='+page,
-                                contentType:"application/json",
-                                dataType: "json",
-                                success: function(data){
-                                    if(data.code == 0){//请求数据正常
-                                        var Data_length =  data.page.content.length;
-                                        if (Data_length == 0) {
-                                            that.show_page = false;
-                                            that.has_noinfo = true;
-                                            that.loading = false;
-                                            return;
-                                        }else{//请求到数据
-                                            that.orders = data.page.content;//改变页面内容
-                                            that.page = data.page;
-                                            that.show_page = true;
-                                            that.has_noinfo = false;
-                                            that.loading = false;
-                                        }
-                                    }   
-                                    to_login(data);
-                                }
-                            });
-                        }else{
-                            $.ajax({
-                                headers: {
-                                    'Authorization': 'bearer '+_token
-                                },
-                                type: "POST",
-                                url: weixin_url + '/order/prescription-order/list?page='+page,
-                                contentType:"application/json",
-                                data: JSON.stringify({status:order_status}),
-                                dataType: "json",
-                                success: function(data){
-                                    if(data.code == 0){//请求数据正常
-                                        var Data_length =  data.page.content.length;
-                                        if (Data_length == 0) {
-                                            that.show_page = false;
-                                            that.has_noinfo = true;
-                                            that.loading = false;
-                                            return;
-                                        }else{//请求到数据
-                                            that.orders = data.page.content;//改变页面内容
-                                            that.page = data.page;
-                                            that.show_page = true;
-                                            that.has_noinfo = false;
-                                            that.loading = false;
-                                        }
-                                    }   
-                                    to_login(data);
-                                }
-                            });
+                            get_order(that,page);
                         }
                     }
                 },
@@ -663,7 +597,7 @@ $(function(){
                 }
             }
         });
-    }else if($('.m_coupon').size()>0){//优惠券页面
+    }else if($('#my_coupon').size()>0){//优惠券页面
         var _token = localStorage.getItem('access_token');
         var coupon_status = 'can_use';//默认值
         if (coupon_status == 'can_use') {
@@ -759,7 +693,7 @@ $(function(){
                 }
             }
         });
-    }else if($('.doctor_list').size()>0){//医生列表页
+    }else if($('#doctor_list').size()>0){//医生列表页
         var _token = localStorage.getItem('access_token');
         var app = new Vue({
             el: '#doctor_list',
@@ -820,7 +754,7 @@ $(function(){
                 }
             }
         });
-    }else if($('.m_reserve').size()>0){//预约页面
+    }else if($('#m_reserve').size()>0){//预约页面
         var _token = localStorage.getItem('access_token');
         if (_token !==null){//判断token存在
             // 实例化对象
@@ -1217,12 +1151,7 @@ $(function(){
         }else{//返回登录
             window.location.href='./login.html';
         }
-    }else if($('.msg_success').size()>0){//预约成功页面
-        // $('.go_last').on('click',function(){
-        //     window.history.go(-1);
-        // });
-
-    }else if($('.order_detail').size()>0){
+    }else if($('#order_detail').size()>0){//医生预约列表
         var _token = localStorage.getItem('access_token');
         var page = 0;//默认第一页
         var app = new Vue({
@@ -1380,7 +1309,7 @@ $(function(){
                 },
             }
         });
-    }else if($('.doctor_detail').size()>0){
+    }else if($('#doctor_detail').size()>0){
         var doctor_detail = JSON.parse(localStorage.getItem('doctor_detail'));
         var map = JSON.parse(localStorage.getItem('map'));
         var app = new Vue({
@@ -6746,7 +6675,6 @@ $(function(){
                     var payPrice = e.payPrice;
                     if (payPrice==0) {//说明用神庭币支付
                         var _token = localStorage.getItem('access_token');
-                        var that = this;
                         $.ajax({//发起请求,查询是否设置支付密码
                             headers: {
                                 'Authorization': 'bearer '+_token
@@ -6786,6 +6714,29 @@ $(function(){
                         var _url ='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6e228291e030c062&redirect_uri='+redirect_url1+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
                         window.location.href=_url;
                     }
+                },
+                cancel_order:function(e){
+                    var that =this;
+                    var orderNum = e.orderNum;
+                    $.ajax({//发起请求,查询是否设置支付密码
+                        headers: {
+                            'Authorization': 'bearer '+_token
+                        },
+                        type: "delete",
+                        url:weixin_url + '/sale/order/'+orderNum,
+                        contentType:"application/json",
+                        success: function(data){
+                            if (data.code == 0) {
+                                var order_status = 'wait-for-pay';
+                                that.order_status = 'wait-for-pay';
+                                var page = 0;
+                                get_info(order_status,page,that);
+                            }else{
+                                alert(data.message);
+                            }
+                            to_login(data);
+                        }
+                    });
                 },
                 forget_password:function(){
                     $.ajax({//发起请求

@@ -20,14 +20,17 @@
             </span>
         </div>
         <div class="m_order" id="my_order" style="padding-top:60px;">
-            <div class="bar_option flex">
-                <div class="flex-1 all_order"  :class=[{"active":(status=='all_order')}] v-on:click="change_status">全部</div>
-                <div class="flex-1 ordering" :class=[{"active":(status=='ordering')}] v-on:click="change_status">进行</div>
-                <div class="flex-1 ordered" :class=[{"active":(status=='ordered')}] v-on:click="change_status">完成</div>
-                <div class="flex-1 notpay" :class=[{"active":(status=='notpay')}] v-on:click="change_status">待支付</div>
+            <div class="top_fix" style="position: fixed;z-index: 1000;">
+                <div class="bar_option flex">
+                    <div class="flex-1 all_order"  :class=[{"active":(status=='all')}] v-on:click="change_status">全部</div>
+                    <div class="flex-1 ordering" :class=[{"active":(status=='underway')}] v-on:click="change_status">进行</div>
+                    <div class="flex-1 ordered" :class=[{"active":(status=='complete')}] v-on:click="change_status">完成</div>
+                    <div class="flex-1 notpay" :class=[{"active":(status=='notpay')}] v-on:click="change_status">待支付</div>
+                </div>
             </div>
-            <div class="my_order" :class=[{"dis-no":(show_page==false)}] style="margin-top:10px;">
-                <div style="max-height:500px;overflow-y:scroll;">
+            <div class="mask_div"></div>
+            <div class="my_order" :class=[{"dis-no":(show_page==false)}] style="margin-top:70px;">
+                <div>
                     <div class="weui-cells" v-for="order in orders">
                         <div class="weui-cell" >
                             <div class="weui-cell__hd"><img src="../images/bg_medicinal.png"></div>
@@ -56,9 +59,13 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="clearfix fr cli_page">
-                    <div class="fl  order_page" v-on:click="change_page" :class=[{'active':(page==current)}]  v-for="page in page.totalPage">{{page}}</div>
+                    <!-- 加载效果 -->
+                    <div class="weui-loadmore no_all_good">
+                        <i class="weui-loading"></i>
+                        <span class="weui-loadmore__tips">正在加载</span>
+                    </div>
+                    <!-- 无商品 -->
+                    <p class="tint no_good dis-no" style="height:40px;line-height:40px;text-align:center;color:#939399;">没有更多商品啦~</p>
                 </div>
             </div>
             <!-- 没有数据 -->

@@ -41,7 +41,10 @@
                             </div>
                         </div>
                         <p class="payprice total_price" @click="to_sale(order_status,order,order.totalPayPrice)">共{{order.saleOrderProductList.length}}件商品，合计：¥<span style="display:inline-block;font-size:16px;">{{order.payPrice.toFixed(2)}}</span></p>
-                        <button v-if="order_status=='wait-for-pay'" class="to_pay" v-on:click="to_pay(order)">去支付</button>
+                        <div class="clearfix" style="clear:both;">
+                            <button v-if="order_status=='wait-for-pay'" class="to_pay" v-on:click="to_pay(order)">支付订单</button>
+                            <button v-if="order_status=='wait-for-pay'" class="to_pay cancel" v-on:click="cancel_order(order)">取消订单</button>
+                        </div>
                     </div>
                     <!-- 加载效果 -->
                     <div class="weui-loadmore no_all_good">
