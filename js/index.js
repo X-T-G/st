@@ -70,10 +70,13 @@ $(function(){
                             if (str == 'doctor-list.html'){//医生列表跳转而来
                                 window.location.href='./doctor-list.html';
                             }else if (str == 'application.html'){//神庭公益跳转而来
-                                window.location.href='application.html';
+                                window.location.href='./application.html';
+                            }else if(str == 'good-index.html'){
+                                window.location.href='./good-index.html';
                             }else{
                                 window.location.href='./person.html';
                             } 
+                            // window.location.href='./'+str;
                         }else{
                             var $androidDialog2 = $('#androidDialog2');
                             $androidDialog2.fadeIn(200);
@@ -1416,7 +1419,7 @@ $(function(){
                     dataType: "json",
                     success: function(data){
                         if(data.code==0){
-                            if(data.object.realName==2){//已经实名认证
+                            // if(data.object.realName==2){//已经实名认证
                                 $.ajax({//获取导航分类
                                     headers: {
                                         'Authorization': 'bearer '+_token
@@ -1454,16 +1457,16 @@ $(function(){
                                 });
                                 var page = that.page;
                                 get_info(that,page);
-                            }else if(data.object.realName==0){
-                                alert('未实名认证，请先认证！');
-                                window.location.href = './person.html';
-                            }else if(data.object.realName==1){
-                                alert('实名认证审核中！');
-                                window.location.href = './person.html';
-                            }else if(data.object.realName==3){
-                                alert('实名认证未通过！');
-                                window.location.href = './person.html';
-                            }
+                            // }else if(data.object.realName==0){
+                            //     alert('未实名认证，请先认证！');
+                            //     window.location.href = './person.html';
+                            // }else if(data.object.realName==1){
+                            //     alert('实名认证审核中！');
+                            //     window.location.href = './person.html';
+                            // }else if(data.object.realName==3){
+                            //     alert('实名认证未通过！');
+                            //     window.location.href = './person.html';
+                            // }
                         }else{
                             alert(data.message);
                         }
