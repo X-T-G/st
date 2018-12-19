@@ -35,8 +35,9 @@
                                 <img :src="each_good.productSnapshot.coverImg">
                             </div>
                             <div class="weui-cell__bd">
-                                <p class="create">{{each_good.templateProductSnapshot.name}}</p>
-                                <p class="payprice">单价：¥<span>{{each_good.productSnapshot.price.toFixed(2)}} x {{each_good.number}}</span></p>
+                                <p class="create" style="margin-bottom:10px;">{{each_good.templateProductSnapshot.name}}</p>
+                                <p class="payprice" style="margin-bottom:10px;">单价：¥<span>{{each_good.productSnapshot.price.toFixed(2)}} x {{each_good.number}}</span></p>
+                                <p class="payprice">创建于：{{each_good.createtime.split(" ")[0]}}</p>
                             </div>
                         </div>
                         <p class="payprice total_price" @click="to_sale(order_status,order,order.totalPayPrice)">共{{order.saleOrderProductList.length}}件商品，合计：¥<span style="display:inline-block;font-size:16px;">{{order.payPrice.toFixed(2)}}</span></p>

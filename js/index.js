@@ -1723,9 +1723,9 @@ $(function(){
                         var _id = that.specification[_index].id;
                         var _num = $('.show_good .ope_num').html();
                         var stock = $('.show_good .stock').html();
-                        if (stock == 0){
-                            alert("库存不足！");
-                        }else{
+                        // if (stock == 0){
+                        //     alert("库存不足！");
+                        // }else{
                             $.ajax({//发起请求
                                 headers: {
                                     'Authorization': 'bearer '+_token
@@ -1748,7 +1748,7 @@ $(function(){
                                     to_login(data);
                                 }
                             });
-                        }
+                        // }
                         
                     }else{//如果是直接购买
                         var _index = that.selected;
@@ -1776,11 +1776,11 @@ $(function(){
                     var _num =Number($('.show_good .ope_num').html());
                     var total =Number($('.show_good .stock').html());
                     _num++;
-                    if (total<_num) {
-                        alert("库存不足！");
-                    }else{
+                    // if (total<_num) {
+                    //     alert("库存不足！");
+                    // }else{
                         $('.show_good .ope_num').html(_num);
-                    }
+                    // }
                 },
             }
         });
