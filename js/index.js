@@ -1387,6 +1387,7 @@ $(function(){
                 all_good:[],//所有数据初始化
                 page:0,//初始化页面
                 total_page:1,//记录页面总数
+                show_modal:false,
             },
             mounted () {//触底事件
                 window.addEventListener('scroll', this.handleScroll,true)
@@ -1532,6 +1533,14 @@ $(function(){
                 },
                 quick_search:function(e){
                     window.location.href=encodeURI("./search-page.html?name="+e);//中文转码
+                },
+                modal_page:function(){//显示模态框
+                    var that = this;
+                    that.show_modal = true;
+                },
+                agree_sure:function(){
+                    var that = this;
+                    that.show_modal = false;
                 }
             }
         });
@@ -1812,6 +1821,7 @@ $(function(){
                         for(var i = 0;i<_id.length;i++){
                             for(var j = 0;j<good_info.length;j++){
                                 if(good_info[j].id==_id[i].attributes[0].value){
+                                    good_info[j].number = _id[i].innerHTML;
                                     _idList.push(good_info[j]);
                                 }
                             }

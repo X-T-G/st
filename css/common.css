@@ -769,9 +769,12 @@ body input{background-color: #fff;}
 #way_list .cli_page{margin: 10px;margin-bottom: 60px;}
 #way_list .cli_page .order_page {margin-bottom: 5px;margin-left: 4px;padding: 4px 8px;width: 30px;height: 30px;text-align: center;line-height: 23px;}
 #way_list .cli_page div.active {border: 1px solid #F17355;background-color: #F17355;color: #fff;}
+#good_index .weui-mask2{height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index: 20002;transition: none 0.5s ease;display: none;}
+#good_index .weui-actionsheet__menu button {width: 60px;height: 28px;background-color: #fff;outline: none;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 4px;}
+#good_index .weui-skin_android .weui-actionsheet {z-index: 20003;}
 
 /*首页 搜索 */
-.search_contain{width: 96%;height: 40px;line-height: 40px;position: relative;border: 1px solid #e5e5e5;background-color: #fff;border-radius: 20px;margin: 50px auto 0;}
+.search_contain{width: 96%;height: 40px;line-height: 40px;position: relative;border: 1px solid #e5e5e5;background-color: #fff;border-radius: 20px;margin: 20px auto 0;}
 .search_contain .search_input{width: 80%;border: none;border-top-left-radius: 20px;border-bottom-left-radius: 20px;padding: 0 20px;border-right: 1px solid #e5e5e5;}
 .search_contain span{display: inline-block;width: 20%;text-align: center;font-size: 24px;color: #939399;}
 .serach_content p.last_search{padding:0 20px;margin: 10px 0;}

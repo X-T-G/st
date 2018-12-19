@@ -29,6 +29,9 @@
                         </div>
                         <div class="swiper-pagination"></div>
                     </div>
+                    <div class="clearfix">
+                        <p v-on:click="modal_page" class="fr" style="color:#f57d64;margin-right:15px;margin-top: 20px;">神庭馆藏系列说明</p>
+                    </div>
                     <div class="index_content">
                         <!-- 搜索模块 -->
                         <div class="search_contain flex">
@@ -107,6 +110,34 @@
                     <div v-on:click="delete_record" style="text-align:center;" class="delete_record">
                         <p><span class="iconfont">&#xe632;</span></p>
                         <p>清空搜索记录</p>
+                    </div>
+                </div>
+                <!-- 使用须知 -->
+                <div class="weui-skin_android welcome_page" :class=[{"dis-no":(show_modal==false)}] id="quit_account">
+                    <div class="weui-mask2"  @click="agree_sure" :class=[{"dis-no":(show_modal==false)}]   style="display:block;"></div>
+                    <div class="weui-actionsheet">
+                        <div class="weui-actionsheet__menu" style="max-height: 560px;text-align:left;overflow-y: scroll;padding: 20px;">
+                            <div class="text_info"  style="text-align:center;font-size: 16px;margin: 10px 0 0;">神庭馆藏系列说明</div>
+                            <div style="font-size:12px;">
+                                <p>神庭馆藏系列成药产品由李德敏博士结合神庭君软件大数据研发推出，突出中医药简便廉效的特点，以更好的服务于广大用户。有关使用注意事项如下：</p>
+                                <p>1.神庭馆藏系列产品均为成熟配方，经长期大量临床实践验证，安全无毒，疗效确切可靠；</p>
+                                <p>2.产品仅限于已经完成实名认证的神庭君注册用户购买使用；</p>
+                                <p>3.产品通过神庭医馆和神庭君的微信公众号进行订购；</p>
+                                <p>4.产品通常需预定，订单成功后由神庭医馆手工配制，制作时间通常为1周以内；</p>
+                                <p>5.若系统判定用户所购产品与自身健康情况存在不适合情况，或医馆原材料缺货，或其他异常情况，则会提示订单无效，用户所付款项将被退回；</p>
+                                <p>6.神庭馆藏系列产品标识组方、适应症、规格用法，储存条件、使用注意和禁忌事项；</p>
+                                <p>7.神庭馆藏系列均为定制，用户在订购前请认真查看适应症和说明，一旦下单成功，则不再退款；</p>
+                                <p>8.用户收到商品后需认真查看外包装，若有破损请拒收并及时与医馆客服联系；</p>
+                                <p>9.产品一经售出不得退货，敬请知悉；</p>
+                                <p>10.欢迎用户积极填写用药反馈及建议，以便于更好的改进；</p>
+                                <p>11.免责申明：产品所述适应症均为基于长期大量临床实践而研发，供用户参考，其有效性适用于大量广泛人群，但不排除个体情况而存在疗效差异，故请用户慎重下单敬请知悉，有不明处请遵医嘱并咨询医馆客服。</p>
+                            </div>
+                            <div class="flex" style="text-align:center;margin: 10px;">
+                                <div class="flex-1">
+                                    <button type="button" class="agree_sure" v-on:click="agree_sure">确认</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
