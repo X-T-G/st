@@ -1567,28 +1567,24 @@ $(function(){
                 selected:0,//默认第一选中
                 ope_type:[],//操作类型
                 banner:[],
-                mySwiper:null
             },
             updated:function() {
-                if(this.mySwiper==null){
-                    this.mySwiper = new Swiper('.swiper-container',{
-                        loop: true,
-                        delay:2000,
-                        freeMode : false,
-                        paginationClickable :true,
-                        touchRatio : 0.5,
-                        pagination: {
-                            el: '.swiper-pagination',
-                        },
-                        autoplay: {
-                            disableOnInteraction: false,
-                        },
-                    });
-                }
+                new Swiper('.swiper-container',{
+                    loop: true,
+                    delay:2000,
+                    freeMode : false,
+                    paginationClickable :true,
+                    touchRatio : 0.5,
+                    pagination: {
+                        el: '.swiper-pagination',
+                    },
+                    autoplay: {
+                        disableOnInteraction: false,
+                    },
+                })
             },
             created:function(){
                 var that = this;
-                that.mySwiper==null;
                 $.ajax({//发起请求
                     headers: {
                         'Authorization': 'bearer '+_token
