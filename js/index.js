@@ -6163,7 +6163,8 @@ $(function(){
                         if (data.code == 0) {
                             that.city_info = data.list;
                             that.user_info = addr_info;
-                            if (addr_info.id!==null && str=='edit'){//编辑
+                            if (str=='edit'){//编辑
+                                $('.header').html('编辑地址');
                                 that.right_phone = true;
                                 // 先渲染省级
                                 var _province_arr = that.city_info;
