@@ -6343,7 +6343,7 @@ $(function(){
                     var c_select = city_name.options[index].id;//城市id
                     var area_name=document.getElementById('area_name');
                     var index=area_name.selectedIndex ;
-                    if (addr_info.id!==null && str=='edit') {//编辑
+                    if (str=='edit') {//编辑
                         var area_id = that.user_info.id;
                     }else{
                         var area_id = null;
@@ -6394,7 +6394,7 @@ $(function(){
                             success: function(data){
                                 if (data.code == 0) {
                                     var $toast = $('#toast');
-                                    if (addr_info.id!==null && str=='edit') {//编辑
+                                    if (str=='edit') {//编辑
                                         $('#toast .weui-toast__content').html("修改成功！");
                                     }else{
                                         $('#toast .weui-toast__content').html("添加成功！");
