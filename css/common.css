@@ -355,8 +355,8 @@ img.store_pic{width: 108px;height:108px;}
 .goods_container .bottom img{width:21px;}
 .goods_container .bottom p{font-size: 12px;}
 .store_index{overflow: hidden;}
-.store_index .swiper-wrapper img,.store_index .swiper-container{height: 210px;}
-.good_detail .swiper-wrapper img{height: 210px;}
+/* .store_index .swiper-wrapper img,.store_index .swiper-container{height: 210px;}
+.good_detail .swiper-wrapper img{height: 210px;} */
 .store_index .swiper-wrapper img,.good_detail .swiper-wrapper img{width: 100%;}
 .store_index .good_img img{width: 100%;height: auto;}
 /* .store_index .swiper-container{min-height: 210px;} */
@@ -840,7 +840,7 @@ div.sku_operate.show_good{display:flex;}
 .add_address .area .weui-cells:before{border-top: none;}
 
 /* 馆藏商品确认页面 */
-#good_sure .hasno_addr{border-bottom: 1px solid #e5e5e5;height: 60px;line-height: 60px;text-align: center;padding-bottom: 10px;}
+#good_sure .hasno_addr{height: 60px;line-height: 60px;text-align: center;padding-bottom: 10px;}
 #good_sure .hasno_addr .icon-jia{display: inline-block;}
 /* #good_sure .addr_contain:after{content: " ";display: inline-block;height: 9px;width: 9px;border-width: 2px 2px 0 0;border-color: #c8c8cd;border-style: solid;-webkit-transform: matrix(.71,.71,-.71,.71,0,0);transform: matrix(.71,.71,-.71,.71,0,0);position: relative;top: -2px;position: absolute;top: 55%;margin-top: -4px;right: 14px;} */
 #good_sure .good_check+.icon-checked:before {content: "\e625";}
@@ -893,7 +893,6 @@ div.sku_operate.show_good{display:flex;}
 #order_sure  .weui-actionsheet__menu.gift_menu input.user_pass {width: 70px;margin-top: 0;}
 #order_sure .weui-actionsheet__menu input {font-size: 14px;height: 30px;line-height: 30px;padding-left: 6px;margin-bottom: 10px;-webkit-appearance: none;border: none;text-align: center;border-bottom: 1px solid #e5e5e5;outline: none;box-shadow: none;}
 #order_sure .good_contain:first-child,#good_sure .good_contain:first-child{margin-top: 10px;}
-
 #pay_list .weui-mask{z-index: 20001;}
 #pay_list .weui-actionsheet{z-index:20002;}
 #pay_list .weui-skin_android .weui-actionsheet__menu{padding: 20px;text-align: center;background-color: #fcfcfd;border-radius: 2px;box-shadow: 0 6px 30px 0 rgba(0,0,0,.1);}
@@ -914,35 +913,12 @@ div.sku_operate.show_good{display:flex;}
 #pay_list .look_for_pass .bar_option div{color: #686b6d;width: 50%;border-bottom: 1px solid #e4e4e4;}
 #pay_list .weui-actionsheet div.phone_input,#pay_list .weui-actionsheet div.email_input{border-bottom: 1px solid #e5e5e5;line-height: 30px;text-align: left;padding-left: 10px;}
 #pay_list .weui-skin_android .bar_option{border:none;}
-
-
-
 /* 馆藏商品订单 */
 #pay_list .ordered{border-top-left-radius: 6px;border-bottom-left-radius: 6px;}
 #pay_list .bar_option div.success{border-top-left-radius: 6px;border-bottom-left-radius: 6px;}
 #pay_list .bar_option div.wait-for-pay{border-top-right-radius: 6px;border-bottom-right-radius: 6px;}
 #pay_list{padding-bottom:0;}
 #pay_list .mask_div,#my_order .mask_div{height: 80px;width: 100%;background-color: #fff;position: fixed;top: 40px;z-index: 999;}
-@media screen and (max-width: 768px){
-    #pay_list .top_fix{left:284px;}
-    #my_order .top_fix{left:284px;}
-}
-@media screen and (max-width: 414px){
-    #pay_list .top_fix{left:107px;}
-    #my_order .top_fix{left:107px;}
-}
-@media screen and (max-width: 375px){
-    #pay_list .top_fix{left:87px;}
-    #my_order .top_fix{left:87px;}
-}
-@media screen and (max-width: 360px){
-    #pay_list .top_fix{left:80px;}
-    #my_order .top_fix{left:80px;}
-}
-@media screen and (max-width: 320px){
-    #pay_list .top_fix{left:60px;}
-    #my_order .top_fix{left:60px;}
-}
 .swiper-pagination-bullet-active{background:#f17355;}
 #pay_list  button.to_pay{float: right;width: 66px;height: 25px;border-radius: 4px;margin-bottom: 15px;border: none;background-color: #F17355;color: #fff;margin-right: 20px;}
 #pay_list .weui-cells .total_price{float: right;margin-bottom: 10px;margin-right: 20px;color: #686b6d;}

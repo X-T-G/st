@@ -432,6 +432,8 @@ $(function(){
             }
         });
     }else if($('#my_order').size()>0){//订单页面
+        var _width = window.screen.width;
+        $('#my_order .top_fix').css('left',(_width-200)/2+'px');
         var _token = localStorage.getItem('access_token');
         function get_order(that,page){
             var total_page = that.total_page;
@@ -451,11 +453,15 @@ $(function(){
                             var Data_length =  data.page.content.length;
                             that.total_page = data.page.totalPage;
                             if (Data_length == 0) {
+                                $('.no_all_good').addClass('dis-no');
+                                $('.no_good').removeClass('dis-no');
                                 that.show_page = false;
                                 that.has_noinfo = true;
                                 that.loading = false;
                                 return;
                             }else{//请求到数据
+                                $('.no_all_good').addClass('dis-no');
+                                $('.no_good').addClass('dis-no');
                                 var origin_data = that.all_good;
                                 var _content =data.page.content;
                                 for(var i=0;i<_content.length;i++){
@@ -5173,7 +5179,7 @@ $(function(){
                     window.location.href='../html/choose-address.html';
                 },
                 add_addr:function(){//添加地址
-                    window.location.href='../html/add-address.html';
+                    window.location.href='../html/new-address.html';
                 },
                 good_detail:function(e){//跳转商品详情
                     window.location.href="../html/good-detail.html?goodId="+e;
@@ -6477,14 +6483,10 @@ $(function(){
             methods:{
                 choose_addr:function(e){//从结算页面的地址选择跳转而来
                     var _url = document.referrer;
-                    var _index = _url.lastIndexOf("\/");  
+                    var _index = _url.lastIndexOf("\=");  
                     var str  = _url.substring(_index + 1, _url.length);
-                    if (str=='good-sure.html') {//判断页面
-                        localStorage.setItem("selected",e);
-                        window.location.href='../html/good-sure.html';
-                    }else{
-                        return;
-                    }
+                    localStorage.setItem("selected",e);
+                    window.location.href='../html/good-sure.html?num='+str;
                 }
             }
         })
@@ -6563,6 +6565,8 @@ $(function(){
             });
         }
     }else if($('#pay_list').size()>0){//馆藏商品订单
+        var _width = window.screen.width;
+        $('#pay_list .top_fix').css('left',(_width-200)/2+'px');
         var _token = localStorage.getItem('access_token');
         function get_info(order_status,page,that){
             var total_page = that.total_page;
@@ -7029,6 +7033,239 @@ $(function(){
                             to_login(data);
                         }
                     });
+                }
+            }
+        });
+    }else if($('#new_address').size()>0){//编辑地址页面
+        var _token = localStorage.getItem('access_token');
+        var _url = window.location.href;
+        var _index = _url.lastIndexOf("\=");  
+        var str  = decodeURI(_url.substring(_index + 1, _url.length));
+        var addr_info =JSON.parse(localStorage.getItem('addr_info'));
+        var app = new Vue({
+            el: '#new_address',
+            data: {
+                loading:true,
+                showpage:false,
+                user_info:[],//初始化商品数据
+                aidApply:[],//传给后台的数据
+                city_info:[],//城市信息,汇总
+                city_name:[],//市级
+                area_name:[],//地区级
+                is_three:false,//标记是否三层
+                is_select_last:false,//标记是否选择最后一层
+                province:{name:"",id:""},
+                city:{name:"",id:""},
+                area:{name:"",id:""},
+                right_phone:false,//手机号码正则
+            },
+            created:function(){
+                var that = this;
+                that.loading = false;
+                that.showpage = true;
+                $.ajax({//发起请求//请求地址信息
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: 'GET',
+                    url:'https://wap.shentingkeji.com/stassistant/plugins/city/cityJson.json',
+                    contentType:"application/json",
+                    success: function(data){
+                        if (data.code == 0) {
+                            that.city_info = data.list;
+                            that.user_info = [];
+                            var _province_arr = that.city_info;
+                            var province_content = "<option value='-1' id='p_select1'>请选择</option>";
+                            for(var i = 0;i<_province_arr.length;i++){
+                                province_content+="<option value='"+_province_arr[i].dictName+"' id='"+_province_arr[i].id+"'>"+_province_arr[i].dictName+"</option>";
+                            }
+                            var city_content = "<option value='-1' id='p_select2'>请选择</option>";
+                            $('#city_province').html(province_content);
+                            $('#city_name').html(city_content);
+                        }else{
+                            alert(data.message);
+                        }
+                        to_login(data);
+                    }
+                });
+            },
+            methods:{
+                selectVal:function(e){
+                    var that = this;
+                    var myselect=document.getElementById("city_province");
+                    var _index=myselect.selectedIndex - 1;
+                    if (_index == -1) {
+                        $('.city_name').addClass('dis-no');
+                        $('.city_name select').val('请选择');
+                        $('.area_name').addClass('dis-no');
+                        $('.area_name select').val('请选择');
+                        return;
+                    }else{
+                        var city_info = that.city_info;
+                        var city_length = city_info[_index].children.length;
+                        $('.city_name').removeClass('dis-no');
+                        $('.city_name select').val('请选择');
+                        $('.area_name').addClass('dis-no');
+                        $('.area_name select').val('请选择');
+                        if (city_length == 1) {//若为直辖市或者港澳台
+                            is_urisdiction = city_info[_index].children[0].children;
+                            if (is_urisdiction !== undefined){//直辖市
+                                that.city_name=city_info[_index].children;
+                            }else{//港澳台和其他
+                                that.city_name=city_info[_index].children;
+                            }
+                        }else{//若非直辖市
+                            that.city_name=city_info[_index].children;
+                        }
+                        var _city_arr = that.city_name;
+                        var city_content = "<option value='-1' id='p_select2'>请选择</option>";
+                        for(var i = 0;i<_city_arr.length;i++){
+                            city_content+="<option value='"+_city_arr[i].dictName+"' id='"+_city_arr[i].id+"'>"+_city_arr[i].dictName+"</option>";
+                        }
+                        $('#city_name').html(city_content);
+                        that.is_three = false;
+                        that.is_select_last = false;
+                    }
+                },
+                selectVal2:function(){
+                    var that = this;
+                    var myselect=document.getElementById("city_name");
+                    var _index=myselect.selectedIndex - 1;
+                    if (_index == -1) {
+                        $('.area_name').addClass('dis-no');
+                        $('.area_name select').val('请选择');
+                        return;
+                    }else{
+                        var city_name = that.city_name;
+                        that.area_name=city_name[_index].children;
+                        var _area_arr = that.area_name;
+                        var area_content = "<option value='-1' id='p_select3'>请选择</option>";
+                        if (_area_arr!==undefined) {//有三个层级
+                            for(var i = 0;i<_area_arr.length;i++){
+                                area_content+="<option value='"+_area_arr[i].dictName+"' id='"+_area_arr[i].id+"'>"+_area_arr[i].dictName+"</option>";
+                            }
+                        }else{//有两个层级
+                            return;
+                        }
+                        $('#area_name').html(area_content);
+                        if (city_name[_index].children !== undefined) {//普通省市
+                            $('.area_name').removeClass('dis-no');
+                            that.is_three = true;
+                        }else{//直辖市和港澳台等
+                            $('.area_name').addClass('dis-no'); 
+                            that.is_three = false;                       
+                        }
+                    }
+                },
+                selectVal3:function(){
+                    var that = this;
+                    var myselect=document.getElementById("area_name");
+                    var _index=myselect.selectedIndex - 1;
+                    if (_index == -1) {
+                        return;
+                    }else{
+                        that.is_select_last = true;//选完最后一级
+                    }
+                },
+                save_addr:function(){
+                    var that = this;
+                    var _token = localStorage.getItem('access_token');
+                    var name = $('#addr_name').val();//收货人姓名
+                    var phone = $('#addr_phone').val();//联系方式
+                    var address = $('#addr_detail').val();//联系方式
+                    var city_province=document.getElementById('city_province');
+                    var index=city_province.selectedIndex ; // selectedIndex代表的是你所选中项的index
+                    var p_select = city_province.options[index].id;//省份id
+                    var city_name=document.getElementById('city_name');
+                    var index=city_name.selectedIndex ;
+                    var c_select = city_name.options[index].id;//城市id
+                    var area_name=document.getElementById('area_name');
+                    var index=area_name.selectedIndex ;
+                    var area_id = null;
+                    if(area_name.options[index]==undefined){
+                        var a_select = 'p_select3';
+                    }else{
+                        var a_select = area_name.options[index].id;//地区id
+                    }
+                    if (p_select !== 'p_select1' && c_select == 'p_select2' && a_select == 'p_select3') {//只选了一个级别
+                        $('.error_info').removeClass('dis-no');
+                        setTimeout(function(){
+                            $('.error_info').addClass('dis-no');
+                        }, 3000); 
+                    }else if(p_select !== 'p_select1' && c_select !== 'p_select2' && a_select == 'p_select3'){//只选了两个级别
+                        var is_three = that.is_three;
+                        var is_select_last = that.is_select_last;
+                        if (is_three == false) {//只有两级
+                            var _id = c_select;
+                            var apartment = _id;
+                        }else if(is_three && is_select_last == false){
+                            $('.error_info').removeClass('dis-no');
+                            setTimeout(function(){
+                                $('.error_info').addClass('dis-no');
+                            }, 3000); 
+                        } 
+                    }else if(p_select !== 'p_select1' && c_select !== 'p_select2' && a_select !== 'p_select3'){//三个级别
+                        var _id = a_select;
+                        var apartment = _id;
+                    }else{//一个未选
+                        $('.error_info').removeClass('dis-no');
+                        setTimeout(function(){
+                            $('.error_info').addClass('dis-no');
+                        }, 3000); 
+                    }
+                    if(name.length>0 && phone.length>0 && address.length>0 && apartment!==undefined && that.right_phone ==true){
+                        var apartment1 = {};
+                        apartment1.id = apartment;
+                        $.ajax({//发起请求
+                            headers: {
+                                'Authorization': 'bearer '+_token
+                            },
+                            type: 'POST',
+                            url:medicine_url+'/v1.0.0/personalCenter/saveLogisticsAddress',
+                            contentType:"application/json",
+                            data: JSON.stringify({id:area_id,name:name,phone:phone,location:apartment1,address:address,isdefault:"1"}),
+                            dataType: "json",
+                            success: function(data){
+                                if (data.code == 0) {
+                                    var $toast = $('#toast');
+                                    $('#toast .weui-toast__content').html("添加成功！");
+                                    var _url = document.referrer;
+                                    var _index = _url.lastIndexOf("\=");  
+                                    var str  = _url.substring(_index + 1, _url.length);
+                                    if ($toast.css('display') != 'none') return;
+                                    $toast.fadeIn(100);
+                                    setTimeout(function () {
+                                        $toast.fadeOut(100);
+                                        window.location.href='../html/good-sure.html?num='+str;
+                                    }, 2000);
+                                }else{
+                                    alert(data.message);
+                                }
+                                to_login(data);
+                            }
+                        });
+                    }else if(that.right_phone ==false){
+                        $('.error_info2').removeClass('dis-no');
+                        setTimeout(function(){
+                            $('.error_info2').addClass('dis-no');
+                        }, 3000); 
+                    }else{
+                        $('.error_info').removeClass('dis-no');
+                        setTimeout(function(){
+                            $('.error_info').addClass('dis-no');
+                        }, 3000); 
+                    }
+                },
+                test:function(){
+                    var that = this;
+                    var reg2 = /^[1][3,4,5,7,8][0-9]{9}$/;//手机号码正则
+                    var _val2 = $('#addr_phone').val();
+                    var obj2 = reg2.test(_val2);
+                    if(obj2){
+                        that.right_phone = true;
+                    }else{
+                        that.right_phone = false;
+                    }
                 }
             }
         });

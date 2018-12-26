@@ -78,7 +78,7 @@
                         <div class="good_sku flex-1 " :class=[{"show_good":(index==selected)}]>
                             <p class="good_price">¥<span>{{specification.price}}</span></p>
                             <p v-if="specification.stock>0">库存<span class="stock">{{specification.stock}}</span>件</p>
-                            <p v-if="specification.stock<=0">预售</p>
+                            <p v-if="specification.stock<=0" style="color:#F17355;">定制</p>
                         </div>
                         <div class="iconfont icon-shanchu3"></div>
                     </div>

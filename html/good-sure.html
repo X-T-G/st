@@ -26,9 +26,9 @@
                         <div class="info_addr" style="position: relative;">
                             <p class="im_info" style="margin-bottom: 10px;">收货方式</p>
                             <div class="flex" style="border-top:1px solid #e5e5e5;">
-                                <div class="addr_contain flex-1" style="padding: 10px 15px;" v-if="index==selected" v-for="(user_info,index) in user_info"  :class=[{"dis-no":(showpage==false)}] >
+                                <div class="addr_contain flex-1" style="padding: 10px 15px;">
                                     <p @click="choose_send"><span class="iconfont icon-truck"></span> 快递配送(快递到付)</p>
-                                    <div class="addr_info" :class=[{"dis-no":(transWay=='trans_way_self')}]>
+                                    <div class="addr_info" v-if="index==selected" v-for="(user_info,index) in user_info"  :class=[{"dis-no":(transWay=='trans_way_self')}]>
                                         <div class="flex tint" style="margin-bottom: 6px;padding: 0 15px;color:#09bb07;" @click="choose_addr">
                                             <p class="flex-1">{{user_info.name}}</p>
                                             <p>{{user_info.phone}}</p>
@@ -36,6 +36,15 @@
                                         <div class="flex" style="padding:0 15px;color:#09bb07;" @click="choose_addr">
                                             <p class="iconfont icon-dingwei"></p>
                                             <p class="tint addr_detail" style="color:#09bb07;">{{user_info.locationSeqcn}}-{{user_info.address}}</p>
+                                        </div>
+                                    </div>
+                                    <!-- 没有地址 添加 -->
+                                    <div :class=[{"dis-no":(transWay=='trans_way_self')}]>
+                                        <div class="hasno_addr" :class=[{"dis-no":(has_noinfo==false)}]  @click="add_addr">
+                                            <div>
+                                                <span class="iconfont icon-jia"></span>
+                                                <span>添加地址</span> 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -58,11 +67,6 @@
                                     </label>
                                 </div>
                             </div>
-                        </div>
-                        <!-- 没有地址 添加 -->
-                        <div class="hasno_addr" :class=[{"dis-no":(has_noinfo==false)}] @click="add_addr">
-                            <span class="iconfont icon-jia"></span>
-                            <span>添加地址</span> 
                         </div>
                         <!-- 加载效果 -->
                         <div class="weui-loadmore show_address" :class=[{"dis-no":(loading==false)}]>
