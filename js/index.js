@@ -5225,10 +5225,16 @@ $(function(){
                         var productId = [];
                         var remark = $('#remark').val();//备注
                         var transWay = that.transWay;//送货方式
-                        var logisticsAddressId = that.user_info[_index].id;//地址id
                         var coinPay = that.coinPay;//是否使用神庭币
                         if (transWay == 'trans_way_self') {//如果为自取，删除快递地址
                             var logisticsAddressId = "";
+                        }
+                        if (transWay == 'trans_way_express') {//如果为自取，删除快递地址
+                            if (that.user_info.length>0) {
+                                var logisticsAddressId = that.user_info[_index].id;//地址id                            
+                            }else{
+                                alert("请完善地址信息！");
+                            }
                         }
                         if(_goods.option!==undefined){//从详情页直接支付
                             var productId = _goods.id;
