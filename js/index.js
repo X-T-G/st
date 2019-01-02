@@ -27,7 +27,6 @@ $(function(){
     // 公共方法：分页
 
     if($('.lead').size()>0){//导航页面
-        alert(888);
         $('.lead_button').on('click',function(){
             wx.openLocation({
                 latitude: 30.5547, // 纬度，浮点数，范围为90 ~ -90
@@ -5221,6 +5220,8 @@ $(function(){
                     var _token = localStorage.getItem('access_token');
                     var _index =Number(that.selected); 
                     var transWay = that.transWay;//送货方式
+                    var coinPay = that.coinPay;//是否使用神庭币
+                    var remark = $('#remark').val();//备注
                     if (transWay == 'trans_way_self') {//如果为自取，删除快递地址
                         var logisticsAddressId = "";
                     }
@@ -5235,8 +5236,6 @@ $(function(){
                     if (that.use_coin==false) {//需要调用微信支付
                         var _goods = that.good_info;
                         var productId = [];
-                        var remark = $('#remark').val();//备注
-                        var coinPay = that.coinPay;//是否使用神庭币
                         if(_goods.option!==undefined){//从详情页直接支付
                             var productId = _goods.id;
                             var num = that.good_num;
@@ -5298,6 +5297,7 @@ $(function(){
                     }else{//只用神庭币支付
                         var _token = localStorage.getItem('access_token');
                         var that = this;
+
                         $.ajax({//发起请求,查询是否设置支付密码
                             headers: {
                                 'Authorization': 'bearer '+_token
@@ -5307,9 +5307,9 @@ $(function(){
                             contentType:"application/json",
                             success: function(data){
                                 if (data.code == 0) {
+                                    var _goods = that.good_info;
+                                    var productId = [];
                                     if(data.payPassword){//如果已经设置支付密码
-                                        var _goods = that.good_info;
-                                        var productId = [];
                                         if(_goods.option!==undefined){//从详情页直接支付
                                             var productId = _goods.id;
                                             var num = that.good_num;
@@ -5364,12 +5364,33 @@ $(function(){
                                             });
                                         }
                                     }else{//若未设置支付密码
-                                        // 弹窗
-                                        var $androidActionSheet = $('#quit_account2');
-                                        var $androidMask = $androidActionSheet.find('.weui-mask2');
-                                        $androidActionSheet.fadeIn(200);
-                                        $androidMask.css('display','block');
-                                        $androidMask.fadeIn(200);
+                                        for(var i = 0;i<_goods.length;i++){
+                                            productId.push(_goods[i].id);
+                                        }
+                                        var list = productId;//商品id
+                                        $.ajax({//发起请求
+                                            headers: {
+                                                'Authorization': 'bearer '+_token
+                                            },
+                                            type: 'post',
+                                            url:weixin_url+'/sale/shopping-cart/commit',
+                                            contentType:"application/json",
+                                            data: JSON.stringify({list:list,remark:remark,transWay:transWay,logisticsAddressId:logisticsAddressId,coinPay:coinPay}),
+                                            success: function(data){
+                                                if (data.code == 0) {
+                                                    that.coinpay_num = data.order.orderNum;
+                                                    // 弹窗
+                                                    var $androidActionSheet = $('#quit_account');
+                                                    var $androidMask = $androidActionSheet.find('.weui-mask');
+                                                    $androidActionSheet.fadeIn(200);
+                                                    $androidMask.css('display','block');
+                                                    $androidMask.fadeIn(200);
+                                                }else{
+                                                    alert(data.message);
+                                                }
+                                                to_login(data);
+                                            }
+                                        });
                                     }
                                 }
                                 to_login(data);
@@ -5425,7 +5446,7 @@ $(function(){
                     var _token = localStorage.getItem('access_token');
                     var that =this;
                     var payPassword = $('.gift_menu').find('input.user_pass').val();
-                    if(payPassword.length>0){
+                    if(payPassword.length==6){
                         var code = "";
                         var orderNum = that.coinpay_num;
                         $.ajax({//发起请求
@@ -5454,13 +5475,14 @@ $(function(){
                             }
                         });
                     }else{
-                        alert('请输入支付密码！');
+                        alert('密码格式错误！');
                     }
                 },
             }
         });
-        $('#good_sure #quit_account2 button.time_cancel').live('click',function(){//取消按钮
+        $('#good_sure #quit_account2 button.time_cancel,#good_sure #quit_account button.time_cancel').live('click',function(){//取消按钮
             $('#quit_account2').css("display","none");
+            $('#quit_account').css("display","none");
             window.location.href="../html/pay-list.html";
         });
         $('#good_sure #quit_account3 button.time_cancel').live('click',function(){//取消按钮
@@ -5479,6 +5501,48 @@ $(function(){
             $('.phone_input').removeClass('dis-no');
             $('.email_input').addClass('dis-no');
             $('.re_email').removeClass('active');
+        });
+        $('#good_sure #quit_account .quit_sure').live('click',function(){//设置密码，确认
+            var password = $(this).parents('.weui-actionsheet__menu').find('input').val();
+            if(password.length == 6){
+                $.ajax({//发起请求
+                    headers: {
+                        'Authorization': 'bearer '+_token
+                    },
+                    type: "POST",
+                    url:weixin_url + '/user/pay-password',
+                    contentType:"application/json",
+                    data: JSON.stringify({payPassword:password}),
+                    success: function(data){
+                        if (data.code == 0) {
+                            $('#good_sure #quit_account').css('display','none');
+                            var $toast = $('#toast2');
+                            if ($toast.css('display') != 'none') return;
+                            $toast.fadeIn(100);
+                            setTimeout(function () {
+                                $toast.fadeOut(500);
+                                // 弹窗
+                                var $androidActionSheet = $('#quit_account2');
+                                var $androidMask = $androidActionSheet.find('.weui-mask2');
+                                $androidActionSheet.fadeIn(600);
+                                $androidMask.css('display','block');
+                                $androidMask.fadeIn(600);
+                            }, 400);
+                        }
+                        to_login(data);
+                    }
+                });
+            }else{
+                $('#good_sure #quit_account .input_error').removeClass('dis-no');
+                $('#good_sure #quit_account .input_error').html('密码格式错误！');
+                setTimeout(function(){
+                    $('#good_sure #quit_account .input_error').addClass('dis-no');
+                    $('#good_sure #quit_account .input_error').html(''); 
+                },1000)
+            }
+        });
+        $('#good_sure #quit_account .time_cancel').live('click',function(){//设置密码，取消
+            $('#good_sure #quit_account').css('display','none');
         });
         // 头部菜单切换
         $('#good_sure .bar_option').on('click','.flex-1',function(){
@@ -5770,7 +5834,7 @@ $(function(){
                     var _token = localStorage.getItem('access_token');
                     var that =this;
                     var payPassword = $('.gift_menu').find('input.user_pass').val();
-                    if(payPassword.length>0){
+                    if(payPassword.length==6){
                         var code = "";
                         var orderNum = that.coinpay_num;
                         $.ajax({//发起请求
@@ -5799,7 +5863,7 @@ $(function(){
                             }
                         });
                     }else{
-                        alert('请输入支付密码！');
+                        alert('密码格式错误！');
                     }
                 },
             }
@@ -6496,73 +6560,69 @@ $(function(){
         var orderNum = localStorage.getItem('orderNum');
         var use_coin = localStorage.getItem('use_coin');
         var payPassword = "";
-        if (use_coin==true){//起调神庭币密码支付
-            alert(66666);
-        }else{//微信支付
-            $.ajax({//发起请求
-                headers: {
-                    'Authorization': 'bearer '+_token
-                },
-                type: "POST",
-                url:weixin_url + '/sale/pay',
-                contentType:"application/json",
-                data: JSON.stringify({"orderNum":orderNum,thirdPay:"WEIXIN_PAY",payPassword:payPassword,code:code}),
-                async:false,
-                success: function(data){
-                    if (data.code == 0) {
-                        var _data = JSON.parse(data.str);
-                        var newOrderNum = orderNum;
-                        function onBridgeReady(){
-                            WeixinJSBridge.invoke(
-                                'getBrandWCPayRequest', _data,
-                                function(res){
-                                    $.ajax({//发起请求
-                                        headers: {
-                                            'Authorization': 'bearer '+_token
-                                        },
-                                        type: "GET",
-                                        url:weixin_url + '/sale/status/'+newOrderNum,
-                                        contentType:"application/json",
-                                        success: function(data){
-                                            to_login(data);
-                                        }
-                                    });
-                                    if(res.err_msg == "get_brand_wcpay_request:ok" ){
-                                        var $toast = $('#toast');
-                                        if ($toast.css('display') != 'none') return;
-                                        $toast.fadeIn(100);
-                                        setTimeout(function () {
-                                            $toast.fadeOut(100);
-                                            window.location.href='../html/pay-success.html';
-                                        }, 1000);
-                                    }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
-                                            alert('支付取消!');
-                                            window.location.href='../html/pay-list.html';
-                                    }else if(res.err_msg == "get_brand_wcpay_request:fail"){
-                                            alert('支付失败!');
-                                            window.location.href='../html/pay-list.html';
-                                    }else{
-                                            return;
-                                    } 
-                                }); 
-                            }
-                            if (typeof WeixinJSBridge == "undefined"){
-                                if( document.addEventListener ){
-                                    document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-                                }else if (document.attachEvent){
-                                    document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
-                                    document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-                                }
-                            }else{
-                                onBridgeReady();
+        $.ajax({//发起请求
+            headers: {
+                'Authorization': 'bearer '+_token
+            },
+            type: "POST",
+            url:weixin_url + '/sale/pay',
+            contentType:"application/json",
+            data: JSON.stringify({"orderNum":orderNum,thirdPay:"WEIXIN_PAY",payPassword:payPassword,code:code}),
+            async:false,
+            success: function(data){
+                if (data.code == 0) {
+                    var _data = JSON.parse(data.str);
+                    var newOrderNum = orderNum;
+                    function onBridgeReady(){
+                        WeixinJSBridge.invoke(
+                            'getBrandWCPayRequest', _data,
+                            function(res){
+                                $.ajax({//发起请求
+                                    headers: {
+                                        'Authorization': 'bearer '+_token
+                                    },
+                                    type: "GET",
+                                    url:weixin_url + '/sale/status/'+newOrderNum,
+                                    contentType:"application/json",
+                                    success: function(data){
+                                        to_login(data);
+                                    }
+                                });
+                                if(res.err_msg == "get_brand_wcpay_request:ok" ){
+                                    var $toast = $('#toast');
+                                    if ($toast.css('display') != 'none') return;
+                                    $toast.fadeIn(100);
+                                    setTimeout(function () {
+                                        $toast.fadeOut(100);
+                                        window.location.href='../html/pay-success.html';
+                                    }, 1000);
+                                }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
+                                        alert('支付取消!');
+                                        window.location.href='../html/pay-list.html';
+                                }else if(res.err_msg == "get_brand_wcpay_request:fail"){
+                                        alert('支付失败!');
+                                        window.location.href='../html/pay-list.html';
+                                }else{
+                                        return;
+                                } 
+                            }); 
+                        }
+                        if (typeof WeixinJSBridge == "undefined"){
+                            if( document.addEventListener ){
+                                document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+                            }else if (document.attachEvent){
+                                document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+                                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
                             }
                         }else{
-                            alert(data.message);
+                            onBridgeReady();
                         }
-                        to_login(data);
-                }
-            });
-        }
+                    }else{
+                        alert(data.message);
+                    }
+                    to_login(data);
+            }
+        });
     }else if($('#pay_list').size()>0){//馆藏商品订单
         var _width = window.screen.width;
         $('#pay_list .top_fix').css('left',(_width-200)/2+'px');
@@ -6623,7 +6683,8 @@ $(function(){
                 total_page:1,//记录页面总数
                 all_good:[],
                 order_status:"success",
-                order_info:[]
+                order_info:[],
+                pay_index:-1,//辅助标注被支付的订单
             },
             created:function(){
                 var page = 0;//默认第一页
@@ -6667,6 +6728,7 @@ $(function(){
                             var order_status = 'wait-for-pay';
                             that.order_status = 'wait-for-pay';//改变页面内容
                         }
+                        $('.has_noinfo').addClass('dis-no'); 
                         that.show_page = false;
                         that.has_noinfo = false;
                         that.loading = true;
@@ -6681,41 +6743,19 @@ $(function(){
                         window.location.href="../html/order-sure.html";
                     }
                 },
-                to_pay:function(e){//确认支付按钮
+                to_pay:function(e,id){//确认支付按钮
                     var that = this;
                     that.order_info = e;
+                    that.pay_index = id;
                     var _token = localStorage.getItem('access_token');
                     var payPrice = e.payPrice;
                     if (payPrice==0) {//说明用神庭币支付
-                        var _token = localStorage.getItem('access_token');
-                        $.ajax({//发起请求,查询是否设置支付密码
-                            headers: {
-                                'Authorization': 'bearer '+_token
-                            },
-                            type: "GET",
-                            url:weixin_url + '/user/pay-password',
-                            contentType:"application/json",
-                            success: function(data){
-                                if (data.code == 0) {
-                                    if(data.payPassword){//如果已经设置支付密码
-                                        that.coinpay_num = that.order_info.orderNum;
-                                        var $androidActionSheet = $('#quit_account2');
-                                        var $androidMask = $androidActionSheet.find('.weui-mask2');
-                                        $androidActionSheet.fadeIn(200);
-                                        $androidMask.css('display','block');
-                                        $androidMask.fadeIn(200);
-                                    }else{//若未设置支付密码
-                                        // 弹窗
-                                        var $androidActionSheet = $('#quit_account2');
-                                        var $androidMask = $androidActionSheet.find('.weui-mask2');
-                                        $androidActionSheet.fadeIn(200);
-                                        $androidMask.css('display','block');
-                                        $androidMask.fadeIn(200);
-                                    }
-                                }
-                                to_login(data);
-                            }
-                        });
+                        that.coinpay_num = that.order_info.orderNum;
+                        var $androidActionSheet = $('#quit_account2');
+                        var $androidMask = $androidActionSheet.find('.weui-mask2');
+                        $androidActionSheet.fadeIn(200);
+                        $androidMask.css('display','block');
+                        $androidMask.fadeIn(200);
                     }else{//微信支付
                         var that =this;
                         var orderNum = that.order_info.orderNum;
@@ -6775,8 +6815,10 @@ $(function(){
                 coin_pay:function(){//输入密码后点击确认
                     var _token = localStorage.getItem('access_token');
                     var that =this;
+                    var pay_index = that.pay_index
+                    var _this = $(this);
                     var payPassword = $('.gift_menu').find('input.user_pass').val();
-                    if(payPassword.length>0){
+                    if(payPassword.length==6){
                         var code = "";
                         var orderNum = that.coinpay_num;
                         $.ajax({//发起请求
@@ -6796,7 +6838,14 @@ $(function(){
                                     $toast.fadeIn(100);
                                     setTimeout(function () {
                                         $toast.fadeOut(100);
-                                        window.location.href='../html/pay-success.html';
+                                        $('#'+pay_index).remove();
+                                        if ($('.weui-cells.clearfix').length==0) {
+                                            $('.has_noinfo').removeClass('dis-no'); 
+                                            $('.no_good.tint').addClass('dis-no');
+                                        }else{
+                                            $('.has_noinfo').addClass('dis-no'); 
+                                            $('.no_good.tint').removeClass('dis-no');  
+                                        }
                                     }, 1000);
                                 }else{
                                     alert(data.message);
@@ -6805,7 +6854,7 @@ $(function(){
                             }
                         });
                     }else{
-                        alert('请输入支付密码！');
+                        alert('密码格式错误！');
                     }
                 },
             },
@@ -7026,12 +7075,18 @@ $(function(){
                 success: function(data){
                     if (data.code == 0) {
                         _this.parents('.weui-cells.clearfix').remove();
+                        var $toast = $('#toast2');
+                        if ($toast.css('display') != 'none') return;
+                        $toast.fadeIn(100);
+                        setTimeout(function () {
+                            $toast.fadeOut(100);
+                        }, 1000);
                         if ($('.weui-cells.clearfix').length==0) {
-                            $('.has_noinfo').css('display','block');
-                            $('.no_good.tint').css('display','none');
+                            $('.has_noinfo').removeClass('dis-no'); 
+                            $('.no_good.tint').addClass('dis-no');
                         }else{
-                            $('.has_noinfo').css('display','none'); 
-                            $('.no_good.tint').css('display','block');  
+                            $('.has_noinfo').addClass('dis-no'); 
+                            $('.no_good.tint').removeClass('dis-no');  
                         }
                     }else{
                         alert(data.message);

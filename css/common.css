@@ -871,7 +871,7 @@ div.sku_operate.show_good{display:flex;}
 #good_sure .weui-actionsheet__menu .text_info{font-size: 16px;margin: 10px 0 0;}
 #good_sure .weui-actionsheet__menu button {width: 60px;height: 28px;background-color: #fff;outline: none;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 4px;}
 #good_sure .weui-actionsheet__menu input {font-size: 14px;height: 30px;line-height: 30px;padding-left: 6px;margin-bottom: 10px;-webkit-appearance: none;border: 1px solid #e5e5e5;outline: none;box-shadow: none;font-size: 16px;margin: 10px 0 0;}
-#good_sure #quit_account2 .weui-mask2,#good_sure #quit_account3 .weui-mask3{height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.7);z-index:20001;transition: none 0.5s ease;display: none;}
+#good_sure #quit_account2 .weui-mask2,#good_sure #quit_account3 .weui-mask3{height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;background-color: rgba(0, 0, 0, 0.6);z-index:20001;transition: none 0.5s ease;display: none;}
 #good_sure #quit_account2 .weui-skin_android .weui-actionsheet,#good_sure #quit_account3 .weui-skin_android .weui-actionsheet{z-index:20002;}
 #good_sure .look_for_pass .input_row img {margin-top: 8px;margin-right: 0px;width: 24px;height: 25px;}
 #good_sure .look_for_pass .input_row .flex-1 input.pass_code {width: 100px;}

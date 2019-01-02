@@ -29,8 +29,8 @@
             <div class="mask_div"></div>
             <div class="my_order" :class=[{"dis-no":(show_page==false)}] style="margin-top:10px;">
                 <div style="margin-top: 50px;">
-                    <div class="weui-cells clearfix" v-for="order in orders">
-                        <div class="weui-cell" v-for="each_good in order.saleOrderProductList" @click="to_sale(order_status,order,order.totalPayPrice)">
+                    <div class="weui-cells clearfix" :id="index" v-for="(order,index) in orders">
+                        <div class="weui-cell"  v-for="each_good in order.saleOrderProductList" @click="to_sale(order_status,order,order.totalPayPrice)">
                             <div class="weui-cell__hd" >
                                 <img :src="each_good.productSnapshot.coverImg">
                             </div>
@@ -42,8 +42,8 @@
                         </div>
                         <p class="payprice total_price" @click="to_sale(order_status,order,order.totalPayPrice)">共{{order.saleOrderProductList.length}}件商品，合计：¥<span style="display:inline-block;font-size:16px;">{{order.payPrice.toFixed(2)}}</span></p>
                         <div class="clearfix" style="clear:both;">
-                            <button v-if="order_status=='wait-for-pay'" class="to_pay" v-on:click="to_pay(order)">支付订单</button>
-                            <button v-if="order_status=='wait-for-pay'" class="to_pay cancel" :id="order.orderNum">取消订单</button>
+                            <button v-if="order_status=='wait-for-pay'"  class="to_pay" v-on:click="to_pay(order,index)">支付订单</button>
+                            <button v-if="order_status=='wait-for-pay'"  class="to_pay cancel" :id="order.orderNum">取消订单</button>
                         </div>
                     </div>
                     <!-- 加载效果 -->
@@ -53,24 +53,6 @@
                     </div>
                     <!-- 无商品 -->
                     <p class="tint no_good dis-no" style="height:40px;line-height:40px;text-align:center;color:#939399;">没有更多商品啦~</p>
-                </div>
-                 <!-- 弹窗1 设置交易密码-->
-                 <div class="weui-skin_android" id="quit_account" style="opacity: 0; display: none;">
-                    <div class="weui-mask"></div>
-                    <div class="weui-actionsheet">
-                        <div class="weui-actionsheet__menu">
-                            <div class="text_info">请设置支付密码：<input type="number" maxlength="6" placeholder="6位数字" oninput="if(value.length>6)value=value.slice(0,6)"></div>
-                            <p class="input_error dis-no" style="text-align:left;color:#fd5749;font-size: 12px;padding-left: 40px;padding-bottom: 5px;"></p>                        
-                            <div class="flex" style="padding-top:15px;">
-                                <div class="flex-1">
-                                    <button type="button" class="quit_sure">确认</button>
-                                </div>
-                                <div class="flex-1">
-                                    <button type="button" class="time_cancel">取消</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <!-- 输入交易密码-->
                 <div class="weui-skin_android" id="quit_account2" style="opacity: 0; display: none;">
@@ -143,6 +125,13 @@
                     <div class="weui-toast">
                         <i class="weui-icon-success-no-circle weui-icon_toast"></i>
                         <p class="weui-toast__content">支付成功！</p>
+                    </div>
+                </div>
+                <div id="toast2" style="opacity: 0; display: none;">
+                    <div class="weui-mask_transparent"></div>
+                    <div class="weui-toast">
+                        <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+                        <p class="weui-toast__content">取消成功！</p>
                     </div>
                 </div>
             </div>
