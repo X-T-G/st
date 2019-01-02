@@ -106,6 +106,25 @@
             <div class="has_noinfo" :class=[{"dis-no":(has_noinfo==false)}]>
                 <img src="../images/bg_nodata.png" alt="">
             </div>
+               <!-- 底部 -->
+               <div class="bottom flex bottom_contain" v-if="has_noinfo==true">
+                    <div class="flex-1">
+                        <a href="./good-index.html">
+                            <img src="../images/index_1.png" alt="">
+                            <p>神庭馆藏</p>
+                        </a>                          
+                    </div>
+                    <div class="flex-1">
+                        <img src="../images/car_2.png" alt="">
+                        <p>购物车</p>  
+                    </div>
+                    <div class="flex-1">
+                        <a href="./person.html">
+                            <img src="../images/person_1.png" alt="">
+                            <p>个人中心</p> 
+                        </a>
+                    </div>
+                </div>
         </div>
     </body>
 </html>

@@ -164,6 +164,9 @@ img.store_pic{width: 108px;height:108px;}
 .person .weui-actionsheet__menu button.time_cancel{background-color:#AFABAC;}
 .person .weui-actionsheet__menu .text_info{font-size: 16px;margin: 10px 0;}
 .person .weui-skin_android .weui-actionsheet{border: 1px solid #e5e5e5;}
+.person .bottom.bottom_contain{height: 50px;width: 100%;border-top: 1px solid #e5e5e5;padding-top: 5px;position: fixed;background-color: #fff;bottom: 0;z-index: 20000;text-align: center;}
+.person .bottom.bottom_contain img{width: 21px;}
+.person .bottom p{font-size: 12px;}
 
 /* 我的订单/消费记录*/
 .m_order,.m_consume,.m_coupon{padding: 20px 0;}
@@ -491,6 +494,9 @@ animation: myfade_in .2s;
 .cart .cart_container .good_check+.icon-checked:before{ content: "\e625";}/*未选中*/
 .cart .cart_container .good_check:checked+.icon-checked:before{content: "\e623"; color: #09bb07;}/*选中*/
 .cart .cart_container .good_check{left: -10000px;position: absolute;}
+.cart .bottom.bottom_contain{height: 50px;width: 100%;border-top: 1px solid #e5e5e5;padding-top: 5px;position: fixed;background-color: #fff;bottom: 0;z-index: 20000;text-align: center;}
+.cart .bottom.bottom_contain img{width: 21px;}
+.cart .bottom p{font-size: 12px;}
 
 /* 地址管理 */
 .all_address .van-address-list .van-cell__value {color: #333;padding-right: 34px;position: relative;}

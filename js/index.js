@@ -5219,23 +5219,24 @@ $(function(){
                 pay_sure:function(){//确认支付按钮
                     var that = this;
                     var _token = localStorage.getItem('access_token');
+                    var _index =Number(that.selected); 
+                    var transWay = that.transWay;//送货方式
+                    if (transWay == 'trans_way_self') {//如果为自取，删除快递地址
+                        var logisticsAddressId = "";
+                    }
+                    if (transWay == 'trans_way_express') {//如果为快递,获取地址id
+                        if (that.user_info.length>0) {
+                            var logisticsAddressId = that.user_info[_index].id;//地址id                            
+                        }else{
+                            alert("请完善地址信息！");
+                            return;
+                        }
+                    }
                     if (that.use_coin==false) {//需要调用微信支付
                         var _goods = that.good_info;
-                        var _index =Number(that.selected); 
                         var productId = [];
                         var remark = $('#remark').val();//备注
-                        var transWay = that.transWay;//送货方式
                         var coinPay = that.coinPay;//是否使用神庭币
-                        if (transWay == 'trans_way_self') {//如果为自取，删除快递地址
-                            var logisticsAddressId = "";
-                        }
-                        if (transWay == 'trans_way_express') {//如果为自取，删除快递地址
-                            if (that.user_info.length>0) {
-                                var logisticsAddressId = that.user_info[_index].id;//地址id                            
-                            }else{
-                                alert("请完善地址信息！");
-                            }
-                        }
                         if(_goods.option!==undefined){//从详情页直接支付
                             var productId = _goods.id;
                             var num = that.good_num;
@@ -5263,7 +5264,7 @@ $(function(){
                                     to_login(data);
                                 }
                             });
-                        }else{
+                        }else{//购物车跳转
                             for(var i = 0;i<_goods.length;i++){
                                 productId.push(_goods[i].id);
                             }
@@ -5308,15 +5309,7 @@ $(function(){
                                 if (data.code == 0) {
                                     if(data.payPassword){//如果已经设置支付密码
                                         var _goods = that.good_info;
-                                        var _index =Number(that.selected); 
                                         var productId = [];
-                                        var remark = $('#remark').val();//备注
-                                        var transWay = that.transWay;//送货方式
-                                        var logisticsAddressId = that.user_info[_index].id;//地址id
-                                        var coinPay = that.coinPay;//是否使用神庭币
-                                        if (transWay == 'trans_way_self') {//如果为自取，删除快递地址
-                                            var logisticsAddressId = "";
-                                        }
                                         if(_goods.option!==undefined){//从详情页直接支付
                                             var productId = _goods.id;
                                             var num = that.good_num;
@@ -6735,29 +6728,6 @@ $(function(){
                         window.location.href=_url;
                     }
                 },
-                cancel_order:function(e){
-                    var that =this;
-                    var orderNum = e.orderNum;
-                    $.ajax({//发起请求,查询是否设置支付密码
-                        headers: {
-                            'Authorization': 'bearer '+_token
-                        },
-                        type: "delete",
-                        url:weixin_url + '/sale/order/'+orderNum,
-                        contentType:"application/json",
-                        success: function(data){
-                            if (data.code == 0) {
-                                var order_status = 'wait-for-pay';
-                                that.order_status = 'wait-for-pay';
-                                var page = 0;
-                                get_info(order_status,page,that);
-                            }else{
-                                alert(data.message);
-                            }
-                            to_login(data);
-                        }
-                    });
-                },
                 forget_password:function(){
                     $.ajax({//发起请求
                         headers: {
@@ -7041,6 +7011,34 @@ $(function(){
                     });
                 }
             }
+        });
+        // 取消订单
+        $('#pay_list button.to_pay.cancel').live('click',function(){
+            var orderNum = $(this).attr('id');
+            var _this = $(this);
+            $.ajax({//发起请求,查询是否设置支付密码
+                headers: {
+                    'Authorization': 'bearer '+_token
+                },
+                type: "delete",
+                url:weixin_url + '/sale/order/'+orderNum,
+                contentType:"application/json",
+                success: function(data){
+                    if (data.code == 0) {
+                        _this.parents('.weui-cells.clearfix').remove();
+                        if ($('.weui-cells.clearfix').length==0) {
+                            $('.has_noinfo').css('display','block');
+                            $('.no_good.tint').css('display','none');
+                        }else{
+                            $('.has_noinfo').css('display','none'); 
+                            $('.no_good.tint').css('display','block');  
+                        }
+                    }else{
+                        alert(data.message);
+                    }
+                    to_login(data);
+                }
+            });
         });
     }else if($('#new_address').size()>0){//编辑地址页面
         var _token = localStorage.getItem('access_token');
