@@ -570,6 +570,7 @@ $(function(){
                     var class_name = event.target.className;
                     var class_name2 = event.target.className.split(" ")[1]
                     var is_active = class_name.indexOf('active');
+                    that.total_page = 1;//切换时默认有数据
                     if (is_active !==-1) {//被选中
                         return;
                     }else{
