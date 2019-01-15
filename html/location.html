@@ -14,37 +14,14 @@
             * {margin: 0; padding: 0; border: 0;}
             body{position: absolute;width: 100%;height: 100%;}
             #geoPage, #markPage {position: relative;}
+            iframe{padding-top: 40px;}
         </style>
         <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&JQ4BZ-3SH36-MFYS3-EARIU-GET35-VMBDB"></script>
-        <script>
-                var center = new qq.maps.LatLng(30.5547650046,104.0787420956);
-        </script>
     </head>
     <body>
         <div class="header">
             定位导航
         </div>
-        <!-- <div class="lead"> -->
-            <!-- <img class="store_img" src="../images/store_img.jpg" alt="">
-            <p class="text_detail">
-                <strong>地址：</strong>成都市高新区世纪城路198号时尚天堂街206-1-15。
-            </p>
-            <a href="" class="weui-btn weui-btn_plain-primary lead_button">一键导航</a> -->
-            <iframe id="mapPage" width="100%" height="100%" frameborder=0 src="https://apis.map.qq.com/tools/routeplan/eword=神庭诊所&epointx=104.0785410000&epointy=30.5547410000?referer=myapp&addr=四川省成都市武侯区世纪城路198号206-1-15号&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77"></iframe>
-            <!-- 软件下载 -->
-            <!-- <div class="app_contain">
-                <img class="store_pic" src="../images/app_pic.png" alt="">
-                <p>神庭君下载二维码</p>
-            </div> -->
-        <!-- </div> -->
-        <script>
-            window.addEventListener('message', function(event) {
-                // 接收位置信息，用户选择确认位置点后选点组件会触发该事件，回传用户的位置信息
-                var loc = event.data;
-                if (loc && loc.module == 'locationPicker') {//防止其他应用也会向该页面post信息，需判断module是否为'locationPicker'
-                  console.log('location', loc);
-                }
-            }, false);
-        </script>
+        <iframe id="mapPage" width="100%" height="100%" frameborder=0 src="https://apis.map.qq.com/tools/poimarker?type=0&center=30.5547410000,104.0785410000&marker=coord:30.5547410000,104.0785410000;title:神庭诊所;addr:四川省成都市武侯区世纪城路198号206-1-15号|coord:30.5547410000,104.0785410000;title:神庭医馆;addr:四川省成都市武侯区世纪城路198号206-1-15号&key=JQ4BZ-3SH36-MFYS3-EARIU-GET35-VMBDB&referer=myapp"></iframe>
     </body>
 </html>
