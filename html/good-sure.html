@@ -27,7 +27,7 @@
                             <p class="im_info" style="margin-bottom: 10px;">收货方式</p>
                             <div class="flex" style="border-top:1px solid #e5e5e5;">
                                 <div class="addr_contain flex-1" style="padding: 10px 15px;">
-                                    <p @click="choose_send"><span class="iconfont icon-truck"></span> 快递配送(快递到付)</p>
+                                    <p @click="choose_send"><span class="iconfont icon-truck"></span> 快递配送(顺丰到付)</p>
                                     <div class="addr_info" v-if="index==selected" v-for="(user_info,index) in user_info"  :class=[{"dis-no":(transWay=='trans_way_self')}]>
                                         <div class="flex tint" style="margin-bottom: 6px;padding: 0 15px;color:#09bb07;" @click="choose_addr">
                                             <p class="flex-1">{{user_info.name}}</p>
